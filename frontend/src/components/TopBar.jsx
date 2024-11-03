@@ -2,14 +2,14 @@ import React from 'react'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom'
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 const TopBar = () => {
  const [Drawer , setDrawer] = useState(false)
 
  const [students, setMarks] = useState([]);
  useEffect(() => {
      const fetchData = () => {
-         axios.get("http://localhost:3000/api/students")
+         axios.get("https://eps-backend.onrender.com/students")
              .then(students => setMarks(students.data))
              .catch(err => console.log(err));
      };

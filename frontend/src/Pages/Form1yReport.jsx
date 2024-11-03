@@ -9,7 +9,7 @@ const Form1yReport = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    axios.get("api/joined-students_marks-form1y")
+    axios.get("https://eps-backend.onrender.com/api/joined-students_marks-form1y")
       .then(response => {
         // Calculate average for each student and sort by average descending
         const studentsWithAverage = response.data.map(student => {

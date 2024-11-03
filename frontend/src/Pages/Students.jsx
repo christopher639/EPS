@@ -6,7 +6,7 @@ axios.defaults.baseURL = "https://eps-backend.onrender.com"
 const Students = () => {
   const[students,setStudents] = useState([])
   const getFetchData = ()  =>{
-    axios.get("http://localhost:3000/api/students")
+    axios.get("https://eps-backend.onrender.com/api/students")
     .then(students => setStudents(students.data))
     .catch(err => console.log(err))
   }

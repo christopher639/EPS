@@ -10,7 +10,7 @@ const MarksFom1y = () => {
     const [students, setMarks] = useState([]);
     useEffect(() => {
         const fetchData = () => {
-            axios.get("http://localhost:3000/api/joined-students_marks-form1y")
+            axios.get("https://eps-backend.onrender.com/api/joined-students_marks-form1y")
                 .then(students => setMarks(students.data))
                 .catch(err => console.log(err));
         };
