@@ -1,5 +1,6 @@
 import React from 'react'
 import {useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 const NavBar = () => {
 const [mobileBar,setMobileBar] = useState(false)
@@ -13,14 +14,50 @@ const [mobileBar,setMobileBar] = useState(false)
                     <div className="fixed md:hidden w-1/2 inset-0 bg-black bg-opacity-50 backdrop-blur-[0px] flex  ">
                      <div className='bg-white w-full border-r border-slate-500'>
                      <div className='pl-4 flex flex-col gap-5'>
-                        <div className='border-b flex gap-51 py-5'>
+                        <div className='border-b flex   gap-2  py-5'>
+                          <div>
                           <img className='w-10 h-10 ' src="kibabiilogo.jpeg" alt="" />
-                          <p className='text-lg pt-2'>Kibabii School</p>
                           </div>
-                        <div>Enter Marks</div>
-                        <div>Performance</div>
-                        <div>Messages</div>
-                        <div>Profile</div>
+                    
+                        <div className='flex justify-between'>
+                        <p className='text-lg pt-2'>Kibu</p>
+                          <p className=' mt-2 bg-green-800 h-6 rounded-full cursor-pointer '>
+                            <svg  onClick={()=>setMobileBar(false)} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="m338-288-50-50 141-142-141-141 50-50 142 141 141-141 50 50-141 141 141 142-50 50-141-141-142 141Z"/></svg>
+                         </p>
+                  
+                        </div>
+                          </div>
+                          <div className=' min-h-full '>
+           
+           <NavLink  to='/select-subject'>
+                <div className='list-none hover:cursor-pointer hover:bg-slate-800 hover:text-white  border-b text-lg pt-3'>
+                    <li className='ml-2' >HOME</li>
+                 </div>
+                </NavLink>
+                <NavLink  to='/entermarks'>
+                <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                    <li className='ml-2' >LEARNING AREAS</li>
+                 </div>
+                </NavLink>
+                   
+                <NavLink to='/performance'>
+                <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                    <li className='ml-2' >PERFORMANCE</li>
+                 </div>
+                </NavLink>
+                 <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                    <li className='ml-2' >MESSAGES</li>
+                 </div>
+                 <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                    <li className='ml-2' >ANALYTICS</li>
+                 </div>
+                 <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                    <li className='ml-2' >SETTINGS</li>
+                 </div>
+                 <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                    <li className='ml-2' >PROFILE</li>
+                 </div>
+           </div>
                      </div>
                      </div>
                     </div>

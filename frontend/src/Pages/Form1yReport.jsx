@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // Import Bar from Chart.js (if you're using it)
 
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const Form1yReport = () => {
   const [students, setMarks] = useState([]);

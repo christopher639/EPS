@@ -2,7 +2,7 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import {useEffect,useState } from 'react'
 import axios from "axios"
-axios.defaults.baseURL = " http://localhost:3000/"
+axios.defaults.baseURL = "https://eps-backend.onrender.com"
 const Users = () => {
     const[userform,setUserForm] = useState(false)
     const[users,setUsers] = useState([])

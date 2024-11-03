@@ -4,7 +4,7 @@ import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const Marks = () => {
     const [students, setMarks] = useState([]);
