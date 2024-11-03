@@ -10,7 +10,7 @@ const PhycFormData = () => {
 
 
     const getFetchData = ()  =>{
-      axios.get("http://localhost:3000/api/joined-students-generallay")
+      axios.get("https://eps-backend.onrender.com/api/joined-students-generallay")
       .then(students => setMarks(students.data))
       .catch(err => console.log(err));
     }
