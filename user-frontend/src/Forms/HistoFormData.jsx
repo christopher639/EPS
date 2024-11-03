@@ -2,7 +2,7 @@ import React from 'react'
 import {useEffect,useState } from 'react'
 import axios from "axios"
 import { toast } from 'react-toastify'
-axios.defaults.baseURL = " http://localhost:3000/"
+axios.defaults.baseURL = "https://eps-backend.onrender.com"
 
 const HistoFormData = () => {
  
