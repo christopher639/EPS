@@ -19,7 +19,7 @@ const Admission = () => {
   });
 
   const getFetchData = () => {
-    axios.get("http://localhost:3000/api/stream")
+    axios.get("https://eps-backend.onrender.com/api/stream")
       .then(streams => setStream(streams.data))
       .catch(err => console.log(err));
   };
@@ -40,7 +40,7 @@ const Admission = () => {
   // Handle form submission
   const handleSubmit = async () => {
     try {
-      await axios.post("http://localhost:3000/api/students", formData);
+      await axios.post("https://eps-backend.onrender.com/api/students", formData);
       console.log(formData)
       alert("Student admitted successfully");
       // Clear form data after successful submission

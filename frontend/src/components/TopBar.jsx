@@ -9,7 +9,7 @@ const TopBar = () => {
  const [students, setMarks] = useState([]);
  useEffect(() => {
      const fetchData = () => {
-         axios.get("https://eps-backend.onrender.com/students")
+         axios.get("https://eps-backend.onrender.com/api/students")
              .then(students => setMarks(students.data))
              .catch(err => console.log(err));
      };
@@ -156,8 +156,8 @@ const TopBar = () => {
           </div>
           )
          }
-         <div className='border shadow-xl bg-slate-800 flex justify-center rounded w-1/3'>
-          <p className='py-3  sm:text-sm md:text-lg text-white  whitespace-nowrap  px-2 '>Total Students :</p>
+         <div className='border shadow-xl bg-slate-800 flex flex-col items-center rounded w-1/3'>
+          <p className='py-1  sm:text-sm md:text-lg text-white  whitespace-nowrap   '>Total Students</p>
           <p className='md:text-3xl sm:text-sm lg:text-4xl text-white pt-1'>{students.length}</p>
          </div>
          <div className='border shadow-sm border-slate-500 flex justify-center rounded w-1/3'>
