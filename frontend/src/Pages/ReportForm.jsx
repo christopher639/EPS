@@ -12,7 +12,7 @@ import {
   } from 'chart.js';
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const ReportForm = () => {
   const [students, setMarks] = useState([]);
