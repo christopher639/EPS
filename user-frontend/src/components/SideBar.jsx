@@ -6,7 +6,7 @@ const SideBar = () => {
    
   return (
     <div >
-      <div className=' min-h-full '>
+      <div className=' min-h-full   pr-5'>
            
       <NavLink  to='/select-subject'>
            <div className='list-none hover:cursor-pointer hover:bg-slate-800 hover:text-white  border-b text-lg pt-3'>

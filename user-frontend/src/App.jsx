@@ -32,7 +32,7 @@ const App = () => {
       <NavBar/>
        <div className='flex flex-row '>
       
-        <div className='border-l hidden sm:flex  flex-col w-1/6 h-screen border-r border-slate-500 '>
+        <div className='border-l hidden sm:flex  flex-col h-screen border-r border-slate-500 '>
             <SideBar/>
         </div>
         <div className='w-full'>

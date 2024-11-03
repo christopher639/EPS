@@ -35,7 +35,7 @@ const EnterMarks = () => {
         setUserForm(false)
     }
   return (
-     <div className='mx-4 md:mx-1'>
+     <div className='mx-4 max-h-[80vh] overflow-y-auto md:mx-1'>
            <div className=' flex  justify-between mx-4 mt-2'>
                 <div>
                     <input className='outline-none py-1  text-center border' type="text" placeholder='Search'/>

@@ -6,7 +6,7 @@ const NavBar = () => {
 const [mobileBar,setMobileBar] = useState(false)
 
   return (
-    <div className='flex  justify-between border-b p-2 border-slate-500'>
+    <div className='flex max-h-[80vh] overflow-y-auto justify-between border-b p-2 border-slate-500'>
 
             <div className='ml-3 gap-4 flex flex-row'>
             {
@@ -19,42 +19,42 @@ const [mobileBar,setMobileBar] = useState(false)
                           <img className='w-10 h-10 ' src="kibabiilogo.jpeg" alt="" />
                           </div>
                     
-                        <div className='flex justify-between'>
-                        <p className='text-lg pt-2'>Kibu</p>
+                        <div className='flex  w-full mr-1  justify-between'>
+                        <p className='text-lg pt-2'>KIBABII SCHOOL</p>
                           <p className=' mt-2 bg-green-800 h-6 rounded-full cursor-pointer '>
                             <svg  onClick={()=>setMobileBar(false)} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="m338-288-50-50 141-142-141-141 50-50 142 141 141-141 50 50-141 141 141 142-50 50-141-141-142 141Z"/></svg>
                          </p>
                   
                         </div>
                           </div>
-                          <div className=' min-h-full '>
+        <div className=' min-h-full    overflow-y-auto '>
            
            <NavLink  to='/select-subject'>
-                <div className='list-none hover:cursor-pointer hover:bg-slate-800 hover:text-white  border-b text-lg pt-3'>
+                <div  onClick={()=>setMobileBar(false)}  className='list-none hover:cursor-pointer hover:bg-slate-800 hover:text-white  border-b text-lg py-4'>
                     <li className='ml-2' >HOME</li>
                  </div>
                 </NavLink>
                 <NavLink  to='/entermarks'>
-                <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                <div  onClick={()=>setMobileBar(false)}  className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
                     <li className='ml-2' >LEARNING AREAS</li>
                  </div>
                 </NavLink>
                    
                 <NavLink to='/performance'>
-                <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                <div  onClick={()=>setMobileBar(false)} className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
                     <li className='ml-2' >PERFORMANCE</li>
                  </div>
                 </NavLink>
-                 <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                 <div  onClick={()=>setMobileBar(false)} className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
                     <li className='ml-2' >MESSAGES</li>
                  </div>
-                 <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                 <div  onClick={()=>setMobileBar(false)} className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
                     <li className='ml-2' >ANALYTICS</li>
                  </div>
-                 <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                 <div  onClick={()=>setMobileBar(false)} className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
                     <li className='ml-2' >SETTINGS</li>
                  </div>
-                 <div className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
+                 <div  onClick={()=>setMobileBar(false)} className='list-none  hover:bg-slate-800 hover:text-white  hover:cursor-pointer border-b text-lg pt-3'>
                     <li className='ml-2' >PROFILE</li>
                  </div>
            </div>
