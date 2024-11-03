@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const Admission = () => {
   const [streams, setStream] = useState([]);
