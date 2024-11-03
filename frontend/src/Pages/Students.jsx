@@ -1,7 +1,7 @@
 import React from 'react'
 import {useEffect,useState } from 'react'
 import axios from "axios"
-axios.defaults.baseURL = " http://localhost:3000/"
+axios.defaults.baseURL = "https://eps-backend.onrender.com"
 
 const Students = () => {
   const[students,setStudents] = useState([])
