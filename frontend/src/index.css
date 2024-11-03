@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: sans-serif;
+    font-optical-sizing: auto;
+    font-style:24px;
+    top: 0;
+    bottom: 0;
+
+}
+@media print{
+    .student-page {
+        page-break-before: always;
+    }
+}
