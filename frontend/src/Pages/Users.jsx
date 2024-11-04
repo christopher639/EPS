@@ -42,7 +42,7 @@ const Users = () => {
     }
 
     const getFetchData = ()  =>{
-      axios.get("http://localhost:3000/users")
+      axios.get("https://eps-backend.onrender.com/users")
       .then(users => setUsers(users.data))
       .catch(err => console.log(err))
     }
@@ -60,7 +60,7 @@ const Users = () => {
                 </div>
                 
                 <div>
-                <button  onClick={()=>setUserForm(true)}  className='bg-green-500 text-white px-2 py-1 rounded'>New User</button>
+                <button  onClick={()=>setUserForm(true)}  className='bg-green-500 text-white px-2 py-1 rounded'>New</button>
                 </div>
 
             

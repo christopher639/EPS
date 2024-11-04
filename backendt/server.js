@@ -19,6 +19,11 @@ mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.ne
 .then(()=>{
   console.log("Database connected")
 })
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html')); // adjust path as needed
+});
+
 //API to get all users or staff
 app.get('/api/staffs',async(req,res)=>{
  try {
