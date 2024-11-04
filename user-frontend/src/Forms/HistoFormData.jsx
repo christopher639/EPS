@@ -104,7 +104,7 @@ const HistoFormData = () => {
   
  <div>
 
- <div className='flex    flex-col max-h-[70vh] sm:max-h-[57vh]  overflow-y-auto overflow-x-auto'>
+ <div className='flex mx-2    flex-col max-h-[70vh] sm:max-h-[57vh]  overflow-y-auto overflow-x-auto'>
  <div className='flex   justify-between'>
       <div>
         <input className='outline-none border  mt-1' type="text" placeholder='search' />
@@ -117,7 +117,6 @@ const HistoFormData = () => {
         <thead className='bg-slate-800 text-white '>
           <tr>
             <th className='border-r'>ADM NO</th>
-            <th className='border-r'>NAME</th>
             <th className='border-r'>STREAM</th>
             <th className='border-r whitespace-nowrap'>HISTO SCORE</th>
             <th className='border border-slate-500 text-center'>
@@ -134,7 +133,7 @@ const HistoFormData = () => {
             return (
               <tr key={index} className='border py-3 border-slate-500'>
                 <td className='pr-2 text-center border border-slate-500'>{student.regno}</td>
-                <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.name}</td>
+      
                 <td className='pr-2 text-center border border-slate-500'>{student.stream}</td>
                 <td className='pr-2 border text-center border-slate-500'>{student.marks.histo10}</td>
                 <td className='border border-slate-500 text-center'>
