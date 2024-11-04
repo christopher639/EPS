@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 const  Academic = () => {
   return (
     <div >
-            <div  className=' shadow-lg flex mx-4  justify-between mt-1 '>
+            <div  className='  flex mx-4  justify-between mt-1 '>
                           <div className='flex  justify-between'>
                           
                              <input type="text" className='text-center border outline-none py-1 px-2 text-sm  cursor-pointer  mb-2' placeholder='Search'/>
@@ -14,7 +14,7 @@ const  Academic = () => {
                       
 
                           <div>
-                            <button className='bg-green-700 text-white px-2 py-1 rounded'>NEW STREAM</button>
+                            <button className='bg-green-700 text-white px-2 rounded'>NEW </button>
                            </div>
                 </div>
 

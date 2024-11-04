@@ -30,34 +30,39 @@ const MarksFom1y = () => {
     };
 
     return (
-        <div className='flex flex-col max-h-[80vh] overflow-y-auto overflow-x-auto'>
-            <div className='shadow-lg flex justify-between mt-1 mx-1'>
-                <div>
-                    <input type="text" className='text-center border outline-none py-1 px-2 text-sm cursor-pointer mb-2' placeholder='Search' />
-                    <button onClick={() => { alert("Not implemented by Bundi for now") }} className='text-center bg-green-600 py-1 px-2 text-sm cursor-pointer text-white mb-2'>Search
-                    </button>
+ <div className='flex overflow-none mx-1 mr-5 flex-col  md:flex-row '>
+        <div className=' w-full  '>
+                <div className='flex flex-col'>
+           
+                  <div  className='  flex justify-between mt-1 mx-2'>
+                          <div>
+                              <input type="text" className='text-center border outline-none py-1 px-2 text-sm  cursor-pointer  mb-2' placeholder='Search'/>
+                              <button onClick={handlePrint} className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>Print
+                              </button>
+                          </div>
+                          <NavLink to='/reportform1y'>
+                         <p className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>Report
+                         </p>
+                          </NavLink>
                 </div>
-                <button onClick={handlePrint} className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>Print
-                </button>
-                <NavLink to='/reportform1y'>
-                    <p className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>Report Forms
-                    </p>
-                </NavLink>
-            </div>
-            <div id="printableTable">
+                </div>
+               
+
+                <div  className='flex h-screen overflow-y-auto overflow-x-auto justify-center   '>
+                <div className='w-full' id="printableTable">
                 <table className='min-w-full mt-2'>
                     <thead className='border bg-slate-800 text-white'>
                         <tr>
-                            <th className='border px-2'>NO</th>
-                            <th className='border'>Full Name</th>
-                            <th className='border'>ADN NO</th>
-                            <th className='border'>MATH</th>
-                            <th className='border'>ENG</th>
-                            <th className='border'>CHEM</th>
-                            <th className='border'>KISWA</th>
-                            <th className='border'>AGRI</th>
-                            <th className='border'>BS</th>
-                            <th className='border'>PHYC</th>
+                            <th className='border whitespace-nowrap  px-2'>NO</th>
+                            <th className='border  whitespace-nowrap '>Full Name</th>
+                            <th className='border  whitespace-nowrap '>ADN NO</th>
+                            <th className='border  whitespace-nowrap '>MATH</th>
+                            <th className='border whitespace-nowrap '>ENG</th>
+                            <th className='border  whitespace-nowrap '>CHEM</th>
+                            <th className='border  whitespace-nowrap '>KISWA</th>
+                            <th className='border  whitespace-nowrap '>AGRI</th>
+                            <th className='border px-1'>BS</th>
+                            <th className='border  whitespace-nowrap '>PHYC</th>
                             <th className='border'>HISTO</th>
                             <th className='border'>BIO</th>
                             <th className='border'>Total</th>
@@ -88,7 +93,9 @@ const MarksFom1y = () => {
                     </tbody>
                 </table>
             </div>
+                </div>
         </div>
+   </div>
     );
 };
 
