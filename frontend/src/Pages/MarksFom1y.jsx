@@ -48,7 +48,7 @@ const MarksFom1y = () => {
                 </div>
                
 
-                <div  className='flex  max-h-[80vh] overflow-y-auto overflow-x-auto justify-center   '>
+                <div  className='flex  max-h-[75vh] overflow-y-auto overflow-x-auto justify-center   '>
                 <div className='w-full' id="printableTable">
                 <table className='min-w-full mt-2'>
                     <thead className='border bg-slate-800 text-white'>

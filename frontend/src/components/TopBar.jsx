@@ -163,7 +163,7 @@ const TopBar = () => {
          <div className='flex justify-center rounded w-1/3'>
           <p className='py-3 '>Data2</p>
          </div>
-         <div className='mr-3   flex justify-center rounded w-1/3'>
+         <div className=' flex justify-end mr-3 rounded w-1/3'>
           <p className='py-3 '>Data3</p>
          </div>
         </div>
