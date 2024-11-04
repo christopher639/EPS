@@ -104,7 +104,7 @@ const  BioFormData = () => {
   
  <div>
 
- <div className='flex  mx-2   flex-col max-h-[65vh] sm:max-h-[57vh]  overflow-y-auto overflow-x-auto'>
+ <div className='flex  mx-2   flex-col max-h-[65vh] sm:max-h-[50vh]  overflow-y-auto overflow-x-auto'>
  <div className='flex   justify-between'>
       <div>
         <input className='outline-none border  mt-1' type="text" placeholder='search' />
