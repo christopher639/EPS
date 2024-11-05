@@ -1,6 +1,5 @@
 const express = require("express")
 const cors = require("cors")
-const path = require('path');
 const mongoose = require("mongoose")
 const staffModel = require("./models/staffs.js")
 const MarkModel = require("./models/marks.js")
@@ -21,11 +20,7 @@ mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.ne
   console.log("Database connected")
 })
 
-app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 //API to get all users or staff
 app.get('/api/staffs',async(req,res)=>{
  try {
