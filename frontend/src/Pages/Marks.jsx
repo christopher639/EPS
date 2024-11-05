@@ -19,6 +19,11 @@ const Marks = () => {
         return () => clearInterval(interval);
     }, []);
 
+
+    
+
+
+
     const handlePrint = () => {
         const printContents = document.getElementById("printableTable").innerHTML;
         const originalContents = document.body.innerHTML;
@@ -34,6 +39,7 @@ const Marks = () => {
     );
 
     return (
+        
         <div className='flex overflow-none mx-1 mr-5 flex-col md:flex-row '>
             <div className='w-full'>
                 <div className='flex flex-col'>
@@ -49,8 +55,9 @@ const Marks = () => {
                             <button onClick={handlePrint} className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>
                                 Print
                             </button>
+                            
                         </div>
-                        <NavLink to='/reportform1y'>
+                        <NavLink to='/reportform'>
                             <p className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>Report</p>
                         </NavLink>
                     </div>
@@ -79,7 +86,11 @@ const Marks = () => {
                             </thead>
                             <tbody>
                                 {
-                                    filteredStudents.map((student, index) => (
+                                    filteredStudents.map((student, index) => {
+                                        const avg= (student.marks.math10 + student.marks.eng10 + student.marks.bio10 + student.marks.chem10 + student.marks.histo10 + student.marks.physc10 + student.marks.agri10 + student.marks.kisw10 +student.marks.bio10) / 9;
+                                        const total= (student.marks.math10 + student.marks.eng10 + student.marks.bio10 + student.marks.chem10 + student.marks.histo10 + student.marks.physc10 + student.marks.agri10 + student.marks.kisw10 +student.marks.bio10);
+                                      
+                                       return(
                                         <tr key={index} className='border py-3 border-slate-500'>
                                             <td className='pr-2 whitespace-nowrap border border-slate-500'>{index + 1}</td> 
                                             <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.name}</td>
@@ -93,10 +104,11 @@ const Marks = () => {
                                             <td className='pr-2 border text-center border-slate-500'>{student.marks.physc10}</td>
                                             <td className='pr-2 border text-center border-slate-500'>{student.marks.histo10}</td>
                                             <td className='pr-2 border text-center border-slate-500'>{student.marks.bio10}</td>
-                                            <td className='pr-2 border text-center border-slate-500'></td>
-                                            <td className='pr-2 border text-center border-slate-500'></td>
+                                            <td className='pr-2 border text-center border-slate-500'>{total}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{avg.toFixed(2)}</td>
                                         </tr>
-                                    ))
+                                       )
+                                  } )
                                 }
                             </tbody>
                         </table>

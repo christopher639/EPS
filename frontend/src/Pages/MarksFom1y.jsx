@@ -79,8 +79,12 @@ const MarksFom1y = () => {
                             </thead>
                             <tbody>
                                 {
-                                    filteredStudents.map((student, index) => (
-                                        <tr key={index} className='border py-3 border-slate-500'>
+                                    filteredStudents.map((student, index) => {
+                                        const avg= (student.marks.math10  +student.marks.eng10+  +student.marks.chem10 +  student.marks.kisw10 + student.marks.agri10 + student.marks.busi10 +student.marks.physc10 +student.marks.histo10 +student.marks.physc10) / 9;
+                                        const total= (student.marks.math10  +student.marks.eng10+  +student.marks.chem10 +  student.marks.kisw10 + student.marks.agri10 + student.marks.busi10 +student.marks.physc10 +student.marks.histo10 +student.marks.physc10);
+                                      
+                                        return(
+                                            <tr key={index} className='border py-3 border-slate-500'>
                                             <td className='pr-2 whitespace-nowrap border border-slate-500'>{index + 1}</td> 
                                             <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.name}</td>
                                             <td className='pr-2 text-center border border-slate-500'>{student.regno}</td>
@@ -93,10 +97,13 @@ const MarksFom1y = () => {
                                             <td className='pr-2 border text-center border-slate-500'>{student.marks.physc10}</td>
                                             <td className='pr-2 border text-center border-slate-500'>{student.marks.histo10}</td>
                                             <td className='pr-2 border text-center border-slate-500'>{student.marks.bio10}</td>
-                                            <td className='pr-2 border text-center border-slate-500'></td>
-                                            <td className='pr-2 border text-center border-slate-500'></td>
+                                            <td className='pr-2 border text-center border-slate-500'>{total}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{avg.toFixed(2)}</td>
                                         </tr>
-                                    ))
+                                        )
+                                    }
+                                    
+                                    )
                                 }
                             </tbody>
                         </table>

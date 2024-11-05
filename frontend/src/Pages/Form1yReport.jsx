@@ -104,13 +104,16 @@ const Form1yReport = () => {
                     <p>TERM II</p>
                   </div>
                 </div>
-                <div className='flex border-b border-slate-500 justify-between'>
-                  <p className='ml-1'>Name: <span className='text-yellow-800'>{student.name.toUpperCase()}</span></p>
-                  <p className='ml-1'>ADM: <span className='text-yellow-800'>{student.regno}</span></p>
-                  <p className='mr-3'>AVG: <span className='text-yellow-800'>{avg.toFixed(2)}</span></p>
+               <div>
+               <div className='flex border-b border-slate-500 justify-between'>
+                  <p className='ml-1'>Name: <span className='text-yellow-800 whitespace-wrap text-sm'>{student.name.toUpperCase()}</span></p>
+                  <p className='ml-1'>ADM: <span className='text-yellow-800 text-sm'>{student.regno}</span></p>
+                  <p className='ml-1'>STREAM: <span className='text-yellow-800 text-sm'>{student.stream.toUpperCase()}</span></p>
+                  <p className='mr-3'>AVG: <span className='text-yellow-800 '>{avg.toFixed(2)}</span></p>
                   <p className='mr-3'>GRADE: <span className='text-yellow-800'>{avgGradeRemark}</span></p>
-                  <p className='mr-3'>REMARKS: <span className='text-yellow-800'>{avgRemark}</span></p>
+                  <p className='mr-3'>REMARKS: <span className='text-yellow-800 text-sm'>{avgRemark}</span></p>
                 </div>
+               </div>
                 <table className='w-full'>
                   <thead className='border-b border-r border-slate-500'>
                     <tr>
