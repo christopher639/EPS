@@ -158,13 +158,13 @@ const TopBar = () => {
          }
          <div className=' flex gap-2 items-center rounded w-1/3'>
           <p className=' sm:text-sm md:text-lg text-slate-800  whitespace-nowrap   '>TOTAL:</p>
-          <p className='md:text-3xl sm:text-sm lg:text-4xl text-green-800  '>{students.length}</p>
+          <p className='md:text-3xl sm:text-sm lg:text-3xl text-green-800  '>{students.length}</p>
          </div>
          <div className='flex justify-center rounded w-1/3'>
-          <p className='py-3 '>Data2</p>
+          <p className='py-2 '>Data2</p>
          </div>
          <div className=' flex justify-end mr-3 rounded w-1/3'>
-          <p className='py-3 '>Data3</p>
+          <p className='py-2 '>Data3</p>
          </div>
         </div>
     </div>

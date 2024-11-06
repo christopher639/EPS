@@ -68,12 +68,12 @@ const Form1yReport = () => {
   };
 
   return (
-    <div className='flex mt-1 min-w-full max-h-[80vh] flex-col gap-10 mb-5 overflow-y-auto overflow-x-auto'>
-      <div className='shadow-lg flex justify-between mt-1'>
+    <div className='flex  min-w-full max-h-[80vh] flex-col  mb-5 overflow-y-auto overflow-x-auto'>
+      <div className=' flex  justify-between '>
         <div>
           <input 
             type="text" 
-            className='text-center border outline-none py-1 px-2 text-sm cursor-pointer mb-2' 
+            className='text-center rounded border outline-none py-1 px-2 text-sm cursor-pointer mb-2' 
             placeholder='Search by Adm No' 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)} // Update search term

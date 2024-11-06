@@ -68,8 +68,8 @@ const ReportForm = () => {
   };
 
   return (
-    <div className='flex mt-1 min-w-full max-h-[80vh] flex-col gap-10 mb-5 overflow-y-auto overflow-x-auto'>
-      <div className='shadow-lg flex justify-between mt-1'>
+    <div className='flex  min-w-full max-h-[80vh] flex-col gap-10 mb-5 overflow-y-auto overflow-x-auto'>
+      <div className=' flex justify-between '>
         <div>
           <input 
             type="text" 

@@ -5,7 +5,7 @@ const SideBar = () => {
   return (
     <div className="hidden min-h-full   insert-y-0 left-0   transform -translate-x-full  transition-transform duration-300 md:relative md:translate-x-0       md:flex flex-col min-h-full  min-w-full ">
       <div className=" flex justify-center">
-        <div className="flex justify-center   items-center border h-8 w-8  md:w-24 md:h-24 border-slate-500 rounded-full mt-2">
+        <div className="flex justify-center   items-center h-8 w-8  md:w-24 md:h-24">
           <img
             className="w-8 h-8 md:w-16 md:h-16"
             src="kibabiilogo.jpeg"
@@ -14,7 +14,7 @@ const SideBar = () => {
         </div>
       </div>
       <NavLink to="/dashboard">
-        <div className="flex border-b hover:bg-gray-800 hover:text-white w-full mt-2 px-3 py-1  border-t felx-row gap-1">
+        <div className="flex border-b hover:bg-gray-800 hover:text-white w-full  px-3 py-1  border-t felx-row gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
