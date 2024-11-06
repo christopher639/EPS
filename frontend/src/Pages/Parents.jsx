@@ -33,28 +33,24 @@ const  Parents = () => {
           <thead className='bg-slate-800 px-1 text-white'>
             <tr>
               <th className='border whitespace-nowrap px-1'>NO</th>
-              <th className='border whitespace-nowrap px-1'>Full Name</th>
+              <th className='border whitespace-nowrap px-1'>P/G FULL NAME</th>
               <th className='border whitespace-nowrap px-1'>EMAIL</th>
               <th className='border whitespace-nowrap px-1'>PHONE</th>
-              <th className='border whitespace-nowrap px-1'>STUDENT </th>
-              <th className='border whitespace-nowrap px-1'>STREAM</th>
+              <th className='border whitespace-nowrap px-1'>STUDENT NMAE </th>
+              <th className='border whitespace-nowrap px-1'>ADM NO</th>
               
             </tr>
           </thead>
           <tbody>
             {
               students.map((student, index) => (
-                <tr key={index} className='border  py-3 border-slate-500'>
-                  <td className='pr-2 whitespace-nowrap border border-slate-500'>{index + 1}</td>
-                  <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.
-parentname}</td>
-                  <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.
-email}</td>
-                  <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.
-phone
-}</td>
+            <tr key={index} className='border  py-3 border-slate-500'>
+            <td className='pr-2 whitespace-nowrap border border-slate-500'>{index + 1}</td>
+             <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.parentname}</td>
+                  <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.email}</td>
+                  <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.phone}</td>
                   <td className='pr-2 whitespace-nowrap border text-center border-slate-500'>{student.name}</td>
-                  <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.stream}</td>
+                  <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.regno}</td>
                  
                  
                 </tr>

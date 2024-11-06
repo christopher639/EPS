@@ -21,22 +21,22 @@ const  Academic = () => {
       <div className='grid grid-cols-2 mt-4 md:grid-cols-2'>
         
       <NavLink  to='/marks'>
-      <div className='min-w-full border  shadow-lg rounded items-center flex justify-center h-24'>
+      <div className='min-w-full border hover:bg-slate-800 hover:text-white rounded items-center flex justify-center h-24'>
          <div className='flex flex-col'>
          <p>FORM 1X</p>
-            <p>Number Of Students:</p>
-            <p>Class teacher:</p>
+            <p>TOTAL:</p>
+            <p>COD:</p>
          </div>
            
         </div>
       </NavLink>
       <NavLink to='/marks1y'>
-        <div  className='min-w-full border shadow-lg rounded items-center flex justify-center h-24'>
+        <div  className='min-w-full border hover:bg-slate-800 hover:text-white rounded items-center flex justify-center h-24'>
             
             <div className='flex flex-col'>
          <p>FORM 1Y</p>
-            <p>Number Of Students:</p>
-            <p>Class teacher:</p>
+            <p>TOTAL:</p>
+            <p>COD:</p>
          </div>
            
         </div>

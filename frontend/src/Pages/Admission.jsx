@@ -69,17 +69,17 @@ const Admission = () => {
         <p className='p-2 border text-center min-w-auto'> NEW STUDENT ADMISSION FORM </p>
       </div>
 
-      <div className='mt-3 mx-4 md:mx-1 flex flex-col md:flex-row gap-2'>
+      <div className='mt-3 mx-4 md:mx-1 flex flex-col md:flex-row  gap-2'>
         
       <div className='w-1/6 '>
      <p className=' pt-3 '> PASSPORT</p>
      <img src="avater.jpeg" alt="" />
     </div>
-        <div className='w-full overflow-y-auto flex flex-col min-h-full md:grid px-2 grid-cols-3 gap-5'>
+        <div className='w-full overflow-y-auto flex flex-col min-h-full md:grid px-2 md:grid-cols-2 lg:grid-cols-3 gap-2'>
           <div className='min-w-full'>
             <p>STUDENT FULL NAME</p>
             <input 
-              className='min-w-full py-2 outline-none border border-slate-500 px-2 rounded' 
+              className='w-full py-2 outline-none border border-slate-500 px-2 rounded' 
               type="text" 
               name="name" 
               value={formData.name} 
@@ -143,7 +143,7 @@ const Admission = () => {
         </div>
       </div>
 
-      <div className='mx-5 mt-10 grid grid-cols-1 md:grid-cols-3 gap-5 md:mx-1'>
+      <div className='mx-5'>
         <div className='min-w-full'>
           <p>PARENTS/GARDIAN FULL NAME</p>
           <input 
@@ -176,16 +176,16 @@ const Admission = () => {
         </div>
       </div>
 
-      <div className='flex justify-center mt-5'>
-        <div>
+      <div className=' mx-5 justify-center mt-5'>
+        <div >
           <p>ASSIGN STREAM</p>
           <select 
-            className='outline-none py-1 w-full border border-slate-500 rounded' 
+            className='outline-none min-w-full   py-1 w-full border border-slate-500 rounded' 
             name="stream" 
             value={formData.stream} 
             onChange={handleChange}
           >
-            <option value="">Select Stream</option>
+            <option  value="">Select Stream</option>
             {streams.map((stream) => (
               <option key={stream._id} value={stream.name}>{stream.name}</option>
             ))}
