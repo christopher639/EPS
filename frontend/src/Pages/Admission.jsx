@@ -64,22 +64,22 @@ const Admission = () => {
   };
 
   return (
-    <div className='max-h-[80vh] overflow-y-auto'>
+    <div className='max-h-[85vh] overflow-y-auto'>
       <div className='w-full bg-slate-800 text-white'>
         <p className='p-2 border text-center min-w-auto'> NEW STUDENT ADMISSION FORM </p>
       </div>
 
-      <div className='mt-3 mx-4 md:mx-1 flex flex-col md:flex-row  gap-2'>
+      <div className='mt-3 mx-4 md:mx-1 flex flex-col md:flex-row   gap-2'>
         
-      <div className='w-1/6 '>
+      <div className='ml-5 '>
      <p className=' pt-3 '> PASSPORT</p>
-     <img src="avater.jpeg" alt="" />
+     <img className=' w-24' src="avater.jpeg" alt="" />
     </div>
         <div className='w-full overflow-y-auto flex flex-col min-h-full md:grid px-2 md:grid-cols-2 lg:grid-cols-3 gap-2'>
           <div className='min-w-full'>
-            <p>STUDENT FULL NAME</p>
+            <p>STUDENT NAME</p>
             <input 
-              className='w-full py-2 outline-none border border-slate-500 px-2 rounded' 
+              className='w-full py-2 outline-none border border-slate-500  rounded' 
               type="text" 
               name="name" 
               value={formData.name} 
@@ -108,16 +108,16 @@ const Admission = () => {
           </div>
 
           <div className='min-w-full'>
-            <p>ADM NO</p>
+            <p>ADM</p>
             <input 
-              className='py-2 min-w-full outline-none border border-slate-500 px-2 rounded' 
+              className='w-full py-2 outline-none border border-slate-500  rounded' 
               type="text" 
               name="regno" 
               value={formData.regno} 
               onChange={handleChange} 
             />
           </div>
-          <div className='min-w-full'>
+          <div className='min-w-full '>
             <p>GENDER</p>
             <select 
               className='min-w-full py-2 border border-slate-500 rounded' 
@@ -180,7 +180,7 @@ const Admission = () => {
         <div >
           <p>ASSIGN STREAM</p>
           <select 
-            className='outline-none min-w-full   py-1 w-full border border-slate-500 rounded' 
+            className='outline-none min-w-full   py-2 w-full border border-slate-500 rounded' 
             name="stream" 
             value={formData.stream} 
             onChange={handleChange}

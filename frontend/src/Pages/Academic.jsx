@@ -18,11 +18,11 @@ const  Academic = () => {
                            </div>
                 </div>
 
-      <div className='grid grid-cols-2 mt-4 md:grid-cols-2'>
+      <div className='grid  mx-5 grid-cols-2 mt-4 md:grid-cols-2'>
         
       <NavLink  to='/marks'>
       <div className='min-w-full border hover:bg-slate-800 hover:text-white rounded items-center flex justify-center h-24'>
-         <div className='flex flex-col'>
+         <div className='flex  flex-col'>
          <p>FORM 1X</p>
             <p>TOTAL:</p>
             <p>COD:</p>
