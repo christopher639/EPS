@@ -1,3 +1,214 @@
-   axios.get("https://eps-backend.onrender.com/api/joined-students_marks-form1y") 
-    axios.get("https://eps-backend.onrender.com/api/joined-students_marks-form1y")  
-       axios.get("https://eps-backend.onrender.com/api/joined-students_marks")
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
+
+const Admission = () => {
+  const [streams, setStream] = useState([]);
+  const [formData, setFormData] = useState({
+    passport: '',
+    name: '',
+    dot: '',
+    dob: '',
+    regno: 5000,  // Start regno at 5000
+    gender: '',
+    previous: '',
+    parentname: '',
+    email: '',
+    phone: '',
+    stream: ''
+  });
+
+  const getFetchData = () => {
+    axios.get("/api/stream")
+      .then(response => setStream(response.data))
+      .catch(err => console.error("Failed to fetch streams:", err));
+  };
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  // Handle form data change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post("/api/students", formData);
+
+      if (response.data.success) {
+        toast.success(response.data.message || "Student admitted successfully");
+
+        // Increment regno by 1 and clear other form fields
+        setFormData({
+          passport: '',
+          name: '',
+          dot: '',
+          dob: '',
+          regno: formData.regno + 1,  // Increment regno for the next entry
+          gender: '',
+          previous: '',
+          parentname: '',
+          email: '',
+          phone: '',
+          stream: ''
+        });
+      } else {
+        toast.error(response.data.message || "Failed to admit student");
+      }
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      toast.error("Failed to submit the form");
+    }
+  };
+
+  return (
+    <div className='max-h-[85vh] overflow-y-auto'>
+      <div className='w-full bg-slate-800 text-white'>
+        <p className='p-2 border text-center'>NEW STUDENT ADMISSION FORM</p>
+      </div>
+
+      <div className='mt-3 mx-4 md:mx-1 flex flex-col md:flex-row gap-2'>
+        <div className='ml-5'>
+          <p className='pt-3'>PASSPORT</p>
+          <img className='w-24' src="avater.jpeg" alt="Avatar" />
+        </div>
+        <div className='w-full flex flex-col min-h-full md:grid px-2 md:grid-cols-2 lg:grid-cols-3 gap-2'>
+          <div className='min-w-full'>
+            <p>STUDENT NAME</p>
+            <input 
+              className='w-full py-2 outline-none border border-slate-500 rounded' 
+              type="text" 
+              name="name" 
+              value={formData.name} 
+              onChange={handleChange} 
+            />
+          </div>
+          <div className='min-w-full'>
+            <p>DATE OF ADM</p>
+            <input 
+              className='min-w-full py-2 outline-none border border-slate-500 px-2 rounded' 
+              type="date" 
+              name="dot" 
+              value={formData.dot} 
+              onChange={handleChange} 
+            />
+          </div>
+          <div className='min-w-full'>
+            <p>DATE OF BIRTH</p>
+            <input 
+              className='py-2 min-w-full outline-none border border-slate-500 rounded' 
+              type="date" 
+              name="dob" 
+              value={formData.dob} 
+              onChange={handleChange} 
+            />
+          </div>
+          <div className='min-w-full'>
+            <p>ADM</p>
+            <input 
+              className='w-full py-2 outline-none border border-slate-500 rounded' 
+              type="text" 
+              name="regno" 
+              value={formData.regno} 
+              readOnly  // Make it read-only since ADM is auto-generated
+            />
+          </div>
+          <div className='min-w-full'>
+            <p>GENDER</p>
+            <select 
+              className='min-w-full py-2 border border-slate-500 rounded' 
+              name="gender" 
+              value={formData.gender} 
+              onChange={handleChange}
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">MALE</option>
+              <option value="Female">FEMALE</option>
+            </select>
+          </div>
+          <div className='min-w-full'>
+            <p>PREVIOUS SCHOOL</p>
+            <input 
+              className='min-w-full py-2 outline-none border border-slate-500 rounded px-2' 
+              type="text" 
+              name="previous" 
+              value={formData.previous} 
+              onChange={handleChange} 
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className='mx-5'>
+        <div className='min-w-full'>
+          <p>PARENT/GUARDIAN FULL NAME</p>
+          <input 
+            className='py-2 min-w-full outline-none border border-slate-500 px-2 rounded' 
+            type="text" 
+            name="parentname" 
+            value={formData.parentname} 
+            onChange={handleChange} 
+          />
+        </div>
+        <div className='min-w-full'>
+          <p>EMAIL</p>
+          <input 
+            className='py-2 min-w-full outline-none border border-slate-500 px-2 rounded' 
+            type="email" 
+            name="email" 
+            value={formData.email} 
+            onChange={handleChange} 
+          />
+        </div>
+        <div className='min-w-full'>
+          <p>PARENT/GUARDIAN PHONE NUMBER</p>
+          <input 
+            className='py-2 min-w-full outline-none border border-slate-500 px-2 rounded' 
+            type="text" 
+            name="phone" 
+            value={formData.phone} 
+            onChange={handleChange} 
+          />
+        </div>
+      </div>
+
+      <div className='mx-5 justify-center mt-5'>
+        <div>
+          <p>ASSIGN STREAM</p>
+          <select 
+            className='outline-none min-w-full py-2 w-full border border-slate-500 rounded' 
+            name="stream" 
+            value={formData.stream} 
+            onChange={handleChange}
+          >
+            <option value="">Select Stream</option>
+            {streams.map((stream) => (
+              <option key={stream._id} value={stream.name}>{stream.name}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className='flex justify-center mt-4'>
+        <button 
+          onClick={handleSubmit} 
+          className='py-2 bg-slate-800 text-white shadow-lg min-w-1/2 px-10 rounded'
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Admission;

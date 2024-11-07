@@ -79,12 +79,12 @@ const Admission = () => {
   };
 
   return (
-    <div className='max-h-[85vh] overflow-y-auto bg-gray-100'>
-      <div className='w-full mx-5 bg-slate-800 text-white py-2 text-center'>
-        <p className='text-xl font-semibold'>NEW STUDENT ADMISSION FORM</p>
+    <div className='max-h-[75vh] md:max-h-[80vh] overflow-y-auto mx-5 overflow-x-hidden bg-gray-100'>
+   <div className='  bg-slate-800 text-white py-2 text-center'>
+        <p className='text-xl  font-semibold'>NEW STUDENT ADMISSION FORM</p>
       </div>
-
-      <div className='mt-4 mx-6 md:mx-10 flex flex-col md:flex-row gap-6'>
+      <div className='mt-4 md:mx-8 flex flex-col md:flex-row gap-6'>
+        
         <div className='md:w-1/3'>
           <p className='text-sm text-gray-700 mb-2'>PASSPORT</p>
           <img className='w-24 h-24 object-cover rounded-full mx-auto' src="avater.jpeg" alt="Avatar" />
