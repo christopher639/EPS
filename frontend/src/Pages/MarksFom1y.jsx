@@ -41,7 +41,7 @@ const MarksFom1y = () => {
                         <div className='flex gap-2'>
                             <input 
                                 type="text" 
-                                className='text-center border border-slate-300 outline-none py-2 px-3 text-sm mb-2 rounded-md' 
+                                className='text-center w-32 border border-slate-300 outline-none py-2 px-3 text-sm mb-2 rounded-md' 
                                 placeholder='Search by ADN NO' 
                                 value={searchQuery} 
                                 onChange={(e) => setSearchQuery(e.target.value)} 

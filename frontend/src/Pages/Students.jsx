@@ -53,7 +53,7 @@ const Students = () => {
 
   return (
     <div className='flex flex-col min-w-full'>
-      <div className='mx-4 md:mx-0 flex max-h-[67vh] md:max-h-[77vh]  overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+      <div className='mx-4 md:mx-0 flex max-h-[73vh] md:max-h-[77vh]  overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
         <table className='min-w-full mt-2'>
           <thead className='bg-slate-800 px-1 h-10 text-white'>
             <tr>
@@ -73,7 +73,7 @@ const Students = () => {
               students.map((student, index) => (
                 <tr key={index} className='border  hover:bg-gray-200 py-1 border-slate-500'>
                   <td className='border  py-1 text-center'>{index + 1}</td>
-                  <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.name}</td>
+                  <td className='border whitespace-nowrap px-4 py-1'>{student.name}</td>
                   <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.regno}</td>
                   <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.gender}</td>
                   <td className='border whitespace-nowrap px-4 py-1 text-center'>{formatDate(student.dot)}</td>

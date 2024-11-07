@@ -41,7 +41,7 @@ const Marks = () => {
                         <div className='flex gap-2'>
                             <input 
                                 type="text" 
-                                className='text-center border border-slate-300 outline-none py-2 px-3 text-sm mb-2 rounded-md' 
+                                className='text-center border w-32 border-slate-300 outline-none py-2 px-3 text-sm mb-2 rounded-md' 
                                 placeholder='Search by ADN NO' 
                                 value={searchQuery} 
                                 onChange={(e) => setSearchQuery(e.target.value)} 
@@ -60,7 +60,7 @@ const Marks = () => {
                     </div>
                 </div>
 
-                <div className='flex max-h-[67vh] md:max-h-[73vh] overflow-y-auto overflow-x-auto justify-center'>
+                <div className='flex max-h-[70vh] md:max-h-[73vh]  overflow-y-auto overflow-x-auto justify-center'>
                     <div className='w-full' id="printableTable">
                         <table className='min-w-full mt-2'>
                             <thead className='border h-10 bg-slate-800 text-white'>
