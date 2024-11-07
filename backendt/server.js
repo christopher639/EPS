@@ -1,6 +1,6 @@
 const express = require("express")
 const cors = require("cors")
-
+const path = require('path');
 const mongoose = require("mongoose")
 const staffModel = require("./models/staffs.js")
 const MarkModel = require("./models/marks.js")
@@ -33,6 +33,13 @@ app.get('/api/staffs',async(req,res)=>{
  }
 })
 //api to post data
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+
+
 app.listen(port,()=>{
     console.log(`Server is running at port http://localhost:${port}`)
 })
