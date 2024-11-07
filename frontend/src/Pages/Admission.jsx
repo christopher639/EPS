@@ -162,7 +162,7 @@ const Admission = () => {
         </div>
       </div>
 
-      <div className='mx-6 mt-4'>
+      <div className=' mt-4'>
         <div className='min-w-full'>
           <p className='text-sm text-gray-700'>PARENT/GUARDIAN FULL NAME</p>
           <input
@@ -197,7 +197,7 @@ const Admission = () => {
         </div>
       </div>
 
-      <div className='mx-6 mt-6'>
+      <div className=' mt-6'>
         <div>
           <p className='text-sm text-gray-700'>ASSIGN STREAM</p>
           <select
