@@ -53,7 +53,7 @@ const Students = () => {
 
   return (
     <div className='flex flex-col min-w-full'>
-      <div className='flex max-h-[84vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+      <div className='flex max-h-[75vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
         <table className='min-w-full mt-2'>
           <thead className='bg-slate-800 px-1 h-10 text-white'>
             <tr>
