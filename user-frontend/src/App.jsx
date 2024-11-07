@@ -27,7 +27,7 @@ import HistoFormData from './Forms/HistoFormData';
 import Histo from './Subjects/Histo';
 const App = () => {
   return (
-    <div className=' min-h-full  fixed w-full'>
+    <div className=' min-h-full bg-gray-100  fixed w-full'>
      <ToastContainer />
       <NavBar/>
        <div className='flex flex-row '>
