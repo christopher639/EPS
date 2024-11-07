@@ -1,1 +1,3 @@
-   axios.get("https://eps-backend.onrender.com/api/joined-students_marks-form1y")
+   axios.get("https://eps-backend.onrender.com/api/joined-students_marks-form1y") 
+    axios.get("https://eps-backend.onrender.com/api/joined-students_marks-form1y")  
+       axios.get("https://eps-backend.onrender.com/api/joined-students_marks")

@@ -19,7 +19,7 @@ import Form1yReport from "./Pages/Form1yReport";
 
 const App = () => {
   return (
-    <div className="flex min-h-full w-full fixed  flex-row">
+    <div className="flex min-h-full bg-gray-100 w-full fixed  flex-row">
       <ToastContainer />
       <div className=" border-r  border-slate-500 flex flex-col  items-center h-screen">
         <SideBar />

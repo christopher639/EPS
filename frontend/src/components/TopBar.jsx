@@ -23,8 +23,8 @@ const TopBar = () => {
 
 
   return (
-    <div className=' gap-5 pb-5  '>
-        <div className=' flex  mx-1 gap-3  flex-row justify-between'>
+    <div className=' gap-5 pb-5 bg-gray-100 '>
+        <div className='flex gap-4 items-center bg-gray-100 p-4 '>
           <div >
           <button onClick={()=>setDrawer(true)}>
                     <svg className='mt-3 md:hidden' xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
@@ -156,16 +156,18 @@ const TopBar = () => {
           </div>
           )
          }
-         <div className=' flex gap-2 items-center rounded w-1/3'>
-          <p className=' sm:text-sm md:text-lg text-slate-800  whitespace-nowrap   '>TOTAL:</p>
-          <p className='md:text-3xl sm:text-sm lg:text-3xl text-green-800  '>{students.length}</p>
-         </div>
-         <div className='flex justify-center rounded w-1/3'>
-          <p className='py-2 '>Data2</p>
-         </div>
-         <div className=' flex justify-end mr-3 rounded w-1/3'>
-          <p className='py-2 '>Data3</p>
-         </div>
+        <div className='flex items-center justify-start w-1/3'>
+    <p className='text-slate-800 text-sm md:text-lg font-semibold whitespace-nowrap'>TOTAL:</p>
+    <p className='text-green-800 text-xl md:text-3xl lg:text-3xl font-bold ml-2'>{students.length}</p>
+  </div>
+
+  <div className='flex justify-center w-1/3'>
+    <p className='text-sm text-gray-700 py-2'>Data2</p>
+  </div>
+
+  <div className='flex justify-end items-center w-1/3'>
+    <p className='text-sm text-gray-700 py-2'>Data3</p>
+  </div>
         </div>
     </div>
 

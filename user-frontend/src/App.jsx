@@ -28,7 +28,7 @@ import Histo from './Subjects/Histo';
 const App = () => {
   return (
     <div className=' min-h-full  fixed w-full'>
-   
+     <ToastContainer />
       <NavBar/>
        <div className='flex flex-row '>
       

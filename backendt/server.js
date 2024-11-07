@@ -1,5 +1,6 @@
 const express = require("express")
 const cors = require("cors")
+
 const mongoose = require("mongoose")
 const staffModel = require("./models/staffs.js")
 const MarkModel = require("./models/marks.js")
@@ -9,6 +10,7 @@ const engModel = require("./models/english.js")
 const studentModel = require("./models/students.js")
 const subjectsMarksModel  =  require('./models/subjectsmarks.js')
 const streamModel = require("./models/stream.js")
+const LastRegno = require('./models/LastRegno.js');
 
 
 const app = express()
@@ -175,14 +177,40 @@ app.get("/api/students",async(req,res)=>{
   }
 })
 //api to post student information to the database
-app.post("/api/students",async(req,res)=>{
+app.post("/api/students", async (req, res) => {
   try {
-     const student = await studentModel.create(req.body)
-     res.status(200).json({success:"true",message:"New Student has been admitted to the database"})
+    // Check if a student with the same regno already exists
+    const existingStudent = await studentModel.findOne({ regno: req.body.regno });
+    if (existingStudent) {
+      return res.status(400).json({
+        success: false,
+        message: "A student with this admission number already exists."
+      });
+    }
+
+    // Create new student if regno is unique
+    await studentModel.create(req.body);
+    res.status(200).json({
+      success: true,
+      message: "New Student has been admitted "
+    });
   } catch (error) {
-    res.status(500).json({message:error.message})
+    res.status(500).json({ message: error.message });
   }
-})
+});
+
+//apii to delete student
+app.delete("/api/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await studentModel.findByIdAndDelete(id);
+    res.status(200).json({ success: "true", message: "Data deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 
 //api to find a student by regno
 app.get("api/student/:regno",async(req,res) =>{
@@ -204,8 +232,11 @@ app.get("api/student/:regno",async(req,res) =>{
 //aggreagation and lookups  data 23/10/2024
 app.get("/api/subjectmark",async(req,res)=>{
   try {
-    const subjectmark = await subjectsMarksModel.find()
-    res.status(200).json(subjectmark)
+     await subjectsMarksModel.find();
+    res.status(200).json({
+      success: true,
+      message: "Mark Saved"
+    });
   } catch (error) {
     res.status(404).json({message:error.message})
   }
@@ -409,3 +440,50 @@ app.get("/api/stream",async(req,res)=>{
  }
 })
 
+app.get('/api/last-registration-number', async (req, res) => {
+  try {
+    // Try fetching the latest registration number from the database
+    const lastRegnoDoc = await LastRegno.findOne().sort({ _id: -1 }).limit(1); // Find the last entry
+
+    if (lastRegnoDoc) {
+      // If a regno is found, return the regno number incremented by 1
+      return res.status(200).json({ lastRegno: lastRegnoDoc.lastRegno });
+    }
+
+    // If no regno found, return the default starting regno
+    return res.status(200).json({ lastRegno: 5000 }); // Starting regno
+  } catch (error) {
+    console.error("Error fetching last registration number:", error);
+    return res.status(500).json({ message: "Failed to fetch last registration number" });
+  }
+});
+
+// routes/registration.js
+app.post('/api/update-last-regno', async (req, res) => {
+  try {
+    const { lastRegno } = req.body;
+
+    // Check if the body contains a valid lastRegno value
+    if (typeof lastRegno !== 'number') {
+      return res.status(400).json({ message: "Invalid registration number" });
+    }
+
+    // Find or create the document that stores the lastRegno
+    const existingRegno = await LastRegno.findOne();
+
+    if (existingRegno) {
+      // If it exists, update the registration number
+      existingRegno.lastRegno = lastRegno;
+      await existingRegno.save();
+    } else {
+      // Otherwise, create a new record
+      const newRegno = new LastRegno({ lastRegno });
+      await newRegno.save();
+    }
+
+    return res.status(200).json({ message: "Last registration number updated successfully" });
+  } catch (error) {
+    console.error("Error updating last registration number:", error);
+    return res.status(500).json({ message: "Failed to update last registration number" });
+  }
+});

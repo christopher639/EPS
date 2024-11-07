@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
 axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const Admission = () => {
@@ -9,7 +12,7 @@ const Admission = () => {
     name: '',
     dot: '',
     dob: '',
-    regno: '',
+    regno: '', // Now editable by the user
     gender: '',
     previous: '',
     parentname: '',
@@ -18,10 +21,11 @@ const Admission = () => {
     stream: ''
   });
 
+  // Fetch streams from the backend
   const getFetchData = () => {
-    axios.get("https://eps-backend.onrender.com/api/stream")
-      .then(streams => setStream(streams.data))
-      .catch(err => console.log(err));
+    axios.get("/api/stream")
+      .then(response => setStream(response.data))
+      .catch(err => console.error("Failed to fetch streams:", err));
   };
 
   useEffect(() => {
@@ -39,153 +43,170 @@ const Admission = () => {
 
   // Handle form submission
   const handleSubmit = async () => {
+    // Validate regno is not empty
+    if (!formData.regno) {
+      toast.error("Admission number (regno) is required.");
+      return;
+    }
+
     try {
-      await axios.post("https://eps-backend.onrender.com/api/students", formData);
-      console.log(formData)
-      alert("Student admitted successfully");
-      // Clear form data after successful submission
-      setFormData({
-        passport: '',
-        name: '',
-        dot: '',
-        dob: '',
-        regno: '',
-        gender: '',
-        previous: '',
-        parentname: '',
-        email: '',
-        phone: '',
-        stream: ''
-      });
+      const response = await axios.post("/api/students", formData);
+
+      if (response.data.success) {
+        toast.success(response.data.message || "Student admitted successfully");
+
+        // Reset the form for the next entry
+        setFormData({
+          passport: '',
+          name: '',
+          dot: '',
+          dob: '',
+          regno: '',  // Keep regno empty for the next entry
+          gender: '',
+          previous: '',
+          parentname: '',
+          email: '',
+          phone: '',
+          stream: ''
+        });
+      } else {
+        toast.error(response.data.message || "Failed to admit student");
+      }
     } catch (error) {
       console.error("Error submitting the form:", error);
-      alert("Failed to submit the form");
+      toast.error("Failed to submit the form");
     }
   };
 
   return (
-    <div className='max-h-[85vh] overflow-y-auto'>
-      <div className='w-full bg-slate-800 text-white'>
-        <p className='p-2 border text-center min-w-auto'> NEW STUDENT ADMISSION FORM </p>
+    <div className='max-h-[85vh] overflow-y-auto bg-gray-100'>
+      <div className='w-full mx-5 bg-slate-800 text-white py-2 text-center'>
+        <p className='text-xl font-semibold'>NEW STUDENT ADMISSION FORM</p>
       </div>
 
-      <div className='mt-3 mx-4 md:mx-1 flex flex-col md:flex-row   gap-2'>
-        
-      <div className='ml-5 '>
-     <p className=' pt-3 '> PASSPORT</p>
-     <img className=' w-24' src="avater.jpeg" alt="" />
-    </div>
-        <div className='w-full overflow-y-auto flex flex-col min-h-full md:grid px-2 md:grid-cols-2 lg:grid-cols-3 gap-2'>
+      <div className='mt-4 mx-6 md:mx-10 flex flex-col md:flex-row gap-6'>
+        <div className='md:w-1/3'>
+          <p className='text-sm text-gray-700 mb-2'>PASSPORT</p>
+          <img className='w-24 h-24 object-cover rounded-full mx-auto' src="avater.jpeg" alt="Avatar" />
+        </div>
+
+        <div className='w-full flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-3'>
           <div className='min-w-full'>
-            <p>STUDENT NAME</p>
-            <input 
-              className='w-full py-2 outline-none border border-slate-500  rounded' 
-              type="text" 
-              name="name" 
-              value={formData.name} 
-              onChange={handleChange} 
-            />
-          </div>
-          <div className='min-w-full'>
-            <p>DATE OF ADM</p>
-            <input 
-              className='min-w-full py-2 outline-none border border-slate-500 px-2 rounded' 
-              type="date" 
-              name="dot" 
-              value={formData.dot} 
-              onChange={handleChange} 
-            />
-          </div>
-          <div className='min-w-full'>
-            <p>DATE OF BIRTH</p>
-            <input 
-              className='py-2 min-w-full outline-none border border-slate-500 rounded' 
-              type="date" 
-              name="dob" 
-              value={formData.dob} 
-              onChange={handleChange} 
+            <p className='text-sm text-gray-700'>STUDENT NAME</p>
+            <input
+              className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
             />
           </div>
 
           <div className='min-w-full'>
-            <p>ADM</p>
-            <input 
-              className='w-full py-2 outline-none border border-slate-500  rounded' 
-              type="text" 
-              name="regno" 
-              value={formData.regno} 
-              onChange={handleChange} 
+            <p className='text-sm text-gray-700'>DATE OF ADMISSION</p>
+            <input
+              className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+              type="date"
+              name="dot"
+              value={formData.dot}
+              onChange={handleChange}
             />
           </div>
-          <div className='min-w-full '>
-            <p>GENDER</p>
-            <select 
-              className='min-w-full py-2 border border-slate-500 rounded' 
-              name="gender" 
-              value={formData.gender} 
+
+          <div className='min-w-full'>
+            <p className='text-sm text-gray-700'>DATE OF BIRTH</p>
+            <input
+              className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+              type="date"
+              name="dob"
+              value={formData.dob}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className='min-w-full'>
+            <p className='text-sm text-gray-700'>ADM NUMBER</p>
+            <input
+              className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+              type="text"
+              name="regno"
+              value={formData.regno}
+              onChange={handleChange}  // Let user input regno
+            />
+          </div>
+
+          <div className='min-w-full'>
+            <p className='text-sm text-gray-700'>GENDER</p>
+            <select
+              className='w-full py-2 px-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+              name="gender"
+              value={formData.gender}
               onChange={handleChange}
             >
               <option value="">Select Gender</option>
-              <option value="Male">MALE</option>
-              <option value="Female">FEMALE</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
           </div>
+
           <div className='min-w-full'>
-            <p>PREVIOUS SCHOOL</p>
-            <input 
-              className='min-w-full py-2 outline-none border border-slate-500 rounded px-2' 
-              type="text" 
-              name="previous" 
-              value={formData.previous} 
-              onChange={handleChange} 
+            <p className='text-sm text-gray-700'>PREVIOUS SCHOOL</p>
+            <input
+              className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+              type="text"
+              name="previous"
+              value={formData.previous}
+              onChange={handleChange}
             />
           </div>
         </div>
       </div>
 
-      <div className='mx-5'>
+      <div className='mx-6 mt-4'>
         <div className='min-w-full'>
-          <p>PARENTS/GARDIAN FULL NAME</p>
-          <input 
-            className='py-2 min-w-full outline-none border border-slate-500 px-2 rounded' 
-            type="text" 
-            name="parentname" 
-            value={formData.parentname} 
-            onChange={handleChange} 
+          <p className='text-sm text-gray-700'>PARENT/GUARDIAN FULL NAME</p>
+          <input
+            className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+            type="text"
+            name="parentname"
+            value={formData.parentname}
+            onChange={handleChange}
           />
         </div>
-        <div className='min-w-full'>
-          <p>EMAIL</p>
-          <input 
-            className='py-2 min-w-full outline-none border border-slate-500 px-2 rounded' 
-            type="email" 
-            name="email" 
-            value={formData.email} 
-            onChange={handleChange} 
+
+        <div className='min-w-full mt-4'>
+          <p className='text-sm text-gray-700'>EMAIL</p>
+          <input
+            className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
-        <div className='min-w-full'>
-          <p>PARENTS/GARDIAN PHONE NUMBER</p>
-          <input 
-            className='py-2 min-w-full outline-none border border-slate-500 px-2 rounded' 
-            type="text" 
-            name="phone" 
-            value={formData.phone} 
-            onChange={handleChange} 
+
+        <div className='min-w-full mt-4'>
+          <p className='text-sm text-gray-700'>PARENT/GUARDIAN PHONE NUMBER</p>
+          <input
+            className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+            type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
           />
         </div>
       </div>
 
-      <div className=' mx-5 justify-center mt-5'>
-        <div >
-          <p>ASSIGN STREAM</p>
-          <select 
-            className='outline-none min-w-full   py-2 w-full border border-slate-500 rounded' 
-            name="stream" 
-            value={formData.stream} 
+      <div className='mx-6 mt-6'>
+        <div>
+          <p className='text-sm text-gray-700'>ASSIGN STREAM</p>
+          <select
+            className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+            name="stream"
+            value={formData.stream}
             onChange={handleChange}
           >
-            <option  value="">Select Stream</option>
+            <option value="">Select Stream</option>
             {streams.map((stream) => (
               <option key={stream._id} value={stream.name}>{stream.name}</option>
             ))}
@@ -193,10 +214,10 @@ const Admission = () => {
         </div>
       </div>
 
-      <div className='flex justify-center mt-4'>
-        <button 
-          onClick={handleSubmit} 
-          className='py-2 bg-slate-800 text-white shadow-lg min-w-1/2 px-10 rounded'
+      <div className='flex justify-center mt-6'>
+        <button
+          onClick={handleSubmit}
+          className='py-3 px-12 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'
         >
           Submit
         </button>

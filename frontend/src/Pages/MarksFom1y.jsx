@@ -36,22 +36,26 @@ const MarksFom1y = () => {
     return (
         <div className='flex overflow-none mx-1 mr-5 flex-col md:flex-row '>
             <div className='w-full'>
-                <div className='flex flex-col'>
-                    <div className='flex justify-between mt-1 mx-2'>
-                        <div>
+            <div className='flex flex-col'>
+                    <div className='flex justify-between items-center'>
+                        <div className='flex gap-2'>
                             <input 
                                 type="text" 
-                                className='text-center border outline-none py-1 px-2 text-sm cursor-pointer mb-2' 
+                                className='text-center border border-slate-300 outline-none py-2 px-3 text-sm mb-2 rounded-md' 
                                 placeholder='Search by ADN NO' 
-                                value={searchQuery} // Bind input value to searchQuery state
-                                onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
+                                value={searchQuery} 
+                                onChange={(e) => setSearchQuery(e.target.value)} 
                             />
-                            <button onClick={handlePrint} className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>
+                            <button 
+                                onClick={handlePrint} 
+                                className='text-center bg-green-600 py-2 px-4 text-white text-sm mb-2 rounded-md hover:bg-green-700'>
                                 Print
                             </button>
                         </div>
                         <NavLink to='/reportform1y'>
-                            <p className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>Report</p>
+                            <p className='text-center bg-green-600 py-2 px-4 text-white text-sm mb-2 rounded-md hover:bg-green-700'>
+                                Report
+                            </p>
                         </NavLink>
                     </div>
                 </div>
@@ -59,7 +63,7 @@ const MarksFom1y = () => {
                 <div className='flex max-h-[75vh] overflow-y-auto overflow-x-auto justify-center'>
                     <div className='w-full' id="printableTable">
                         <table className='min-w-full mt-2'>
-                            <thead className='border bg-slate-800 text-white'>
+                            <thead className='border h-10 bg-slate-800 text-white'>
                                 <tr>
                                     <th className='border whitespace-nowrap px-2'>NO</th>
                                     <th className='border whitespace-nowrap'>Full Name</th>
@@ -84,7 +88,7 @@ const MarksFom1y = () => {
                                         const total= (student.marks.math10  +student.marks.eng10+  +student.marks.chem10 +  student.marks.kisw10 + student.marks.agri10 + student.marks.busi10 +student.marks.physc10 +student.marks.histo10 +student.marks.physc10);
                                       
                                         return(
-                                            <tr key={index} className='border py-3 border-slate-500'>
+                                            <tr key={index} className='border  hover:bg-gray-200 h-10 py-3 border-slate-500'>
                                             <td className='pr-2 whitespace-nowrap border border-slate-500'>{index + 1}</td> 
                                             <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.name}</td>
                                             <td className='pr-2 text-center border border-slate-500'>{student.regno}</td>

@@ -1,0 +1,53 @@
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
+
+const AgriFormData = () => {
+  const [students, setMarks] = useState([]);
+  const [formData, setFormData] = useState({
+    subjectcode: "agri10",
+    regno: "",
+    score: ""
+  });
+
+  const getFetchData = () => {
+    axios.get("http://localhost:3000/api/joined-students-generallay")
+      .then(students => setMarks(students.data))
+      .catch(err => console.log(err));
+  }
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  const handleOnChange = (e) => {
+    const { value, name } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      await axios.post("/api/subjectmark", formData);
+      toast.success("Agriculture Mark Submitted");
+
+      // Clear form data
+      setFormData({
+        subjectcode: 'agri10',
+        regno: '',
+        score: ''
+      });
+
+      getFetchData();
+    } catch (error) {
+      console.error("Error saving data:", error);
+      toast.error("Error saving marks. Please try again.");
+    }
+  }
