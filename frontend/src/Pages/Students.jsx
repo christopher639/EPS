@@ -53,7 +53,7 @@ const Students = () => {
 
   return (
     <div className='flex flex-col min-w-full'>
-      <div className='flex max-h-[75vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+      <div className='mx-4 md:mx-0 flex max-h-[77vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
         <table className='min-w-full mt-2'>
           <thead className='bg-slate-800 px-1 h-10 text-white'>
             <tr>
@@ -73,19 +73,19 @@ const Students = () => {
               students.map((student, index) => (
                 <tr key={index} className='border  hover:bg-gray-200 py-1 border-slate-500'>
                   <td className='border  py-1 text-center'>{index + 1}</td>
-                  <td className='border px-4 py-1 text-center'>{student.name}</td>
-                  <td className='border px-4 py-1 text-center'>{student.regno}</td>
-                  <td className='border px-4 py-1 text-center'>{student.gender}</td>
-                  <td className='border px-4 py-1 text-center'>{formatDate(student.dot)}</td>
-                  <td className='border px-4 py-1 text-center'>{student.stream.toUpperCase()}</td>
-                  <td className='border px-4 py-1 text-center'>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.name}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.regno}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.gender}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>{formatDate(student.dot)}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.stream.toUpperCase()}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>
                   <button onClick={() => handleDelete(user._id)} className='text-white px-2 py-1 rounded-md bg-red-600 hover:bg-red-700'>
                     <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="white">
                       <path d="M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z" />
                     </svg>
                   </button>
                 </td>
-                <td className='border px-4 py-2 text-center'>
+                <td className='border px-4  py-2 text-center'>
                   <button
                     onClick={() => { alert("Not working at the moment") }}
                     className='text-white px-2 py-1 rounded-md bg-green-600 hover:bg-green-700'
