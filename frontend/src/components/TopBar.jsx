@@ -23,7 +23,7 @@ const TopBar = () => {
 
 
   return (
-    <div className=' gap-5 py-5 bg-gray-100 '>
+    <div className=' gap-5 p-5  bg-gray-100 '>
         <div className='flex gap-4 items-center bg-gray-100 '>
           <div >
           <button onClick={()=>setDrawer(true)}>
