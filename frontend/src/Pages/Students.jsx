@@ -9,8 +9,11 @@ const Students = () => {
   const [students, setStudents] = useState([]);
 
   const getFetchData = () => {
-    axios.get("https://eps-backend.onrender.com/api/students")
-      .then(response => setStudents(response.data))
+    axios.get("/api/students")
+      .then(response => {
+        // Reverse the data so the most recently admitted students come first
+        setStudents(response.data.reverse());
+      })
       .catch(err => console.log(err));
   };
 
@@ -28,12 +31,11 @@ const Students = () => {
     });
   };
 
-
   const handleDelete = async (id) => {
     console.log("ID being deleted:", id);  // Log the ID to the console
   
     try {
-      const response = await axios.delete("https://eps-backend.onrender.com/api/delete/"+id)
+      const response = await axios.delete(`/api/delete/${id}`);
       if (response.data.success === "true") {
         toast.success("Student has been deleted successfully");
   
@@ -47,13 +49,10 @@ const Students = () => {
       toast.error("Error deleting student. Please try again.");
     }
   };
-  
-  
-  
 
   return (
     <div className='flex flex-col min-w-full'>
-      <div className='mx-4 md:mx-0 flex max-h-[73vh] md:max-h-[77vh]  overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+      <div className='mx-4 md:mx-0 flex max-h-[73vh] md:max-h-[82vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
         <table className='min-w-full mt-2'>
           <thead className='bg-slate-800 px-1 h-10 text-white'>
             <tr>
@@ -63,7 +62,6 @@ const Students = () => {
               <th className='border whitespace-nowrap px-1'>GENDER</th>
               <th className='border whitespace-nowrap px-1'>DATE OF ADM</th>
               <th className='border whitespace-nowrap px-1'>STREAM</th>
-          
               <th className='border whitespace-nowrap px-1'>DELETE</th>
               <th className='border whitespace-nowrap px-1'>UPDATE</th>
             </tr>
@@ -71,8 +69,9 @@ const Students = () => {
           <tbody>
             {
               students.map((student, index) => (
-                <tr key={index} className='border  hover:bg-gray-200 py-1 border-slate-500'>
-                  <td className='border  py-1 text-center'>{index + 1}</td>
+                <tr key={student._id} className='border hover:bg-gray-200 py-1 border-slate-500'>
+                  {/* Display the highest index first */}
+                  <td className='border py-1 text-center'>{students.length - index}</td>
                   <td className='border whitespace-nowrap px-4 py-1'>{student.name}</td>
                   <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.regno}</td>
                   <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.gender}</td>

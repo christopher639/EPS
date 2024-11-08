@@ -1,7 +1,7 @@
 import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom"; // Import Navigate
 import Staff from "./Pages/Staff";
 import Users from "./Pages/Users";
-import { Routes, Route } from "react-router-dom";
 import RightBar from "./components/RightBar";
 import SideBar from "./components/SideBar";
 import TopBar from "./components/TopBar";
@@ -19,15 +19,18 @@ import Form1yReport from "./Pages/Form1yReport";
 
 const App = () => {
   return (
-    <div className="flex min-h-full bg-gray-100 w-full fixed  flex-row">
+    <div className="flex min-h-full bg-gray-100 w-full fixed flex-row">
       <ToastContainer />
-      <div className="  flex flex-col  items-center h-screen">
+      <div className="flex flex-col items-center h-screen">
         <SideBar />
       </div>
-      <div className=" w-full  min-h-full    md:mx-0   ">
+      <div className="w-full min-h-full md:mx-0">
         <TopBar />
 
         <Routes>
+          {/* Redirect the root path to /students */}
+          <Route path="/" element={<Navigate to="/students" />} />
+          
           <Route path="/staffs" element={<Staff />} />
           <Route path="/users" element={<Users />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -41,10 +44,10 @@ const App = () => {
           <Route path="/students" element={<Students />} />
           <Route path="/streams" element={<Academic />} />
           <Route path="/fees" element={<Fees />} />
-          <Route path="/parents" element={<Parents/>} />
+          <Route path="/parents" element={<Parents />} />
         </Routes>
       </div>
-      <div className=" md:mr-0 ">
+      <div className="md:mr-0">
         <RightBar />
       </div>
     </div>
