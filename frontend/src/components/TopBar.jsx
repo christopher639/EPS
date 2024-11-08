@@ -25,11 +25,7 @@ const TopBar = () => {
   return (
     <div className=' gap-5 p-5  bg-gray-100 '>
         <div className='flex gap-4 items-center bg-gray-100 '>
-          <div >
-          <button onClick={()=>setDrawer(true)}>
-                    <svg className='mt-3 md:hidden' xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
-                    </button>
-          </div>
+         
          {
           Drawer && (
             <div className=' border-r md:hidden border-slate-500 fixed w-2/3 inset-0 bg-black bg-opacity-50 backdrop-blur-[0px] flex justify-start '>
@@ -168,6 +164,11 @@ const TopBar = () => {
   <div className='flex justify-end items-center w-1/3'>
     <p className='text-sm text-gray-700 py-2'>Data3</p>
   </div>
+  <div >
+          <button onClick={()=>setDrawer(true)}>
+                    <svg className='mt-3 md:hidden' xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+                    </button>
+          </div>
         </div>
     </div>
 
