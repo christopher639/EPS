@@ -79,7 +79,7 @@ const Admission = () => {
   };
 
   return (
-    <div className='max-h-[75vh] mx-5  md:max-h-[80vh] overflow-y-auto   overflow-x-hidden bg-gray-100'>
+    <div className='max-h-[72vh] mx-5  md:max-h-[80vh] overflow-y-auto   overflow-x-hidden bg-gray-100'>
    <div className='  bg-slate-800 text-white py-1 text-center'>
         <p className='text-lg  font-semibold'>NEW STUDENT ADMISSION FORM</p>
       </div>

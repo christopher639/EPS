@@ -1,37 +1,60 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 axios.defaults.baseURL = "https://eps-backend.onrender.com";
+
 const TopBar = () => {
- const [Drawer , setDrawer] = useState(false)
+  const [drawer, setDrawer] = useState(false);
+  const [students, setMarks] = useState([]);
 
- const [students, setMarks] = useState([]);
- useEffect(() => {
-     const fetchData = () => {
-         axios.get("https://eps-backend.onrender.com/api/students")
-             .then(students => setMarks(students.data))
-             .catch(err => console.log(err));
-     };
+  useEffect(() => {
+    const fetchData = () => {
+      axios.get("/api/students")
+        .then(students => setMarks(students.data))
+        .catch(err => console.log(err));
+    };
 
-     fetchData();
-     const interval = setInterval(fetchData, 1000);
-     return () => clearInterval(interval);
- }, []);
-
-
-
+    fetchData();
+    const interval = setInterval(fetchData, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className=' gap-5 p-5  bg-gray-100 '>
-        <div className='flex gap-4 items-center bg-gray-100 '>
-         
-         {
-          Drawer && (
-            <div className=' border-r md:hidden border-slate-500 fixed w-2/3 inset-0 bg-black bg-opacity-50 backdrop-blur-[0px] flex justify-start '>
+    <div className='relative gap-5 p-5 bg-gray-100'>
+      <div className='flex gap-4 items-center bg-gray-100'>
+        <div className='flex items-center justify-start w-1/3'>
+          <p className='text-slate-800 text-sm md:text-lg font-semibold whitespace-nowrap'>TOTAL:</p>
+          <p className='text-green-800 text-xl md:text-3xl lg:text-3xl font-bold ml-2'>{students.length}</p>
+        </div>
 
-              <div className='bg-gray-100 w-full   min-h-full '>
-                  <div className=' flex justify-between mx-5 mt-5'>
+        <div className='flex justify-center w-1/3'>
+          <p className='text-sm text-gray-700 py-2'>Data2</p>
+        </div>
+
+        <div className='flex justify-end items-center w-1/3'>
+          <p className='text-sm text-gray-700 py-2'>Data3</p>
+        </div>
+
+        <div>
+          <button onClick={() => setDrawer(true)}>
+            <svg className='mt-3 md:hidden' xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000">
+              <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div
+        className={`fixed top-0 left-0 h-full bg-white shadow-lg transform transition-transform duration-500 ease-in-out ${
+          drawer ? 'translate-x-0' : '-translate-x-full'
+        }`}
+        style={{ width: '250px' }}
+      >
+       
+        <div className='bg-gray-100 w-full   min-h-full ' >
+         
+          <div >
+                  <div className=' flex justify-between mx-5 '>
                       <div className='flex justify-center   items-center border h-8 w-8  md:w-24 md:h-24 border-slate-500 rounded-full mt-2'>
                       <img className='w-8 h-8 md:w-16 md:h-16' src="kibabiilogo.jpeg" alt="Description of image" />
                      </div>
@@ -142,37 +165,13 @@ const TopBar = () => {
             <li className='list-none text-sm md:lg lg:2xl'>PROFILE</li>
          </div>
        </div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+          
               </div>
           
-          </div>
-          )
-         }
-        <div className='flex items-center justify-start w-1/3'>
-    <p className='text-slate-800 text-sm md:text-lg font-semibold whitespace-nowrap'>TOTAL:</p>
-    <p className='text-green-800 text-xl md:text-3xl lg:text-3xl font-bold ml-2'>{students.length}</p>
-  </div>
-
-  <div className='flex justify-center w-1/3'>
-    <p className='text-sm text-gray-700 py-2'>Data2</p>
-  </div>
-
-  <div className='flex justify-end items-center w-1/3'>
-    <p className='text-sm text-gray-700 py-2'>Data3</p>
-  </div>
-  <div >
-          <button onClick={()=>setDrawer(true)}>
-                    <svg className='mt-3 md:hidden' xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
-                    </button>
-          </div>
         </div>
+      </div>
     </div>
-
-  )
+  );
 }
 
-export default TopBar
+export default TopBar;
