@@ -79,18 +79,18 @@ const Admission = () => {
   };
 
   return (
-    <div className='max-h-[75vh] md:max-h-[80vh] overflow-y-auto mx-5   overflow-x-hidden bg-gray-100'>
-   <div className='  bg-slate-800 text-white py-2 text-center'>
-        <p className='text-xl  font-semibold'>NEW STUDENT ADMISSION FORM</p>
+    <div className='max-h-[75vh] mx-5  md:max-h-[80vh] overflow-y-auto   overflow-x-hidden bg-gray-100'>
+   <div className='  bg-slate-800 text-white py-1 text-center'>
+        <p className='text-lg  font-semibold'>NEW STUDENT ADMISSION FORM</p>
       </div>
-      <div className='mt-4 md:mx-8 flex flex-col md:flex-row gap-6'>
+      <div className='mt-4  flex flex-col md:flex-row gap-6'>
         
-        <div className='md:w-1/3'>
+        <div className=''>
           <p className='text-sm text-gray-700 mb-2'>PASSPORT</p>
-          <img className='w-24 h-24 object-cover rounded-full mx-auto' src="avater.jpeg" alt="Avatar" />
+          <img className='w-24  object-cover rounded-full mx-auto' src="avater.jpeg" alt="Avatar" />
         </div>
 
-        <div className='w-full flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-3'>
+        <div className='w-full flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-3'>
           <div className='min-w-full'>
             <p className='text-sm text-gray-700'>STUDENT NAME</p>
             <input
@@ -103,7 +103,7 @@ const Admission = () => {
           </div>
 
           <div className='min-w-full'>
-            <p className='text-sm text-gray-700'>DATE OF ADMISSION</p>
+            <p className='text-sm text-gray-700'>ADMISSION DATE</p>
             <input
               className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
               type="date"
@@ -162,7 +162,7 @@ const Admission = () => {
         </div>
       </div>
 
-      <div className=' mt-4'>
+      <div className=' mt-4 lg:grid gap-5 grid-cols-2'>
         <div className='min-w-full'>
           <p className='text-sm text-gray-700'>PARENT/GUARDIAN FULL NAME</p>
           <input
@@ -174,7 +174,7 @@ const Admission = () => {
           />
         </div>
 
-        <div className='min-w-full mt-4'>
+        <div className='min-w-full '>
           <p className='text-sm text-gray-700'>EMAIL</p>
           <input
             className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
@@ -185,7 +185,7 @@ const Admission = () => {
           />
         </div>
 
-        <div className='min-w-full mt-4'>
+        <div className='min-w-full'>
           <p className='text-sm text-gray-700'>PARENT/GUARDIAN PHONE NUMBER</p>
           <input
             className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
@@ -195,9 +195,7 @@ const Admission = () => {
             onChange={handleChange}
           />
         </div>
-      </div>
-
-      <div className=' mt-6'>
+        <div className=''>
         <div>
           <p className='text-sm text-gray-700'>ASSIGN STREAM</p>
           <select
@@ -214,10 +212,13 @@ const Admission = () => {
         </div>
       </div>
 
-      <div className='flex justify-center mt-6'>
+      </div>
+
+     
+      <div className='flex  mt-5 mx-24 justify-center'>
         <button
           onClick={handleSubmit}
-          className='py-3 px-12 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'
+          className='w-full bg-green-600 rounded  py-1 text-white'
         >
           Submit
         </button>

@@ -15,7 +15,7 @@ const TopBar = () => {
      };
 
      fetchData();
-     const interval = setInterval(fetchData, 5000);
+     const interval = setInterval(fetchData, 1000);
      return () => clearInterval(interval);
  }, []);
 
@@ -23,8 +23,8 @@ const TopBar = () => {
 
 
   return (
-    <div className=' gap-5 pb-5 bg-gray-100 '>
-        <div className='flex gap-4 items-center bg-gray-100 p-4 '>
+    <div className=' gap-5 py-5 bg-gray-100 '>
+        <div className='flex gap-4 items-center bg-gray-100 '>
           <div >
           <button onClick={()=>setDrawer(true)}>
                     <svg className='mt-3 md:hidden' xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
@@ -34,7 +34,7 @@ const TopBar = () => {
           Drawer && (
             <div className=' border-r md:hidden border-slate-500 fixed w-2/3 inset-0 bg-black bg-opacity-50 backdrop-blur-[0px] flex justify-start '>
 
-              <div className='bg-white w-full  min-h-full '>
+              <div className='bg-gray-100 w-full   min-h-full '>
                   <div className=' flex justify-between mx-5 mt-5'>
                       <div className='flex justify-center   items-center border h-8 w-8  md:w-24 md:h-24 border-slate-500 rounded-full mt-2'>
                       <img className='w-8 h-8 md:w-16 md:h-16' src="kibabiilogo.jpeg" alt="Description of image" />
@@ -45,7 +45,7 @@ const TopBar = () => {
                       </p>
                 </div>
                   <NavLink to='/dashboard'>
-                  <div onClick={()=>setDrawer(false)} className='flex border-b hover:bg-gray-800 hover:text-white w-full mt-2 px-3 py-1  border-t felx-row gap-1'>
+                  <div onClick={()=>setDrawer(false)} className='flex  border-b hover:bg-gray-800 hover:text-white w-full mt-2 px-3 py-1  border-t felx-row gap-1'>
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
                         <li className='list-none text-lg'>DASHBOARD</li>
                 </div>

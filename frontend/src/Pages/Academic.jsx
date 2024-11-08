@@ -4,25 +4,23 @@ import { NavLink } from 'react-router-dom'
 const Academic = () => {
   return (
     <div className="bg-gray-100 min-h-screen p-4">
-      <div className="flex mx-4 justify-between mt-1">
-        <div className="flex justify-between w-full">
-          <div className="flex gap-2 w-full">
-            <input 
-              type="text" 
-              className="text-center border border-slate-300 outline-none py-2 px-3 text-sm cursor-pointer mb-2 w-full rounded-md" 
-              placeholder="Search" 
-            />
-            <button 
-              onClick={() => { alert("Not implemented by Bundi for now") }} 
-              className="text-center bg-green-600 py-2 px-4 text-sm cursor-pointer text-white mb-2 rounded-md hover:bg-green-700"
-            >
-              Search
-            </button>
-          </div>
+      <div className='flex justify-between mx-4 mt-4'>
+        <div className='flex gap-2'>
+          <input
+            className='outline-none px-4 py-2 text-center border border-gray-300 rounded-md w-1/3'
+            type="text"
+            placeholder='Search'
+          />
+          <button className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600'>
+            Search
+          </button>
         </div>
         <div>
-          <button className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800">
-            NEW
+          <button
+            onClick={() => setUserForm(true)}
+            className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600'
+          >
+            New
           </button>
         </div>
       </div>

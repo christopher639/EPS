@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
   return (
-    <div className="hidden md:flex flex-col min-h-full bg-gray-100 text-white w-50 p-4">
+    <div className="hidden bg-gray-200 border  rounded md:flex flex-col min-h-full bg-gray-100 text-white w-50 p-4">
       {/* Logo Section */}
       <div className="flex justify-center py-4">
       <div className="flex justify-center   items-center h-8 w-8  md:w-24 md:h-24">

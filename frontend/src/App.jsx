@@ -21,7 +21,7 @@ const App = () => {
   return (
     <div className="flex min-h-full bg-gray-100 w-full fixed  flex-row">
       <ToastContainer />
-      <div className=" border-r  border-slate-500 flex flex-col  items-center h-screen">
+      <div className="  flex flex-col  items-center h-screen">
         <SideBar />
       </div>
       <div className=" w-full  min-h-full    md:mx-0   ">
