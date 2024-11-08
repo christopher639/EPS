@@ -74,7 +74,7 @@ const Admission = () => {
       }
     } catch (error) {
       console.error("Error submitting the form:", error);
-      toast.error("Failed to submit the form");
+      toast.error("Failed to submit the ");
     }
   };
 
