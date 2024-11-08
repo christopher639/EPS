@@ -45,13 +45,13 @@ const TopBar = () => {
       </div>
 
       <div
-        className={`fixed top-0 left-0 h-full bg-white shadow-lg transform transition-transform duration-500 ease-in-out ${
+        className={`fixed top-20 left-0 h-full bg-white  md:hidden   transform transition-transform duration-500 ease-in-out ${
           drawer ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{ width: '250px' }}
       >
        
-        <div className='bg-gray-100 w-full   min-h-full ' >
+        <div className='bg-gray-200 w-full min-h-full ' >
          
           <div >
                   <div className=' flex justify-between mx-5 '>

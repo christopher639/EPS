@@ -44,9 +44,9 @@ const EnterMarks = () => {
         <div className="mx-4 max-h-[80vh] overflow-y-auto bg-gray-100 md:mx-1 p-4">
             {/* Header and Search Section */}
             <div className="flex justify-center mb-4">
-                <div className="flex gap-2">
+                <div className="flex w-full gap-2">
                     <input
-                        className="outline-none w-32 py-2 px-4 rounded border border-gray-300 w-56"
+                        className="outline-none w-full text-center py-2  rounded border border-gray-300 w-56"
                         type="text"
                         placeholder="Search"
                     />

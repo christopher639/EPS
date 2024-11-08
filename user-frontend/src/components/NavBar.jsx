@@ -6,7 +6,7 @@ const NavBar = () => {
 const [mobileBar,setMobileBar] = useState(false)
 
   return (
-    <div className='flex max-h-[80vh] overflow-y-auto justify-between border-b p-2 border-slate-500'>
+    <div className='flex max-h-[80vh] overflow-y-auto justify-between p-2 '>
 
             <div className='ml-3 gap-4 flex flex-row'>
             {
