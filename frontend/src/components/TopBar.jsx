@@ -23,7 +23,7 @@ const TopBar = () => {
     <div className='relative gap-5 p-5 bg-gray-100'>
       <div className='flex gap-4 items-center bg-gray-100'>
         <div className='flex items-center justify-start w-1/3'>
-          <p className='text-slate-800 text-sm md:text-lg font-semibold whitespace-nowrap'>TOTAL:</p>
+          <p className='text-slate-800 text-sm md:text-lg font-semibold whitespace-nowrap'>STUDENTS:</p>
           <p className='text-green-800 text-xl md:text-3xl lg:text-3xl font-bold ml-2'>{students.length}</p>
         </div>
 
