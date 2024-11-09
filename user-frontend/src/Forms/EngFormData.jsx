@@ -2,7 +2,7 @@ import React from 'react'
 import {useEffect,useState } from 'react'
 import axios from "axios"
 import { toast } from 'react-toastify'
-axios.defaults.baseURL = "https://eps-backend.onrender.com"
+axios.defaults.baseURL = "https://eps-backendt.onrender.com"
 
 const EngFormData = () => {
  
@@ -10,7 +10,7 @@ const EngFormData = () => {
 
 
     const getFetchData = ()  =>{
-      axios.get("https://eps-backend.onrender.com/api/joined-students-generallay")
+      axios.get("https://eps-backendt.onrender.com/api/joined-students-generallay")
       .then(students => setMarks(students.data))
       .catch(err => console.log(err));
     }

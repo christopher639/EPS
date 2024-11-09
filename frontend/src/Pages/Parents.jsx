@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-axios.defaults.baseURL = "https://eps-backend.onrender.com";
+axios.defaults.baseURL = "https://eps-backendt.onrender.com";
 
 const  Parents = () => {
   const [students, setStudents] = useState([]);
 
   const getFetchData = () => {
-    axios.get("https://eps-backend.onrender.com/api/students")
+    axios.get("https://eps-backendt.onrender.com/api/students")
       .then(response => setStudents(response.data))
       .catch(err => console.log(err));
   };

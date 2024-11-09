@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "https://eps-backend.onrender.com";
+axios.defaults.baseURL = "https://eps-backendt.onrender.com";
 
 const AgriFormData = () => {
   const [students, setMarks] = useState([]);

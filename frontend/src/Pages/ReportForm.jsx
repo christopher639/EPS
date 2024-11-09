@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // Import Bar from Chart.js (if you're using it)
 
-axios.defaults.baseURL = "https://eps-backend.onrender.com";
+axios.defaults.baseURL = "https://eps-backendt.onrender.com";
 
 const ReportForm = () => {
   const [students, setMarks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    axios.get("https://eps-backend.onrender.com/api/joined-students_marks")
+    axios.get("https://eps-backendt.onrender.com/api/joined-students_marks")
       .then(response => {
         // Calculate average for each student and sort by average descending
         const studentsWithAverage = response.data.map(student => {
