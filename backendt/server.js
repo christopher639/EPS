@@ -16,7 +16,13 @@ const LastRegno = require('./models/LastRegno.js');
 const app = express()
 const port = process.env.PORT|| 3000;
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173', // or '*' to allow all origins (but it's less secure)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+
 mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system")
 .then(()=>{
   console.log("Database connected")
@@ -198,6 +204,22 @@ app.post("/api/students", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
+app.get('/api/students/:id', async (req, res) => {
+  const studentId = req.params.id;
+  try {
+    const student = await studentModel.findById(studentId);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.json(student);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching student details' });
+  }
+});
+
 
 //apii to delete student
 app.delete("/api/delete/:id", async (req, res) => {

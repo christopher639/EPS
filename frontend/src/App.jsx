@@ -16,6 +16,7 @@ import Fees from "./Pages/Fees";
 import Parents from "./Pages/Parents";
 import MarksFom1y from "./Pages/MarksFom1y";
 import Form1yReport from "./Pages/Form1yReport";
+import StudentDetail from "./Pages/StudentDetail";
 
 const App = () => {
   return (
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/streams" element={<Academic />} />
           <Route path="/fees" element={<Fees />} />
           <Route path="/parents" element={<Parents />} />
+          <Route path="/student/:id" element={<StudentDetail />} />
         </Routes>
       </div>
       <div className="md:mr-0">
