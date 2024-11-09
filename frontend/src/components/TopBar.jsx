@@ -143,6 +143,11 @@ const TopBar = () => {
             <li className='list-none text-sm md:lg lg:2xl'>PROFILE</li>
          </div>
          </div>
+         <div className='text-sm ml-2  text-black fixed bottom-40 w-full '>
+  <p className='text-center'>© 2024 Software Engineer Bundi</p>
+</div>
+
+
         </div>
         </div>
       </div>
