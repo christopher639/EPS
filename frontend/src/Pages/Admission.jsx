@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = "https://eps-backendt.onrender.com";
@@ -80,6 +81,7 @@ const Admission = () => {
 
   return (
     <div className='max-h-[77vh] mx-5  md:max-h-[80vh] overflow-y-auto  no-scrollbar   overflow-x-hidden bg-gray-100'>
+   <ToastContainer />
    <div className='  bg-slate-800 text-white py-1 text-center'>
         <p className='text-lg  font-semibold'>NEW STUDENT ADMISSION FORM</p>
       </div>
