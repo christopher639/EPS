@@ -46,7 +46,7 @@ const Parents = () => {
 
   return (
     <div className='flex flex-col bg-gray-100 min-w-full'>
-      <div className='flex max-h-[84vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+      <div className='flex max-h-[72vh] md:max-h-[71vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
         <table className='min-w-full mt-2'>
           <thead className='bg-slate-800 px-1 py-2 text-white'>
             <tr className='py-2'>
