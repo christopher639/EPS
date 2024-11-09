@@ -140,7 +140,7 @@ const ReportForm = () => {
                       <p className='ml-1'>STREAM: <span className='text-yellow-800'>{student.stream}</span></p>
                       <p className='mr-3'>AVG: <span className='text-yellow-800'>{avg.toFixed(2)}</span></p>
                       <p className='mr-3'>GRADE: <span className='text-yellow-800'>{avgGradeRemark}</span></p>
-                      <p className='mr-3'>REMARKS: <span className='text-yellow-800'>{avgRemark}</span></p>
+                      <p className='mr-3'>RMKS: <span className='text-yellow-800'>{avgRemark}</span></p>
                     </div>
                     <table className='w-full'>
                       <thead className='border-b border-r border-slate-500'>
