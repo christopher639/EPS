@@ -16,12 +16,7 @@ const LastRegno = require('./models/LastRegno.js');
 const app = express()
 const port = process.env.PORT|| 3000;
 app.use(express.json())
-app.use(cors({
-  origin: 'http://localhost:5173', // or '*' to allow all origins (but it's less secure)
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
+app.use(cors());
 
 mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system")
 .then(()=>{
