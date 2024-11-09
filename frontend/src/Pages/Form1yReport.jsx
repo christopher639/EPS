@@ -83,8 +83,8 @@ const Form1yReport = () => {
   };
 
   return (
-    <div className='flex min-w-full max-h-[80vh] flex-col gap-10 mb-5 overflow-y-auto overflow-x-auto'>
-      <div className='flex justify-between'>
+    <div className='flex min-w-full max-h-[80vh] flex-col gap-10 mb-5 overflow-y-auto overflow-x-hidden'>
+      <div className='flex mx-5 justify-between'>
         <div>
           <input
             type="text"
