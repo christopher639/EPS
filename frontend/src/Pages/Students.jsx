@@ -76,7 +76,7 @@ const Students = () => {
           <p className="text-lg font-semibold text-gray-600">Wait, it's loading...</p>
         </div>
       ) : (
-        <div className='mx-4 md:mx-0 flex max-h-[75vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+        <div className='mx-4 md:mx-0 flex max-h-[70vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
           <table className='min-w-full mt-2'>
             <thead className='bg-slate-800 px-1 h-10 text-white'>
               <tr>
