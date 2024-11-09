@@ -144,10 +144,11 @@ const Users = () => {
       )}
 
       {!loading && (
-        <div className='flex max-h-[74vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+        <div className='flex max-h-[72vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
           <table className='min-w-full mt-4'>
             <thead className='bg-gray-800 text-white'>
               <tr>
+                <th className='border px-4 py-2'>NO</th>
                 <th className='border px-4 py-2'>Full Name</th>
                 <th className='border px-4 py-2'>Email</th>
                 <th className='border px-4 py-2'>Phone Number</th>
@@ -156,8 +157,9 @@ const Users = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr className='border whitespace-nowrap h-10 py-3 border-slate-500' key={user._id}>
+              {users.map((user,index) => (
+               <tr className='border whitespace-nowrap h-10 py-3 border-slate-500' key={user._id}>
+                   <td className='border px-4 py-2'>{index + 1}</td>
                   <td className='border px-4 py-2'>{user.name}</td>
                   <td className='border px-4 py-2'>{user.email}</td>
                   <td className='border px-4 py-2'>{user.mobile}</td>
