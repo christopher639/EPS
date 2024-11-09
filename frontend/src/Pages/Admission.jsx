@@ -49,7 +49,39 @@ const Admission = () => {
       toast.error("Admission number (regno) is required.");
       return;
     }
+    if (!formData.name) {
+      toast.error("Failed (name) is required.");
+      return;
+    }
 
+    if (!formData.dob) {
+      toast.error("Failed (date of birth) is required.");
+      return;
+    }
+
+    if (!formData.dob) {
+      toast.error("Failed (date of admission) is required.");
+      return;
+    }
+
+    if (!formData.previous) {
+      toast.error("Failed (Previous school) is required.");
+      return;
+    }
+
+    if (!formData.parentname) {
+      toast.error("Failed (paraent name) is required.");
+      return;
+    }
+
+    if (!formData.phone) {
+      toast.error("Failed (phone no) is required.");
+      return;
+    }
+    if (!formData.email) {
+      toast.error("Failed (email) is required.");
+      return;
+    }
     try {
       const response = await axios.post("/api/students", formData);
 
@@ -71,7 +103,7 @@ const Admission = () => {
           stream: ''
         });
       } else {
-        toast.error(response.data.message || "Failed to admit student");
+        toast.error(response.data.message || "Failed to admit student ");
       }
     } catch (error) {
       console.error("Error submitting the form:", error);

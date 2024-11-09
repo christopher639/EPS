@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import axios from "axios";
 axios.defaults.baseURL = "https://eps-backendt.onrender.com";
@@ -66,6 +67,7 @@ const Users = () => {
 
   return (
     <div className='flex flex-col min-w-full bg-gray-100'>
+         <ToastContainer />
       <div className='flex justify-between mx-4 mt-4'>
         <div className='flex gap-2'>
           <input
