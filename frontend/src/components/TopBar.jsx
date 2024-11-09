@@ -24,7 +24,7 @@ const TopBar = () => {
       <div className='flex gap-4 items-center bg-gray-100'>
         <div className='flex items-center justify-start w-1/3'>
           <p className='text-slate-800 text-sm md:text-lg font-semibold whitespace-nowrap'>STUDENTS:</p>
-          <p className='text-green-800 text-xl md:text-3xl lg:text-3xl font-bold ml-2'>{students.length}</p>
+          <p className='text-green-800 text-xl md:text-3xl lg:text-3xl font-bold '>{students.length}</p>
         </div>
 
         <div className='flex justify-center w-1/3'>
