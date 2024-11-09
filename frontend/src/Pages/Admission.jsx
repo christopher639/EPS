@@ -83,7 +83,7 @@ const Admission = () => {
    <div className='  bg-slate-800 text-white py-1 text-center'>
         <p className='text-lg  font-semibold'>NEW STUDENT ADMISSION FORM</p>
       </div>
-      <div className='mt-4  flex flex-col md:flex-row gap-6'>
+      <div className=' pt-2  flex flex-col md:flex-row gap-6'>
         
         <div className=''>
           <p className='text-sm text-gray-700 mb-2'>PASSPORT</p>
