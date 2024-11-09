@@ -88,7 +88,7 @@ const ReportForm = () => {
         <div>
           <input
             type="text"
-            className='text-center border outline-none py-1 px-2 text-sm cursor-pointer mb-2'
+            className='text-center w-32 border outline-none py-1 px-2 text-sm cursor-pointer mb-2'
             placeholder='Search by Adm No'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)} // Update search term
