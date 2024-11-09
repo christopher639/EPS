@@ -84,7 +84,7 @@ const ReportForm = () => {
 
   return (
     <div className='flex min-w-full max-h-[80vh] flex-col gap-10 mb-5 overflow-y-auto overflow-x-hidden'>
-      <div className=' mx-5 justify-between'>
+      <div className=' mx-5 flex justify-between'>
         <div>
           <input
             type="text"
@@ -97,9 +97,11 @@ const ReportForm = () => {
             Search
           </button>
         </div>
-        <button onClick={handlePrint} className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>
+       <div>
+       <button onClick={handlePrint} className='text-center bg-green-600 py-1 px-2 cursor-pointer text-white text-sm mb-2'>
           Print
         </button>
+       </div>
       </div>
 
       {/* Conditional Rendering: Loading message */}
@@ -134,7 +136,7 @@ const ReportForm = () => {
                         <p>TERM II</p>
                       </div>
                     </div>
-                    <div className='flex border-b border-slate-500 justify-between'>
+                    <div className=' grid grid-cols-3 md:flex border-b border-slate-500  justify-between'>
                       <p className='ml-1'>Name: <span className='text-yellow-800'>{student.name.toUpperCase()}</span></p>
                       <p className='ml-1'>ADM: <span className='text-yellow-800'>{student.regno}</span></p>
                       <p className='ml-1'>STREAM: <span className='text-yellow-800'>{student.stream}</span></p>
