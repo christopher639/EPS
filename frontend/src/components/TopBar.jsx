@@ -45,18 +45,18 @@ const TopBar = () => {
       </div>
 
       <div
-        className={`fixed top-20 left-0 h-full bg-white  md:hidden   transform transition-transform duration-500 ease-in-out ${
+        className={`fixed top-5 left-0 h-full bg-white  md:hidden   transform transition-transform duration-500 ease-in-out ${
           drawer ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{ width: '250px' }}
       >
        
-        <div className='bg-gray-200 border rounded  shadow-2xl w-full min-h-full ' >
+        <div className='bg-gray-200 border rounded   shadow-2xl w-full min-h-full ' >
          
                 <div >
                   <div className=' flex justify-between mx-5 '>
                       <div className='flex justify-center   items-center border h-8 w-8  md:w-24 md:h-24 border-slate-500 rounded-full mt-2'>
-                      <img className='w-8 h-8 md:w-16 md:h-16' src="kibabiilogo.jpeg" alt="Description of image" />
+                      <img className='w-8 h-8 md:w-16 md:h-16' src="kibabiilogo.jpeg" alt="school logo" />
                      </div>
 
                      <p className=' mt-2 bg-green-800 h-6 rounded-full cursor-pointer '>
