@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-axios.defaults.baseURL = "https://eps-backendt.onrender.com";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const ReportForm = () => {
   const [students, setMarks] = useState([]);        // State to hold the students' marks data

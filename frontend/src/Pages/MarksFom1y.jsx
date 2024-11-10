@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
-axios.defaults.baseURL = "https://eps-backendt.onrender.com";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const MarksFom1y = () => {
     const [students, setMarks] = useState([]);
@@ -9,7 +9,7 @@ const MarksFom1y = () => {
 
     useEffect(() => {
         const fetchData = () => {
-            axios.get("https://eps-backendt.onrender.com/api/joined-students_marks-form1y")
+            axios.get("https://eps-backend.onrender.com/api/joined-students_marks-form1y")
                 .then(students => setMarks(students.data))
                 .catch(err => console.log(err));
         };

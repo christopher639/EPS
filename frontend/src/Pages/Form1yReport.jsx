@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-axios.defaults.baseURL = "https://eps-backendt.onrender.com";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const Form1yReport = () => {
   const [students, setMarks] = useState([]);        // State to hold the students' marks data
@@ -15,7 +15,7 @@ const Form1yReport = () => {
 
     // Fetch students data
   //  axios.get("/api/joined-students_marks")
-    axios.get("https://eps-backendt.onrender.com/api/joined-students_marks-form1y")
+    axios.get("https://eps-backend.onrender.com/api/joined-students_marks-form1y")
       .then(response => {
         // Calculate average marks for each student and sort them
         const studentsWithAverage = response.data.map(student => {

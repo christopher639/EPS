@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-axios.defaults.baseURL = "https://eps-backendt.onrender.com";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const StudentDetail = () => {
   const { id } = useParams(); // Get the student ID from the URL
@@ -12,7 +12,7 @@ const StudentDetail = () => {
   useEffect(() => {
     const fetchStudentDetails = async () => {
       try {
-        const response = await axios.get(`https://eps-backendt.onrender.com/api/students/${id}`);
+        const response = await axios.get(`https://eps-backend.onrender.com/api/students/${id}`);
         setStudent(response.data);
         setLoading(false);
       } catch (error) {
