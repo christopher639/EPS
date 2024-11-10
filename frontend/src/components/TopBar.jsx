@@ -51,7 +51,7 @@ const TopBar = () => {
         style={{ width: '250px' }}
       >
        
-        <div className='bg-gray-200 w-full min-h-full ' >
+        <div className='bg-gray-200 border rounded  shadow-2xl w-full min-h-full ' >
          
                 <div >
                   <div className=' flex justify-between mx-5 '>
