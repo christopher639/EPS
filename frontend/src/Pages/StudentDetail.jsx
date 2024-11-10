@@ -25,7 +25,7 @@ const StudentDetail = () => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className='flex  mx-32 justify-center'><div>Loading...</div></div>;
   }
 
   if (!student) {
@@ -56,17 +56,17 @@ const StudentDetail = () => {
      <div>
        <div className='grid grid-cols-2 gap-5'>
         <div>
-        <img className='w-24 object-cover rounded-full mx-auto' src="avater.jpeg" alt="Avatar" />
+        <img className='w-24 object-cover rounded-full mx-auto' src="kibabiilogo.jpeg" alt="Avatar" />
         </div>
-      <p><strong>Full Name:</strong> {student.name}</p>
-      <p><strong>ADM:</strong> {student.regno}</p>
-      <p><strong>Gender:</strong> {student.gender}</p>
-      <p><strong>DOA:</strong> {new Date(student.dot).toLocaleDateString('en-GB')}</p>
-      <p><strong>Stream:</strong> {student.stream}</p>
-      <p><strong>P/G Name:</strong> {student.parentname}</p>
-      <p><strong>P/G Phone:</strong> {student.phone}</p>
-      <p><strong>P/G Email:</strong> {student.email}</p>
-      <p><strong>Previous School:</strong> {student.previous}</p>
+      <p><strong>Full Name:</strong><span className='text-yellow-800' > {student.name.toUpperCase()}</span></p>
+      <p><strong>ADM:</strong> <span className='text-yellow-800'>{student.regno.toUpperCase()}</span></p>
+      <p><strong>Gender:</strong><span className='text-yellow-800'> {student.gender.toUpperCase()}</span></p>
+      <p ><strong>DOA:</strong><span className='text-yellow-800'>  {new Date(student.dot).toLocaleDateString('en-GB')}</span></p>
+      <p><strong>Stream:</strong><span className='text-yellow-800'> {student.stream.toUpperCase()}</span></p>
+      <p><strong>P/G Name:</strong> <span className='text-yellow-800'>{student.parentname.toUpperCase()}</span></p>
+      <p><strong>P/G Phone:</strong><span  className='text-yellow-800'> +254{student.phone}</span></p>
+      <p><strong>P/G Email:</strong><span  className='text-yellow-800'> {student.email}</span></p>
+      <p><strong>Previous School:</strong> <span  className='text-yellow-800'>{student.previous.toUpperCase()}</span></p>
 
       {/* Add more fields as necessary */}
        </div>
