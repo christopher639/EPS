@@ -2,7 +2,7 @@ const express = require("express")
 const cors = require("cors")
 
 const mongoose = require("mongoose")
-import multer from "multer"
+
 const staffModel = require("./models/staffs.js")
 const MarkModel = require("./models/marks.js")
 const UserModel = require("./models/Users.js")
@@ -183,19 +183,10 @@ app.get("/api/students",async(req,res)=>{
 //api to post student information to the database
 
 //image storage
-const storage = multer.diskStorage({
-  destination: 'uploads', // Ensure the 'uploads' folder exists or create it
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`); // Unique filename with timestamp
-  }
-});
 
-// Create multer instance
-const upload = multer({ storage: storage });
 
 // Route for adding a new student and handling image upload
-app.post('/api/students', upload.single('image'), async (req, res) => {
-  let image_filename = ` ${req.file.filename}`
+app.post('/api/students', async (req, res) => {
   try {
     // Check if a student with the same regno already exists
     const existingStudent = await studentModel.findOne({ regno: req.body.regno });
@@ -207,11 +198,6 @@ app.post('/api/students', upload.single('image'), async (req, res) => {
     }
 
     // Add the image path to the student data if a file was uploaded
-    const studentData = {
-      ...req.body,
-      passport: req.file ? req.file.path : undefined // Include image path if uploaded
-    };
-
     // Create new student
     await studentModel.create(studentData);
     res.status(200).json({
