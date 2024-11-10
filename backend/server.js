@@ -1,60 +1,43 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const path = require("path");
+const express = require("express")
+const cors = require("cors")
 
-const staffModel = require("./models/staffs.js");
-const MarkModel = require("./models/marks.js");
-const UserModel = require("./models/Users.js");
-const mathModel = require("./models/math.js");
-const engModel = require("./models/english.js");
-const studentModel = require("./models/students.js");
-const subjectsMarksModel = require('./models/subjectsmarks.js');
-const streamModel = require("./models/stream.js");
+const mongoose = require("mongoose")
+
+const staffModel = require("./models/staffs.js")
+const MarkModel = require("./models/marks.js")
+const UserModel = require("./models/Users.js")
+const mathModel = require("./models/math.js")
+const engModel = require("./models/english.js")
+const studentModel = require("./models/students.js")
+const subjectsMarksModel  =  require('./models/subjectsmarks.js')
+const streamModel = require("./models/stream.js")
 const LastRegno = require('./models/LastRegno.js');
 
-const app = express();
-const port = process.env.PORT || 3000;
 
-app.use(express.json());
+const app = express()
+const port = process.env.PORT|| 3000;
+app.use(express.json())
 app.use(cors());
 
-// Database connection
 mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system")
-  .then(() => {
-    console.log("Database connected");
-  })
-  .catch((error) => {
-    console.error("Database connection error:", error);
-  });
-
-// Serve static files from the React app in production
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// Define API routes here
-app.get('/api/staffs', async (req, res) => {
-  try {
-    const staffs = await staffModel.find();
-    res.status(200).json(staffs);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Define other API routes below...
-
-// Catch-all route to serve React app for any other route
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
-// Start server
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+.then(()=>{
+  console.log("Database connected")
+})
 
 
-
+//API to get all users or staff
+app.get('/api/staffs',async(req,res)=>{
+ try {
+  const staffs = await staffModel.find()
+  res.status(200).json(staffs)
+ } catch (error) {
+  res.status(500).json({message: error.message})
+ }
+})
+//api to post data
+app.listen(port,()=>{
+    console.log(`Server is running at port http://localhost:${port}`)
+})
 app.get("/",(req,res)=>{
     res.send("Api is working Christopher Bundi")
 })
