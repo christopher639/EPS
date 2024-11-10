@@ -42,17 +42,6 @@ const Admission = () => {
     });
   };
 
-  // Handle passport file change
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData({
-        ...formData,
-        passport: file
-      });
-    }
-  };
-
   // Handle form submission
   const handleSubmit = async () => {
     // Validate regno is not empty
@@ -81,7 +70,7 @@ const Admission = () => {
     }
 
     if (!formData.parentname) {
-      toast.error("Failed (parent name) is required.");
+      toast.error("Failed (paraent name) is required.");
       return;
     }
 
@@ -93,27 +82,8 @@ const Admission = () => {
       toast.error("Failed (email) is required.");
       return;
     }
-
-    // Prepare form data for submission
-    const data = new FormData();
-    data.append('passport', formData.passport);
-    data.append('name', formData.name);
-    data.append('dot', formData.dot);
-    data.append('dob', formData.dob);
-    data.append('regno', formData.regno);
-    data.append('gender', formData.gender);
-    data.append('previous', formData.previous);
-    data.append('parentname', formData.parentname);
-    data.append('email', formData.email);
-    data.append('phone', formData.phone);
-    data.append('stream', formData.stream);
-
     try {
-      const response = await axios.post("/api/students", data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post("/api/students", formData);
 
       if (response.data.success) {
         toast.success(response.data.message || "Student admitted successfully");
@@ -133,37 +103,25 @@ const Admission = () => {
           stream: ''
         });
       } else {
-        toast.error(response.data.message || "Failed to admit student");
+        toast.error(response.data.message || "Failed to admit student ");
       }
     } catch (error) {
       console.error("Error submitting the form:", error);
-      toast.error("Failed to submit the form");
+      toast.error("Failed to submit the ");
     }
   };
 
   return (
     <div className='max-h-[77vh] mx-5  md:max-h-[80vh] overflow-y-auto  no-scrollbar   overflow-x-hidden bg-gray-100'>
-      <ToastContainer />
-      <div className='bg-slate-800 text-white py-1 text-center'>
+   <ToastContainer />
+   <div className='  bg-slate-800 text-white py-1 text-center'>
         <p className='text-lg  font-semibold'>NEW STUDENT ADMISSION FORM</p>
       </div>
-      <div className='pt-2 flex flex-col md:flex-row gap-6'>
+      <div className=' pt-2  flex flex-col md:flex-row gap-6'>
         
         <div className=''>
           <p className='text-sm text-gray-700 mb-2'>PASSPORT</p>
-          {/* Display the passport photo */}
-          {formData.passport ? (
-            <img className='w-24 object-cover rounded-full mx-auto' src={URL.createObjectURL(formData.passport)} alt="Passport" />
-          ) : (
-            <img className='w-24 object-cover rounded-full mx-auto' src="avater.jpeg" alt="Avatar" />
-          )}
-          {/* File input for passport */}
-          <input 
-            type="file" 
-            accept="image/*"
-            onChange={handleFileChange}
-            className="block mt-2 mx-auto"
-          />
+          <img className='w-24  object-cover rounded-full mx-auto' src="avater.jpeg" alt="Avatar" />
         </div>
 
         <div className='w-full flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-3'>
@@ -238,7 +196,7 @@ const Admission = () => {
         </div>
       </div>
 
-      <div className='mt-4 lg:grid gap-5 grid-cols-2'>
+      <div className=' mt-4 lg:grid gap-5 grid-cols-2'>
         <div className='min-w-full'>
           <p className='text-sm text-gray-700'>PARENT/GUARDIAN FULL NAME</p>
           <input
@@ -250,7 +208,7 @@ const Admission = () => {
           />
         </div>
 
-        <div className='min-w-full'>
+        <div className='min-w-full '>
           <p className='text-sm text-gray-700'>EMAIL</p>
           <input
             className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
@@ -262,7 +220,7 @@ const Admission = () => {
         </div>
 
         <div className='min-w-full'>
-          <p className='text-sm text-gray-700'>PHONE NUMBER</p>
+          <p className='text-sm text-gray-700'>PARENT/GUARDIAN PHONE NUMBER</p>
           <input
             className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
             type="text"
@@ -271,9 +229,9 @@ const Admission = () => {
             onChange={handleChange}
           />
         </div>
-
-        <div className='min-w-full'>
-          <p className='text-sm text-gray-700'>STREAM</p>
+        <div className=''>
+        <div>
+          <p className='text-sm text-gray-700'>ASSIGN STREAM</p>
           <select
             className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
             name="stream"
@@ -282,16 +240,19 @@ const Admission = () => {
           >
             <option value="">Select Stream</option>
             {streams.map((stream) => (
-              <option key={stream._id} value={stream._id}>{stream.name}</option>
+              <option key={stream._id} value={stream.name}>{stream.name}</option>
             ))}
           </select>
         </div>
       </div>
 
-      <div className="my-4 text-center">
+      </div>
+
+     
+      <div className='flex  mt-5 mx-24 justify-center'>
         <button
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg"
           onClick={handleSubmit}
+          className='w-full bg-green-600 rounded  py-1 text-white'
         >
           Submit
         </button>

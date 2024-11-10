@@ -52,12 +52,13 @@ const StudentDetail = () => {
        </div>
        </div>
       </div>
-     <div className="p-4 flex  mt-10 justify-center">
+     <div className="p-4 flex flex-col  justify-center">
      <div>
+        <img className='w-24 object-cover rounded-full mx-auto' src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar" />
+
+    </div>
+     <div  className='flex  gap-5 justify-center'>
        <div className='grid grid-cols-2 gap-5'>
-        <div>
-        <img className='w-24 object-cover rounded-full mx-auto' src="kibabiilogo.jpeg" alt="Avatar" />
-        </div>
       <p><strong>Full Name:</strong><span className='text-yellow-800' > {student.name.toUpperCase()}</span></p>
       <p><strong>ADM:</strong> <span className='text-yellow-800'>{student.regno.toUpperCase()}</span></p>
       <p><strong>Gender:</strong><span className='text-yellow-800'> {student.gender.toUpperCase()}</span></p>
