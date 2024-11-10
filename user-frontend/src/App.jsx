@@ -1,6 +1,4 @@
-
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from './components/NavBar';
 import { ToastContainer } from 'react-toastify'; // Import Toastify
 import Performance from './components/Performance';
@@ -28,19 +26,28 @@ import HistoFormData from './Forms/HistoFormData';
 import Histo from './Subjects/Histo';
 
 const App = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [darkMode]);
+
   return (
-    <div className='min-h-full bg-gray-100 fixed w-full'>
+    <div className={`min-h-full fixed w-full ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
       <ToastContainer />
       <NavBar />
       <div className='flex flex-row'>
-        <div className='bg-gray-200 hidden sm:flex flex-col h-screen  '>
+        <div className='bg-gray-200 dark:bg-gray-800 hidden sm:flex flex-col h-screen'>
           <SideBar />
         </div>
         <div className='w-full'>
           <Routes>
             {/* Default route that redirects to the /entermarks page */}
             <Route path="/" element={<Navigate to="/entermarks" />} />
-            
             <Route path="/select-subject" element={<Select />} />
             <Route path="/performance" element={<Performance />} />
             <Route path="/math" element={<Math />} />

@@ -16,7 +16,7 @@ const SideBar = () => {
       </div>
 
       {/* Navigation Links */}
-      <NavLink to="/dashboard">
+      <NavLink >
         <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,7 @@ const SideBar = () => {
         </div>
       </NavLink>
 
-      <NavLink to="/fees">
+      <NavLink >
       <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
           <li className="list-none text-sm">FINANCE</li>

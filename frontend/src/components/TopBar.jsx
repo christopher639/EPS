@@ -45,26 +45,26 @@ const TopBar = () => {
       </div>
 
       <div
-        className={`fixed top-0 left-0 h-full bg-white  md:hidden   transform transition-transform duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 h-full bg-white  border rounded-lg shadow-2xl md:hidden   transform transition-transform duration-500 ease-in-out ${
           drawer ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{ width: '250px' }}
       >
        
-        <div className='bg-gray-200 border rounded   shadow-2xl w-full min-h-full ' >
+        <div className='bg-gray-200 w-full min-h-full ' >
          
                 <div >
                   <div className=' flex justify-between mx-5 '>
-                      <div className='flex justify-center   items-center border h-8 w-8  md:w-24 md:h-24 border-slate-500 rounded-full mt-2'>
-                      <img className='w-8 h-8 md:w-16 md:h-16' src="kibabiilogo.jpeg" alt="school logo" />
+                      <div className='flex justify-center   items-center border h-8 w-8  md:w-24 md:h-24  mt-2'>
+                      <img className='w-8 h-8 md:w-16 md:h-16' src="kibabiilogo.jpeg" alt="Description of image" />
                      </div>
 
                      <p className=' mt-2 bg-green-800 h-6 rounded-full cursor-pointer '>
                             <svg  onClick={()=>setDrawer(false)} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="m338-288-50-50 141-142-141-141 50-50 142 141 141-141 50 50-141 141 141 142-50 50-141-141-142 141Z"/></svg>
                       </p>
                 </div>
-                <NavLink to="/dashboard">
-            <div onClick={()=>setDrawer(false)} className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
+                <NavLink >
+            <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
@@ -106,7 +106,7 @@ const TopBar = () => {
         </div>
       </NavLink>
 
-      <NavLink to="/fees">
+      <NavLink>
       <div onClick={()=>setDrawer(false)} className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
           <li className="list-none text-sm">FINANCE</li>
