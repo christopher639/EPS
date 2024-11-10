@@ -45,7 +45,7 @@ const TopBar = () => {
       </div>
 
       <div
-        className={`fixed top-5 left-0 h-full bg-white  md:hidden   transform transition-transform duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 h-full bg-white  md:hidden   transform transition-transform duration-500 ease-in-out ${
           drawer ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{ width: '250px' }}
