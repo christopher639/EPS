@@ -1,6 +1,6 @@
 const express = require("express")
 const cors = require("cors")
-
+const path = require("path");
 const mongoose = require("mongoose")
 
 const staffModel = require("./models/staffs.js")
@@ -498,3 +498,12 @@ app.post('/api/update-last-regno', async (req, res) => {
     return res.status(500).json({ message: "Failed to update last registration number" });
   }
 });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  
+  // Catch-all route to serve React app for any route not handled by the API
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
