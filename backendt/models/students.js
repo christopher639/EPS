@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema(
   {
-    passport: { type: String, required: false },
+    passport: { type: String,  },
     name: { type: String, required: true },
     dot: { type: Date, required: true }, // Date of admission
     dob: { type: Date, required: true }, // Date of birth
