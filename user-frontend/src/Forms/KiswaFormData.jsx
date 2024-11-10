@@ -2,7 +2,7 @@ import React from 'react'
 import {useEffect,useState } from 'react'
 import axios from "axios"
 import { toast } from 'react-toastify'
-axios.defaults.baseURL = "https://eps-backendt.onrender.com"
+axios.defaults.baseURL = "https://eps-backend.onrender.com"
 
 const  KiswaFormData = () => {
  
@@ -10,7 +10,7 @@ const  KiswaFormData = () => {
 
 
     const getFetchData = ()  =>{
-      axios.get("http://localhost:3000/api/joined-students-generallay")
+      axios.get("/api/joined-students-generallay")
       .then(students => setMarks(students.data))
       .catch(err => console.log(err));
     }

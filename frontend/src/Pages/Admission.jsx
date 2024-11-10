@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 
-axios.defaults.baseURL = "https://eps-backendt.onrender.com";
+axios.defaults.baseURL = "https://eps-backend.onrender.com";
 
 const Admission = () => {
   const [streams, setStream] = useState([]);

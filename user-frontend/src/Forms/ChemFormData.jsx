@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Set the default base URL for axios
-axios.defaults.baseURL = 'https://eps-backendt.onrender.com';
+axios.defaults.baseURL = 'https://eps-backend.onrender.com';
 
 const ChemFormData = () => {
   const [students, setMarks] = useState([]);
