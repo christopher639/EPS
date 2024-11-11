@@ -60,15 +60,16 @@ const StudentDetail = () => {
     </div>
      <div  className='flex gap-1 md:gap-5 justify-center'>
        <div className='grid  grid-cols-1 md:grid-cols-2 gap-5'>
-      <p><strong>Full Name:</strong><span className='text-yellow-800' > {student.name.toUpperCase()}</span></p>
-      <p><strong>ADM:</strong> <span className='text-yellow-800'>{student.regno.toUpperCase()}</span></p>
-      <p><strong>Gender:</strong><span className='text-yellow-800'> {student.gender.toUpperCase()}</span></p>
-      <p ><strong>DOA:</strong><span className='text-yellow-800'>  {new Date(student.dot).toLocaleDateString('en-GB')}</span></p>
-      <p><strong>Stream:</strong><span className='text-yellow-800'> {student.stream.toUpperCase()}</span></p>
-      <p><strong>P/G Name:</strong> <span className='text-yellow-800'>{student.parentname.toUpperCase()}</span></p>
-      <p><strong>P/G Phone:</strong><span  className='text-yellow-800'> +254{student.phone}</span></p>
-      <p><strong>P/G Email:</strong><span  className='text-yellow-800'> {student.email}</span></p>
-      <p><strong>Previous School:</strong> <span  className='text-yellow-800'>{student.previous.toUpperCase()}</span></p>
+      <p className='flex justify-between'><strong>STUDENT NAME :</strong><span className='text-yellow-800' > {student.name.toUpperCase()}</span></p>
+      <p className='flex justify-between'><strong>ADM :</strong> <span className='text-yellow-800'>{student.regno.toUpperCase()}</span></p>
+      <p  className='flex justify-between'><strong>GENDER :</strong><span className='text-yellow-800'> {student.gender.toUpperCase()}</span></p>
+      <p  className='flex justify-between' ><strong>ADMITTED ON :</strong><span className='text-yellow-800'>  {new Date(student.dot).toLocaleDateString('en-GB')}</span></p>
+      <p  className='flex justify-between' ><strong>DATE OF BIRTH :</strong><span className='text-yellow-800'>  {new Date(student.dob).toLocaleDateString('en-GB')}</span></p>
+      <p  className='flex justify-between'><strong>CLASS STREAM :</strong><span className='text-yellow-800'> {student.stream.toUpperCase()}</span></p>
+      <p  className='flex justify-between'><strong>PARENT/GARDIAN NAME :</strong> <span className='text-yellow-800'>{student.parentname.toUpperCase()}</span></p>
+      <p  className='flex justify-between'><strong>PARENT/GARDIAN PHONE :</strong><span  className='text-yellow-800'> +254{student.phone}</span></p>
+      <p  className='flex justify-between'><strong>PARENT/GARDIAN EMAIL :</strong><span  className='text-yellow-800'> {student.email}</span></p>
+      <p  className='flex justify-between'><strong>PREVIOUS SCHOOL :</strong> <span  className='text-yellow-800'>{student.previous.toUpperCase()}</span></p>
 
       {/* Add more fields as necessary */}
        </div>
