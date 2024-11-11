@@ -59,17 +59,17 @@ const StudentDetail = () => {
 
     </div>
      <div  className='flex gap-1 md:gap-5 justify-center'>
-       <div className='grid  grid-cols-1 md:grid-cols-2 gap-5'>
-      <p className='flex justify-between'><strong>STUDENT NAME :</strong><span className='text-yellow-800' > {student.name.toUpperCase()}</span></p>
-      <p className='flex justify-between'><strong>ADM :</strong> <span className='text-yellow-800'>{student.regno.toUpperCase()}</span></p>
-      <p  className='flex justify-between'><strong>GENDER :</strong><span className='text-yellow-800'> {student.gender.toUpperCase()}</span></p>
-      <p  className='flex justify-between' ><strong>ADMITTED ON :</strong><span className='text-yellow-800'>  {new Date(student.dot).toLocaleDateString('en-GB')}</span></p>
-      <p  className='flex justify-between' ><strong>DATE OF BIRTH :</strong><span className='text-yellow-800'>  {new Date(student.dob).toLocaleDateString('en-GB')}</span></p>
-      <p  className='flex justify-between'><strong>CLASS STREAM :</strong><span className='text-yellow-800'> {student.stream.toUpperCase()}</span></p>
-      <p  className='flex justify-between'><strong>PARENT/GARDIAN NAME :</strong> <span className='text-yellow-800'>{student.parentname.toUpperCase()}</span></p>
-      <p  className='flex justify-between'><strong>PARENT/GARDIAN PHONE :</strong><span  className='text-yellow-800'> +254{student.phone}</span></p>
-      <p  className='flex justify-between'><strong>PARENT/GARDIAN EMAIL :</strong><span  className='text-yellow-800'> {student.email}</span></p>
-      <p  className='flex justify-between'><strong>PREVIOUS SCHOOL :</strong> <span  className='text-yellow-800'>{student.previous.toUpperCase()}</span></p>
+       <div className='grid  grid-cols-1 md:grid-cols-2 gap-3'>
+      <p className='flex justify-between'><strong className='sm:text-sm lg:text-lg'>STUDENT NAME :</strong><span className='text-yellow-800 sm:text-sm lg:text-lg' > {student.name.toUpperCase()}</span></p>
+      <p className='flex justify-between'><strong  className='sm:text-sm lg:text-lg'>ADM :</strong> <span className='text-yellow-800 sm:text-sm lg:text-lg'>{student.regno.toUpperCase()}</span></p>
+      <p  className='flex justify-between'><strong  className='sm:text-sm lg:text-lg'>GENDER :</strong><span className='text-yellow-800'> {student.gender.toUpperCase()}</span></p>
+      <p  className='flex justify-between' ><strong  className='sm:text-sm lg:text-lg'>ADMITTED ON :</strong><span className='text-yellow-800 sm:text-sm lg:text-lg'>  {new Date(student.dot).toLocaleDateString('en-GB')}</span></p>
+      <p  className='flex justify-between sm:text-sm lg:text-lg' ><strong  className='sm:text-sm lg:text-lg'>DATE OF BIRTH :</strong><span className='text-yellow-800'>  {new Date(student.dob).toLocaleDateString('en-GB')}</span></p>
+      <p  className='flex justify-between sm:text-sm lg:text-lg'><strong  className='sm:text-sm lg:text-lg'>CLASS STREAM :</strong><span className='text-yellow-800'> {student.stream.toUpperCase()}</span></p>
+      <p  className='flex justify-between'><strong  className='sm:text-sm lg:text-lg'>PARENT/G  NAME :</strong> <span className='text-yellow-800 sm:text-sm lg:text-lg'>{student.parentname.toUpperCase()}</span></p>
+      <p  className='flex justify-between sm:text-sm md:text-lg'><strong  className='sm:text-sm lg:text-lg'>PARENT/G PHONE :</strong><span  className='text-yellow-800 sm:text-sm lg:text-lg'> +254{student.phone}</span></p>
+      <p  className='flex justify-between sm:text-sm lg:text-lg'><strong  className='sm:text-sm lg:text-lg'>PARENT/G  EMAIL :</strong><span  className='text-yellow-800 sm:text-sm lg:text-lg'> {student.email}</span></p>
+      <p  className='flex justify-between'><strong  className='sm:text-sm lg:text-lg'>PREVIOUS SCHOOL :</strong> <span  className='text-yellow-800 sm:text-sm lg:text-lg '>{student.previous.toUpperCase()}</span></p>
 
       {/* Add more fields as necessary */}
        </div>
