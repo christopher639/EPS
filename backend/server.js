@@ -171,7 +171,9 @@ app.post("/api/eng",async(req,res)=>{
 
 //students api to get student and to post students to the database
 app.get("/api/students",async(req,res)=>{
+  
   try {
+
     const students  = await studentModel.find()
     res.status(200).json(students)
   } catch (error) {
@@ -187,13 +189,39 @@ app.get("/api/students",async(req,res)=>{
 
 // Route for adding a new student and handling image upload
 app.post('/api/students', async (req, res) => {
+  // Working on the API to avoid posting similar students in the database
+  const { regno } = req.body;
+
   try {
+    // Check if a student with the same registration number already exists
+    const studentregno = await studentModel.findOne({ regno });
+
+    if (studentregno) {
+      // If the student exists, send an appropriate response
+      return res.status(400).json({
+        success: false,
+        message: `Student with registration number ${regno} already exists in the database.`,
+      });
+    }
+
+    // Create the new student if no duplicate is found
     await studentModel.create(req.body);
-    res.status(200).json({success:"true",message:"Student addimmited successfully"})
+
+    // Return success message for successful student admission
+    res.status(201).json({
+      success: true,
+      message: "Student admitted successfully",
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    // Catch any errors and return an error response
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 });
+
+
 
 app.get('/api/students/:id', async (req, res) => {
   const studentId = req.params.id;
