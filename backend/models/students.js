@@ -6,12 +6,12 @@ const studentSchema = new mongoose.Schema(
     name: { type: String, required: true },
     dot: { type: Date, required: true }, // Date of admission
     dob: { type: Date, required: true }, // Date of birth
-    regno: { type: String, required: true },
+    regno: { type: String, required: true,unique:true },
     gender: { type: String, required: true },
     previous: { type: String, required: true }, // Previous school or level
     stream: { type: String, required: true },
     parentname: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true,unique:true },
     phone: { type: Number, required: true }
   },
   {
