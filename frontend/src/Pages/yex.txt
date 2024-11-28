@@ -1,0 +1,19 @@
+{
+      stream.map((item,index)=>{
+        
+        return(
+          <div className="grid mx-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
+          <NavLink to="/marks">
+            <div className="min-w-full border border-slate-300 hover:bg-slate-800 hover:text-white rounded-lg flex justify-center items-center h-32 p-4">
+              <div className="flex flex-col items-center">
+                <p className="text-lg font-semibold">{item.name}</p>
+                <p className="text-sm">TOTAL:</p>
+                <p className="text-sm">COD:{item.teacher}</p>
+                
+              </div>
+            </div>
+          </NavLink>
+        </div>
+        )
+      })
+     }

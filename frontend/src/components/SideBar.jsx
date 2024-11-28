@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
   return (
-    <div className="hidden bg-gray-200 border  rounded md:flex flex-col min-h-full bg-gray-100 text-white w-50 p-4">
+    <div className="hidden bg-gray-200 border  rounded md:flex flex-col min-h-full  bg-gray-100 text-white w-50 p-4">
       {/* Logo Section */}
       <div className="flex justify-center ">
       <div className="flex justify-center   items-center h-8 w-8  md:w-24 md:h-24">
@@ -16,7 +16,7 @@ const SideBar = () => {
       </div>
 
       {/* Navigation Links */}
-      <NavLink >
+      <NavLink to='/dashboard' >
         <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -30,13 +30,7 @@ const SideBar = () => {
           <li className="list-none text-sm">DASHBOARD</li>
         </div>
       </NavLink>
-
-      <NavLink to="/admission">
-      <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
-      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M610-210q12 0 21-9t9-21q0-12-9-21t-21-9q-12 0-21 9t-9 21q0 12 9 21t21 9Zm110 0q12 0 21-9t9-21q0-12-9-21t-21-9q-12 0-21 9t-9 21q0 12 9 21t21 9Zm110 0q12 0 21-9t9-21q0-12-9-21t-21-9q-12 0-21 9t-9 21q0 12 9 21t21 9Zm-630 90q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v268q-19-9-39-15.5t-41-9.5v-243H200v560h242q3 22 9.5 42t15.5 38H200Zm0-120v40-560 243-3 280Zm80-40h163q3-21 9.5-41t14.5-39H280v80Zm0-160h244q32-30 71.5-50t84.5-27v-3H280v80Zm0-160h400v-80H280v80ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Z"/></svg>
-          <li className="list-none text-sm">ADMISSION</li>
-        </div>
-      </NavLink>
+       
 
       <NavLink to="/students">
       <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
@@ -48,7 +42,18 @@ const SideBar = () => {
       <NavLink to="/streams">
       <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z"/></svg>
-          <li className="list-none text-sm">ACADEMICS</li>
+          <li className="list-none text-sm">STREAMS </li>
+        </div>
+      </NavLink>
+      <NavLink to="/teachers">
+      <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
+          <li className="list-none text-sm">TEACHERS</li>
+        </div>
+      </NavLink><NavLink to="/learningarea">
+      <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
+          <li className="list-none text-sm">LEARNING </li>
         </div>
       </NavLink>
 
@@ -59,7 +64,7 @@ const SideBar = () => {
         </div>
       </NavLink>
 
-      <NavLink >
+      <NavLink to='/finance' >
       <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
           <li className="list-none text-sm">FINANCE</li>
@@ -73,16 +78,16 @@ const SideBar = () => {
           <li className="list-none text-sm">USERS</li>
         </div>
       </NavLink>
-      <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
+     <NavLink to="/analytics"> <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
       <svg className="hover:" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#00000"><path d="M280-280h80v-200h-80v200Zm320 0h80v-400h-80v400Zm-160 0h80v-120h-80v120Zm0-200h80v-80h-80v80ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
           <li className="list-none text-sm">ANALYTICS</li>
-        </div>
+        </div></NavLink>
         <div className="flex items-center border px-3 py-1   mt-2 gap-1">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/></svg>
           <li className="list-none text-sm text-slate-800 md:lg lg:2xl">PROFILE</li>
         </div>
         <div>
-  <p className='text-sm ml-4 whitespace-wrap text-black'>© 2024 Software Engineer Bundi</p>
+  <p className='text-sm ml-4 whitespace-wrap text-black mt-6'>© 2024  Bundi</p>
 </div>
       
 

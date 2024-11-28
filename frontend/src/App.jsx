@@ -17,6 +17,11 @@ import Parents from "./Pages/Parents";
 import MarksFom1y from "./Pages/MarksFom1y";
 import Form1yReport from "./Pages/Form1yReport";
 import StudentDetail from "./Pages/StudentDetail";
+import JoinedStudentsMarks from "./Pages/JoinedStudentsMarks";
+import Teachers from "./Pages/Teachers";
+import LearningArea from "./Pages/LearningArea";
+import Analytics from "./Pages/Analytics";
+import Finance from "./Pages/Finance";
 
 const App = () => {
   return (
@@ -46,7 +51,12 @@ const App = () => {
           <Route path="/streams" element={<Academic />} />
           <Route path="/fees" element={<Fees />} />
           <Route path="/parents" element={<Parents />} />
+          <Route path="/teachers" element={<Teachers />} />
+          <Route path="/learningarea" element={<LearningArea />} />
           <Route path="/student/:id" element={<StudentDetail />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/finance" element={<Finance />} />
+          <Route path="/joined-students_marks/:stream" element={<JoinedStudentsMarks />} />
         </Routes>
       </div>
       <div className="md:mr-0">

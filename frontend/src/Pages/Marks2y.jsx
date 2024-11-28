@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 axios.defaults.baseURL = "http://localhost:3000";
 
-const Marks = () => {
+const Marks2y = () => {
     const [students, setMarks] = useState([]);
     const [searchQuery, setSearchQuery] = useState(''); // State for search input
-    const { stream } = useParams(); // Extract 'stream' from the URL
 
     useEffect(() => {
         const fetchData = () => {
-            axios.get(`/api/joined-students_marks/${stream}`) // Use the 'stream' from the URL
-                .then(response => setMarks(response.data))
+            axios.get("/api/joined-students_marks-form1y")
+                .then(students => setMarks(students.data))
                 .catch(err => console.log(err));
         };
-
+  
         fetchData();
         const interval = setInterval(fetchData, 5000);
         return () => clearInterval(interval);
-    }, [stream]); // Dependency array updated with 'stream'
+    }, []);
 
     const handlePrint = () => {
         const printContents = document.getElementById("printableTable").innerHTML;
@@ -37,7 +36,7 @@ const Marks = () => {
     return (
         <div className='flex overflow-none mx-1 mr-5 flex-col md:flex-row '>
             <div className='w-full'>
-                <div className='flex flex-col'>
+            <div className='flex flex-col'>
                     <div className='flex justify-between items-center'>
                         <div className='flex gap-2'>
                             <input 
@@ -85,27 +84,30 @@ const Marks = () => {
                             <tbody>
                                 {
                                     filteredStudents.map((student, index) => {
-                                        const avg = (student.marks.math10 + student.marks.eng10 + student.marks.chem10 + student.marks.kisw10 + student.marks.agri10 + student.marks.busi10 + student.marks.physc10 + student.marks.histo10) / 8;
-                                        const total = (student.marks.math10 + student.marks.eng10 + student.marks.chem10 + student.marks.kisw10 + student.marks.agri10 + student.marks.busi10 + student.marks.physc10 + student.marks.histo10);
-                                        
-                                        return (
-                                            <tr key={index} className='border hover:bg-gray-200 h-10 py-3 border-slate-500'>
-                                                <td className='pr-2 whitespace-nowrap border border-slate-500'>{index + 1}</td> 
-                                                <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.name}</td>
-                                                <td className='pr-2 text-center border border-slate-500'>{student.regno}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{student.marks.math10}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{student.marks.eng10}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{student.marks.chem10}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{student.marks.kisw10}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{student.marks.agri10}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{student.marks.busi10}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{student.marks.physc10}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{student.marks.histo10}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{total}</td>
-                                                <td className='pr-2 border text-center border-slate-500'>{avg.toFixed(2)}</td>
-                                            </tr>
-                                        );
-                                    })
+                                        const avg= (student.marks.math10  +student.marks.eng10+  +student.marks.chem10 +  student.marks.kisw10 + student.marks.agri10 + student.marks.busi10 +student.marks.physc10 +student.marks.histo10 +student.marks.physc10) / 9;
+                                        const total= (student.marks.math10  +student.marks.eng10+  +student.marks.chem10 +  student.marks.kisw10 + student.marks.agri10 + student.marks.busi10 +student.marks.physc10 +student.marks.histo10 +student.marks.physc10);
+                                      
+                                        return(
+                                            <tr key={index} className='border  hover:bg-gray-200 h-10 py-3 border-slate-500'>
+                                            <td className='pr-2 whitespace-nowrap border border-slate-500'>{index + 1}</td> 
+                                            <td className='pr-2 whitespace-nowrap border border-slate-500'>{student.name}</td>
+                                            <td className='pr-2 text-center border border-slate-500'>{student.regno}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{student.marks.math10}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{student.marks.eng10}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{student.marks.chem10}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{student.marks.kisw10}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{student.marks.agri10}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{student.marks.busi10}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{student.marks.physc10}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{student.marks.histo10}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{student.marks.bio10}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{total}</td>
+                                            <td className='pr-2 border text-center border-slate-500'>{avg.toFixed(2)}</td>
+                                        </tr>
+                                        )
+                                    }
+                                    
+                                    )
                                 }
                             </tbody>
                         </table>
@@ -116,4 +118,4 @@ const Marks = () => {
     );
 };
 
-export default Marks;
+export default Marks2y;

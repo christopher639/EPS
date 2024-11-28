@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
-axios.defaults.baseURL = "https://eps-backend.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 
 const TopBar = () => {
   const [drawer, setDrawer] = useState(false);
   const [students, setMarks] = useState([]);
+  const [stream,setStream] = useState([]);
 
   useEffect(() => {
     const fetchData = () => {
-      axios.get("/api/students")
+      axios.get("http://localhost:3000/api/students")
         .then(students => setMarks(students.data))
         .catch(err => console.log(err));
     };
@@ -19,20 +20,32 @@ const TopBar = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const fetchData = () => {
+      axios.get("http://localhost:3000/api/stream")
+        .then(stream => setStream(stream.data))
+        .catch(err => console.log(err));
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 1000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className='relative gap-5 p-5 bg-gray-100'>
       <div className='flex gap-4 items-center bg-gray-100'>
         <div className='flex items-center justify-start w-1/3'>
-          <p className='text-slate-800 text-sm md:text-lg font-semibold whitespace-nowrap'>STUDENTS:</p>
-          <p className='text-green-800 text-xl md:text-3xl lg:text-3xl font-bold '>{students.length}</p>
+          <p className='text-slate-800  font-semibold whitespace-nowrap'>STUDENTS :</p>
+          <p className='text-green-800  font-bold '>{students.length}</p>
         </div>
 
-        <div className='flex justify-center w-1/3'>
-          <p className='text-sm text-gray-700 py-2'>Data2</p>
+        <div className='flex justify-center gap-2 w-1/3'>
+          <p className='text-sm text-gray-700 py-2'>TEACHERS</p>
         </div>
 
-        <div className='flex justify-end items-center w-1/3'>
-          <p className='text-sm text-gray-700 py-2'>Data3</p>
+        <div className='flex  justify-end items-center w-1/3'>
+          <p className='text-sm text-gray-700 py-2'>STREAMS : </p>
+          <p className='text-green-800  font-bold '>{stream.length}</p>
         </div>
 
         <div>

@@ -68,7 +68,7 @@ const Users = () => {
   return (
     <div className='flex flex-col min-w-full bg-gray-100'>
          <ToastContainer />
-      <div className='flex justify-between mx-4 mt-4'>
+      <div className='flex justify-between mx-4 py-3'>
         <div className='flex gap-2'>
           <input
             className='outline-none px-4 py-2 text-center border border-gray-300 rounded-md w-1/3'
@@ -90,53 +90,63 @@ const Users = () => {
       </div>
 
       {userform && (
-        <div className='fixed inset-0 bg-black bg-opacity-50 backdrop-blur-[0px] flex justify-center items-center'>
-          <div className='bg-white p-6 rounded-lg w-full mx-5 md:w-1/2 shadow-lg'>
-            <div className='flex justify-between'>
-              <p className='text-sm mb-3 bg-green-700 shadow-lg text-white px-2 py-1 rounded'>
-                Fill this Form
-              </p>
-              <p
-                className='bg-green-800 h-6 rounded-full cursor-pointer'
-                onClick={() => setUserForm(false)}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="http://www.w3.org/2000/svg" width="24px" fill="white">
-                  <path d="m338-288-50-50 141-142-141-141 50-50 142 141 141-141 50 50-141 141 141 142-50 50-141-141-142 141Z" />
-                </svg>
-              </p>
-            </div>
-            <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
-              <input
-                required
-                className='outline-none px-4 w-full border rounded-md border-gray-300 py-2'
-                type="text"
-                name='name'
-                placeholder='Full Name'
-                onChange={handleOnChange}
-              />
-              <input
-                required
-                className='outline-none px-4 w-full border rounded-md border-gray-300 py-2'
-                type="email"
-                name='email'
-                placeholder='Email'
-                onChange={handleOnChange}
-              />
-              <input
-                required
-                className='outline-none px-4 w-full border rounded-md border-gray-300 py-2'
-                type="tel"
-                name='mobile'
-                placeholder='Mobile Number'
-                onChange={handleOnChange}
-              />
-              <button className='bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800' type='submit'>
-                Submit
-              </button>
-            </form>
-          </div>
+  <div className='fixed inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-[0px] flex justify-center items-center'>
+    <div className='bg-white p-6 rounded-lg max-h-[80vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-1/2 shadow-lg'>
+      <div className='flex justify-between items-center mb-4'>
+      <p className='text-lg font-semibold'>Add New Student </p>
+        <p
+          className='bg-green-800 h-6 rounded-full cursor-pointer'
+          onClick={() => setUserForm(false)}
+        >
+         
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
+        <input
+          required
+          className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+          type="text"
+          name='name'
+          placeholder='Full Name'
+          onChange={handleOnChange}
+        />
+        <input
+          required
+          className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+          type="email"
+          name='email'
+          placeholder='Email'
+          onChange={handleOnChange}
+        />
+        <input
+          required
+          className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
+          type="tel"
+          name='mobile'
+          placeholder='Mobile Number'
+          onChange={handleOnChange}
+        />
+        
+        <div className='flex justify-end gap-4 mt-6'>
+          <button
+            type="button"
+            onClick={() => setUserForm(false)}
+            className='bg-gray-500 text-white py-2 px-4 rounded-md'
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className='bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-800'
+          >
+            Submit
+          </button>
         </div>
-      )}
+      </form>
+    </div>
+  </div>
+)}
 
       {/* Display a "Wait, it's loading..." message if loading */}
       {loading && (
