@@ -22,6 +22,8 @@ import Teachers from "./Pages/Teachers";
 import LearningArea from "./Pages/LearningArea";
 import Analytics from "./Pages/Analytics";
 import Finance from "./Pages/Finance";
+import Departments from "./Pages/Departments";
+import Offices from "./Pages/Offices";
 
 const App = () => {
   return (
@@ -56,6 +58,8 @@ const App = () => {
           <Route path="/student/:id" element={<StudentDetail />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/finance" element={<Finance />} />
+          <Route path="/departments" element={<Departments/>} />
+          <Route path="/offices" element={<Offices/>} />
           <Route path="/joined-students_marks/:stream" element={<JoinedStudentsMarks />} />
         </Routes>
       </div>

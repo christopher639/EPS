@@ -19,16 +19,17 @@ const Teachers = () => {
     email: "",
     phone: "",
     salary: "",
-    subjectsteaching: [],
+    subjectsteaching:"",
     type: "",
     tse: "",
+    department: "",
   });
   const [streams, setStreams] = useState([]);
   const navigate = useNavigate();
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("/api/teachers")
+    axios.get("http://localhost:3000/api/teachers")
       .then(response => {
         setTeachers(response.data.reverse());
         setLoading(false);
@@ -170,8 +171,7 @@ const Teachers = () => {
               onChange={(e) => setFormData({ ...formData, nationaid: e.target.value })}
             />
           </div>
-
-          {/* Email */}
+          {/*Email */}
           <div className="min-w-full">
             <p className="text-sm text-gray-700">Email</p>
             <input
@@ -209,16 +209,16 @@ const Teachers = () => {
 
           {/* Subjects Teaching */}
           <div className="min-w-full">
-            <p className="text-sm text-gray-700">Subjects Teaching</p>
+            <p className="text-sm text-gray-700">Modules teaching</p>
             <input
               className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
               type="text"
               name="subjectsteaching"
-              placeholder="e.g., Chemistry, Geography"
               value={formData.subjectsteaching}
-              onChange={(e) => setFormData({ ...formData, subjectsteaching: e.target.value.split(',').map(sub => sub.trim()) })}
+              onChange={(e) => setFormData({ ...formData, subjectsteaching: e.target.value })}
             />
           </div>
+
 
           {/* Type */}
           <div className="min-w-full">
@@ -244,6 +244,16 @@ const Teachers = () => {
               name="tse"
               value={formData.tse}
               onChange={(e) => setFormData({ ...formData, tse: e.target.value })}
+            />
+          </div>
+          <div className="min-w-full">
+            <p className="text-sm text-gray-700">Depertment</p>
+            <input
+              className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+              type="text"
+              name="tse"
+              value={formData.department}
+              onChange={(e) => setFormData({ ...formData, department: e.target.value })}
             />
           </div>
         </div>
@@ -274,7 +284,7 @@ const Teachers = () => {
           <p className="text-lg font-semibold text-gray-600">Wait, it's loading...</p>
         </div>
       ) : (
-        <div className='mx-4 md:mx-0 flex max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+        <div className='mx-4 md:mx-0 grid gri-cols-1 max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
           <table className='min-w-full mt-2'>
             <thead className='bg-slate-800 px-1 h-10 text-white'>
               <tr>

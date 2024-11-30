@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import axios from "axios";
-axios.defaults.baseURL = "https://eps-backend.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 
 const Users = () => {
   const [userform, setUserForm] = useState(false);
@@ -89,64 +89,59 @@ const Users = () => {
         </div>
       </div>
 
-      {userform && (
-  <div className='fixed inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-[0px] flex justify-center items-center'>
-    <div className='bg-white p-6 rounded-lg max-h-[80vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-1/2 shadow-lg'>
-      <div className='flex justify-between items-center mb-4'>
-      <p className='text-lg font-semibold'>Add New Student </p>
-        <p
-          className='bg-green-800 h-6 rounded-full cursor-pointer'
-          onClick={() => setUserForm(false)}
-        >
-         
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
-        <input
-          required
-          className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
-          type="text"
-          name='name'
-          placeholder='Full Name'
-          onChange={handleOnChange}
-        />
-        <input
-          required
-          className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
-          type="email"
-          name='email'
-          placeholder='Email'
-          onChange={handleOnChange}
-        />
-        <input
-          required
-          className='w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500'
-          type="tel"
-          name='mobile'
-          placeholder='Mobile Number'
-          onChange={handleOnChange}
-        />
-        
-        <div className='flex justify-end gap-4 mt-6'>
+      {userform  && (
+      
+      <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+      <form onSubmit={handleSubmit}  className="bg-white p-6 rounded-lg w-96">
+        <h2 className="text-xl font-semibold mb-4">Add New User</h2>
+        <div className="mb-4">
+          <label className="block text-sm font-medium">Stream Name</label>
+          <input
+            type="text"
+            className="w-full p-2 border border-gray-300 rounded-md"
+           name='name'
+              onChange={handleOnChange}
+            placeholder="Enter user name"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium">email</label>
+          <input
+            type="text"
+            className="w-full p-2 border border-gray-300 rounded-md"
+              name='email'
+            onChange={handleOnChange}
+            placeholder="user@gazmil.com"
+          />
+        </div>
+            <div className="mb-4">
+          <label className="block text-sm font-medium">email</label>
+          <input
+            type="number"
+            className="w-full p-2 border border-gray-300 rounded-md"
+              name='mobile'
+            onChange={handleOnChange}
+            placeholder="745678765"
+          />
+        </div>
+        <div className="flex justify-end gap-4">
           <button
-            type="button"
             onClick={() => setUserForm(false)}
-            className='bg-gray-500 text-white py-2 px-4 rounded-md'
+            className="px-4 py-2 bg-gray-300 text-black rounded-md"
           >
             Cancel
           </button>
-          <button
-            type="submit"
-            className='bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-800'
+          <button type='submit'
+          
+            className="px-4 py-2 bg-green-500 text-white rounded-md"
           >
-            Submit
+            Add User
           </button>
         </div>
       </form>
     </div>
-  </div>
-)}
+  
+  )}
 
       {/* Display a "Wait, it's loading..." message if loading */}
       {loading && (

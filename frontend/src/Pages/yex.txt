@@ -1,19 +1,28 @@
-{
-      stream.map((item,index)=>{
-        
-        return(
-          <div className="grid mx-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
-          <NavLink to="/marks">
-            <div className="min-w-full border border-slate-300 hover:bg-slate-800 hover:text-white rounded-lg flex justify-center items-center h-32 p-4">
-              <div className="flex flex-col items-center">
-                <p className="text-lg font-semibold">{item.name}</p>
-                <p className="text-sm">TOTAL:</p>
-                <p className="text-sm">COD:{item.teacher}</p>
-                
-              </div>
-            </div>
-          </NavLink>
-        </div>
-        )
-      })
-     }
+<div className="min-w-full">
+  <p className="text-sm text-gray-700">Subjects Teaching</p>
+  <div className="grid grid-cols-2 gap-2 mt-2">
+    {["Chemistry", "Geography", "Mathematics", "Physics", "Biology", "History"].map((subject) => (
+      <label key={subject} className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          name="subjectsTeaching"
+          value={subject}
+          className="h-4 w-4 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+          checked={formData.subjectsTeaching.includes(subject)}
+          onChange={(e) => {
+            const selectedSubjects = formData.subjectsTeaching;
+            if (e.target.checked) {
+              setFormData({ ...formData, subjectsTeaching: [...selectedSubjects, subject] });
+            } else {
+              setFormData({
+                ...formData,
+                subjectsTeaching: selectedSubjects.filter((sub) => sub !== subject),
+              });
+            }
+          }}
+        />
+        <span className="text-gray-800">{subject}</span>
+      </label>
+    ))}
+  </div>
+</div>

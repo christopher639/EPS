@@ -30,7 +30,21 @@ const SideBar = () => {
           <li className="list-none text-sm">DASHBOARD</li>
         </div>
       </NavLink>
+
+      <NavLink to="/departments">
+      <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
+          <li className="list-none text-sm">DEPARTMENTS</li>
+        </div>
+      </NavLink>
        
+
+      <NavLink to="/streams">
+      <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z"/></svg>
+          <li className="list-none text-sm">CLASS/LEVELS</li>
+        </div>
+      </NavLink>
 
       <NavLink to="/students">
       <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
@@ -39,23 +53,21 @@ const SideBar = () => {
         </div>
       </NavLink>
 
-      <NavLink to="/streams">
-      <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
-      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z"/></svg>
-          <li className="list-none text-sm">STREAMS </li>
-        </div>
-      </NavLink>
+   
       <NavLink to="/teachers">
       <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
           <li className="list-none text-sm">TEACHERS</li>
         </div>
-      </NavLink><NavLink to="/learningarea">
+      </NavLink>
+      <NavLink to="/learningarea">
       <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
-          <li className="list-none text-sm">LEARNING </li>
+          <li className="list-none text-sm">SUBJECTS</li>
         </div>
       </NavLink>
+
+      
 
       <NavLink to="/parents">
       <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full  px-3 py-1   felx-row gap-1">
