@@ -4,16 +4,23 @@ const path = require("path");
 const mongoose = require("mongoose")
 
 
+const bodyParser = require('body-parser');
+
+const learningrouter =require("./Routes/LearningAreaRoutes.js")
+const departmentRoutes =require("./Routes/departmentRoutes.js")
+const officeRoutes = require('./Routes/officeRoutes.js');
+const teacherRoutes = require('./Routes/teacherRoutes');
+
 const staffModel = require("./models/staffs.js")
 const MarkModel = require("./models/marks.js")
 const UserModel = require("./models/Users.js")
 
-const engModel = require("./models/english.js")
+const LearningArea = require("./models/Learningarea.js")
 const studentModel = require("./models/students.js")
 const subjectsMarksModel  =  require('./models/subjectsmarks.js')
 const streamModel = require("./models/stream.js")
 const LastRegno = require('./models/LastRegno.js');
-const Teacher = require('./models/Teacher.js');
+
 
 const app = express()
 const port = process.env.PORT|| 3000;
@@ -25,11 +32,19 @@ mongoose.connect("mongodb://localhost:27017/dreamhomehouse")
   console.log("Database connected")
 })
 
+//Routes
+
+app.use('/api/learningAreas', learningrouter);
+app.use('/api/departments', departmentRoutes);
+app.use('/api/offices', officeRoutes);
+app.use('/api/teachers', teacherRoutes);
 //
 //mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system")
 //.then(()=>{
  // console.log("Database connected")
 //})
+
+
 
 //API to get all users or staff
 app.get('/api/staffs',async(req,res)=>{
@@ -44,6 +59,9 @@ app.get('/api/staffs',async(req,res)=>{
 app.listen(port,()=>{
     console.log(`Server is running at port http://localhost:${port}`)
 })
+
+// Routes
+
 app.get("/",(req,res)=>{
     res.send("Api is working Christopher Bundi")
 })
@@ -72,13 +90,13 @@ app.put("/update",async(req,res)=>{
 
 
 //User model controllers date 14-10-2024
-app.get("/users",async(req,res)=>{
- try {
-  const users = await UserModel.find()
-  res.status(200).json(users)
- } catch (error) {
-  res.status(500).json({message:error.message})
- }
+app.get("/Users",async(req,res)=>{
+  try {
+    const users = await UserModel.find()
+    res.status(200).json(users)
+  } catch (error) {
+    res.status(500).json({success:"false",message:error})
+  }
 })
 
 app.post("/create",async(req,res)=>{
@@ -476,19 +494,6 @@ app.get("/api/total-students-by-stream", async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //27/10/2024  stream 
 app.post("/api/stream",async(req,res)=>{
   try {
@@ -566,64 +571,3 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-//28-12/2024
-app.get('/api/teachers', async (req, res) => {
-  try {
-    const teachers = await Teacher.find();
-    res.status(200).json(teachers);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-
-app.get('/api/teachers/:id', async (req, res) => {
-  try {
-    const teacher = await Teacher.findById(req.params.id);
-    if (!teacher) {
-      return res.status(404).json({ message: 'Teacher not found' });
-    }
-    res.status(200).json(teacher);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-
-app.post('/api/teachers', async (req, res) => {
-  try {
-    const newTeacher = new Teacher(req.body);
-    const savedTeacher = await newTeacher.save();
-    res.status(201).json(savedTeacher);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
-app.put('/api/teachers/:id', async (req, res) => {
-  try {
-    const updatedTeacher = await Teacher.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true } // Return updated document and validate
-    );
-    if (!updatedTeacher) {
-      return res.status(404).json({ message: 'Teacher not found' });
-    }
-    res.status(200).json(updatedTeacher);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
-app.delete('/api/teachers/:id', async (req, res) => {
-  try {
-    const deletedTeacher = await Teacher.findByIdAndDelete(req.params.id);
-    if (!deletedTeacher) {
-      return res.status(404).json({ message: 'Teacher not found' });
-    }
-    res.status(200).json({ message: 'Teacher deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});

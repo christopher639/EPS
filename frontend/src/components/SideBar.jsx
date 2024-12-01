@@ -1,18 +1,20 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import {  useNavigate, useParams } from 'react-router-dom';
 const SideBar = () => {
   return (
     <div className="hidden bg-gray-200 border  rounded md:flex flex-col min-h-full  bg-gray-100 text-white w-50 p-4">
       {/* Logo Section */}
       <div className="flex justify-center ">
-      <div className="flex justify-center   items-center h-8 w-8  md:w-24 md:h-24">
+     <NavLink to='/dashboard'>
+     <div className="flex justify-center   items-center h-8 w-8  md:w-24 md:h-24">
           <img
-            className="w-8 h-8 md:w-16 md:h-16 bg-gray-100"
-            src="kibabiilogo.jpeg"
+            className="w-8 h-8 md:w-[70px] md:h-16 bg-gray-200"
+            src="KIbabii-Logo.png"
             alt="Description of image"
           />
         </div>
+     </NavLink>
       </div>
 
       {/* Navigation Links */}

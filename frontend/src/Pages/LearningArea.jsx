@@ -9,7 +9,9 @@ axios.defaults.baseURL = "http://localhost:3000";
 const LearningArea = () => {
   const [learningareas, setLearningAreas] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [teachers, setTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [departments, setDepartments] = useState([]);
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const [formData, setFormData] = useState({
     subjectCode: "",
@@ -39,6 +41,33 @@ const LearningArea = () => {
       });
   };
 
+  
+  const getFetchDataTeachers = () => {
+    setLoading(true);
+    axios.get("http://localhost:3000/api/teachers")
+      .then(response => {
+        setTeachers(response.data.reverse());
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+  const fetchDepartments = () => {
+    //  setLoading(true);
+      axios
+        .get("/api/departments")
+        .then((response) => {
+          setDepartments(response.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          setLoading(false);
+        });
+    };
+  
   const fetchStreams = () => {
     axios.get("/api/stream")
       .then(response => {
@@ -52,7 +81,12 @@ const LearningArea = () => {
   useEffect(() => {
     getFetchData();
     fetchStreams();
+    fetchDepartments();
+    getFetchDataTeachers()
   }, []);
+
+
+
 
   const handleDelete = async (id) => {
     try {
@@ -180,25 +214,49 @@ const LearningArea = () => {
                   {/* Department */}
                   <div className="min-w-full">
                     <p className="text-sm text-gray-700">Department</p>
-                    <input
+                    <select
                       className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      type="text"
                       name="department"
                       value={formData.department}
                       onChange={handleChange}
-                    />
+                    >
+                      <option value=""></option>
+                      {departments.map((department) => (
+                        <option key={department._id} value={department.name}>
+                         {department.departmentName}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-
                   {/* Teacher ID */}
-                  <div className="min-w-full">
-                    <p className="text-sm text-gray-700">Istructor</p>
-                    <input
-                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      type="text"
-                      name="teacher"
-                      value={formData.teacher}
-                      onChange={handleChange}
-                    />
+                  <div>
+                    <p>Instructor</p>
+                    <div className="relative">
+                      <select
+                        className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                        name="departmentHead"
+                        value={formData.teacher}
+                        onChange={(e) => setFormData({ ...formData, teacher: e.target.value })}
+                        style={{
+                          maxHeight: "100px",
+                          overflowY: "auto",
+                        }}
+                      >
+                        <option value=""></option>
+                        {teachers.map((teacher) => (
+                          <option
+                            key={teacher.fullname}
+                            value={teacher.fullname}
+                            className="border-b border-gray-300 last:border-b-0"
+                            style={{
+                              borderBottom: "1px solid #d1d5db", // Tailwind gray-300
+                            }}
+                          >
+                            {teacher.fullname}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
                   {/* Schedule */}
@@ -297,7 +355,8 @@ const LearningArea = () => {
                   <td className="py-2 px-4">{learningarea.subjectCode}</td>
                   <td className="py-2 px-4">{learningarea.name}</td>
                   <td className="py-2 px-4">{learningarea.department}</td>
-                  <td className="py-2 px-4"></td>
+                  <td className="py-2 px-4">{learningarea.teacher}</td>
+                
                   <td className="py-2 px-4">
                     <button
                       onClick={() => handleDelete(learningarea._id)}

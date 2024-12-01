@@ -46,7 +46,7 @@ const TopBar = () => {
         </div>
 
         <div className='flex  justify-end items-center w-1/3'>
-        <div className='flex bg-white p-2'>
+        <div className='flex flex-row bg-white p-2'>
         <p className=' text-gray-700 font-semibold '>STREAMS : </p>
         <p className='text-green-800  font-bold '>{stream.length}</p>
         </div>

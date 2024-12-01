@@ -9,6 +9,8 @@ axios.defaults.baseURL = "http://localhost:3000";
 const Teachers = () => {
   const [teachers, setTeachers] = useState([]); // Corrected setter function
   const [searchQuery, setSearchQuery] = useState("");
+  const [learningareas, setLearningAreas] = useState([]);
+  const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -40,6 +42,18 @@ const Teachers = () => {
       });
   };
 
+  const getLeaningareaData = () => {
+    setLoading(true);
+    axios.get("/api/learningAreas")
+      .then(response => {
+        setLoading(false);
+        setLearningAreas(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
   const fetchStreams = () => {
     axios.get("/api/streams")
       .then(response => {
@@ -49,10 +63,26 @@ const Teachers = () => {
         console.log(err);
       });
   };
+  const fetchDepartments = () => {
+    //  setLoading(true);
+      axios
+        .get("/api/departments")
+        .then((response) => {
+          setDepartments(response.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          setLoading(false);
+        });
+    };
+  
 
   useEffect(() => {
     getFetchData();
     fetchStreams();
+    fetchDepartments();
+    getLeaningareaData()
   }, []);
 
   const formatDate = (dateString) => {
@@ -209,17 +239,22 @@ const Teachers = () => {
 
           {/* Subjects Teaching */}
           <div className="min-w-full">
-            <p className="text-sm text-gray-700">Modules teaching</p>
-            <input
+            <p className="text-sm text-gray-700">Modules Teaching</p>
+            
+            <select
               className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-              type="text"
               name="subjectsteaching"
               value={formData.subjectsteaching}
               onChange={(e) => setFormData({ ...formData, subjectsteaching: e.target.value })}
-            />
+            >
+              <option value="">Select a Module</option>
+              {learningareas.map((area) => (
+                <option key={area._id} value={area.name}>
+                  {area.name}
+                </option>
+              ))}
+            </select>
           </div>
-
-
           {/* Type */}
           <div className="min-w-full">
             <p className="text-sm text-gray-700">Type of Teacher</p>
@@ -247,38 +282,41 @@ const Teachers = () => {
             />
           </div>
           <div className="min-w-full">
-            <p className="text-sm text-gray-700">Depertment</p>
-            <input
-              className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-              type="text"
-              name="tse"
-              value={formData.department}
-              onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-            />
-          </div>
-        </div>
-
-        <div className="mt-6 flex justify-end">
-          <button
-            type="button"
-            onClick={() => setShowModal(false)}
-            className="bg-gray-500 text-white py-2 px-4 rounded-md mr-2"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="bg-green-600 text-white py-2 px-4 rounded-md"
-          >
-            Add Teacher
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
-
-
+                    <p className="text-sm text-gray-700">Department</p>
+                    <select
+                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                      name="department"
+                      value={formData.department}
+                        onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                    >
+                      <option value=""></option>
+                      {departments.map((department) => (
+                        <option key={department._id} value={department.departmentName}>
+                         {department.departmentName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                  <div className="mt-6 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => setShowModal(false)}
+                      className="bg-gray-500 text-white py-2 px-4 rounded-md mr-2"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="bg-green-600 text-white py-2 px-4 rounded-md"
+                    >
+                      Add Teacher
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <p className="text-lg font-semibold text-gray-600">Wait, it's loading...</p>

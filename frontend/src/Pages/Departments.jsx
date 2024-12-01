@@ -8,6 +8,7 @@ axios.defaults.baseURL = "http://localhost:3000";
 
 const Departments = () => {
   const [departments, setDepartments] = useState([]);
+  const [teachers, setTeachers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -23,10 +24,24 @@ const Departments = () => {
     budget: "",
   });
 
+  const getFetchData = () => {
+    setLoading(true);
+    axios.get("http://localhost:3000/api/teachers")
+      .then(response => {
+        setTeachers(response.data.reverse());
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+
   const navigate = useNavigate();
 
   const fetchDepartments = () => {
-    setLoading(true);
+  //  setLoading(true);
     axios
       .get("/api/departments")
       .then((response) => {
@@ -41,6 +56,7 @@ const Departments = () => {
 
   useEffect(() => {
     fetchDepartments();
+    getFetchData(); // Fetch teachers here
   }, []);
 
   const handleDelete = async (id) => {
@@ -173,13 +189,32 @@ const Departments = () => {
                   </div>
                   <div>
                     <p>Department Head</p>
-                    <input
-                      type="text"
-                      name="departmentHead"
-                      value={formData.departmentHead}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border rounded"
-                    />
+                    <div className="relative">
+                      <select
+                        className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                        name="departmentHead"
+                        value={formData.departmentHead}
+                        onChange={(e) => setFormData({ ...formData, departmentHead: e.target.value })}
+                        style={{
+                          maxHeight: "100px",
+                          overflowY: "auto",
+                        }}
+                      >
+                        <option value=""></option>
+                        {teachers.map((teacher) => (
+                          <option
+                            key={teacher._id}
+                            value={teacher._id}
+                            className="border-b border-gray-300 last:border-b-0"
+                            style={{
+                              borderBottom: "1px solid #d1d5db", // Tailwind gray-300
+                            }}
+                          >
+                            {teacher.fullname}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                   <div>
                     <p>Number Of Stuff</p>
@@ -239,9 +274,10 @@ const Departments = () => {
           <thead>
             <tr className="border-b-2">
               <th className="py-2 px-4">No</th>
-              <th className="py-2 px-4">Code</th>
-              <th className="py-2 px-4">Name</th>
-              <th className="py-2 px-4">Location</th>
+              <th className="py-2 px-4 text-start">Code</th>
+              <th className="py-2 px-4 text-start">Department Name</th>
+              <th className="py-2 px-4 text-start">Chair</th>
+              <th className="py-2 px-4 text-start">Location</th>
               <th className="py-2 px-4">Delete</th>
             </tr>
           </thead>
@@ -257,6 +293,7 @@ const Departments = () => {
                   <td className="py-2 px-4">{index + 1}</td>
                   <td className="py-2 px-4">{department.departmentCode}</td>
                   <td className="py-2 px-4">{department.departmentName}</td>
+                  <td className="py-2 px-4">{department.departmentHead}</td>
                   <td className="py-2 px-4">{department.location}</td>
                   <td className="py-2 px-4">
                     <button

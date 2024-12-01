@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL = "http://localhost:3000";
 
 const Academic = () => {
   const [stream, setStream] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
-  const [newStreamName, setNewStreamName] = useState(''); // State to handle input value for new stream
-  const [newStreamTeacher, setNewStreamTeacher] = useState(''); // State to handle teacher input value
+  const [searchQuery, setSearchQuery] = useState("");
+  const [teachers, setTeachers] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newStreamName, setNewStreamName] = useState("");
+  const [newStreamTeacher, setNewStreamTeacher] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,14 +21,22 @@ const Academic = () => {
         .catch((err) => console.log(err));
     };
 
+    const fetchTeachers = () => {
+      axios
+        .get("/api/teachers")
+        .then((response) => setTeachers(response.data.reverse()))
+        .catch((err) => console.log(err));
+    };
+
     fetchData();
+    fetchTeachers();
   }, []);
 
   // Filter streams based on the search query
-  const filteredStreams = stream.filter((item) =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredStreams = stream.filter(
+    (item) => item && item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  
   // Function to handle the submission of a new stream
   const handleAddStream = () => {
     const newStream = {
@@ -39,14 +48,16 @@ const Academic = () => {
       .post("/api/stream", newStream)
       .then((response) => {
         alert(response.data.message); // Show success message
-        setStream((prevStreams) => [...prevStreams, newStream]); // Update the streams list
+        setStream((prevStreams) => [...prevStreams, response.data.stream]); // Update the streams list
         setModalVisible(false); // Close the modal
+        setNewStreamName("");
+        setNewStreamTeacher("");
       })
       .catch((err) => console.log("Error adding stream:", err));
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen ">
+    <div className="bg-gray-100 min-h-screen">
       {/* Modal for Adding New Stream */}
       {modalVisible && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
@@ -62,17 +73,36 @@ const Academic = () => {
                 placeholder="Enter stream name"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium">Teacher</label>
-              <input
-                type="text"
-                className="w-full p-2 border border-gray-300 rounded-md"
-                value={newStreamTeacher}
-                onChange={(e) => setNewStreamTeacher(e.target.value)}
-                placeholder="Enter teacher's name"
-              />
+            <div>
+              <p>Department Head</p>
+              <div className="relative">
+                <select
+                  className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                  name="departmentHead"
+                  value={newStreamTeacher}
+                  onChange={(e) => setNewStreamTeacher(e.target.value)}
+                  style={{
+                    maxHeight: "100px",
+                    overflowY: "auto",
+                  }}
+                >
+                  <option value="">Select a Teacher</option>
+                  {teachers.map((teacher) => (
+                    <option
+                      key={teacher.fullname}
+                      value={teacher.fullname}
+                      className="border-b border-gray-300 last:border-b-0"
+                      style={{
+                        borderBottom: "1px solid #d1d5db", // Tailwind gray-300
+                      }}
+                    >
+                      {teacher.fullname}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-end gap-4 mt-4">
               <button
                 onClick={() => setModalVisible(false)}
                 className="px-4 py-2 bg-gray-300 text-black rounded-md"
@@ -90,7 +120,7 @@ const Academic = () => {
         </div>
       )}
 
-      <div className="flex justify-between  mx-4 mt-1">
+      <div className="flex justify-between mx-4 mt-1">
         <div className="flex gap-2">
           <input
             className="outline-none px-4 py-2 text-center border border-gray-300 rounded-md w-1/3"
@@ -105,7 +135,7 @@ const Academic = () => {
         </div>
         <div>
           <button
-            onClick={() => setModalVisible(true)} // Show modal when clicking "New"
+            onClick={() => setModalVisible(true)}
             className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
           >
             New

@@ -83,7 +83,7 @@ const Form1yReport = () => {
               <div className='min-h-auto min-w-auto pb-10 px-4'>
                 <div className='flex flex-col justify-center'>
                   <div className='flex pb-2 justify-center'>
-                    <img className='w-10 mt-4 h-10 md:w-20 md:h-20' src="kibabiilogo.jpeg" alt="School Logo" />
+                    <img className='w-10 mt-4 h-10 md:w-20 md:h-20' src="KIbabii-Logo.png" alt="School Logo" />
                   </div>
                   <div className='flex justify-center'>
                     <p>KIBABII SCHOOL</p>
