@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
 
 const TopBar = () => {
   const [drawer, setDrawer] = useState(false);
@@ -10,7 +10,7 @@ const TopBar = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      axios.get("http://localhost:3000/api/students")
+      axios.get("https://eps-backendvtwo.onrender.com/api/students")
         .then(students => setMarks(students.data))
         .catch(err => console.log(err));
     };
@@ -22,7 +22,7 @@ const TopBar = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      axios.get("http://localhost:3000/api/stream")
+      axios.get("https://eps-backendvtwo.onrender.com/api/stream")
         .then(stream => setStream(stream.data))
         .catch(err => console.log(err));
     };

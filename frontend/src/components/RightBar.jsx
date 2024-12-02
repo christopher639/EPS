@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
 const RightBar = () => {
   const [studentData, setStudentData] = useState([]);
   const [loading, setLoading] = useState(true);
