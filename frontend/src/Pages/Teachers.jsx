@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "https://eps-admin-frontend.onrender.com";
+axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
 
 const Teachers = () => {
   const [teachers, setTeachers] = useState([]); // Corrected setter function
