@@ -1,4 +1,4 @@
-const Teacher = require('../models/teacherModel');
+const Teacher = require('../models/teacherModel.js');
 
 // Get all teachers
 exports.getAllTeachers = async (req, res) => {
