@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
+<<<<<<< HEAD
 axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
+=======
+axios.defaults.baseURL = "https://eps-admin-frontend.onrender.com";
+>>>>>>> 45796e9109df8f7a62e05c843b3e041c18090776
 
 const StudentDetail = () => {
   const { id } = useParams(); // Get the student ID from the URL
