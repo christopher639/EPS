@@ -74,7 +74,7 @@ const Academic = () => {
               />
             </div>
             <div>
-              <p>Department Head</p>
+              <p>Class Teacher</p>
               <div className="relative">
                 <select
                   className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"

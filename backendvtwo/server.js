@@ -44,8 +44,6 @@ app.use('/api/teachers', teacherRoutes);
  // console.log("Database connected")
 //})
 
-
-
 //API to get all users or staff
 app.get('/api/staffs',async(req,res)=>{
  try {
