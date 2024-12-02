@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://eps-admin-frontend.onrender.com";
 
 const Teachers = () => {
   const [teachers, setTeachers] = useState([]); // Corrected setter function
@@ -31,7 +31,7 @@ const Teachers = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("http://localhost:3000/api/teachers")
+    axios.get("/api/teachers")
       .then(response => {
         setTeachers(response.data.reverse());
         setLoading(false);
