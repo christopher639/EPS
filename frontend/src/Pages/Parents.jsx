@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
 
 const Parents = () => {
   const [students, setStudents] = useState([]);
@@ -29,7 +29,7 @@ const Parents = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("/api/students")
+    axios.get("https://eps-backendvtwo.onrender.com/api/students")
       .then(response => {
         setStudents(response.data.reverse());
         setLoading(false);
@@ -41,7 +41,7 @@ const Parents = () => {
   };
 
   const fetchStreams = () => {
-    axios.get("/api/stream")
+    axios.get("https://eps-backendvtwo.onrender.com/api/stream")
       .then(response => {
         setStreams(response.data);
       })

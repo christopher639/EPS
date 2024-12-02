@@ -69,7 +69,7 @@ const LearningArea = () => {
     };
   
   const fetchStreams = () => {
-    axios.get("/api/stream")
+    axios.get("https://eps-backendvtwo.onrender.com/api/stream")
       .then(response => {
         setStreams(response.data);
       })

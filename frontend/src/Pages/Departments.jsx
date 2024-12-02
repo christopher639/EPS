@@ -43,7 +43,7 @@ const Departments = () => {
   const fetchDepartments = () => {
   //  setLoading(true);
     axios
-      .get("https://eps-backendvtwo.onrender.com/api/teachers")
+      .get("https://eps-backendvtwo.onrender.com/api/departments")
       .then((response) => {
         setDepartments(response.data);
         setLoading(false);

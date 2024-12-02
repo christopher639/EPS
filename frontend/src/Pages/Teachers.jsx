@@ -44,7 +44,7 @@ const Teachers = () => {
 
   const getLeaningareaData = () => {
     setLoading(true);
-    axios.get("/api/learningAreas")
+    axios.get("https://eps-backendvtwo.onrender.com/api/learningAreas")
       .then(response => {
         setLoading(false);
         setLearningAreas(response.data);
@@ -55,7 +55,7 @@ const Teachers = () => {
       });
   };
   const fetchStreams = () => {
-    axios.get("/api/streams")
+    axios.get("https://eps-backendvtwo.onrender.com/api/streams")
       .then(response => {
         setStreams(response.data);
       })
@@ -66,7 +66,7 @@ const Teachers = () => {
   const fetchDepartments = () => {
     //  setLoading(true);
       axios
-        .get("/api/departments")
+        .get("https://eps-backendvtwo.onrender.com/api/departments")
         .then((response) => {
           setDepartments(response.data);
           setLoading(false);
