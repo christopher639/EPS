@@ -11,7 +11,7 @@ const RightBar = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get('/api/total-students-by-stream');
+        const response = await axios.get('https://eps-backendvtwo.onrender.com/api/total-students-by-stream');
         setStudentData(response.data);  // Set the response data into state
         setLoading(false);
       } catch (err) {

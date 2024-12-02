@@ -27,10 +27,12 @@ const port = process.env.PORT|| 3000;
 app.use(express.json())
 app.use(cors());
 
-mongoose.connect("mongodb://localhost:27017/dreamhomehouse")
+/**
+ * mongoose.connect("mongodb://localhost:27017/dreamhomehouse")
 .then(()=>{
   console.log("Database connected")
 })
+ */
 
 //Routes
 
@@ -38,11 +40,11 @@ app.use('/api/learningAreas', learningrouter);
 app.use('/api/departments', departmentRoutes);
 app.use('/api/offices', officeRoutes);
 app.use('/api/teachers', teacherRoutes);
-//
-//mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system")
-//.then(()=>{
- // console.log("Database connected")
-//})
+
+mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system")
+.then(()=>{
+console.log("Database connected")
+})
 
 //API to get all users or staff
 app.get('/api/staffs',async(req,res)=>{

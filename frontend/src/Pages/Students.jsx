@@ -29,7 +29,7 @@ const Students = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("/api/students")
+    axios.get("https://eps-backendvtwo.onrender.com/api/students")
       .then(response => {
         setStudents(response.data.reverse());
         setLoading(false);
