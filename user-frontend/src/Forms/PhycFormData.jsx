@@ -2,13 +2,10 @@ import React from 'react'
 import {useEffect,useState } from 'react'
 import axios from "axios"
 import { toast } from 'react-toastify'
-axios.defaults.baseURL = "http://localhost:3000"
+axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com"
 
 const PhycFormData = () => {
- 
     const [students, setMarks] = useState([]);
-
-
     const getFetchData = ()  =>{
       axios.get("/api/joined-students-generallay")
       .then(students => setMarks(students.data))
@@ -18,8 +15,6 @@ const PhycFormData = () => {
       getFetchData()
        
     },[])
-
-
   const[formData,setFormData] = useState({
     subjectcode:"physc10",
     regno:"",
@@ -35,7 +30,6 @@ const PhycFormData = () => {
 
     })
   }
-
   const handleSubmit = (e) =>{
     setFormData({
       subjectcode: 'physc10',
@@ -47,14 +41,9 @@ const PhycFormData = () => {
     console.log(data)
 
       alert("Physics Marks Saved")
-      getFetchData()
-    
+      getFetchData() 
   }
-
-  
-
   return (
-
     <div className='flex   flex-col md:flex-row '>
     <div className='flex w-full flex-col'>
     <div className='flex mt-1 flex-col md:flex-row'>
@@ -101,9 +90,7 @@ const PhycFormData = () => {
     
     </div>
    <div>
-  
  <div>
-
  <div className='flex  mx-2   flex-col max-h-[53vh] sm:max-h-[50vh]  overflow-y-auto overflow-x-auto'>
  <div className='flex   justify-between'>
       <div>
