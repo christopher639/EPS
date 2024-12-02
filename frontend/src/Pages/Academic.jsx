@@ -23,7 +23,7 @@ const Academic = () => {
 
     const fetchTeachers = () => {
       axios
-        .get("/api/teachers")
+        .get("https://eps-backendvtwo.onrender.com/api/teachers")
         .then((response) => setTeachers(response.data.reverse()))
         .catch((err) => console.log(err));
     };
