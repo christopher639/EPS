@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
 
 const Academic = () => {
   const [stream, setStream] = useState([]);
