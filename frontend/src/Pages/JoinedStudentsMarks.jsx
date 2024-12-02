@@ -11,7 +11,7 @@ const JoinedStudentsMarks = () => {
 
     useEffect(() => {
         const fetchData = () => {
-            axios.get(`http://localhost:3000/api/joined-students_marks/${stream}`)
+            axios.get(`https://eps-backendvtwo.onrender.com/api/joined-students_marks/${stream}`)
                 .then(response => setMarks(response.data))
                 .catch(err => console.log(err));
         };
