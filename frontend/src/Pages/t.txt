@@ -1,0 +1,139 @@
+  {showModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3">
+            <div className="py-1">
+              <p className="text-lg font-semibold">Add New Department</p>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="pt-2 flex flex-col md:flex-row gap-6">
+                <div className="w-full flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-3">
+                  <div>
+                    <p>Department Code</p>
+                    <input
+                      type="text"
+                      name="departmentCode"
+                      value={formData.departmentCode}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border rounded"
+                    />
+                  </div>
+                  <div>
+                    <p>Department Name</p>
+                    <input
+                      type="text"
+                      name="departmentName"
+                      value={formData.departmentName}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border rounded"
+                    />
+                  </div>
+                  <div>
+                    <p>Location</p>
+                    <input
+                      type="text"
+                      name="location"
+                      value={formData.location}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border rounded"
+                    />
+                  </div>
+                  <div>
+                    <p>Contact Email</p>
+                    <input
+                      type="email"
+                      name="contactEmail"
+                      value={formData.contactEmail}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border rounded"
+                    />
+                  </div>
+                  <div>
+                    <p>Contact Phone</p>
+                    <input
+                      type="text"
+                      name="contactPhone"
+                      value={formData.contactPhone}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border rounded"
+                    />
+                  </div>
+                  <div>
+                    <p>Department Head</p>
+                    <div className="relative">
+                      <select
+                        className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                        name="departmentHead"
+                        value={formData.departmentHead}
+                        onChange={(e) => setFormData({ ...formData, departmentHead: e.target.value })}
+                        style={{
+                          maxHeight: "100px",
+                          overflowY: "auto",
+                        }}
+                      >
+                        <option value=""></option>
+                        {teachers.map((teacher) => (
+                          <option
+                            key={teacher._id}
+                            value={teacher._id}
+                            className="border-b border-gray-300 last:border-b-0"
+                            style={{
+                              borderBottom: "1px solid #d1d5db", // Tailwind gray-300
+                            }}
+                          >
+                            {teacher.fullname}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Number Of Stuff</p>
+                    <input
+                      type="number"
+                      name="numberOfStaff"
+                      value={formData.numberOfStaff}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border rounded"
+                    />
+                  </div>
+                  <div>
+                    <p>Established Year</p>
+                    <input
+                      type="number"
+                      name="establishedYear"
+                      value={formData.establishedYear}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border rounded"
+                    />
+                  </div>
+                  <div>
+                    <p>Budget</p>
+                    <input
+                      type="number"
+                      name="budget"
+                      value={formData.budget}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border rounded"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-end mt-4 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 bg-red-600 text-white rounded-md"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-green-600 text-white rounded-md"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}

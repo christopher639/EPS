@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 
 axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
 
 const Teachers = () => {
-  const [teachers, setTeachers] = useState([]);
+  const [teachers, setTeachers] = useState([]); // Corrected setter function
   const [searchQuery, setSearchQuery] = useState("");
   const [learningareas, setLearningAreas] = useState([]);
   const [departments, setDepartments] = useState([]);
-  const [streams, setStreams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -22,46 +21,76 @@ const Teachers = () => {
     email: "",
     phone: "",
     salary: "",
-    subjectsteaching: "",
+    subjectsteaching:"",
     type: "",
     tse: "",
     department: "",
   });
-
+  const [streams, setStreams] = useState([]);
   const navigate = useNavigate();
 
-  const fetchAllData = async () => {
+  const getFetchData = () => {
     setLoading(true);
-    try {
-      const [teachersRes, learningAreasRes, departmentsRes, streamsRes] = await Promise.all([
-        axios.get("/api/teachers"),
-        axios.get("/api/learningAreas"),
-        axios.get("/api/departments"),
-        axios.get("/api/streams"),
-      ]);
-
-      setTeachers(teachersRes.data.reverse());
-      setLearningAreas(learningAreasRes.data);
-      setDepartments(departmentsRes.data);
-      setStreams(streamsRes.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      toast.error("Failed to load data.");
-    } finally {
-      setLoading(false);
-    }
+    axios.get("https://eps-backendvtwo.onrender.com/api/teachers")
+      .then(response => {
+        setTeachers(response.data.reverse());
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
+  const getLeaningareaData = () => {
+    setLoading(true);
+    axios.get("https://eps-backendvtwo.onrender.com/api/learningAreas")
+      .then(response => {
+        setLoading(false);
+        setLearningAreas(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+  const fetchStreams = () => {
+    axios.get("https://eps-backendvtwo.onrender.com/api/streams")
+      .then(response => {
+        setStreams(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  const fetchDepartments = () => {
+    //  setLoading(true);
+      axios
+        .get("https://eps-backendvtwo.onrender.com/api/departments")
+        .then((response) => {
+          setDepartments(response.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          setLoading(false);
+        });
+    };
+  
+
   useEffect(() => {
-    fetchAllData();
+    getFetchData();
+    fetchStreams();
+    fetchDepartments();
+    getLeaningareaData()
   }, []);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
     });
   };
 
@@ -70,7 +99,7 @@ const Teachers = () => {
       const response = await axios.delete(`/api/delete/${id}`);
       if (response.data.success === "true") {
         toast.success("Teacher has been deleted successfully");
-        setTeachers((prevTeachers) => prevTeachers.filter((teacher) => teacher._id !== id));
+        setTeachers((prevTeachers) => prevTeachers.filter(teacher => teacher._id !== id));
       } else {
         toast.error("Failed to delete Teacher.");
       }
@@ -82,21 +111,20 @@ const Teachers = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("/api/teachers", formData)
-      .then((response) => {
+    axios.post("http://localhost:3000/api/teachers", formData)
+      .then(response => {
         toast.success("Teacher added successfully");
         setShowModal(false);
-        fetchAllData(); // Reload data after adding
+        getFetchData(); // Reload teachers list after adding
       })
-      .catch((error) => {
+      .catch(error => {
         toast.error(error.message || "Error occurred while adding teacher.");
       });
   };
 
   return (
-    <div className="flex flex-col min-w-full">
-      <div className="px-4 flex gap-5">
+    <div className='flex flex-col min-w-full'>
+      <div className='px-4 flex gap-5'>
         <input
           type="text"
           placeholder="Search by name or regno"
@@ -106,15 +134,16 @@ const Teachers = () => {
         />
         <div>
           <button
-            onClick={() => setShowModal(true)}
-            className="bg-green-600 p-2 rounded text-white"
+            onClick={() => setShowModal(true)} // Open modal on button click
+            className='bg-green-600 p-2 rounded text-white'
           >
             New
           </button>
         </div>
       </div>
 
-      {showModal && (
+     {/* Modal */}
+       {showModal && (
   <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
     <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3">
       <div className="py-1">
@@ -288,59 +317,56 @@ const Teachers = () => {
               </div>
             </div>
           )}
-
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <p className="text-lg font-semibold text-gray-600">loading...</p>
+          <p className="text-lg font-semibold text-gray-600"> loading...</p>
         </div>
       ) : (
-        <div className="mx-4 md:mx-0 grid gri-cols-1 max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0">
-          <table className="min-w-full mt-2">
-            <thead className="bg-slate-800 px-1 h-10 text-white">
+        <div className='mx-4 md:mx-0 grid gri-cols-1 max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+          <table className='min-w-full mt-2'>
+            <thead className='bg-slate-800 px-1 h-10 text-white'>
               <tr>
-                <th className="border whitespace-nowrap px-1">NO</th>
-                <th className="border whitespace-nowrap px-1">Full Name</th>
-                <th className="border whitespace-nowrap px-1">TSE NO</th>
-                <th className="border whitespace-nowrap px-1">SALARY</th>
-                <th className="border whitespace-nowrap px-1">TYPE</th>
-                <th className="border whitespace-nowrap px-1">GENDER</th>
-                <th className="border whitespace-nowrap px-1">DELETE</th>
-                <th className="border whitespace-nowrap px-1">UPDATE</th>
+                <th className='border whitespace-nowrap px-1'>NO</th>
+                <th className='border whitespace-nowrap px-1'>Full Name</th>
+                <th className='border whitespace-nowrap px-1'>TSE NO</th>
+                <th className='border whitespace-nowrap px-1'>SALARY</th>
+                <th className='border whitespace-nowrap px-1'>TYPE</th>
+                <th className='border whitespace-nowrap px-1'>GENDER</th>
+                <th className='border whitespace-nowrap px-1'>DELETE</th>
+                <th className='border whitespace-nowrap px-1'>UPDATE</th>
               </tr>
             </thead>
             <tbody>
               {teachers.map((teacher, index) => (
                 <tr
                   key={teacher._id}
-                  className="border hover:bg-gray-200 py-1 border-slate-500 cursor-pointer"
+                  className='border hover:bg-gray-200 py-1 border-slate-500 cursor-pointer'
                   onClick={() => navigate(`/teacher/${teacher._id}`)}
                 >
-                  <td className="border py-1 text-center">{teachers.length - index}</td>
-                  <td className="border whitespace-nowrap px-4 py-1">{teacher.fullname}</td>
-                  <td className="border whitespace-nowrap px-4 py-1 text-center">{teacher.tse}</td>
-                  <td className="border whitespace-nowrap px-4 py-1 text-center">KSH.{teacher.salary}</td>
-                  <td className="border whitespace-nowrap px-4 py-1 text-center">{teacher.type}</td>
-                  <td className="border whitespace-nowrap px-4 py-1 text-center">{teacher.gender}</td>
-                  <td className="border whitespace-nowrap px-4 py-1 text-center">
+                  <td className='border py-1 text-center'>{teachers.length - index}</td>
+                  <td className='border whitespace-nowrap px-4 py-1'>{teacher.fullname}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>{teacher.tse}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>KSH.{teacher.salary}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>{teacher.type}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>{teacher.gender}</td>
+                  <td className='border whitespace-nowrap px-4 py-1 text-center'>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(teacher._id);
-                      }}
-                      className="text-white px-2 py-1 rounded-md bg-red-600 hover:bg-red-700"
+                      onClick={(e) => { e.stopPropagation(); handleDelete(teacher._id); }}
+                      className='text-white px-2 py-1 rounded-md bg-red-600 hover:bg-red-700'
                     >
-                      Delete
+                      <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="white">
+                        <path d="M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z" />
+                      </svg>
                     </button>
                   </td>
-                  <td className="border px-4 py-2 text-center">
+                  <td className='border px-4 py-2 text-center'>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        alert("Not working at the moment");
-                      }}
-                      className="text-white px-2 py-1 rounded-md bg-green-600 hover:bg-green-700"
+                      onClick={(e) => { e.stopPropagation(); alert("Not working at the moment"); }}
+                      className='text-white px-2 py-1 rounded-md bg-green-600 hover:bg-green-700'
                     >
-                      Update
+                      <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="white">
+                        <path d="M216-216h51l375-375-51-51-375 375v51Zm-72 72v-153l498-498q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L297-144H144Zm600-549-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z" />
+                      </svg>
                     </button>
                   </td>
                 </tr>

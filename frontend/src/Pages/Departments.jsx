@@ -26,22 +26,22 @@ const Departments = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("https://eps-backendvtwo.onrender.com/api/teachers")
-      .then(response => {
+    axios
+      .get("https://eps-backendvtwo.onrender.com/api/teachers")
+      .then((response) => {
         setTeachers(response.data.reverse());
         setLoading(false);
       })
-      .catch(err => {
-        console.log(err);
+      .catch((err) => {
+        console.error(err);
         setLoading(false);
       });
   };
 
-
   const navigate = useNavigate();
 
   const fetchDepartments = () => {
-  //  setLoading(true);
+    setLoading(true);
     axios
       .get("https://eps-backendvtwo.onrender.com/api/departments")
       .then((response) => {
@@ -56,7 +56,7 @@ const Departments = () => {
 
   useEffect(() => {
     fetchDepartments();
-    getFetchData(); // Fetch teachers here
+    getFetchData();
   }, []);
 
   const handleDelete = async (id) => {
@@ -79,13 +79,10 @@ const Departments = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate required fields
     if (!formData.departmentCode || !formData.departmentName) {
       toast.error("Department Code and Name are required fields.");
       return;
     }
-
-    console.log("Form Data to be submitted:", formData);
 
     axios
       .post("/api/departments", formData)
@@ -268,47 +265,55 @@ const Departments = () => {
         </div>
       )}
 
-<div className='mx-4 md:mx-0 grid gri-cols-1 max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
-      <div className="w-full">
-      <table className="min-w-full bg-white shadow-md">
-          <thead>
-            <tr className="border-b-2">
-              <th className="py-2 px-4">No</th>
-              <th className="py-2 px-4 text-start">Code</th>
-              <th className="py-2 px-4 text-start">Department Name</th>
-              <th className="py-2 px-4 text-start">Chair</th>
-              <th className="py-2 px-4 text-start">Location</th>
-              <th className="py-2 px-4">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {departments
-              .filter((department) =>
-                department.departmentName
-                  .toLowerCase()
-                  .includes(searchQuery.toLowerCase())
-              )
-              .map((department, index) => (
-                <tr key={department._id} className="border-b hover:bg-gray-100">
-                  <td className="py-2 px-4">{index + 1}</td>
-                  <td className="py-2 px-4">{department.departmentCode}</td>
-                  <td className="py-2 px-4">{department.departmentName}</td>
-                  <td className="py-2 px-4">{department.departmentHead}</td>
-                  <td className="py-2 px-4">{department.location}</td>
-                  <td className="py-2 px-4">
-                    <button
-                      onClick={() => handleDelete(department._id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
+
+      {loading ? (
+        <div className="text-center py-10 text-gray-600">Loading...</div>
+      ) : (
+        <div className="mx-4 md:mx-0 grid gri-cols-1 max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0">
+          <div className="w-full">
+            <table className="min-w-full bg-white shadow-md">
+              <thead>
+                <tr className="border-b-2">
+                  <th className="py-2 px-4">No</th>
+                  <th className="py-2 px-4 text-start">Code</th>
+                  <th className="py-2 px-4 text-start">Department Name</th>
+                  <th className="py-2 px-4 text-start">Chair</th>
+                  <th className="py-2 px-4 text-start">Location</th>
+                  <th className="py-2 px-4">Delete</th>
                 </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-      </div>
+              </thead>
+              <tbody>
+                {departments
+                  .filter((department) =>
+                    department.departmentName
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())
+                  )
+                  .map((department, index) => (
+                    <tr
+                      key={department._id}
+                      className="border-b hover:bg-gray-100"
+                    >
+                      <td className="py-2 px-4">{index + 1}</td>
+                      <td className="py-2 px-4">{department.departmentCode}</td>
+                      <td className="py-2 px-4">{department.departmentName}</td>
+                      <td className="py-2 px-4">{department.departmentHead}</td>
+                      <td className="py-2 px-4">{department.location}</td>
+                      <td className="py-2 px-4">
+                        <button
+                          onClick={() => handleDelete(department._id)}
+                          className="bg-red-600 text-white px-3 py-1 rounded"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       <ToastContainer />
     </div>
