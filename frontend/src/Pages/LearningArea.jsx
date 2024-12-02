@@ -30,7 +30,7 @@ const LearningArea = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("/api/learningAreas")
+    axios.get("https://eps-backendvtwo.onrender.com/api/learningAreas")
       .then(response => {
         setLoading(false);
         setLearningAreas(response.data);

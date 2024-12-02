@@ -16,7 +16,7 @@ const Academic = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get("/api/stream")
+        .get("https://eps-backendvtwo.onrender.com/api/stream")
         .then((response) => setStream(response.data))
         .catch((err) => console.log(err));
     };
