@@ -5,7 +5,7 @@ const {
   createTeacher,
   updateTeacher,
   deleteTeacher,
-} = require('../controllers/teacherController');
+} = require('../Controllers/teacherController');
 
 const router = express.Router();
 
