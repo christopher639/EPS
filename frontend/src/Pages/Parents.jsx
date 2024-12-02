@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
 
 const Parents = () => {
   const [students, setStudents] = useState([]);

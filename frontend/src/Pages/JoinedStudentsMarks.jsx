@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
 
 const JoinedStudentsMarks = () => {
     const [students, setMarks] = useState([]);
@@ -11,7 +11,7 @@ const JoinedStudentsMarks = () => {
 
     useEffect(() => {
         const fetchData = () => {
-            axios.get(`http://localhost:3000/api/joined-students_marks/${stream}`)
+            axios.get(`https://eps-backendvtwo.onrender.com/api/joined-students_marks/${stream}`)
                 .then(response => setMarks(response.data))
                 .catch(err => console.log(err));
         };
