@@ -277,7 +277,7 @@ const Students = () => {
 
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <p className="text-lg font-semibold text-gray-600">Wait, it's loading...</p>
+          <p className="text-lg font-semibold text-gray-600">Loading...</p>
         </div>
       ) : (
         <div className='mx-4 md:mx-0 grid gri-cols-1 max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>

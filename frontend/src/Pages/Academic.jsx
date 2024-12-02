@@ -8,36 +8,34 @@ const Academic = () => {
   const [stream, setStream] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [teachers, setTeachers] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
   const [modalVisible, setModalVisible] = useState(false);
   const [newStreamName, setNewStreamName] = useState("");
   const [newStreamTeacher, setNewStreamTeacher] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("https://eps-backendvtwo.onrender.com/api/stream")
-        .then((response) => setStream(response.data))
-        .catch((err) => console.log(err));
-    };
-
-    const fetchTeachers = () => {
-      axios
-        .get("https://eps-backendvtwo.onrender.com/api/teachers")
-        .then((response) => setTeachers(response.data.reverse()))
-        .catch((err) => console.log(err));
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const streamResponse = await axios.get("/api/stream");
+        const teachersResponse = await axios.get("/api/teachers");
+        setStream(streamResponse.data);
+        setTeachers(teachersResponse.data.reverse());
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
-    fetchTeachers();
   }, []);
 
-  // Filter streams based on the search query
   const filteredStreams = stream.filter(
     (item) => item && item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  
-  // Function to handle the submission of a new stream
+
   const handleAddStream = () => {
     const newStream = {
       name: newStreamName,
@@ -47,9 +45,9 @@ const Academic = () => {
     axios
       .post("/api/stream", newStream)
       .then((response) => {
-        alert(response.data.message); // Show success message
-        setStream((prevStreams) => [...prevStreams, response.data.stream]); // Update the streams list
-        setModalVisible(false); // Close the modal
+        alert(response.data.message);
+        setStream((prevStreams) => [...prevStreams, response.data.stream]);
+        setModalVisible(false);
         setNewStreamName("");
         setNewStreamTeacher("");
       })
@@ -58,7 +56,6 @@ const Academic = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      {/* Modal for Adding New Stream */}
       {modalVisible && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg w-96">
@@ -78,24 +75,12 @@ const Academic = () => {
               <div className="relative">
                 <select
                   className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                  name="departmentHead"
                   value={newStreamTeacher}
                   onChange={(e) => setNewStreamTeacher(e.target.value)}
-                  style={{
-                    maxHeight: "100px",
-                    overflowY: "auto",
-                  }}
                 >
                   <option value="">Select a Teacher</option>
                   {teachers.map((teacher) => (
-                    <option
-                      key={teacher.fullname}
-                      value={teacher.fullname}
-                      className="border-b border-gray-300 last:border-b-0"
-                      style={{
-                        borderBottom: "1px solid #d1d5db", // Tailwind gray-300
-                      }}
-                    >
+                    <option key={teacher.fullname} value={teacher.fullname}>
                       {teacher.fullname}
                     </option>
                   ))}
@@ -143,21 +128,27 @@ const Academic = () => {
         </div>
       </div>
 
-      <div className="grid mx-5 max-h-[72vh] md:max-h-[71vh] overflow-y-auto grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-4">
-        {filteredStreams.map((item, index) => (
-          <div
-            key={index}
-            onClick={() => navigate(`/joined-students_marks/${item.name}`)}
-            className="min-w-full border border-slate-300 hover:bg-slate-800 hover:text-white rounded-lg flex justify-center items-center h-32 p-4 cursor-pointer"
-          >
-            <div className="flex flex-col items-center">
-              <p className="text-lg font-semibold">{item.name}</p>
-              <p className="text-sm">TOTAL:</p>
-              <p className="text-sm">COD: {item.teacher}</p>
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-lg font-semibold text-gray-600">Loading...</p>
+        </div>
+      ) : (
+        <div className="grid mx-5 max-h-[72vh] md:max-h-[71vh] overflow-y-auto grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-4">
+          {filteredStreams.map((item, index) => (
+            <div
+              key={index}
+              onClick={() => navigate(`/joined-students_marks/${item.name}`)}
+              className="min-w-full border border-slate-300 hover:bg-slate-800 hover:text-white rounded-lg flex justify-center items-center h-32 p-4 cursor-pointer"
+            >
+              <div className="flex flex-col items-center">
+                <p className="text-lg font-semibold">{item.name}</p>
+                <p className="text-sm">TOTAL:</p>
+                <p className="text-sm">COD: {item.teacher}</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
