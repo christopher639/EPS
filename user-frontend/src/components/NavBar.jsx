@@ -1,10 +1,8 @@
 import React from 'react'
 import {useState } from 'react'
 import { NavLink } from 'react-router-dom'
-
 const NavBar = () => {
 const [mobileBar,setMobileBar] = useState(false)
-
   return (
     <div className='flex max-h-[80vh] overflow-y-auto justify-between p-2 '>
 
@@ -84,5 +82,4 @@ const [mobileBar,setMobileBar] = useState(false)
     </div>
   )
 }
-
 export default NavBar

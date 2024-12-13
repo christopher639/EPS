@@ -24,7 +24,6 @@ import Analytics from "./Pages/Analytics";
 import Finance from "./Pages/Finance";
 import Departments from "./Pages/Departments";
 import Offices from "./Pages/Offices";
-
 const App = () => {
   return (
     <div className="flex min-h-full bg-gray-100 w-full fixed flex-row">
@@ -34,11 +33,9 @@ const App = () => {
       </div>
       <div className="w-full min-h-full md:mx-0">
         <TopBar />
-
         <Routes>
           {/* Redirect the root path to /students */}
           <Route path="/" element={<Navigate to="/students" />} />
-          
           <Route path="/staffs" element={<Staff />} />
           <Route path="/users" element={<Users />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -69,5 +66,4 @@ const App = () => {
     </div>
   );
 };
-
 export default App;

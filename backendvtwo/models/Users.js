@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-
 const userSchema = mongoose.Schema({
   name:String,
   email: {
@@ -11,8 +10,5 @@ const userSchema = mongoose.Schema({
 },{
   timestamps:true
 })
-
-
-
 const UserModel = mongoose.model.user || mongoose.model("user",userSchema)
 module.exports = UserModel

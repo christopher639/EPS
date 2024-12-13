@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 
 const Parents = () => {
   const [students, setStudents] = useState([]);
@@ -29,7 +29,7 @@ const Parents = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("https://eps-backendvtwo.onrender.com/api/students")
+    axios.get("/api/students")
       .then(response => {
         setStudents(response.data.reverse());
         setLoading(false);
@@ -41,7 +41,7 @@ const Parents = () => {
   };
 
   const fetchStreams = () => {
-    axios.get("https://eps-backendvtwo.onrender.com/api/stream")
+    axios.get("/api/stream")
       .then(response => {
         setStreams(response.data);
       })
@@ -78,7 +78,6 @@ const Parents = () => {
       toast.error("Error deleting student. Please try again.");
     }
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // Submit student data here
@@ -219,5 +218,4 @@ const Parents = () => {
     </div>
   );
 };
-
 export default Parents;

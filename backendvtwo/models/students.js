@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const studentSchema = new mongoose.Schema(
   {
     passport: { type: String,  },
@@ -18,7 +17,5 @@ const studentSchema = new mongoose.Schema(
     timestamps: true
   }
 );
-
 const studentModel = mongoose.model.student ||   mongoose.model("student", studentSchema);
-
 module.exports = studentModel;

@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 
 const Teachers = () => {
   const [teachers, setTeachers] = useState([]); // Corrected setter function
@@ -28,10 +28,9 @@ const Teachers = () => {
   });
   const [streams, setStreams] = useState([]);
   const navigate = useNavigate();
-
   const getFetchData = () => {
     setLoading(true);
-    axios.get("https://eps-backendvtwo.onrender.com/api/teachers")
+    axios.get("/api/teachers")
       .then(response => {
         setTeachers(response.data.reverse());
         setLoading(false);
@@ -41,10 +40,9 @@ const Teachers = () => {
         setLoading(false);
       });
   };
-
   const getLeaningareaData = () => {
     setLoading(true);
-    axios.get("https://eps-backendvtwo.onrender.com/api/learningAreas")
+    axios.get("/api/learningAreas")
       .then(response => {
         setLoading(false);
         setLearningAreas(response.data);
@@ -55,7 +53,7 @@ const Teachers = () => {
       });
   };
   const fetchStreams = () => {
-    axios.get("https://eps-backendvtwo.onrender.com/api/streams")
+    axios.get("/api/streams")
       .then(response => {
         setStreams(response.data);
       })
@@ -66,7 +64,7 @@ const Teachers = () => {
   const fetchDepartments = () => {
     //  setLoading(true);
       axios
-        .get("https://eps-backendvtwo.onrender.com/api/departments")
+        .get("/api/departments")
         .then((response) => {
           setDepartments(response.data);
           setLoading(false);
@@ -84,7 +82,6 @@ const Teachers = () => {
     fetchDepartments();
     getLeaningareaData()
   }, []);
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB", {
@@ -93,7 +90,6 @@ const Teachers = () => {
       year: 'numeric'
     });
   };
-
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(`/api/delete/${id}`);
@@ -108,7 +104,6 @@ const Teachers = () => {
       toast.error("Error deleting teacher. Please try again.");
     }
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post("http://localhost:3000/api/teachers", formData)
@@ -121,7 +116,6 @@ const Teachers = () => {
         toast.error(error.message || "Error occurred while adding teacher.");
       });
   };
-
   return (
     <div className='flex flex-col min-w-full'>
       <div className='px-4 flex gap-5'>

@@ -1,5 +1,4 @@
 const Dormitory = require('../models/dormitoryModel');
-
 // Get all dormitories
 exports.getAllDormitories = async (req, res) => {
   try {
@@ -9,7 +8,6 @@ exports.getAllDormitories = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch dormitories' });
   }
 };
-
 // Get a single dormitory by ID
 exports.getDormitoryById = async (req, res) => {
   try {
@@ -22,7 +20,6 @@ exports.getDormitoryById = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch dormitory' });
   }
 };
-
 // Create a new dormitory
 exports.createDormitory = async (req, res) => {
   try {
@@ -33,7 +30,6 @@ exports.createDormitory = async (req, res) => {
     res.status(400).json({ error: 'Failed to create dormitory', details: error.message });
   }
 };
-
 // Update a dormitory
 exports.updateDormitory = async (req, res) => {
   try {
@@ -50,7 +46,6 @@ exports.updateDormitory = async (req, res) => {
     res.status(400).json({ error: 'Failed to update dormitory', details: error.message });
   }
 };
-
 // Delete a dormitory
 exports.deleteDormitory = async (req, res) => {
   try {

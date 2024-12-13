@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 
 const AgriFormData = () => {
   const [students, setMarks] = useState([]);
@@ -31,12 +31,10 @@ const AgriFormData = () => {
         toast.error("Failed to fetch student data");
       });
   };
-
   // Initial data fetch when the component mounts
   useEffect(() => {
     getFetchData();
   }, []);
-
   // Handle form input changes
   const handleOnChange = (e) => {
     const { value, name } = e.target;
@@ -45,11 +43,9 @@ const AgriFormData = () => {
       [name]: value
     }));
   };
-
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post("/api/subjectmark", formData);
       toast.success("Agriculture mark saved successfully!");
@@ -60,21 +56,17 @@ const AgriFormData = () => {
         regno: '',
         score: ''
       });
-
       // Re-fetch the student data
       getFetchData();
-
       // Revert button back to 'Submit' after 2 seconds
       setTimeout(() => {
         setIsSubmitted(false);
       }, 2000);
-
     } catch (error) {
       console.error("Error saving data:", error);
       toast.error("Error saving mark. Please try again.");
     }
   };
-
   // Handle deletion of student data (if needed)
   const handleDelete = async (id) => {
     try {
@@ -85,7 +77,6 @@ const AgriFormData = () => {
       toast.error("Error deleting mark. Please try again.");
     }
   };
-
   // Display loading or error states
   if (loading) {
     return (
@@ -94,7 +85,6 @@ const AgriFormData = () => {
       </div>
     );
   }
-
   if (error) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -102,7 +92,6 @@ const AgriFormData = () => {
       </div>
     );
   }
-
   return (
     <div className="flex flex-col md:flex-row">
       <div className="flex w-full flex-col">
@@ -201,5 +190,4 @@ const AgriFormData = () => {
     </div>
   );
 };
-
 export default AgriFormData;

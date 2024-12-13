@@ -8,19 +8,16 @@ body{
     font-style:24px;
     top: 0;
     bottom: 0;
-
 }
 @media print{
     .student-page {
         page-break-before: always;
     }
 }
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scroll-hidden::-webkit-scrollbar {
     display: none;
   }
-  
   /* Hide scrollbar for IE, Edge and Firefox */
   .scroll-hidden {
     -ms-overflow-style: none;  /* IE and Edge */
@@ -30,7 +27,6 @@ body{
     scrollbar-width: none; /* For Firefox */
     -ms-overflow-style: none; /* For Internet Explorer and Edge */
   }
-  
   .no-scrollbar::-webkit-scrollbar {
     display: none; /* For Chrome, Safari, and Opera */
   }

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const officeSchema = new mongoose.Schema({
   officeName: {
     type: String,
@@ -45,7 +44,6 @@ const officeSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-
   dateEstablished: {
     type: Date,
     default: Date.now,
@@ -55,12 +53,7 @@ const officeSchema = new mongoose.Schema({
     enum: ['Active', 'Inactive', 'Under Renovation'],
     default: 'Active',
   },
-
-
-
 });
-
 // Creating a model
 const Office = mongoose.model.Office || mongoose.model('Office', officeSchema);
-
 module.exports = Office;

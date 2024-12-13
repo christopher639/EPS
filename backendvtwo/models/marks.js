@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-
 const markSchema = mongoose.Schema({
   name:String,
   adm:String,
@@ -14,6 +13,5 @@ const markSchema = mongoose.Schema({
 },{
   timestamps:true
 })
-
 const MarkModel = mongoose.model.mark || mongoose.model("mark",markSchema)
 module.exports = MarkModel

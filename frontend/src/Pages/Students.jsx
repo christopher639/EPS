@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 
 const Students = () => {
   const [students, setStudents] = useState([]);
@@ -26,10 +26,9 @@ const Students = () => {
   });
   const [streams, setStreams] = useState([]); // Stream options for dropdown
   const navigate = useNavigate();
-
   const getFetchData = () => {
     setLoading(true);
-    axios.get("https://eps-backendvtwo.onrender.com/api/students")
+    axios.get("/api/students")
       .then(response => {
         setStudents(response.data.reverse());
         setLoading(false);
@@ -41,7 +40,7 @@ const Students = () => {
   };
 
   const fetchStreams = () => {
-    axios.get("https://eps-backendvtwo.onrender.com/api/stream")
+    axios.get("/api/stream")
       .then(response => {
         setStreams(response.data);
       })
@@ -54,7 +53,6 @@ const Students = () => {
     getFetchData();
     fetchStreams(); // Fetch streams when the component mounts
   }, []);
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB", {
@@ -98,7 +96,6 @@ const Students = () => {
     student.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     student.regno.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   return (
     <div className='flex flex-col min-w-full'>
       <div className='px-4 flex gap-5'>
@@ -118,7 +115,6 @@ const Students = () => {
           </button>
         </div>
       </div>
-
       {/* Modal */}
       {showModal && (
         <div className="fixed  inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">

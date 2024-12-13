@@ -2,24 +2,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink, useParams } from 'react-router-dom';
 axios.defaults.baseURL = "http://localhost:3000";
-
 const Marks = () => {
     const [students, setMarks] = useState([]);
     const [searchQuery, setSearchQuery] = useState(''); // State for search input
     const { stream } = useParams(); // Extract 'stream' from the URL
-
     useEffect(() => {
         const fetchData = () => {
             axios.get(`/api/joined-students_marks/${stream}`) // Use the 'stream' from the URL
                 .then(response => setMarks(response.data))
                 .catch(err => console.log(err));
         };
-
         fetchData();
         const interval = setInterval(fetchData, 5000);
         return () => clearInterval(interval);
     }, [stream]); // Dependency array updated with 'stream'
-
     const handlePrint = () => {
         const printContents = document.getElementById("printableTable").innerHTML;
         const originalContents = document.body.innerHTML;
@@ -115,5 +111,4 @@ const Marks = () => {
         </div>
     );
 };
-
 export default Marks;

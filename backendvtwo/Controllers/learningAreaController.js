@@ -1,5 +1,4 @@
 const LearningArea = require('../models/Learningarea');
-
 // Create a new LearningArea
 const createLearningArea = async (req, res) => {
   try {
@@ -10,18 +9,15 @@ const createLearningArea = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
-
 // Get all LearningAreas (with pagination)
 const getAllLearningAreas = async (req, res) => {
   try {
-  
     const learningAreas = await LearningArea.find()
     res.status(200).json(learningAreas)
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
 // Get a LearningArea by ID
 const getLearningAreaById = async (req, res) => {
   try {
@@ -32,7 +28,6 @@ const getLearningAreaById = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 // Update a LearningArea by ID
 const updateLearningArea = async (req, res) => {
   try {
@@ -46,7 +41,6 @@ const updateLearningArea = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
-
 // Delete a LearningArea by ID
 const deleteLearningArea = async (req, res) => {
   try {
@@ -57,7 +51,6 @@ const deleteLearningArea = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 module.exports = {
   createLearningArea,
   getAllLearningAreas,

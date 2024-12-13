@@ -3,9 +3,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
-
+axios.defaults.baseURL = "http://localhost:3000";
 const Departments = () => {
   const [departments, setDepartments] = useState([]);
   const [teachers, setTeachers] = useState([]);
@@ -23,11 +21,10 @@ const Departments = () => {
     establishedYear: "",
     budget: "",
   });
-
   const getFetchData = () => {
     setLoading(true);
     axios
-      .get("https://eps-backendvtwo.onrender.com/api/teachers")
+      .get("/api/teachers")
       .then((response) => {
         setTeachers(response.data.reverse());
         setLoading(false);
@@ -37,13 +34,11 @@ const Departments = () => {
         setLoading(false);
       });
   };
-
   const navigate = useNavigate();
-
   const fetchDepartments = () => {
     setLoading(true);
     axios
-      .get("https://eps-backendvtwo.onrender.com/api/departments")
+      .get("/api/departments")
       .then((response) => {
         setDepartments(response.data);
         setLoading(false);
@@ -58,7 +53,6 @@ const Departments = () => {
     fetchDepartments();
     getFetchData();
   }, []);
-
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(`/api/departments/${id}`);
@@ -75,10 +69,8 @@ const Departments = () => {
       toast.error("Error deleting department. Please try again.");
     }
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!formData.departmentCode || !formData.departmentName) {
       toast.error("Department Code and Name are required fields.");
       return;
@@ -96,7 +88,6 @@ const Departments = () => {
         toast.error("Error adding department");
       });
   };
-
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     setFormData((prevState) => ({
@@ -104,7 +95,6 @@ const Departments = () => {
       [name]: type === "number" ? parseInt(value, 10) || 0 : value,
     }));
   };
-
   return (
     <div className="flex px-1 flex-col min-w-full">
       <div className="flex gap-5">
@@ -124,7 +114,6 @@ const Departments = () => {
           </button>
         </div>
       </div>
-
       {showModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3">
@@ -264,8 +253,6 @@ const Departments = () => {
           </div>
         </div>
       )}
-
-
       {loading ? (
         <div className="text-center py-10 text-gray-600">Loading...</div>
       ) : (
@@ -314,10 +301,8 @@ const Departments = () => {
           </div>
         </div>
       )}
-
       <ToastContainer />
     </div>
   );
 };
-
 export default Departments;

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const teacherSchema = new mongoose.Schema({
     fullname: {
       type: String,
@@ -51,7 +50,5 @@ const teacherSchema = new mongoose.Schema({
 }, {
   timestamps: true // Automatically adds `createdAt` and `updatedAt` fields
 });
-
 const Teacher = mongoose.models.Teacher || mongoose.model('Teacher', teacherSchema);
-
 module.exports = Teacher;

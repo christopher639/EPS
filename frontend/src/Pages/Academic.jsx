@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
-
+axios.defaults.baseURL = "http://localhost:3000";
 const Academic = () => {
   const [stream, setStream] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,20 +26,16 @@ const Academic = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
-
   const filteredStreams = stream.filter(
     (item) => item && item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   const handleAddStream = () => {
     const newStream = {
       name: newStreamName,
       teacher: newStreamTeacher,
     };
-
     axios
       .post("/api/stream", newStream)
       .then((response) => {
@@ -53,7 +47,6 @@ const Academic = () => {
       })
       .catch((err) => console.log("Error adding stream:", err));
   };
-
   return (
     <div className="bg-gray-100 min-h-screen">
       {modalVisible && (
@@ -152,5 +145,4 @@ const Academic = () => {
     </div>
   );
 };
-
 export default Academic;

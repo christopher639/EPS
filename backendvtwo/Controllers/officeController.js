@@ -1,5 +1,4 @@
 const Office = require('../models/offices');
-
 // Create a new Office
 exports.createOffice = async (req, res) => {
   try {
@@ -10,7 +9,6 @@ exports.createOffice = async (req, res) => {
     res.status(400).json({ success: false, message: error.message });
   }
 };
-
 // Get all Offices
 exports.getAllOffices = async (req, res) => {
   try {
@@ -20,7 +18,6 @@ exports.getAllOffices = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 // Get a single Office by ID
 exports.getOfficeById = async (req, res) => {
   try {
@@ -33,7 +30,6 @@ exports.getOfficeById = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 // Update an Office
 exports.updateOffice = async (req, res) => {
   try {
@@ -49,7 +45,6 @@ exports.updateOffice = async (req, res) => {
     res.status(400).json({ success: false, message: error.message });
   }
 };
-
 // Delete an Office
 exports.deleteOffice = async (req, res) => {
   try {

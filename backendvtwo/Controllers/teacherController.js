@@ -1,5 +1,4 @@
 const Teacher = require('../models/teacherModel.js');
-
 // Get all teachers
 exports.getAllTeachers = async (req, res) => {
   try {
@@ -9,7 +8,6 @@ exports.getAllTeachers = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error', error });
   }
 };
-
 // Get a single teacher by ID
 exports.getTeacherById = async (req, res) => {
   try {
@@ -32,7 +30,6 @@ exports.createTeacher = async (req, res) => {
     res.status(400).json({ success: false, message: 'Validation error', error });
   }
 };
-
 // Update a teacher by ID
 exports.updateTeacher = async (req, res) => {
   try {
@@ -48,7 +45,6 @@ exports.updateTeacher = async (req, res) => {
     res.status(400).json({ success: false, message: 'Validation error', error });
   }
 };
-
 // Delete a teacher by ID
 exports.deleteTeacher = async (req, res) => {
   try {

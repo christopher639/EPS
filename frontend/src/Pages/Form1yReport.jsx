@@ -1,32 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-
 const Form1yReport = () => {
   const [students, setMarks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { state } = useLocation();  // Access the state passed from JoinedStudentsMarks
   const { students: passedStudents } = state || {}; // Destructure the students data
-
   useEffect(() => {
     if (passedStudents) {
       setMarks(passedStudents);  // Set the passed students data to the state
     }
   }, [passedStudents]);
-
   const getRemark = (score) => {
     if (score >= 75) return "E.E";   // Exceeding Expectation
     if (score >= 50) return "M.E";   // Meeting Expectation
     if (score >= 0) return "B.E";    // Below Expectation
     return "F";                      // Failed or not attended
   };
-
   const getAvgRemark = (avg) => {
     if (avg >= 75) return "E.E";
     if (avg >= 50) return "M.E";
     if (avg >= 0) return "B.E";
     return "F";
   };
-
   const getAvgGradeRemark = (avg) => {
     if (avg >= 80) return "5";
     if (avg >= 60) return "4";
@@ -37,7 +32,6 @@ const Form1yReport = () => {
   const filteredStudents = students.filter(student =>
     student.regno.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
   // Handle the print functionality
   const handlePrint = () => {
     const printContents = document.getElementById("printableTable").innerHTML;
@@ -46,7 +40,6 @@ const Form1yReport = () => {
     window.print();
     document.body.innerHTML = originalContents;
   };
-
   return (
     <div className='flex min-w-full max-h-[80vh] flex-col gap-10 mb-5 overflow-y-auto overflow-x-hidden'>
         <div className=' mx-5 flex justify-between'>
@@ -77,7 +70,6 @@ const Form1yReport = () => {
           const avg = Object.values(marks).reduce((a, b) => a + b, 0) / Object.keys(marks).length;
           const avgRemark = getAvgRemark(avg);
           const avgGradeRemark = getAvgGradeRemark(avg);
-
           return (
             <div key={index} className="page-break">
               <div className='min-h-auto min-w-auto pb-10 px-4'>
@@ -163,5 +155,4 @@ const Form1yReport = () => {
     </div>
   );
 };
-
 export default Form1yReport;

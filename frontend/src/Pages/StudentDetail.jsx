@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 
 const StudentDetail = () => {
   const { id } = useParams(); // Get the student ID from the URL

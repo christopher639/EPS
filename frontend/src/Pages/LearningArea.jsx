@@ -3,9 +3,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
-
+axios.defaults.baseURL = "http://localhost:3000";
 const LearningArea = () => {
   const [learningareas, setLearningAreas] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,13 +22,12 @@ const LearningArea = () => {
     status: "",
     languageOfInstruction: "",
   });
-
   const [streams, setStreams] = useState([]); // Stream options for dropdown
   const navigate = useNavigate();
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("https://eps-backendvtwo.onrender.com/api/learningAreas")
+    axios.get("/api/learningAreas")
       .then(response => {
         setLoading(false);
         setLearningAreas(response.data);
@@ -40,11 +37,9 @@ const LearningArea = () => {
         setLoading(false);
       });
   };
-
-  
   const getFetchDataTeachers = () => {
     setLoading(true);
-    axios.get("https://eps-backendvtwo.onrender.com/api/teachers")
+    axios.get("/api/teachers")
       .then(response => {
         setTeachers(response.data.reverse());
         setLoading(false);
@@ -67,9 +62,8 @@ const LearningArea = () => {
           setLoading(false);
         });
     };
-  
   const fetchStreams = () => {
-    axios.get("https://eps-backendvtwo.onrender.com/api/stream")
+    axios.get("/api/stream")
       .then(response => {
         setStreams(response.data);
       })
@@ -77,17 +71,12 @@ const LearningArea = () => {
         console.log(err);
       });
   };
-
   useEffect(() => {
     getFetchData();
     fetchStreams();
     fetchDepartments();
     getFetchDataTeachers()
-  }, []);
-
-
-
-
+  }, []); 
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(`/api/delete/${id}`);
@@ -383,7 +372,6 @@ const LearningArea = () => {
     </div>
   );
 };
-
 export default LearningArea;
 
 

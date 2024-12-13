@@ -9,9 +9,7 @@ const App = () => {
   const notify = () => toast("Not Working!");
   const [addSection,setAddSection] = useState(false)
   const[staffmembers,setStaffMembers] = useState([])
-  
   const[data,setFormData] = useState({
-  
     fName: "",
     Lname: "",
     position: "",
@@ -21,14 +19,11 @@ const App = () => {
     branchNo: "",
     staffNo: ""
   })
-
   const onnChangedHandler =(event)=>{
     const name = event.target.name;
     const value = event.target.value;
     setFormData(data =>({...data,[name]:value}))
 }
-
-
 const onSubmitHandler = async (event) =>{
   event.preventDefault();
   const formData = new FormData();
@@ -45,14 +40,11 @@ const onSubmitHandler = async (event) =>{
  setAddSection(false)
  notify
  //alert("Programming error")
- 
 }
-
   useEffect(()=>{
     axios.get("http://localhost:3000/api/staffs")
     .then(staffmembers => setStaffMembers(staffmembers.data))
     .catch(err => console.log(err))
-     
   },[])
   return (
    <div className='flex overflow-none mx-1 mr-5 flex-col  md:flex-row '>
@@ -182,5 +174,4 @@ const onSubmitHandler = async (event) =>{
    </div>
   )
 }
-
 export default App

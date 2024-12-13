@@ -91,8 +91,6 @@ const DormitorySchema = new mongoose.Schema({
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 });
-
 // Create the Dormitory Model
 const Dormitory = mongoose.model('Dormitory', DormitorySchema);
-
 module.exports = Dormitory;

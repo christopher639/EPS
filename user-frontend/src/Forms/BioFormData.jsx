@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 
 const BioFormData = () => {
   const [students, setMarks] = useState([]);
@@ -43,7 +43,6 @@ const BioFormData = () => {
       [name]: value
     }));
   };
-
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();

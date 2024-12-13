@@ -1,27 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-
 const Agri = () => {
   const [password, setPassword] = useState('');
   const [passForm, setPassForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); // Call useNavigate inside the component
-
   const handlePasswordSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
-
     // Log the password to the console
     console.log('Password:', password);
-
     // Basic password check (for demo purposes)
     if (password === '5542') {
       navigate('/agriformdata');
     } else {
       setErrorMessage('Incorrect password. Please try again.');
-   
     }
   };
-
   return (
     <div>
       {passForm && (

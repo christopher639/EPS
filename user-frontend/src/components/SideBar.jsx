@@ -1,9 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
-
 const SideBar = () => {
-   
   return (
     <div >
       <div className=' min-h-full px-5  bg-gray-200  pr-5'>

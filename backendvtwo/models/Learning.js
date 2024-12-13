@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 // Define the schema for a Subject
 const subjectSchema = new mongoose.Schema({
   SubjectName: {
@@ -52,8 +51,6 @@ const subjectSchema = new mongoose.Schema({
 }, {
   timestamps: true, // Automatically add `createdAt` and `updatedAt` fields
 });
-
 // Create the model for the schema
 const Subject =   mongoose.model.Subject || mongoose.model('Subject', subjectSchema);
-
 module.exports = Subject;

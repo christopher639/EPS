@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import axios from "axios";
-axios.defaults.baseURL = "https://eps-backendvtwo.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 
 const Users = () => {
   const [userform, setUserForm] = useState(false);
@@ -34,7 +34,6 @@ const Users = () => {
       toast.error("Error deleting user. Please try again."); // Error toast
     }
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post("/create", formData)
@@ -47,7 +46,6 @@ const Users = () => {
         toast.error("Error adding user. Please try again."); // Error toast
       });
   };
-
   const getFetchData = () => {
     setLoading(true); // Set loading to true before starting data fetch
     axios.get("/users")
@@ -60,11 +58,9 @@ const Users = () => {
         setLoading(false); // Set loading to false even in case of error
       });
   };
-
   useEffect(() => {
     getFetchData();
   }, []);
-
   return (
     <div className='flex flex-col min-w-full bg-gray-100'>
          <ToastContainer />

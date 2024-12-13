@@ -1,5 +1,4 @@
 const Department = require('../models/departmentModel'); // Adjust path as necessary
-
 // Get all departments
 exports.getAllDepartments = async (req, res) => {
   try {
@@ -9,7 +8,6 @@ exports.getAllDepartments = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 // Get a single department by ID
 exports.getDepartmentById = async (req, res) => {
   try {
@@ -21,7 +19,6 @@ exports.getDepartmentById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 // Create a new department
 exports.createDepartment = async (req, res) => {
   try {
@@ -32,7 +29,6 @@ exports.createDepartment = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
 // Update an existing department
 exports.updateDepartment = async (req, res) => {
   try {
@@ -44,7 +40,6 @@ exports.updateDepartment = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
 // Delete a department
 exports.deleteDepartment = async (req, res) => {
   try {

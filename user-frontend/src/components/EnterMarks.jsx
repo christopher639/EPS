@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { NavLink } from 'react-router-dom';
-
 axios.defaults.baseURL = "http://localhost:3000/";
-
 const EnterMarks = () => {
     const [userform, setUserForm] = useState(false);
     const [formData, setFormData] = useState({
@@ -18,7 +16,6 @@ const EnterMarks = () => {
         kisw: "",
         geo: "",
     });
-
     const handleOnChange = (e) => {
         const { value, name } = e.target;
         setFormData((prev) => ({
@@ -26,7 +23,6 @@ const EnterMarks = () => {
             [name]: value
         }));
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post("/mark", formData)
@@ -39,7 +35,6 @@ const EnterMarks = () => {
                 alert("Failed to save data.");
             });
     };
-
     return (
         <div className="mx-4 max-h-[80vh] overflow-y-auto bg-gray-100 md:mx-1 p-4">
             {/* Header and Search Section */}
@@ -111,5 +106,4 @@ const EnterMarks = () => {
         </div>
     );
 };
-
 export default EnterMarks;

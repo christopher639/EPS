@@ -18,7 +18,6 @@ const Marks2y = () => {
         const interval = setInterval(fetchData, 5000);
         return () => clearInterval(interval);
     }, []);
-
     const handlePrint = () => {
         const printContents = document.getElementById("printableTable").innerHTML;
         const originalContents = document.body.innerHTML;
@@ -27,12 +26,10 @@ const Marks2y = () => {
         document.body.innerHTML = originalContents;
         window.location.reload(); // Refresh the page after printing
     };
-
     // Filtered list based on the search query
     const filteredStudents = students.filter(student =>
         student.regno.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
     return (
         <div className='flex overflow-none mx-1 mr-5 flex-col md:flex-row '>
             <div className='w-full'>
@@ -59,7 +56,6 @@ const Marks2y = () => {
                         </NavLink>
                     </div>
                 </div>
-
                 <div className='flex max-h-[72vh] md:max-h-[73vh] overflow-y-auto overflow-x-auto justify-center'>
                     <div className='w-full' id="printableTable">
                         <table className='min-w-full mt-2'>
@@ -117,5 +113,4 @@ const Marks2y = () => {
         </div>
     );
 };
-
 export default Marks2y;

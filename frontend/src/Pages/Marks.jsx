@@ -27,12 +27,10 @@ const Marks = () => {
         document.body.innerHTML = originalContents;
         window.location.reload(); // Refresh the page after printing
     };
-
     // Filtered list based on the search query
     const filteredStudents = students.filter(student =>
         student.regno.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
     return (
         <div className='flex overflow-none mx-1 mr-5 flex-col md:flex-row '>
             <div className='w-full'>
@@ -117,5 +115,4 @@ const Marks = () => {
         </div>
     );
 };
-
 export default Marks;
