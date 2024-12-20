@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 const MergedMarks = () => {
   const [marksData, setMarksData] = useState([]);
-  const [subjectHeaders, setSubjectHeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // State for selecting stream, year, and term
   const [stream, setStream] = useState('form1x'); // Default stream
-  const [year, setYear] = useState('2025-2026');  // Default year
-  const [term, setTerm] = useState('Term-1');     // Default term
+  const [year, setYear] = useState('2025-2026'); // Default year
+  const [term, setTerm] = useState('Term-1'); // Default term
 
   const navigate = useNavigate();
 
-  // Function to fetch data with selected parameters
+  // Function to fetch marks data based on selected filters
   const fetchMarksData = async () => {
     const url = `http://localhost:3000/api/marks/${stream}/${year}/${term}`;
     
@@ -29,10 +27,10 @@ const MergedMarks = () => {
     }
   };
 
-  // Fetch the data initially when the component mounts, and when selections change
+  // Fetch data on component mount and when filters change
   useEffect(() => {
     fetchMarksData();
-  }, [stream, year, term]); // Re-run whenever any selection changes
+  }, [stream, year, term]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -46,7 +44,7 @@ const MergedMarks = () => {
     return acc;
   }, {});
 
-  // Function to handle printing each report card
+  // Function to handle print
   const handlePrint = () => {
     const printContents = document.getElementById("printableTable").innerHTML;
     const originalContents = document.body.innerHTML;
@@ -57,7 +55,7 @@ const MergedMarks = () => {
 
   return (
     <div>
-      {/* Stream, Year, and Term Selection */}
+      {/* Stream, Year, Term Selection */}
       <div className='grid grid-cols-6 gap-5 pb-5'>
         <div className='w-24'>
           <button onClick={handlePrint} className="text-center px-3 text-slate-500 text-sm w-full border border-1 border-slate-700 font-bold py-2 rounded hover:text-slate-900">
@@ -99,6 +97,7 @@ const MergedMarks = () => {
             <option value="Term-3">Term-3</option>
           </select>
         </div>
+
         <div>
           <button onClick={() => navigate('')} className="text-center px-3 text-slate-500 text-sm w-full border border-1 border-slate-700 font-bold py-2 rounded hover:text-slate-900">
             Avg Only
@@ -106,13 +105,17 @@ const MergedMarks = () => {
         </div>
 
         <div>
-          <button onClick={() => navigate('/report-card')} className="text-center px-3 text-slate-500 text-sm w-full border border-1 border-slate-700 font-bold py-2 rounded hover:text-slate-900">
+          {/* Button to navigate to MergedReportForm */}
+          <button 
+            onClick={() => navigate('/report-card', { state: { marksData, stream, year, term } })}
+            className="text-center px-3 text-slate-500 text-sm w-full border border-1 border-slate-700 font-bold py-2 rounded hover:text-slate-900"
+          >
             Reports 
           </button>
         </div>
       </div>
 
-      {/* Table Displaying the Merged Marks */}
+      {/* Table to display the Merged Marks */}
       {marksData.length === 0 ? (
         <p>No data found</p>
       ) : (
@@ -129,9 +132,9 @@ const MergedMarks = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td className='text-yellow-900' style={{ border: '1px solid black', padding: '2px' }}>{year}</td>
-                  <td className='text-yellow-900' style={{ border: '1px solid black', padding: '2px' }}>{stream}</td>
-                  <td className='text-yellow-900' style={{ border: '1px solid black', padding: '2px' }}>{term}</td>
+                  <td className='text-yellow-700' style={{ border: '1px solid black', padding: '2px' }}>{year}</td>
+                  <td className='text-yellow-700' style={{ border: '1px solid black', padding: '2px' }}>{stream}</td>
+                  <td className='text-yellow-700' style={{ border: '1px solid black', padding: '2px' }}>{term}</td>
                 </tr>
               </tbody>
             </table>

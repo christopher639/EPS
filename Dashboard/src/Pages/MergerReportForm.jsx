@@ -1,40 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-const MergerReportForm = () => {
-  const [marksData, setMarksData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const MergedReportForm = () => {
+  const location = useLocation();
+  
+  // Destructure marksData, year, stream, and term from location.state
+  const { marksData, year, stream, term } = location.state || {};
 
-  // State for selecting stream, year, and term
-  const [stream, setStream] = useState('form1x'); // Default stream
-  const [year, setYear] = useState('2025-2026');  // Default year
-  const [term, setTerm] = useState('Term-1');     // Default term
+  if (!marksData || marksData.length === 0) {
+    return <div>No data available for report card</div>;
+  }
 
-  // State for filtering by RegNo
-  const [regNoFilter, setRegNoFilter] = useState('');
+  // State for the filter input
+  const [filterRegno, setFilterRegno] = useState("");
 
-  // Function to fetch the report card data
-  const fetchMarksData = async () => {
-    const url = `http://localhost:3000/api/marks/${stream}/${year}/${term}`;
-    
-    try {
-      const response = await axios.get(url);
-      setMarksData(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError('Not Found');
-      setLoading(false);
-    }
+  // Function to handle printing the report card
+  const handlePrint = () => {
+    const printContents = document.getElementById("printableTable").innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
   };
-
-  // Fetch the data initially when the component mounts, and when selections change
-  useEffect(() => {
-    fetchMarksData();
-  }, [stream, year, term]); // Re-run whenever any selection changes
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
 
   // Group marks by RegNo
   const groupedByRegNo = marksData.reduce((acc, mark) => {
@@ -73,99 +60,49 @@ const MergerReportForm = () => {
     return "F";                    // Failed or not attended
   };
 
-  // Filter marksData by RegNo
-  const filteredMarksData = regNoFilter
-    ? marksData.filter(mark => mark.regno.toLowerCase().includes(regNoFilter.toLowerCase()))
-    : marksData;
+  // Filtered data based on the filterRegno state
+  const filteredByRegno = Object.keys(groupedByRegNo).filter((regno) => {
+    return regno.includes(filterRegno);
+  });
 
-  // Group the filtered marks data
-  const filteredGroupedByRegNo = filteredMarksData.reduce((acc, mark) => {
-    if (!acc[mark.regno]) {
-      acc[mark.regno] = [];
-    }
-    acc[mark.regno].push(mark);
-    return acc;
-  }, {});
- // Function to handle printing each report card
- const handlePrint = () => {
-    const printContents = document.getElementById("printableTable").innerHTML;
-    const originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-  };
   return (
     <div>
-      {/* Stream, Year, Term, and RegNo Filter */}
-      <div className="grid grid-cols-6 gap-5 pb-5">
-        <div className="min-w-full">
-          <select
-            className="px-3 py-2 w-full text-sm outline-none border rounded"
-            value={stream}
-            onChange={(e) => setStream(e.target.value)}
-          >
-            <option value="form1x">Form 1X</option>
-            <option value="form2x">Form 2X</option>
-            <option value="form3x">Form 3X</option>
-            <option value="form4x">Form 4X</option>
-          </select>
-        </div>
+      <div className='flex w-full justify-between'>
+         {/* Filter by RegNo Input */}
+       <div className="text-center mb-4">
+        <input
+          type="text"
+          placeholder="Search by RegNo"
+          value={filterRegno}
+          onChange={(e) => setFilterRegno(e.target.value)}
+          className="px-3 py-2 border border-slate-500 text-sm w-full max-w-xs mx-auto mb-2"
+        />
+      </div>
 
-        <div className="min-w-full">
-          <select
-            className="px-3 py-2 w-full text-sm outline-none border rounded"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-          >
-            <option value="2025-2026">2025-2026</option>
-            <option value="2024-2025">2024-2025</option>
-          </select>
-        </div>
-
-        <div className="min-w-full">
-          <select
-            className="px-3 py-2 w-full text-sm outline-none border rounded"
-            value={term}
-            onChange={(e) => setTerm(e.target.value)}
-          >
-            <option value="Term-1">Term-1</option>
-            <option value="Term-2">Term-2</option>
-            <option value="Term-3">Term-3</option>
-          </select>
-        </div>
-
-        {/* RegNo Filter Input */}
-        <div className="min-w-full">
-          <input
-            type="text"
-            placeholder="Filter by RegNo"
-            className="px-3 py-2 w-full text-sm outline-none border rounded"
-            value={regNoFilter}
-            onChange={(e) => setRegNoFilter(e.target.value)}
-          />
-        </div>
-         
-
-       < div>
-      <button onClick={handlePrint}  className="text-center px-3 text-slate-500 text-sm w-full  border border-1 border-slate-700 font-bold     py-2 rounded hover:text-slate-900">
-            Print Reports
-          </button>
+      {/* Print button */}
+      <div className="text-center mb-4">
+        <button onClick={handlePrint} className="text-center px-3 text-slate-500 text-sm w-full border border-1 border-slate-700 font-bold py-2 rounded hover:text-slate-900">
+          Print Reports
+        </button>
       </div>
       </div>
 
       {/* Render Report Cards */}
       <div id="printableTable" style={{ maxHeight: '430px', overflowY: 'auto', overflowX: 'auto' }}>
-        {Object.keys(filteredGroupedByRegNo).length === 0 ? (
+        {filteredByRegno.length === 0 ? (
           <p>No data found</p>
         ) : (
           <>
-            {Object.keys(filteredGroupedByRegNo).map((regno) => {
-              const studentMarks = filteredGroupedByRegNo[regno];
+            {filteredByRegno.map((regno) => {
+              const studentMarks = groupedByRegNo[regno];
               const overallAverage = calculateOverallAverage(studentMarks);
               const overallRemark = getRemark(overallAverage); // Get general remark for overall average
+              const studentStream = studentMarks[0]?.stream || stream; // Stream for each student
+              const studentYear = studentMarks[0]?.year || year; // If stream or year not in mark, use from location.state
+              const studentTerm = studentMarks[0]?.term || term; // Similarly, if term not in mark, use from location.state
 
               return (
-                <div key={regno} className="page-break"   style={{ marginBottom: '20px', border: '', padding: '10px' }}>
+                <div key={regno} className="page-break" style={{ marginBottom: '20px', border: '', padding: '10px' }}>
                   <div className="text-center">
                     <img
                       src="KIbabii-Logo.png"
@@ -175,16 +112,14 @@ const MergerReportForm = () => {
                   </div>
                   {/* Display Stream, Year, and Term below the Logo */}
                   <div className="text-center ">
-                   
-                    <p><strong>Year: </strong>{year}</p>
-                    <p><strong>Term: </strong>{term}</p>
+                    <p><strong>Year: </strong>{studentYear}</p>
+                    <p><strong>Term: </strong>{studentTerm}</p>
                   </div>
                   <div className="flex justify-between">
                     <p className="text-sm font-semibold text-yellow-800">Reg No: <span>{regno}</span></p>
-                    <p><strong>Stream: </strong><span className='text-yellow-700'>{stream}</span></p>
+                    <p><strong>Stream: </strong><span className='text-yellow-700'>{studentStream}</span></p>
                     <p><strong>Avg:</strong> <strong className='text-yellow-800'>{overallAverage.toFixed(2)}</strong> 
-                       <span className='pl-5'>Remark</span>  <span className="ml-2 text-sm  text-yellow-700 font-semibold">{overallRemark}</span></p>
-                        
+                       <span className='pl-5'>Remark</span>  <span className="ml-2 text-sm text-yellow-700 font-semibold">{overallRemark}</span></p>
                   </div>
                   <table style={{ width: '100%', textAlign: 'center', borderCollapse: 'collapse' }}>
                     <thead>
@@ -207,51 +142,55 @@ const MergerReportForm = () => {
 
                         return (
                           <tr key={index} style={{ border: '1px solid black' }}>
-                            <td style={{ padding: '4px'  ,border: '1px solid black'}}>{mark.subjectCode}</td>
-                            <td style={{ padding: '4px' ,border: '1px solid black' }}>{openerScore}</td>
-                            <td style={{ padding: '4px' ,border: '1px solid black' }}>{midTermScore}</td>
-                            <td style={{ padding: '4px' ,border: '1px solid black'}}>{finalScore}</td>
-                            <td style={{ padding: '4px' ,border: '1px solid black' }}>{subjectAverage.toFixed(2)}</td>
-                            <td style={{ padding: '4px' ,border: '1px solid black'}}>{remark}</td>
+                            <td style={{ padding: '4px', border: '1px solid black' }}>{mark.subjectCode}</td>
+                            <td style={{ padding: '4px', border: '1px solid black' }}>{openerScore}</td>
+                            <td style={{ padding: '4px', border: '1px solid black' }}>{midTermScore}</td>
+                            <td style={{ padding: '4px', border: '1px solid black' }}>{finalScore}</td>
+                            <td style={{ padding: '4px', border: '1px solid black' }}>{subjectAverage.toFixed(2)}</td>
+                            <td style={{ padding: '4px', border: '1px solid black' }}>{remark}</td>
                           </tr>
                         );
                       })}
                     </tbody>
                   </table>
                   <div className='flex flex-col md:flex-row gap-5 mt-5'>
-                      <div className='border w-full border-slate-500'>
-                        <table className='w-full'>
-                          <caption>KEY</caption>
-                          <tbody>
-                            <tr className='border-t border-slate-500'>
-                              <td>E.E</td>
-                              <td>75 -100</td>
-                              <td>Exceeding Expectation</td>
-                            </tr>
-                            <tr className='border-t border-slate-500'>
-                              <td>M.E</td>
-                              <td>50 -74</td>
-                              <td>Meeting Expectation</td>
-                            </tr>
-                            <tr className='border-t border-slate-500'>
-                              <td>B.E</td>
-                              <td>0 -49</td>
-                              <td>Below Expectation</td>
-                            </tr>
-                            <tr className='border-t border-slate-500'>
-                              <td>F</td>
-                              <td>NULL</td>
-                              <td>Never did exam</td>
-                            </tr>
-                            <tr className='border-t border-slate-500'>
-                              <td>AVG</td>
-                              <td>Total divided by 9</td>
-                              <td>Average</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                    <div className='border w-full border-slate-500'>
+                      <table className='w-full'>
+                        <caption>KEY</caption>
+                        <tbody>
+                          <tr className='border-t border-slate-500'>
+                            <td>E.E</td>
+                            <td>75 -100</td>
+                            <td>Exceeding Expectation</td>
+                          </tr>
+                          <tr className='border-t border-slate-500'>
+                            <td>M.E</td>
+                            <td>50 -74</td>
+                            <td>Meeting Expectation</td>
+                          </tr>
+                          <tr className='border-t border-slate-500'>
+                            <td>B.E</td>
+                            <td>0 -49</td>
+                            <td>Below Expectation</td>
+                          </tr>
+                          <tr className='border-t border-slate-500'>
+                            <td>F</td>
+                            <td>NULL</td>
+                            <td>Never did exam</td>
+                          </tr>
+                          <tr className='border-t border-slate-500'>
+                            <td>AVG</td>
+                            <td>Total divided by 9</td>
+                            <td>Average</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
+                  </div>
+                  <div>
+                    {/**the graph show be in this part */}
+                  </div>
+                  
                 </div>
               );
             })}
@@ -262,4 +201,4 @@ const MergerReportForm = () => {
   );
 };
 
-export default MergerReportForm;
+export default MergedReportForm;
