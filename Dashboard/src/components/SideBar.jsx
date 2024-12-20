@@ -1,11 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaTachometerAlt, FaUniversity, FaBook, FaUsers, FaChalkboardTeacher, FaClipboardList, FaMoneyBillAlt, FaChartLine, FaUserCircle } from "react-icons/fa"; // Importing icons from react-icons
+import { FaTachometerAlt, FaUniversity,FaFileAlt, FaBook, FaUsers, FaChalkboardTeacher, FaClipboardList, FaMoneyBillAlt, FaChartLine, FaUserCircle } from "react-icons/fa"; // Importing icons from react-icons
 
 const navItems = [
   { to: "/dashboard", label: "DASHBOARD", icon: <FaTachometerAlt /> },
   { to: "/departments", label: "DEPARTMENTS", icon: <FaUniversity /> },
   { to: "/streams", label: "ACADEMICS", icon: <FaBook /> },
+  { to: "/mergedmarks", label: "REPORTS", icon: <FaFileAlt /> },
   { to: "/students", label: "STUDENTS", icon: <FaUsers /> },
   { to: "/teachers", label: "TEACHERS", icon: <FaChalkboardTeacher /> },
   { to: "/learningarea", label: "SUBJECTS", icon: <FaClipboardList /> },
@@ -13,6 +14,7 @@ const navItems = [
   { to: "/finance", label: "FINANCE", icon: <FaMoneyBillAlt /> },
   { to: "/users", label: "USERS", icon: <FaUsers /> },
   { to: "/analytics", label: "ANALYTICS", icon: <FaChartLine /> }
+
 ];
 
 const SideBar = () => {
@@ -31,15 +33,19 @@ const SideBar = () => {
         </NavLink>
       </div>
       
-      {/* Navigation Links */}
-      {navItems.map((item) => (
-        <NavLink to={item.to} key={item.to}>
-          <div className="flex  rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full px-3 py-1 gap-1">
-            {item.icon}
-            <li className="list-none text-sm">{item.label}</li>
-          </div>
-        </NavLink>
-      ))}
+{/* Navigation Links */}
+<div className="max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-custom">
+  {navItems.map((item) => (
+    <NavLink to={item.to} key={item.to}>
+      <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full px-3 py-1 gap-1">
+        {item.icon}
+        <li className="list-none text-sm">{item.label}</li>
+      </div>
+    </NavLink>
+  ))}
+</div>
+
+
       
       {/* Profile Section */}
       <div className="flex  rounded py-2 text-black  hover:bg-gray-800 hover:text-white w-full px-3 py-1 gap-1">

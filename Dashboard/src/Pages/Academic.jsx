@@ -151,11 +151,6 @@ const Academic = () => {
             </select>
           </div>
           <div>
-            <button onClick={()=>navigate('/mergedmarks')}  className="text-center px-3 text-slate-500 text-sm w-full  border border-1 border-slate-700 font-bold     py-2 rounded hover:text-slate-900">
-            Merged
-          </button>
-          </div>
-          <div>
             <button  onClick={handleReportClick}  className="text-center px-3 text-slate-500 text-sm w-full  border border-1 border-slate-700 font-bold     py-2 rounded hover:text-slate-900">
             Reports
           </button>

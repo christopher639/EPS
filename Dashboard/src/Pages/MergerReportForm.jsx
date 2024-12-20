@@ -86,7 +86,14 @@ const MergerReportForm = () => {
     acc[mark.regno].push(mark);
     return acc;
   }, {});
-
+ // Function to handle printing each report card
+ const handlePrint = () => {
+    const printContents = document.getElementById("printableTable").innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  };
   return (
     <div>
       {/* Stream, Year, Term, and RegNo Filter */}
@@ -137,6 +144,13 @@ const MergerReportForm = () => {
             onChange={(e) => setRegNoFilter(e.target.value)}
           />
         </div>
+         
+
+       < div>
+      <button onClick={handlePrint}  className="text-center px-3 text-slate-500 text-sm w-full  border border-1 border-slate-700 font-bold     py-2 rounded hover:text-slate-900">
+            Print Reports
+          </button>
+      </div>
       </div>
 
       {/* Render Report Cards */}
@@ -151,12 +165,26 @@ const MergerReportForm = () => {
               const overallRemark = getRemark(overallAverage); // Get general remark for overall average
 
               return (
-                <div key={regno} style={{ marginBottom: '20px', border: '1px solid black', padding: '10px' }}>
-                  <h3>Report Card - {regno}</h3>
+                <div key={regno} className="page-break"   style={{ marginBottom: '20px', border: '', padding: '10px' }}>
+                  <div className="text-center">
+                    <img
+                      src="KIbabii-Logo.png"
+                      alt="School Logo"
+                      className="w-[54px] h-[54px] mx-auto"
+                    />
+                  </div>
+                  {/* Display Stream, Year, and Term below the Logo */}
+                  <div className="text-center ">
+                   
+                    <p><strong>Year: </strong>{year}</p>
+                    <p><strong>Term: </strong>{term}</p>
+                  </div>
                   <div className="flex justify-between">
                     <p className="text-sm font-semibold text-yellow-800">Reg No: <span>{regno}</span></p>
+                    <p><strong>Stream: </strong><span className='text-yellow-700'>{stream}</span></p>
                     <p><strong>Avg:</strong> <strong className='text-yellow-800'>{overallAverage.toFixed(2)}</strong> 
-                        <span className="ml-2 text-sm font-semibold">{overallRemark}</span></p>
+                       <span className='pl-5'>Remark</span>  <span className="ml-2 text-sm  text-yellow-700 font-semibold">{overallRemark}</span></p>
+                        
                   </div>
                   <table style={{ width: '100%', textAlign: 'center', borderCollapse: 'collapse' }}>
                     <thead>
@@ -179,17 +207,51 @@ const MergerReportForm = () => {
 
                         return (
                           <tr key={index} style={{ border: '1px solid black' }}>
-                            <td style={{ padding: '4px' }}>{mark.subjectCode}</td>
-                            <td style={{ padding: '4px' }}>{openerScore}</td>
-                            <td style={{ padding: '4px' }}>{midTermScore}</td>
-                            <td style={{ padding: '4px' }}>{finalScore}</td>
-                            <td style={{ padding: '4px' }}>{subjectAverage.toFixed(2)}</td>
-                            <td style={{ padding: '4px' }}>{remark}</td>
+                            <td style={{ padding: '4px'  ,border: '1px solid black'}}>{mark.subjectCode}</td>
+                            <td style={{ padding: '4px' ,border: '1px solid black' }}>{openerScore}</td>
+                            <td style={{ padding: '4px' ,border: '1px solid black' }}>{midTermScore}</td>
+                            <td style={{ padding: '4px' ,border: '1px solid black'}}>{finalScore}</td>
+                            <td style={{ padding: '4px' ,border: '1px solid black' }}>{subjectAverage.toFixed(2)}</td>
+                            <td style={{ padding: '4px' ,border: '1px solid black'}}>{remark}</td>
                           </tr>
                         );
                       })}
                     </tbody>
                   </table>
+                  <div className='flex flex-col md:flex-row gap-5 mt-5'>
+                      <div className='border w-full border-slate-500'>
+                        <table className='w-full'>
+                          <caption>KEY</caption>
+                          <tbody>
+                            <tr className='border-t border-slate-500'>
+                              <td>E.E</td>
+                              <td>75 -100</td>
+                              <td>Exceeding Expectation</td>
+                            </tr>
+                            <tr className='border-t border-slate-500'>
+                              <td>M.E</td>
+                              <td>50 -74</td>
+                              <td>Meeting Expectation</td>
+                            </tr>
+                            <tr className='border-t border-slate-500'>
+                              <td>B.E</td>
+                              <td>0 -49</td>
+                              <td>Below Expectation</td>
+                            </tr>
+                            <tr className='border-t border-slate-500'>
+                              <td>F</td>
+                              <td>NULL</td>
+                              <td>Never did exam</td>
+                            </tr>
+                            <tr className='border-t border-slate-500'>
+                              <td>AVG</td>
+                              <td>Total divided by 9</td>
+                              <td>Average</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                 </div>
               );
             })}
