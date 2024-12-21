@@ -99,39 +99,46 @@ const ReportForm = () => {
                 </tbody>
               </table>
               <div className='flex flex-col md:flex-row gap-5 mt-5'>
-                      <div className='border w-full border-slate-500'>
-                        <table className='w-full'>
-                          <caption>KEY</caption>
-                          <tbody>
-                            <tr className='border-t border-slate-500'>
-                              <td>E.E</td>
-                              <td>75 -100</td>
-                              <td>Exceeding Expectation</td>
-                            </tr>
-                            <tr className='border-t border-slate-500'>
-                              <td>M.E</td>
-                              <td>50 -74</td>
-                              <td>Meeting Expectation</td>
-                            </tr>
-                            <tr className='border-t border-slate-500'>
-                              <td>B.E</td>
-                              <td>0 -49</td>
-                              <td>Below Expectation</td>
-                            </tr>
-                            <tr className='border-t border-slate-500'>
-                              <td>F</td>
-                              <td>NULL</td>
-                              <td>Never did exam</td>
-                            </tr>
-                            <tr className='border-t border-slate-500'>
-                              <td>AVG</td>
-                              <td>Total divided by 9</td>
-                              <td>Average</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                    <div className=' w-full'>
+                      <table className='w-full'>
+                      
+                          <tr >
+                            <td className='font-bold text-black'>REMARK</td>
+                            <td className='font-bold text-black'>RANGE</td>
+                            <td className='font-bold text-black'>MEANING</td>
+                          </tr>
+                        
+          
+                        <tbody>
+                          <tr>
+                            <td>E.E</td>
+                            <td>75 -100</td>
+                            <td>Exceeding Expectation</td>
+                          </tr>
+                          <tr>
+                            <td>M.E</td>
+                            <td>50 -74</td>
+                            <td>Meeting Expectation</td>
+                          </tr>
+                          <tr>
+                            <td>B.E</td>
+                            <td>0 -49</td>
+                            <td>Below Expectation</td>
+                          </tr>
+                          <tr>
+                            <td>F</td>
+                            <td>NULL</td>
+                            <td>Never did exam</td>
+                          </tr>
+                          <tr >
+                            <td>AVG</td>
+                            <td></td>
+                            <td>Average</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
+                  </div>
             </div>
             {/* Button to print individual student report */}
            

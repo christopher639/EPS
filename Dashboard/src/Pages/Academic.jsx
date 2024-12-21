@@ -83,8 +83,7 @@ const Academic = () => {
   };
 
   return (
-    <div className='flex overflow-none mx-1 sm:mr-5 md:mr-0 flex-col md:flex-row'>
-      <div className='w-full'>
+    <div className='flex flex-col max-w-screen-xl mx-auto'>
         {/* Filters */}
         <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-4">
           <div className="min-w-full">
@@ -147,22 +146,22 @@ const Academic = () => {
               <option value="opener">Opener</option>
               <option value="mid-term">Mid-Term</option>
               <option value="final">Final</option>
-          
             </select>
           </div>
           <div>
-            <button  onClick={handleReportClick}  className="text-center px-3 text-slate-500 text-sm w-full  border border-1 border-slate-700 font-bold     py-2 rounded hover:text-slate-900">
-            Reports
-          </button>
+            <button onClick={handleReportClick} className="text-center px-3 text-slate-500 text-sm w-full  border border-1 border-slate-700 font-bold py-2 rounded hover:text-slate-900">
+              Reports
+            </button>
           </div>
         </div>
-
+    
         {/* Display data */}
-        <div className='flex max-h-[72vh] md:max-h-[80vh] overflow-y-auto overflow-x-auto justify-center'>
-          <div className='w-full' id="printableTable">
-            <table className="min-w-full  border border-slate-700">
+        <div className='mx-4 md:mx-0 grid grid-cols-1 max-h-[72vh] md:max-h-[80vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+         <div id='printableTable'>
+            {/* Table for displaying Year, Grade/Class, Term, Exam Category */}
+            <table className="min-w-full border ">
               <thead>
-                <tr className=" text-gray-800">
+                <tr className="text-gray-800">
                   <th className="border border-slate-700 px-4 py-1 text-left">Year</th>
                   <th className="border border-slate-700 px-4 py-1 text-left">Grade/class</th>
                   <th className="border border-slate-700 px-4 py-1 text-left">Term</th>
@@ -170,21 +169,22 @@ const Academic = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="">
-                  <td className="border border-slate-700 text-yellow-700 px-4 py-1">{tableYear || year}</td>
-                  <td className="border border-slate-700 text-yellow-700 px-4 py-1">{tableStream || stream}</td>
-                  <td className="border border-slate-700 text-yellow-700 px-4 py-1">{tableTerm || term}</td>
-                  <td className="border border-slate-700 text-yellow-700 px-4 py-1">{tableExamCategory || examCategory}</td>
+                <tr className='border-x border-slate-700'>
+                  <td className=" border-r border-slate-700 text-yellow-700 px-1 py-1">{tableYear || year}</td>
+                  <td className="border-r border-slate-700 text-yellow-700 px-1 py-1">{tableTerm || term}</td>
+                  <td className="border-r border-slate-700 text-yellow-700 px-1 py-1">{tableStream || stream}</td>
+                  <td className="border-r border-slate-700 text-yellow-700 px-1 py-1">{tableExamCategory || examCategory}</td>
                 </tr>
               </tbody>
             </table>
-           
-            <table className="min-w-full  border border-slate-400">
+            
+            {/* Table for displaying student marks */}
+            <table className="min-w-full border border-slate-700">
               <thead>
-                <tr className="">
-                  <th className=" whitespace-nowrap px-4 py-1">Reg No</th>
+                <tr>
+                  <th className="whitespace-nowrap px-1 py-1">Reg No</th>
                   {subjectHeaders.map((subject, index) => (
-                    <th key={index} className=" border-x border-slate-700 px-4 py-1">{subject.toUpperCase()}</th>
+                    <th key={index} className="border-x border-slate-700 px-1 py-1">{subject.toUpperCase()}</th>
                   ))}
                 </tr>
               </thead>
@@ -196,11 +196,11 @@ const Academic = () => {
                 ) : (
                   filteredMarksData.map((student, index) => (
                     <tr key={index} className="hover:bg-gray-300 hover:text-black hover:font-bold">
-                      <td className="border border-slate-500 px-4 py-1">{student.regno}</td>
+                      <td className="border border-slate-500 px-1 py-1">{student.regno}</td>
                       {subjectHeaders.map((subject, idx) => {
                         const mark = student.marks.find(m => m.subjectCode === subject);
                         return (
-                          <td key={idx} className="border text-center border-slate-700 px-4 py-1">
+                          <td key={idx} className="border text-center border-slate-700 px-1 py-1">
                             {mark ? mark.score : "-"}
                           </td>
                         );
@@ -210,9 +210,8 @@ const Academic = () => {
                 )}
               </tbody>
             </table>
-          </div>
+         </div>
         </div>
-      </div>
     </div>
   );
 };

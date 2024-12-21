@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-
 const MergedReportForm = () => {
   const location = useLocation();
-  
   // Destructure marksData, year, stream, and term from location.state
   const { marksData, year, stream, term } = location.state || {};
 
   if (!marksData || marksData.length === 0) {
     return <div>No data available for report card</div>;
   }
-
   // State for the filter input
   const [filterRegno, setFilterRegno] = useState("");
-
   // Function to handle printing the report card
   const handlePrint = () => {
     const printContents = document.getElementById("printableTable").innerHTML;
@@ -22,7 +18,6 @@ const MergedReportForm = () => {
     window.print();
     document.body.innerHTML = originalContents;
   };
-
   // Group marks by RegNo
   const groupedByRegNo = marksData.reduce((acc, mark) => {
     if (!acc[mark.regno]) {
@@ -31,14 +26,12 @@ const MergedReportForm = () => {
     acc[mark.regno].push(mark);
     return acc;
   }, {});
-
   // Function to calculate the average score of a student for a subject
   const calculateSubjectAverage = (scores) => {
     const validScores = scores.filter(score => score !== "-"); // Remove invalid scores
     const totalScore = validScores.reduce((sum, score) => sum + score, 0);
     return totalScore / validScores.length || 0; // Avoid dividing by zero
   };
-
   // Function to calculate the overall average for the student
   const calculateOverallAverage = (studentMarks) => {
     const subjectAverages = studentMarks.map(mark => {
@@ -47,11 +40,9 @@ const MergedReportForm = () => {
       const finalScore = mark.scores.find(score => score.examCategory === 'final')?.score || "-";
       return calculateSubjectAverage([openerScore, midTermScore, finalScore]);
     });
-
     const totalAverage = subjectAverages.reduce((sum, avg) => sum + avg, 0);
     return totalAverage / subjectAverages.length || 0; // Avoid dividing by zero
   };
-
   // Function to get the remark based on the score
   const getRemark = (score) => {
     if (score >= 75) return "E.E"; // Exceeding Expectation
@@ -59,12 +50,10 @@ const MergedReportForm = () => {
     if (score >= 0) return "B.E";  // Below Expectation
     return "F";                    // Failed or not attended
   };
-
   // Filtered data based on the filterRegno state
   const filteredByRegno = Object.keys(groupedByRegNo).filter((regno) => {
     return regno.includes(filterRegno);
   });
-
   return (
     <div>
       <div className='flex w-full justify-between'>
@@ -78,7 +67,6 @@ const MergedReportForm = () => {
           className="px-3 py-2 border border-slate-500 text-sm w-full max-w-xs mx-auto mb-2"
         />
       </div>
-
       {/* Print button */}
       <div className="text-center mb-4">
         <button onClick={handlePrint} className="text-center px-3 text-slate-500 text-sm w-full border border-1 border-slate-700 font-bold py-2 rounded hover:text-slate-900">
@@ -86,7 +74,6 @@ const MergedReportForm = () => {
         </button>
       </div>
       </div>
-
       {/* Render Report Cards */}
       <div id="printableTable" style={{ maxHeight: '430px', overflowY: 'auto', overflowX: 'auto' }}>
         {filteredByRegno.length === 0 ? (
@@ -139,48 +126,51 @@ const MergedReportForm = () => {
                         const finalScore = mark.scores.find(score => score.examCategory === 'final')?.score || "-";
                         const subjectAverage = calculateSubjectAverage([openerScore, midTermScore, finalScore]);
                         const remark = getRemark(subjectAverage); // Get the remark for the subject average
-
                         return (
                           <tr key={index} style={{ border: '1px solid black' }}>
                             <td style={{ padding: '4px', border: '1px solid black' }}>{mark.subjectCode}</td>
                             <td style={{ padding: '4px', border: '1px solid black' }}>{openerScore}</td>
                             <td style={{ padding: '4px', border: '1px solid black' }}>{midTermScore}</td>
                             <td style={{ padding: '4px', border: '1px solid black' }}>{finalScore}</td>
-                            <td style={{ padding: '4px', border: '1px solid black' }}>{subjectAverage.toFixed(2)}</td>
-                            <td style={{ padding: '4px', border: '1px solid black' }}>{remark}</td>
+                            <td className='text-yellow-900 font-semibold' style={{ padding: '4px', border: '1px solid black' }}>{subjectAverage.toFixed(2)}</td>
+                            <td className='text-yellow-800 font-semibold' style={{ padding: '4px', border: '1px solid black' }}>{remark}</td>
                           </tr>
                         );
                       })}
                     </tbody>
                   </table>
                   <div className='flex flex-col md:flex-row gap-5 mt-5'>
-                    <div className='border w-full border-slate-500'>
-                      <table className='w-full'>
-                        <caption>KEY</caption>
+                    <div className=' w-full'>
+                      <table className='w-full'> 
+                          <tr >
+                            <td className='font-bold text-black'>REMARK</td>
+                            <td className='font-bold text-black'>RANGE</td>
+                            <td className='font-bold text-black'>MEANING</td>
+                          </tr>
                         <tbody>
-                          <tr className='border-t border-slate-500'>
+                          <tr>
                             <td>E.E</td>
                             <td>75 -100</td>
                             <td>Exceeding Expectation</td>
                           </tr>
-                          <tr className='border-t border-slate-500'>
+                          <tr>
                             <td>M.E</td>
                             <td>50 -74</td>
                             <td>Meeting Expectation</td>
                           </tr>
-                          <tr className='border-t border-slate-500'>
+                          <tr>
                             <td>B.E</td>
                             <td>0 -49</td>
                             <td>Below Expectation</td>
                           </tr>
-                          <tr className='border-t border-slate-500'>
+                          <tr>
                             <td>F</td>
                             <td>NULL</td>
                             <td>Never did exam</td>
                           </tr>
-                          <tr className='border-t border-slate-500'>
+                          <tr >
                             <td>AVG</td>
-                            <td>Total divided by 9</td>
+                            <td></td>
                             <td>Average</td>
                           </tr>
                         </tbody>
@@ -190,7 +180,6 @@ const MergedReportForm = () => {
                   <div>
                     {/**the graph show be in this part */}
                   </div>
-                  
                 </div>
               );
             })}
@@ -200,5 +189,4 @@ const MergedReportForm = () => {
     </div>
   );
 };
-
 export default MergedReportForm;

@@ -182,5 +182,4 @@ const MergedMarks = () => {
     </div>
   );
 };
-
 export default MergedMarks;
