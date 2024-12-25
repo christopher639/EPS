@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaTachometerAlt, FaUniversity, FaFileAlt, FaBook, FaUsers, FaChalkboardTeacher, FaClipboardList, FaMoneyBillAlt, FaChartLine, FaUserCircle, FaChevronRight, FaChevronDown } from "react-icons/fa"; // Importing icons from react-icons
+import { FaTachometerAlt, FaUniversity, FaBook, FaUsers, FaChalkboardTeacher, FaClipboardList, FaMoneyBillAlt, FaChartLine, FaUserCircle, FaChevronRight, FaChevronDown, FaFileAlt } from "react-icons/fa"; // Importing icons from react-icons
 
 const navItems = [
-  { to: "/dashboard", label: "DASHBOARD", icon: <FaTachometerAlt /> },
-  { to: "/departments", label: "DEPARTMENTS", icon: <FaUniversity /> },
-  {  label: "ACADEMICS", icon: <FaBook /> },
-  { to: "/students", label: "STUDENTS", icon: <FaUsers /> },
-  { to: "/teachers", label: "TEACHERS", icon: <FaChalkboardTeacher /> },
-  { to: "/learningarea", label: "SUBJECTS", icon: <FaClipboardList /> },
-  { to: "/parents", label: "PARENTS", icon: <FaUsers /> },
-  { to: "/finance", label: "FINANCE", icon: <FaMoneyBillAlt /> },
-  { to: "/users", label: "USERS", icon: <FaUsers /> },
-  { to: "/analytics", label: "ANALYTICS", icon: <FaChartLine /> }
+  { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
+  { to: "/departments", label: "Departments", icon: <FaUniversity /> },
+  { label: "Academics", icon: <FaBook /> },
+  { to: "/students", label: "Students", icon: <FaUsers /> },
+  { to: "/teachers", label: "Teachers", icon: <FaChalkboardTeacher /> },
+  { to: "/learningarea", label: "Subjects", icon: <FaClipboardList /> },
+  { to: "/parents", label: "Parents", icon: <FaUsers /> },
+  { to: "/finance", label: "Finance", icon: <FaMoneyBillAlt /> },
+  { to: "/users", label: "Users", icon: <FaUsers /> },
+  { to: "/analytics", label: "Analytics", icon: <FaChartLine /> }
 ];
 
 const SideBar = () => {
@@ -41,34 +41,38 @@ const SideBar = () => {
       {/* Navigation Links */}
       <div className="max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-custom">
         {navItems.map((item) => {
-          if (item.label === "ACADEMICS") {
+          if (item.label === "Academics") {
             return (
-              <div key={item.to}>
-                <NavLink to={item.to} onClick={toggleAcademics}>
-                  <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full px-3 py-1 gap-1">
-                    {item.icon}
-                    <li className="list-none text-sm">{item.label}</li>
-                    {/* Show the arrow icon based on whether the section is open or closed */}
-                    {isAcademicsOpen ? (
-                      <FaChevronDown className="ml-auto" />
-                    ) : (
-                      <FaChevronRight className="ml-auto" />
-                    )}
-                  </div>
-                </NavLink>
+              <div key={item.label}>
+                <div onClick={toggleAcademics} className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full px-3 py-1 gap-1 cursor-pointer">
+                  {item.icon}
+                  <li className="list-none ">{item.label}</li>
+                  {/* Show the arrow icon based on whether the section is open or closed */}
+                  {isAcademicsOpen ? (
+                    <FaChevronDown className="ml-auto" />
+                  ) : (
+                    <FaChevronRight className="ml-auto" />
+                  )}
+                </div>
                 {/* Render extra links if Academics is clicked */}
                 {isAcademicsOpen && (
                   <div className="ml-6">
-                    <NavLink to="/streams">
+                    <NavLink to="/assessments">
                       <div className="flex py-1 text-black hover:bg-gray-800 hover:text-white w-full px-3 py-1 gap-1">
                         <FaFileAlt />
-                        <li className="list-none text-sm">SINGLE REPORT</li>
+                        <li className="list-none">Assessments</li>
                       </div>
                     </NavLink>
-                    <NavLink to="/mergedmarks">
+                    <NavLink to="/merged-assessment">
                       <div className="flex py-1 text-black hover:bg-gray-800 hover:text-white w-full px-3 py-1 gap-1">
                         <FaFileAlt />
-                        <li className="list-none text-sm">MERGED REPORT</li>
+                        <li className="list-none ">ALL Assessments</li>
+                      </div>
+                    </NavLink>
+                    <NavLink to="/general-report">
+                      <div className="flex py-1 text-black hover:bg-gray-800 hover:text-white w-full px-3 py-1 gap-1">
+                        <FaFileAlt />
+                        <li className="list-none ">General Report</li>
                       </div>
                     </NavLink>
                   </div>
@@ -80,7 +84,7 @@ const SideBar = () => {
             <NavLink to={item.to} key={item.to}>
               <div className="flex rounded py-2 text-black hover:bg-gray-800 hover:text-white w-full px-3 py-1 gap-1">
                 {item.icon}
-                <li className="list-none text-sm">{item.label}</li>
+                <li className="list-none ">{item.label}</li>
               </div>
             </NavLink>
           );

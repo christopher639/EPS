@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 // Define the schema for subject marks
 const subjectsMarksSchema = new mongoose.Schema({
     year: {
@@ -14,11 +13,15 @@ const subjectsMarksSchema = new mongoose.Schema({
         type: String, // E.g., "Science", "Arts"
         required: true,
     },
-    examCategory: {
+    class: {
+        type: String,
+        required: true,
+    },
+    category: {
         type: String, // E.g., "Opener", "Mid-Term"
         required: true,
     },
-    subjectCode: { 
+    code: {  // Changed "Code" to lowercase "code"
         type: String, // E.g., "MATH101", "ENG202"
         required: true,
     },

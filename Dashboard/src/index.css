@@ -50,3 +50,15 @@ body{
   background: #f1f1f1; /* Optional: scrollbar track background */
   border-radius: 10px; /* Optional: rounded corners for the track */
 }
+.table-container {
+  max-height: 400px; /* Adjust the height as needed */
+  overflow-y: auto;
+  display: block;
+}
+
+thead th {
+  position: sticky;
+  top: 0; /* Add a background to the sticky header */
+  z-index: 1; 
+  /* Ensures the header is above the table rows */
+}

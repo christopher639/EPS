@@ -111,12 +111,12 @@ const MergedReportForm = () => {
                   <table style={{ width: '100%', textAlign: 'center', borderCollapse: 'collapse' }}>
                     <thead>
                       <tr>
-                        <th style={{ border: '1px solid black', padding: '4px' }}>Subject</th>
-                        <th style={{ border: '1px solid black', padding: '4px' }}>Opener Score</th>
-                        <th style={{ border: '1px solid black', padding: '4px' }}>Mid-Term Score</th>
-                        <th style={{ border: '1px solid black', padding: '4px' }}>Final Score</th>
-                        <th style={{ border: '1px solid black', padding: '4px' }}>Average Score</th>
-                        <th style={{ border: '1px solid black', padding: '4px' }}>Remarks</th>
+                        <th style={{ border: '1px solid black', padding: '1px' }}>Subject</th>
+                        <th style={{ border: '1px solid black', padding: '1px' }}>Opener Score</th>
+                        <th style={{ border: '1px solid black', padding: '1px' }}>Mid-Term Score</th>
+                        <th style={{ border: '1px solid black', padding: '1px' }}>Final Score</th>
+                        <th style={{ border: '1px solid black', padding: '1px' }}>Average Score</th>
+                        <th style={{ border: '1px solid black', padding: '1px' }}>Remarks</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -128,12 +128,12 @@ const MergedReportForm = () => {
                         const remark = getRemark(subjectAverage); // Get the remark for the subject average
                         return (
                           <tr key={index} style={{ border: '1px solid black' }}>
-                            <td style={{ padding: '4px', border: '1px solid black' }}>{mark.subjectCode}</td>
-                            <td style={{ padding: '4px', border: '1px solid black' }}>{openerScore}</td>
-                            <td style={{ padding: '4px', border: '1px solid black' }}>{midTermScore}</td>
-                            <td style={{ padding: '4px', border: '1px solid black' }}>{finalScore}</td>
-                            <td className='text-yellow-900 font-semibold' style={{ padding: '4px', border: '1px solid black' }}>{subjectAverage.toFixed(2)}</td>
-                            <td className='text-yellow-800 font-semibold' style={{ padding: '4px', border: '1px solid black' }}>{remark}</td>
+                            <td style={{ padding: '1px', border: '1px solid black' }}>{mark.subjectCode}</td>
+                            <td style={{ padding: '1px', border: '1px solid black' }}>{openerScore}</td>
+                            <td style={{ padding: '1px', border: '1px solid black' }}>{midTermScore}</td>
+                            <td style={{ padding: '1px', border: '1px solid black' }}>{finalScore}</td>
+                            <td className='text-yellow-900 font-semibold' style={{ padding: '1px', border: '1px solid black' }}>{subjectAverage.toFixed(2)}</td>
+                            <td className='text-yellow-800 font-semibold' style={{ padding: '1px', border: '1px solid black' }}>{remark}</td>
                           </tr>
                         );
                       })}

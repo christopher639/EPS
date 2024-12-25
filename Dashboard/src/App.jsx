@@ -21,9 +21,11 @@ import Analytics from "./Pages/Analytics";
 import Finance from "./Pages/Finance";
 import Departments from "./Pages/Departments";
 
-import MergedMarks from "./Pages/MergedMArks";
 import MergerReportForm from "./Pages/MergerReportForm";
-import AverageMarks from "./Pages/AverageMarks";
+import MergedAssessment from "./Pages/MergedAssessment";
+import Assessments from "./Pages/Assessments";
+import AvgMerged from "./Pages/AvgMerged";
+import GeneralReport from "./Pages/GeneralReport";
 const App = () => {
   return (
     <div className="flex min-h-full bg-gray-100 w-full fixed flex-row">
@@ -50,9 +52,13 @@ const App = () => {
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/finance" element={<Finance />} />
           <Route path="/departments" element={<Departments/>} />
-          <Route path="/averagemarks" element={<AverageMarks/>} />
-          <Route path="/mergedmarks" element={<MergedMarks/>}/>
+          <Route path="/avgmerged" element={<AvgMerged/>} />
+          <Route path="/general-report" element={<GeneralReport/>} />
           <Route path="/report-card" element={<MergerReportForm/>}/>
+          <Route path="/merged-assessment" element={<MergedAssessment/>}/>
+          
+          <Route path="/assessments" element={<Assessments/>}/>
+        
         </Routes>
       </div>
       <div className="md:mr-0">
