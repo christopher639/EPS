@@ -48,37 +48,8 @@ const TopBar = () => {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className='relative md:ml-1 gap-5 py-1 bg-gray-100'>
-      <div className='flex min-w-full gap-4 items-center bg-gray-100'>
-        <div className='flex items-center justify-start w-1/3'>
-         <div className='flex border p-2 rounded bg-white'>
-         <p className='text-slate-800  font-semibold whitespace-nowrap'>STUDENTS :</p>
-         <p className='text-green-800  font-bold '>{students.length}</p>
-         </div>
-        </div>
-
-        <div className='hidden md:flex   justify-center gap-2 w-1/3'>
-        <div className='flex  flex-row bg-white py-2 '>
-        <p className=' text-gray-700 font-semibold whitespace-nowrap px-2'>TEACHERS: </p>
-        <p className='text-green-800 px-1 font-bold '>{teachers.length}</p>
-        </div>
-        </div>
-
-        <div className='flex  justify-end items-center w-1/3'>
-        <div className='flex  flex-row bg-white py-2 '>
-        <p className=' text-gray-700 font-semibold whitespace-nowrap px-2'>STREAMS : </p>
-        <p className='text-green-800 px-1 font-bold '>{stream.length}</p>
-        </div>
-        </div>
-
-        <div>
-          <button onClick={() => setDrawer(true)}>
-            <svg className='mt-3 md:hidden' xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000">
-              <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
-            </svg>
-          </button>
-        </div>
-      </div>
+    <div >
+   
 
       <div
         className={`fixed top-0 left-0 h-full bg-white  border rounded-lg shadow-2xl md:hidden   transform transition-transform duration-500 ease-in-out ${
@@ -160,7 +131,7 @@ const TopBar = () => {
          </div>
          </div>
          <div className='text-sm ml-2  text-black fixed bottom-40 w-full '>
-  <p className='text-center'>© 2024 Software Engineer Bundi</p>
+  <p className='text-center'>© 2025 Software Engineer Bundi</p>
 </div>
         </div>
         </div>

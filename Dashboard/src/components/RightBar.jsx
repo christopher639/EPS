@@ -21,7 +21,7 @@ const RightBar = () => {
     fetchStudentData();
   }, []);
   return (
-    <div className='hidden bg-gray-200  md:flex  flex-col  h-full'>
+    <div className='hidden bg-gray-200   flex-col  h-full'>
     <div className='flex justify-center'>
     </div>
       {/* Display stream and total students */}

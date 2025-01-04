@@ -37,7 +37,7 @@ const App = () => {
         <TopBar />
         <Routes>
           {/* Redirect the root path to /students */}
-          <Route path="/" element={<Navigate to="/students" />} />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/users" element={<Users />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Academic />} />

@@ -1,12 +1,13 @@
+
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 const MergedReportForm = () => {
   const location = useLocation();
   // Destructure marksData, year, stream, and term from location.state
   const { marksData, year, stream, term } = location.state || {};
-
+    console.log(marksData)
   if (!marksData || marksData.length === 0) {
-    return <div>No data available for report card</div>;
+    console.log("Do data")
   }
   // State for the filter input
   const [filterRegno, setFilterRegno] = useState("");

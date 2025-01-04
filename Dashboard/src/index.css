@@ -49,6 +49,7 @@ body{
 .scrollbar-custom::-webkit-scrollbar-track {
   background: #f1f1f1; /* Optional: scrollbar track background */
   border-radius: 10px; /* Optional: rounded corners for the track */
+
 }
 .table-container {
   max-height: 400px; /* Adjust the height as needed */
@@ -60,5 +61,20 @@ thead th {
   position: sticky;
   top: 0; /* Add a background to the sticky header */
   z-index: 1; 
+  background-color:white;
+
   /* Ensures the header is above the table rows */
 }
+
+/* Style odd rows
+
+ */
+tr:nth-child(odd) {
+  background-color: #f9fafb; /* Light gray for odd rows */
+}
+
+/* Style even rows */
+tr:nth-child(even) {
+  background-color: #ffffff; /* White for even rows */
+}
+
