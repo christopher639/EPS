@@ -27,6 +27,7 @@ const Teachers = () => {
     tse: "",
     department: "",
   });
+  const [isUpdating, setIsUpdating] = useState(false); // Track if it's update mode
   const [streams, setStreams] = useState([]);
   const navigate = useNavigate();
 
@@ -82,7 +83,7 @@ const Teachers = () => {
     getFetchData();
     fetchStreams();
     fetchDepartments();
-    getLeaningareaData()
+    getLeaningareaData();
   }, []);
 
   const formatDate = (dateString) => {
@@ -111,15 +112,53 @@ const Teachers = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/api/teachers", formData)
-      .then(response => {
-        toast.success("Teacher added successfully");
-        setShowModal(false);
-        getFetchData(); // Reload teachers list after adding
-      })
-      .catch(error => {
-        toast.error(error.message || "Error occurred while adding teacher.");
-      });
+    if (isUpdating) {
+      // Update teacher
+      axios.put(`/api/teachers/${formData._id}`, formData)
+        .then(response => {
+          toast.success("Teacher updated successfully");
+          setShowModal(false);
+          getFetchData(); // Reload teachers list after updating
+        })
+        .catch(error => {
+          toast.error(error.message || "Error occurred while updating teacher.");
+        });
+    } else {
+      // Add new teacher
+      axios.post("http://localhost:3000/api/teachers", formData)
+        .then(response => {
+          toast.success("Teacher added successfully");
+          setShowModal(false);
+          getFetchData(); // Reload teachers list after adding
+        })
+        .catch(error => {
+          toast.error(error.message || "Error occurred while adding teacher.");
+        });
+    }
+  };
+
+  const handleUpdateClick = (teacher) => {
+    setIsUpdating(true);
+    setFormData(teacher); // Pre-fill form with teacher data
+    setShowModal(true);
+  };
+
+  const handleAddClick = () => {
+    setIsUpdating(false); // Switch to add mode
+    setFormData({
+      fullname: "",
+      gender: "",
+      dob: "",
+      nationaid: "",
+      email: "",
+      phone: "",
+      salary: "",
+      subjectsteaching: "",
+      type: "",
+      tse: "",
+      department: "",
+    });
+    setShowModal(true);
   };
 
   return (
@@ -128,34 +167,26 @@ const Teachers = () => {
         <p>Teachers</p>
         <input
           type="text"
-          placeholder="Search  by name or regno"
+          placeholder="Search by name or regno"
           className="w-full hidden sm:flex sm:w-2/3 md:w-1/3 px-4 py-2 mb-4 border rounded-md text-gray-700 shadow-sm focus:ring-2 focus:ring-blue-500"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <button
-          onClick={() => setShowModal(true)} // Open modal on button click
+          onClick={handleAddClick} // Open modal on button click for adding
           className='bg-green-600 flex text-white py-2 px-4 rounded-md hover:bg-green-700 transition'
         >
           <p>+</p> <p className='hidden md:flex'>Add Teacher</p>
         </button>
         <UserAccount/>
       </div>
-   <div className='flex px-2 py-3 sm:hidden'>
-   <input
-          type="text"
-          placeholder="Search by name or regno"
-          className="w-full sm:w-2/3 md:w-1/3 px-4 py-2 mb-4 border rounded-md text-gray-700 shadow-sm focus:ring-2 focus:ring-blue-500"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-   </div>
+
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3 shadow-lg">
             <div className="py-2 text-center">
-              <p className="text-lg font-semibold">Add New Teacher</p>
+              <p className="text-lg font-semibold">{isUpdating ? 'Update Teacher' : 'Add New Teacher'}</p>
             </div>
             <form onSubmit={handleSubmit}>
               <div className="w-full flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-3">
@@ -247,9 +278,9 @@ const Teachers = () => {
         </div>
       ) : (
         <div className=" overflow-x-auto px-5  bg-white overflow-y-auto max-h-[82vh]">
-          <table className="min-w-full table-auto  px-5 border  shadow-lg ">
+          <table className="min-w-full table-auto  px-5 border  shadow-lg " >
             <thead className=" text-slate-700">
-              <tr >
+              <tr>
                 {["NO", "Full Name", "TSE NO", "Salary", "Type", "Gender", "Delete", "Update"].map((header, index) => (
                   <th key={index} className="py-2 px-4 text-left">{header}</th>
                 ))}
@@ -259,7 +290,7 @@ const Teachers = () => {
               {teachers.map((teacher, index) => (
                 <tr
                   key={teacher._id}
-                  className="border-b hover:bg-gray-100  cursor-pointer"
+                  className="border-b hover:bg-gray-100 cursor-pointer"
                   onClick={() => navigate(`/teacher/${teacher._id}`)}
                 >
                   <td className="py-2 px-4">{teachers.length - index}</td>
@@ -278,7 +309,7 @@ const Teachers = () => {
                   </td>
                   <td className="py-2 px-4">
                     <button
-                      onClick={(e) => { e.stopPropagation(); alert("Not working at the moment"); }}
+                      onClick={(e) => { e.stopPropagation(); handleUpdateClick(teacher); }}
                       className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
                     >
                       Update
@@ -290,7 +321,6 @@ const Teachers = () => {
           </table>
         </div>
       )}
-
       <ToastContainer />
     </div>
   );

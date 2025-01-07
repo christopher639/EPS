@@ -89,7 +89,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen overflow-x-auto overflow-y-auto max-h-[90vh] bg-gray-50">
-      <div className='flex justify-between gap-5 bg-white border-b'>
+      <div className='flex justify-between gap-5'>
         <div className='w-3/4 flex justify-start px-5'>
           <p className="text:text-sm md:text-lg flex gap-2 lg:text-xl font-semibold text-center text-slate-800 p-1 mb-3">
             <p className='hidden sm:flex'>KIBABII SCHOOL</p>
@@ -102,13 +102,13 @@ const Dashboard = () => {
       </div>
       
       <div>
-        <div className='p-5 '>
+        <div className='p-5'>
           {/* Main Dashboard Section */}
-          <div className='flex flex-col md:flex-row md:justify-between    gap-2'>
-            <div className="grid  w-full grid-cols-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-4 xlg:grid-cols-4 gap-2">
-               {/* Students Count */}
-              <div className="flex   flex-col items-center bg-white shadow-lg rounded-lg p-5">
-                <div className="flex justify-between w-full mb-1">
+          <div className='flex gap-2'>
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {/* Students Count */}
+              <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-5">
+                <div className="flex justify-between w-full mb-3">
                   <p className="text-gray-800 font-semibold">STUDENTS</p>
                   <FaUsers className="text-2xl text-blue-500" />
                 </div>
@@ -117,15 +117,16 @@ const Dashboard = () => {
 
               {/* Teachers Count */}
               <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-5">
-                <div className="flex justify-between w-full mb-1">
+                <div className="flex justify-between w-full mb-3">
                   <p className="text-gray-800 font-semibold"> TEACHERS</p>
                   <FaChalkboardTeacher className="text-2xl text-green-500" />
                 </div>
                 <p className="text-green-600 text-3xl font-bold">{teachers.length}</p>
               </div>
+
               {/* Streams Count */}
               <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-5">
-                <div className="flex justify-between w-full mb-1">
+                <div className="flex justify-between w-full mb-3">
                   <p className="text-gray-800 font-semibold"> STREAMS</p>
                   <FaUniversity className="text-2xl text-yellow-500" />
                 </div>
@@ -134,12 +135,12 @@ const Dashboard = () => {
             
               {/* School Mean */}
               <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-5">
-                <div className="flex justify-between w-full mb-1">
+                <div className="flex justify-between w-full mb-3">
                   <p className="text-gray-800 font-semibold">SCHOOL MEAN</p>
-                  <FaMedal className="text-lg text-yellow-500" />
+                  <FaMedal className="text-2xl text-yellow-500" />
                 </div>
                 <div className='flex gap-2'>
-                  <p className="text-green-600 text-xl font-bold">5.4</p>
+                  <p className="text-green-600 text-3xl font-bold">5.4</p>
                   <div className='flex mt-3 gap-2'>
                     <FaArrowAltCircleDown className='text-sm text-red-800'/>
                     <p className='text-sm text-red-800'>Dropping</p>
@@ -149,49 +150,51 @@ const Dashboard = () => {
 
               {/* Total Employees */}
               <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-5">
-                <div className="flex justify-between w-full mb-1">
+                <div className="flex justify-between w-full mb-3">
                   <p className="text-gray-800 font-semibold">Employees</p>
-                  <FaBuilding className="text-xl text-orange-500" />
+                  <FaBuilding className="text-2xl text-orange-500" />
                 </div>
                 <p className="text-green-600 text-3xl font-bold">0</p>
               </div>
 
               {/* Departments Count */}
               <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-5">
-                <div className="flex justify-between w-full mb-1">
+                <div className="flex justify-between w-full mb-3">
                   <p className="text-gray-800 font-semibold">Departments</p>
-                  <FaBuilding className="text-lg text-purple-500" />
+                  <FaBuilding className="text-2xl text-purple-500" />
                 </div>
-                <p className="text-green-600 text-xl font-bold">{stream.length}</p>
+                <p className="text-green-600 text-3xl font-bold">{stream.length}</p>
               </div>
 
               {/* Learning Areas */}
               <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-5">
-                <div className="flex justify-between w-full mb-1">
+                <div className="flex justify-between w-full mb-3">
                   <p className="text-gray-800 font-semibold">Learning Areas</p>
-                  <FaBook className="text-lg text-blue-500" />
+                  <FaBook className="text-2xl text-blue-500" />
                 </div>
-                <p className="text-green-600 text-xl font-bold">12</p>
+                <p className="text-green-600 text-3xl font-bold">12</p>
               </div>
 
               {/* Alumni Count */}
               <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-5">
-                <div className="flex justify-between w-full mb-1">
+                <div className="flex justify-between w-full mb-3">
                   <p className="text-gray-800 font-semibold">Alumni</p>
-                  <FaUserGraduate className="text-lg text-indigo-500" />
+                  <FaUserGraduate className="text-2xl text-indigo-500" />
                 </div>
-                <p className="text-green-600 text-xl font-bold">{alumniCount}</p>
+                <p className="text-green-600 text-3xl font-bold">{alumniCount}</p>
               </div>
             </div>
+            <div>
               {/* Doughnut Chart Section */}
-              <div className='bg-white max-h-128 p-2 shadow-lg rounded-lg'>
+              <div className="mt-8">
                 <div className="flex justify-between items-center">
                   <h2 className="text-xl font-semibold text-gray-800">Doughnut Chart</h2>
                 </div>
-                <div className="mt-5 max-w-64 flex justify-center">
-                  <Doughnut className='max-h-48' data={doughnutData} options={doughnutOptions} />
+                <div className="mt-5 flex justify-center">
+                  <Doughnut data={doughnutData} options={doughnutOptions} />
                 </div>
               </div>
+            </div>
           </div>
 
           {/* Analytics Section */}
@@ -222,76 +225,12 @@ const Dashboard = () => {
               </div>
 
               {/* Financials Analytics */}
-              <div className="bg-white  shadow-lg rounded-lg p-5">
+              <div className="bg-white shadow-lg rounded-lg p-5">
                 <div className="flex justify-between items-center mb-3">
                   <p className="text-gray-800">Financials</p>
                   <FaMoneyBillAlt className="text-2xl text-green-500" />
                 </div>
                 <p className="text-2xl font-bold text-gray-700">Ksh. 0.00</p>
-              </div>
-          
-            </div>
-          </div>
-
-               {/* Quick Links Section */}
-               <div className="mt-8 pb-5">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-800">Quick Links</h2>
-            </div>
-            <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-6">
-              {/* Quick Links with Icons */}
-              <div className="bg-white border rounded-lg p-5 flex justify-center items-center">
-                <NavLink to="/students" className="text-blue-500 font-semibold">
-                  <FaUsers className="text-xl" /> Students
-                </NavLink>
-              </div>
-
-              <div className="bg-white border rounded-lg p-5 flex justify-center items-center">
-                <NavLink to="/teachers" className="text-green-500 font-semibold">
-                  <FaChalkboardTeacher className="text-xl text-green-500" /> Teachers
-                </NavLink>
-              </div>
-
-              <div className="bg-white border rounded-lg p-5 flex justify-center items-center">
-                <NavLink to="/streams" className="text-yellow-500 font-semibold">
-                  <FaUniversity className="text-xl text-yellow-500" /> Streams
-                </NavLink>
-              </div>
-
-              <div className="bg-white border rounded-lg p-5 flex justify-center items-center">
-                <NavLink to="/departments" className="text-red-500 font-semibold">
-                  <FaBuilding className="text-xl text-red-500" /> Departments
-                </NavLink>
-              </div>
-
-              <div className="bg-white border rounded-lg p-5 flex justify-center items-center">
-                <NavLink to="/general-report" className="text-purple-500 font-semibold">
-                  <FaChalkboardTeacher className="text-xl text-purple-500" /> General Exam Report
-                </NavLink>
-              </div>
-
-              <div className="bg-white border rounded-lg p-5 flex justify-center items-center">
-                <NavLink to="/assessments" className="text-slate-500 font-semibold">
-                  <FaFileAlt className="text-xl text-slate-500" /> Assessments Reports
-                </NavLink>
-              </div>
-
-              <div className="bg-white border rounded-lg p-5 flex justify-center items-center">
-                <NavLink to="/finance" className="text-green-700 font-semibold">
-                  <FaMoneyBillAlt className="text-xl" /> Finances
-                </NavLink>
-              </div>
-
-              <div className="bg-white border rounded-lg p-5 flex justify-center items-center">
-                <NavLink to="/users" className="text-fuchsia-800 font-semibold">
-                  <FaUserCircle className="text-xl text-fuchsia-800" /> Users
-                </NavLink>
-              </div>
-
-              <div className="bg-white border rounded-lg p-5 flex justify-center items-center">
-                <NavLink to="/analytics" className="text-stone-950 font-semibold">
-                  <FaChartLine className="text-xl text-stone-950" /> Analytics
-                </NavLink>
               </div>
             </div>
           </div>

@@ -21,7 +21,6 @@ const Academic = () => {
       const url = `http://localhost:3000/api/marks/${classInput}/${yearInput}/${streamInput}/${termInput}/${categoryInput}`;
       const response = await axios.get(url);
       const data = response.data;
-
       // Extract unique subject codes from the fetched data
       const subjects = Array.from(
         new Set(data.flatMap(student => student.marks.map(mark => mark.code)))
