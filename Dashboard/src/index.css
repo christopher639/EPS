@@ -57,15 +57,6 @@ body{
   display: block;
 }
 
-thead th {
-  position: sticky;
-  top: 0; /* Add a background to the sticky header */
-  z-index: 1; 
-  background-color:white;
-
-  /* Ensures the header is above the table rows */
-}
-
 /* Style odd rows
 
  */

@@ -199,15 +199,15 @@ const MergedAssessment = () => {
           {/* Scrollable Table */}
           <div  >
             <table className="min-w-full table-auto text-center">
-              <thead>
+              <thead className="sticky top-0 bg-white">
                 <tr className="bg-slate-800  text-yellow-900">
-                  <th className="border py-2 ">Reg No</th>
-                  <th className="border py-2 ">Stream</th>
-                  <th className="border py-2 ">Subject Code</th>
-                  <th className="border py-2 ">Opener Score</th>
-                  <th className="border py-2 ">Mid Term Score</th>
-                  <th className="border py-2 ">Final Score</th>
-                  <th className="border py-2 ">Average Score</th>
+                  <th className="border  sticky top-0 bg-white py-2 ">Reg No</th>
+                  <th className="border sticky top-0 bg-white py-2 ">Stream</th>
+                  <th className="border sticky top-0 bg-white py-2 ">Subject Code</th>
+                  <th className="border sticky top-0 bg-white py-2 ">Opener Score</th>
+                  <th className="border sticky top-0 bg-white py-2 ">Mid Term Score</th>
+                  <th className="border sticky top-0 bg-white py-2 ">Final Score</th>
+                  <th className="border sticky top-0 bg-white py-2 ">Average Score</th>
                 </tr>
               </thead>
               <tbody>

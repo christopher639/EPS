@@ -256,7 +256,7 @@ const Departments = () => {
       {loading ? (
         <div className="text-center py-10 text-gray-600">Loading...</div>
       ) : (
-        <div className="overflow-x-auto overflow-y-auto max-h-[84vh]">
+        <div className="overflow-x-auto mt-8 overflow-y-auto max-h-[76vh]">
           <table className="min-w-full table-auto shadow-md bg-white rounded-lg border-collapse">
             <thead className="bg-gray-200">
               <tr>

@@ -251,18 +251,18 @@ const GeneralReport = () => {
             </table>
 
             <table className="min-w-full table-auto text-center mt-6">
-              <thead>
+              <thead className="sticky top-0 bg-white">
                 <tr className="bg-gray-200">
-                  <th className="border  py-2">Reg No</th>
-                  <th className="border  py-2">Stream</th>
+                  <th className="border sticky top-0 bg-white  py-2">Reg No</th>
+                  <th className="border  sticky top-0 bg-white py-2">Stream</th>
                   {subjectTotalsAndAverages.map((subjectStat, index) => (
-                    <th key={index} className="border  py-2">
+                    <th key={index} className="border sticky top-0 bg-white  py-2">
                       <p className="text-yellow-600">{index + 1}</p>
                       <p>{subjectStat.code}</p>
                     </th>
                   ))}
-                  <th className="border  py-2">Total</th>
-                  <th className="border  py-2">Average</th>
+                  <th className="border sticky top-0 bg-white  py-2">Total</th>
+                  <th className="border sticky top-0 bg-white  py-2">Average</th>
                 </tr>
               </thead>
               <tbody>

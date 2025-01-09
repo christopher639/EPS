@@ -1,8 +1,15 @@
 const isAdmin = (req, res, next) => {
-    if (req.user && req.user.role === 'admin') {
-        return next(); // Continue to the next middleware or route handler
+    // Check if the user is authenticated (ensure req.user is set)
+    if (!req.user) {
+        return res.status(401).json({ message: 'Authentication required' });
     }
-    return res.status(403).json({ message: "Access denied. Admins only." });
+
+    // Check if the user has an 'admin' role
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Permission denied' }); // Forbidden if not admin
+    }
+
+    next(); // If the user is an admin, allow them to proceed
 };
 
 module.exports = isAdmin;

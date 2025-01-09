@@ -151,6 +151,24 @@
         "language": "es"
       },
       "rolesPermissions": ["admin", "manage"]
+    },
+    {
+      "username": "Kathure ",
+      "email": "Kathure@gmail.com",
+      "password": "5542",
+      "fullName": "Kamunda Nathan",
+      "phoneNumber": "3334445555",
+      "role": "admin",
+      "status": "active",
+      "address": "789 Stark Blvd, Iron City, USA",
+      "dateOfBirth": "1990-01-11T00:00:00Z",
+      "lastLogin": "2025-01-07T14:00:00.402Z",
+      "preferences": {
+        "theme": "dark",
+        "language": "es"
+      },
+      "rolesPermissions": ["admin", "manage"]
     }
+  
   ]
   

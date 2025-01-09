@@ -271,18 +271,18 @@ const Assessments = () => {
             </div>
           </div>
           <table className="w-full">
-            <thead >
+            <thead className="sticky top-0 bg-white" >
               <tr className="bg-slate-800  text-gray-900 ">
-                <th className="border px-1">Reg. No.</th>
-                <th className="border  px-1">Stream</th>
+                <th className="border  sticky top-0 bg-white px-1">Reg. No.</th>
+                <th className="border sticky top-0 bg-white  px-1">Stream</th>
                 {sortedSubjectCodes.map((subjectCode, idx) => (
-                  <th key={idx} className="border text-center  px-1">
+                  <th key={idx} className="border sticky top-0 bg-white text-center  px-1">
                     <h4 className="text-yellow-700">{idx + 1}</h4>
                     <p>{subjectCode.toUpperCase()}</p>
                   </th>
                 ))}
-                <th className="border px-1">Total</th>
-                <th className="border  px-1">Average</th>
+                <th className="border sticky top-0 bg-white px-1">Total</th>
+                <th className="border sticky top-0 bg-white  px-1">Average</th>
               </tr>
             </thead>
             <tbody>

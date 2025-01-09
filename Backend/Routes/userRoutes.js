@@ -8,6 +8,8 @@ const {
     getUserById,
     updateUser,
     deleteUser,
+    sendEmailToAllUsers,
+    sendEmailToSingleUser
 } = require('../Controllers/userController');
 
 // Import middlewares
@@ -36,6 +38,10 @@ router.get('/admin/users', authenticateUser, async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 });
+// Route to send email to all users
+router.post('/admin/send-email-to-all', sendEmailToAllUsers);
 
+// Route to send email to a single user
+router.post('/admin/send-email-to-single/:userId', sendEmailToSingleUser);
 
 module.exports = router;

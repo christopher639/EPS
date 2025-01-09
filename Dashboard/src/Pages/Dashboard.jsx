@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
 import UserAccount from '../components/UserAccount';
-import { FaTachometerAlt, FaUniversity, FaBook, FaUsers, FaChalkboardTeacher, FaClipboardList, FaMoneyBillAlt, FaChartLine, FaUserCircle, FaChevronRight, FaChevronDown, FaFileAlt, FaLongArrowAltDown, FaArrowAltCircleUp, FaAdjust, FaCartArrowDown, FaArrowRight, FaArrowAltCircleDown, FaMedal, FaBuilding, FaUserGraduate } from "react-icons/fa"; 
+import { FaTachometerAlt,FaEnvelope,FaEdit,FaTrash,FaPlus, FaUniversity, FaBook, FaUsers, FaChalkboardTeacher, FaClipboardList, FaMoneyBillAlt, FaChartLine, FaUserCircle, FaChevronRight, FaChevronDown, FaFileAlt, FaLongArrowAltDown, FaArrowAltCircleUp, FaAdjust, FaCartArrowDown, FaArrowRight, FaArrowAltCircleDown, FaMedal, FaBuilding, FaUserGraduate } from "react-icons/fa"; 
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 

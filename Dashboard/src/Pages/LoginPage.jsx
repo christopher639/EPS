@@ -51,7 +51,7 @@ const LoginPage = () => {
               <ClipLoader color="#4F46E5" loading={loading} size={50} />
             </div>
           ) : (
-            <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">Login</h2>
+            <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">KIBABII SCHOOL</h2>
           )}
 
           <form onSubmit={handleLogin} className={`${loading && "opacity-50 pointer-events-none"}`}>

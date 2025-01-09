@@ -1,89 +1,51 @@
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const emailService = require('../services/emailService');  // Import the email service
 
 // User login function
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Check if user exists
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        // Check if password is correct
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        // Generate JWT token
         const token = jwt.sign({ userId: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
-
-        // Send token and username in the response
-        res.json({ token, username: user.username });  // Include username in the response
+        res.json({ token, username: user.username });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Server error" });
     }
 };
 
-
 // Register a new user (Create)
 const registerUser = async (req, res) => {
-    const {
-        email,
-        password,
-        fullName,
-        username,
-        phoneNumber,
-        profilePicture,
-        role = 'user',  // default to 'user' if not provided
-        status = 'active',  // default to 'active' if not provided
-        address,
-        dateOfBirth,
-        preferences,
-        rolesPermissions = []  // default to empty array if not provided
-    } = req.body;
+    const { email, password, fullName, username, phoneNumber, profilePicture, role = 'user', status = 'active', address, dateOfBirth, preferences, rolesPermissions = [] } = req.body;
 
     try {
-        // Check if the email already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "Email already in use" });
         }
 
-        // Check if the username already exists
         const existingUsername = await User.findOne({ username });
         if (existingUsername) {
             return res.status(400).json({ message: "Username already in use" });
         }
 
-        // Hash the password before saving
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        // Create a new user
-        const newUser = new User({
-            email,
-            password: hashedPassword,
-            fullName,
-            username,
-            phoneNumber,
-            profilePicture,
-            role,
-            status,
-            address,
-            dateOfBirth,
-            preferences,
-            rolesPermissions
-        });
-
-        // Save the user to the database
+        const newUser = new User({ email, password: hashedPassword, fullName, username, phoneNumber, profilePicture, role, status, address, dateOfBirth, preferences, rolesPermissions });
         await newUser.save();
 
-        // Respond with success
         res.status(201).json({ message: "User registered successfully" });
     } catch (err) {
         console.error(err);
@@ -91,17 +53,15 @@ const registerUser = async (req, res) => {
     }
 };
 
-
 // Get user details by ID (Read)
 const getUserById = async (req, res) => {
     const userId = req.params.id;
 
     try {
-        const user = await User.findById(userId).select("-password"); // Exclude password field
+        const user = await User.findById(userId).select("-password");
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
         res.json(user);
     } catch (err) {
         console.error(err);
@@ -112,20 +72,13 @@ const getUserById = async (req, res) => {
 // Update user details (Update)
 const updateUser = async (req, res) => {
     const userId = req.params.id;
-    const { fullName, phoneNumber, address } = req.body;
+    const { fullName,email,username, phoneNumber, address } = req.body;
 
     try {
-        // Find the user and update the details
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { fullName, phoneNumber, address },
-            { new: true }
-        );
-
+        const updatedUser = await User.findByIdAndUpdate(userId, { fullName,email,username, phoneNumber, address }, { new: true });
         if (!updatedUser) {
             return res.status(404).json({ message: "User not found" });
         }
-
         res.json(updatedUser);
     } catch (err) {
         console.error(err);
@@ -142,11 +95,47 @@ const deleteUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
         res.json({ message: "User deleted successfully" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Server error" });
+    }
+};
+
+// Send email to all users
+const sendEmailToAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();  // Fetch all users
+        const { subject, text, html } = req.body;
+
+        // Call the email service to send emails to all users
+        await emailService.sendEmailToAllUsers(users, subject, text, html);
+
+        res.status(200).json({ message: "Emails sent to all users successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error while sending emails" });
+    }
+};
+
+// Send email to a single user
+const sendEmailToSingleUser = async (req, res) => {
+    const { userId } = req.params;
+    const { subject, text, html } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Call the email service to send an email to the user
+        await emailService.sendEmailToSingleUser(user, subject, text, html);
+
+        res.status(200).json({ message: `Email sent to ${user.email} successfully` });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error while sending email" });
     }
 };
 
@@ -156,4 +145,6 @@ module.exports = {
     getUserById,
     updateUser,
     deleteUser,
+    sendEmailToAllUsers,
+    sendEmailToSingleUser
 };

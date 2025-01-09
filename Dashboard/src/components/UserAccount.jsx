@@ -23,14 +23,14 @@ const UserAccount = () => {
   };
 
   return (
-    <div className="flex gap-3">
+    <div className="flex justify-between  gap-3">
       <div className="p-1 flex">
         <FaBell className="text-slate-800 text-lg" />
         <p className="text-sm text-red-600">2</p>
       </div>
       <div>
         {/* Display welcome message with the username */}
-        {userName ? <p>Welcome {userName}</p> : <p>Welcome Guest</p>}
+        {userName ? <div className="flex gap-2"><p>Welcome</p> <p  className="font-bold">{userName}</p> </div>: <p>Welcome Guest</p>}
       </div>
       <div
         className="relative px-3"
@@ -40,7 +40,7 @@ const UserAccount = () => {
         <FaUserCircle className="text-3xl" />
         {/* Show user options when hovering */}
         {userLinks && (
-          <div className="absolute right-0 p-2 bg-white shadow-md rounded-md mt-2">
+          <div className="absolute w-32 right-0 px-2 bg-white shadow-md rounded-md ">
             <p className="cursor-pointer" onClick={() => navigate("/profile")}>
               Profile
             </p>
@@ -48,7 +48,7 @@ const UserAccount = () => {
               className="cursor-pointer text-red-500"
               onClick={handleLogout}
             >
-              Logout
+              Log out
             </p>
           </div>
         )}
