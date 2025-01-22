@@ -101,7 +101,7 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
       setIsDeleteModalOpen(false);
       getFetchData(); // Refresh the user list
     } catch (error) {
-      toast.error("Error deleting user. Please try again.");
+      toast.error("Permission Denied .Contact System Admin");
     }
   };
 
@@ -132,7 +132,7 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
         setUserForm(false);
       })
       .catch(() => {
-        toast.error("Error saving user. Please try again.");
+        toast.error("Permission Denied. Contact System Admin");
       });
   };
 
@@ -269,8 +269,6 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
     </div>
   </div>
 )}
-
-
       {userform && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3 shadow-lg">

@@ -98,7 +98,7 @@ const ReportForm = () => {
                   )}
                 </tbody>
               </table>
-              <div className='flex flex-col md:flex-row gap-5 mt-5'>
+                  <div className='flex flex-col md:flex-row gap-5 mt-5'>
                     <div className=' w-full'>
                       <table className='w-full'>
                       

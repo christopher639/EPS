@@ -21,6 +21,7 @@ import AvgMerged from "./Pages/AvgMerged";
 import GeneralReport from "./Pages/GeneralReport";
 import LoginPage from "./Pages/LoginPage"; // Import LoginPage
 import Users from "./Pages/Users";
+import ReportCard from "./Pages/ReportCard"; // Import the ReportCard page
 import RightBar from "./components/RightBar";
 import SideBar from "./components/SideBar";
 
@@ -58,78 +59,32 @@ const App = () => {
           <Route path="/login" element={<LoginPage setIsAuthenticated={setIsAuthenticated} />} />
 
           {/* Protect routes that require authentication */}
-          <Route
-            path="/dashboard"
-            element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/users"
-            element={isAuthenticated ? <Users /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/reportform"
-            element={isAuthenticated ? <ReportForm /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/students"
-            element={isAuthenticated ? <Students /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/streams"
-            element={isAuthenticated ? <Academic /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/fees"
-            element={isAuthenticated ? <Fees /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/parents"
-            element={isAuthenticated ? <Parents /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/teachers"
-            element={isAuthenticated ? <Teachers /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/learningarea"
-            element={isAuthenticated ? <LearningArea /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/student/:id"
-            element={isAuthenticated ? <StudentDetail /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/analytics"
-            element={isAuthenticated ? <Analytics /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/finance"
-            element={isAuthenticated ? <Finance /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/departments"
-            element={isAuthenticated ? <Departments /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/avgmerged"
-            element={isAuthenticated ? <AvgMerged /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/general-report"
-            element={isAuthenticated ? <GeneralReport /> : <Navigate to="/login" />}
-          />
+          <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
+          <Route path="/users" element={isAuthenticated ? <Users /> : <Navigate to="/login" />} />
+          <Route path="/reportform" element={isAuthenticated ? <ReportForm /> : <Navigate to="/login" />} />
+          <Route path="/students" element={isAuthenticated ? <Students /> : <Navigate to="/login" />} />
+          <Route path="/streams" element={isAuthenticated ? <Academic /> : <Navigate to="/login" />} />
+          <Route path="/fees" element={isAuthenticated ? <Fees /> : <Navigate to="/login" />} />
+          <Route path="/parents" element={isAuthenticated ? <Parents /> : <Navigate to="/login" />} />
+          <Route path="/teachers" element={isAuthenticated ? <Teachers /> : <Navigate to="/login" />} />
+          <Route path="/learningarea" element={isAuthenticated ? <LearningArea /> : <Navigate to="/login" />} />
+          <Route path="/student/:id" element={isAuthenticated ? <StudentDetail /> : <Navigate to="/login" />} />
+          <Route path="/analytics" element={isAuthenticated ? <Analytics /> : <Navigate to="/login" />} />
+          <Route path="/finance" element={isAuthenticated ? <Finance /> : <Navigate to="/login" />} />
+          <Route path="/departments" element={isAuthenticated ? <Departments /> : <Navigate to="/login" />} />
+          <Route path="/avgmerged" element={isAuthenticated ? <AvgMerged /> : <Navigate to="/login" />} />
+          <Route path="/general-report" element={isAuthenticated ? <GeneralReport /> : <Navigate to="/login" />} />
+          
+          {/* Add the ReportCard Route */}
           <Route
             path="/report-card"
-            element={isAuthenticated ? <MergerReportForm /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <ReportCard /> : <Navigate to="/login" />}
           />
-          <Route
-            path="/merged-assessment"
-            element={isAuthenticated ? <MergedAssessment /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/assessments"
-            element={isAuthenticated ? <Assessments /> : <Navigate to="/login" />}
-          />
+          <Route path="/report-card" element={isAuthenticated ? <ReportCard /> : <Navigate to="/login" />} />
+
+          <Route path="/report-card" element={isAuthenticated ? <MergerReportForm /> : <Navigate to="/login" />} />
+          <Route path="/merged-assessment" element={isAuthenticated ? <MergedAssessment /> : <Navigate to="/login" />} />
+          <Route path="/assessments" element={isAuthenticated ? <Assessments /> : <Navigate to="/login" />} />
         </Routes>
       </div>
 

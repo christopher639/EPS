@@ -24,7 +24,7 @@ router.post('/register', registerUser); // Register route (POST)
 
 // Protected routes
 router.get('/:id', authenticateUser, getUserById); // Get user details by ID (GET)
-router.put('/:id', authenticateUser, updateUser); // Update user details (PUT)
+router.put('/:id', authenticateUser,isAdmin, updateUser); // Update user details (PUT)
 router.delete('/:id', authenticateUser, isAdmin, deleteUser); // Delete user (DELETE)
 
 // Admin-protected route to fetch all users (or other admin actions)

@@ -97,7 +97,8 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
   try {
     // Destructure the parameters from the URL
     const { class: className, year, term } = req.params;
-    // Build the match object for MongoDB query, ignoring the stream unless provided
+
+    // Build the match object for MongoDB query
     const match = {
       class: className,   // Filter by class
       year: year,         // Filter by year
@@ -129,88 +130,103 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
             $filter: {
               input: "$scores",
               as: "score",
-              cond: { $eq: ["$$score.category", "Opener"] },  // Filter scores by "Opener"
+              cond: { $eq: ["$$score.category", "Opener"] },
             },
           },
           midTermScores: {
             $filter: {
               input: "$scores",
               as: "score",
-              cond: { $eq: ["$$score.category", "Mid-Term"] },  // Filter scores by "Mid-Term"
+              cond: { $eq: ["$$score.category", "Mid-Term"] },
             },
           },
           finalScores: {
             $filter: {
               input: "$scores",
               as: "score",
-              cond: { $eq: ["$$score.category", "Final"] },  // Filter scores by "Final"
+              cond: { $eq: ["$$score.category", "Final"] },
             },
           },
         },
       },
       {
         $addFields: {
-          openerScore: { $avg: "$openerScores.score" },  // Calculate average of "Opener" scores
-          midTermScore: { $avg: "$midTermScores.score" },  // Calculate average of "Mid-Term" scores
-          finalScore: { $avg: "$finalScores.score" },  // Calculate average of "Final" scores
+          openerScore: { $avg: "$openerScores.score" },
+          midTermScore: { $avg: "$midTermScores.score" },
+          finalScore: { $avg: "$finalScores.score" },
         },
       },
       {
         $addFields: {
-          avgScore: { 
-            $avg: ["$openerScore", "$midTermScore", "$finalScore"]  // Calculate the average of the 3 categories
-          }
-        }
+          avgScore: { $avg: ["$openerScore", "$midTermScore", "$finalScore"] },
+        },
       },
       {
         $lookup: {
           from: "students",  // Assuming the student model is in the "students" collection
-          localField: "regno",  // Match based on regno
-          foreignField: "regno", // Match regno in the students collection
-          as: "studentData"  // Name of the new array field to store the student data
+          localField: "regno",
+          foreignField: "regno",
+          as: "studentData",
         },
       },
       {
         $unwind: {
-          path: "$studentData",  // Unwind the student data array (as it will contain at most one element)
-          preserveNullAndEmptyArrays: true  // If no student is found, keep the rest of the data intact
-        }
+          path: "$studentData",
+          preserveNullAndEmptyArrays: true,
+        },
       },
       {
         $addFields: {
-          studentName: { $ifNull: ["$studentData.name", null] }  // If no student is found, set name to null
-        }
+          studentName: { $ifNull: ["$studentData.name", null] },
+        },
+      },
+      {
+        $lookup: {
+          from: "learningarea", // Look up from the learningarea collection
+          localField: "code",    // Match code from the subjectsMarksModel
+          foreignField: "code",  // Match code in the learningarea collection
+          as: "subjectInfo",     // Store subject info in the subjectInfo field
+        },
+      },
+      {
+        $unwind: {
+          path: "$subjectInfo",  // Unwind the subjectInfo array to get the subject data
+          preserveNullAndEmptyArrays: true,  // If no subject is found, preserve null
+        },
+      },
+      {
+        $addFields: {
+          subjectName: { $ifNull: ["$subjectInfo.subjectname", "Unknown Subject"] },
+        },
       },
       {
         $group: {
-          _id: "$regno",  // Group by regno (student)
-          stream: { $first: "$stream" },  // Include the stream information for each student
-          studentName: { $first: "$studentName" },  // Include student name
+          _id: "$regno",
+          stream: { $first: "$stream" },
+          studentName: { $first: "$studentName" },
           subjects: {
             $push: {
-              code: "$code",        // Subject code
-              openerScore: "$openerScore", // Opener score
-              midTermScore: "$midTermScore", // Mid-Term score
-              finalScore: "$finalScore", // Final score
-              avgScore: "$avgScore", // Average score for this subject
+              code: "$code",
+              name: "$subjectName",  // Include subject name
+              openerScore: "$openerScore",
+              midTermScore: "$midTermScore",
+              finalScore: "$finalScore",
+              avgScore: "$avgScore",
             },
           },
-          overallAvg: {
-            $avg: "$avgScore",  // Calculate the overall average across all subjects for this student
-          },
+          overallAvg: { $avg: "$avgScore" },
         },
       },
       {
         $project: {
-          regno: "$_id",    // Include regno in the final output
-          stream: 1,        // Include the stream for each student
-          studentName: 1,   // Include the student name
-          subjects: 1,      // Include the list of subjects with their scores
-          overallAvg: 1,    // Include the overall average for the student
-          _id: 0,           // Remove the _id field
+          regno: "$_id",
+          stream: 1,
+          studentName: 1,
+          subjects: 1,
+          overallAvg: 1,
+          _id: 0,
         },
       },
-    
     ]);
 
     // If no data is found, return a 404 status
@@ -230,6 +246,9 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
     });
   }
 };
+
+
+
 
 exports.getSubjectMarksByClassYearTermCategory = async (req, res) => {
   try {

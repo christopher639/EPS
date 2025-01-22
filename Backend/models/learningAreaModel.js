@@ -8,11 +8,10 @@ const learningAreaSchema = new mongoose.Schema(
       unique: true,
       trim: true, // Removes leading and trailing spaces
     },
-    subjectcode: {
+    code: {
       type: String,
       required: true,
       unique: true,
-      uppercase: true, // Ensures code is stored in uppercase
       trim: true,
     },
     description: {
@@ -20,13 +19,14 @@ const learningAreaSchema = new mongoose.Schema(
       required: false,
     },
     department: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Department",//Assuming that Department model exist
       required: true,
     },
     instructor: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "teacherModel", // Assumes a Teacher model exists
-      required: true,
+      ref: "teacher", // Assumes a Teacher model exists
+      required: false,
     },
     duration: {
       type: Number,
@@ -45,7 +45,7 @@ const learningAreaSchema = new mongoose.Schema(
     studentsEnrolled: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "studentModel", // Assumes a Student model exists
+        ref: "student", // Assumes a Student model exists
       },
     ],
   },

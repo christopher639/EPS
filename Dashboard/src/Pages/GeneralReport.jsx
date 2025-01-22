@@ -52,7 +52,7 @@ const GeneralReport = () => {
   
     // Write the styles and content to the print window
     printWindow.document.write("<html><head><title>Print</title>");
-    printWindow.document.write(`<style>${styles}</style>`);  // Include the styles in the print window
+    printWindow.document.write(`<style>${styles} #bo{border:1px solid black} </style>`);  // Include the styles in the print window
     printWindow.document.write("</head><body>");
     printWindow.document.write(printContent);
     printWindow.document.write("</body></html>");
@@ -66,8 +66,6 @@ const GeneralReport = () => {
       }, 1000);
     };
   };
-  
-
   const calculateStudentTotalsAndAverages = (students) => {
     return students.map((student) => {
       const totalScores = student.subjects.reduce((total, subject) => {
@@ -141,7 +139,11 @@ const GeneralReport = () => {
 
   if (error) {
     return (
-      <div className="text-center text-lg text-red-500">Error: {error}</div>
+      <div className="text-center flex justify-center items-center text-lg text-red-500">
+       <div>
+       Error: {error}
+       </div>
+      </div>
     );
   }
 
@@ -170,7 +172,7 @@ const GeneralReport = () => {
         </button>
         <UserAccount/>
       </div>
-      <div className="flex justify-between  p-2">
+        <div className="flex justify-between  p-2">
           <input
             type="text"
             className="text-center text-sm  border border-slate-300 outline-none py-2 px-3 text-sm rounded-md"
@@ -223,46 +225,46 @@ const GeneralReport = () => {
 
             <table className="min-w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-200 text-gray-800">
-                  <th className=" py-2 border-b">Academic Year</th>
-                  <th className=" py-2 border-b">Class</th>
-                  <th className=" py-2 border-b">Term</th>
-                  <th className=" py-2 border-b">Exam Type</th>
-                  <th className=" py-2 border-b">Best Subject</th>
-                  <th className=" py-2 border-b">Least Subject</th>
-                  <th className=" py-2 border-b">Mean Score</th>
-                  <th className=" py-2 border-b">Grade</th>
-                  <th className=" py-2 border-b">Remark</th>
+                <tr  id='bo'  className="bg-gray-200 text-gray-800">
+                  <th id='bo'  className=" py-2 border-b">Academic Year</th>
+                  <th id='bo'  className=" py-2 border-b">Class</th>
+                  <th id='bo'  className=" py-2 border-b">Term</th>
+                  <th id='bo'  className=" py-2 border-b">Exam Type</th>
+                  <th  id='bo' className=" py-2 border-b">Best Subject</th>
+                  <th id='bo'  className=" py-2 border-b">Least Subject</th>
+                  <th id='bo'  className=" py-2 border-b">Mean Score</th>
+                  <th id='bo'  className=" py-2 border-b">Grade</th>
+                  <th id='bo'  className=" py-2 border-b">Remark</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b">
-                  <td className="px-3 py-2 text-yellow-600">{yearValue}</td>
-                  <td className="px-3 py-2 text-yellow-600">{classValue}</td>
-                  <td className="px-3 py-2 text-yellow-600">{termValue}</td>
-                  <td className="px-3 py-2 text-yellow-600"></td>
-                  <td className="px-3 py-2 text-yellow-600"></td>
-                  <td className="px-3 py-2 text-yellow-600"></td>
-                  <td className="px-3 py-2 text-yellow-600"></td>
-                  <td className="px-3 py-2 text-yellow-600"></td>
-                  <td className="px-3 py-2 text-yellow-600"></td>
+                <tr id='bo' className="border-b">
+                  <td  id='bo'className="px-3 py-2 text-yellow-600">{yearValue}</td>
+                  <td id='bo' className="px-3 py-2 text-yellow-600">{classValue}</td>
+                  <td id='bo' className="px-3 py-2 text-yellow-600">{termValue}</td>
+                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
+                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
+                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
+                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
+                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
+                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
                 </tr>
               </tbody>
             </table>
 
             <table className="min-w-full table-auto text-center mt-6">
               <thead className="sticky top-0 bg-white">
-                <tr className="bg-gray-200">
-                  <th className="border sticky top-0 bg-white  py-2">Reg No</th>
-                  <th className="border  sticky top-0 bg-white py-2">Stream</th>
+                <tr  id='bo' className="bg-gray-200">
+                  <th id='bo' className="border sticky top-0 bg-white  py-2">Reg No</th>
+                  <th id='bo' className="border  sticky top-0 bg-white py-2">Stream</th>
                   {subjectTotalsAndAverages.map((subjectStat, index) => (
-                    <th key={index} className="border sticky top-0 bg-white  py-2">
+                    <th id='bo' key={index} className="border sticky top-0 bg-white  py-2">
                       <p className="text-yellow-600">{index + 1}</p>
                       <p>{subjectStat.code}</p>
                     </th>
                   ))}
-                  <th className="border sticky top-0 bg-white  py-2">Total</th>
-                  <th className="border sticky top-0 bg-white  py-2">Average</th>
+                  <th id='bo' className="border sticky top-0 bg-white  py-2">Total</th>
+                  <th id='bo' className="border sticky top-0 bg-white  py-2">Average</th>
                 </tr>
               </thead>
               <tbody>

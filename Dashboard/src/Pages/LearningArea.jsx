@@ -1,317 +1,269 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-axios.defaults.baseURL = "http://localhost:3000";
+
 const LearningArea = () => {
-  const [learningareas, setLearningAreas] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [teachers, setTeachers] = useState([]);
+  const [learningAreas, setLearningAreas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [departments, setDepartments] = useState([]);
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showModal, setShowModal] = useState(false); // For adding/updating learning areas
   const [formData, setFormData] = useState({
-    subjectCode: "",
-    name: "",
-    description: "",
-    level: "",
-    department: "",
-    teacher: "",
-    assessmentType: "",
-    status: "",
-    languageOfInstruction: "",
+    subjectname: '',
+    code: '',
+    description: '',
+    department: '',
+    instructor: '',
+    status: '',
+    language: '',
+    duration: 12,
+    studentsEnrolled: [],
   });
-  const [streams, setStreams] = useState([]); // Stream options for dropdown
-  const navigate = useNavigate();
+  const [editingId, setEditingId] = useState(null); // For identifying which learning area is being edited
 
-  const getFetchData = () => {
+  // Fetch learning areas from the API
+  const fetchLearningAreas = async () => {
     setLoading(true);
-    axios.get("/api/learningAreas")
-      .then(response => {
-        setLoading(false);
-        setLearningAreas(response.data);
-      })
-      .catch(err => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
-  const getFetchDataTeachers = () => {
-    setLoading(true);
-    axios.get("/api/teachers")
-      .then(response => {
-        setTeachers(response.data.reverse());
-        setLoading(false);
-      })
-      .catch(err => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
-  const fetchDepartments = () => {
-    //  setLoading(true);
-      axios
-        .get("/api/departments")
-        .then((response) => {
-          setDepartments(response.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error(err);
-          setLoading(false);
-        });
-    };
-  const fetchStreams = () => {
-    axios.get("/api/stream")
-      .then(response => {
-        setStreams(response.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    getFetchData();
-    fetchStreams();
-    fetchDepartments();
-    getFetchDataTeachers()
-  }, []); 
-  const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`/api/delete/${id}`);
-      if (response.data.success === "true") {
-        toast.success("Learning area has been deleted successfully");
-        setLearningAreas(prevLearningAreas => prevLearningAreas.filter(learningarea => learningarea._id !== id));
-      } else {
-        toast.error("Failed to delete learning area.");
-      }
+      const response = await axios.get('http://localhost:3000/api/learning-areas');
+      setLearningAreas(response.data);
+      setLoading(false);
     } catch (error) {
-      console.error("Error deleting learning area:", error);
-      toast.error("Error deleting learning area. Please try again.");
+      console.error('Error fetching learning areas:', error);
+      setLoading(false);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Fetch data when the component mounts
+  useEffect(() => {
+    fetchLearningAreas();
+  }, []);
 
-    // Add simple form validation
-    if (!formData.subjectCode || !formData.name || !formData.description) {
-      toast.error("Subject Code, Name, and Description are required fields.");
-      return;
-    }
-
-    console.log("Form Data to be submitted:", formData);
-
-    axios.post("/api/learningAreas", formData)
-      .then(response => {
-        toast.success("New learning area added successfully");
-        setShowModal(false); // Close modal after successful submission
-        getFetchData(); // Reload learning area data
-      })
-      .catch(error => {
-        toast.error("Error adding learning area");
-      });
-  };
-
-  const handleChange = (e) => {
+  // Handle form input changes
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   };
 
+  // Handle creating a new learning area
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    if (!formData.subjectname || !formData.code || !formData.description) {
+      toast.error('Subject Name, Code, and Description are required!');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:3000/api/learning-areas', formData);
+      toast.success('Learning area created successfully!');
+      fetchLearningAreas(); // Refresh the list
+      setShowModal(false); // Close the modal
+    } catch (error) {
+      toast.error('Error creating learning area.');
+    }
+  };
+
+  // Handle updating an existing learning area
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (!formData.subjectname || !formData.code || !formData.description) {
+      toast.error('Subject Name, Code, and Description are required!');
+      return;
+    }
+
+    try {
+      await axios.put(`http://localhost:3000/api/learning-areas/${editingId}`, formData);
+      toast.success('Learning area updated successfully!');
+      fetchLearningAreas(); // Refresh the list
+      setShowModal(false); // Close the modal
+      setEditingId(null); // Reset editingId
+    } catch (error) {
+      toast.error('Error updating learning area.');
+    }
+  };
+
+  // Handle delete action
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/learning-areas/${id}`);
+      toast.success('Learning area deleted successfully!');
+      fetchLearningAreas(); // Refresh the list
+    } catch (error) {
+      toast.error('Error deleting learning area.');
+    }
+  };
+
+  // Set the form data for editing
+  const handleEdit = (learningArea) => {
+    setFormData({
+      subjectname: learningArea.subjectname,
+      code: learningArea.code,
+      description: learningArea.description,
+      department: learningArea.department,
+      instructor: learningArea.instructor._id,
+      status: learningArea.status,
+      language: learningArea.language,
+      duration: learningArea.duration,
+      studentsEnrolled: learningArea.studentsEnrolled,
+    });
+    setEditingId(learningArea._id);
+    setShowModal(true); // Open modal for editing
+  };
+
+  // Handle modal visibility
+  const toggleModal = () => {
+    setShowModal(!showModal);
+    setFormData({}); // Reset form data when closing
+    setEditingId(null); // Reset editing ID when closing
+  };
+
+  if (loading) {
+    return <div>Loading...</div>; // Loading state
+  }
+
   return (
-    <div className="flex px-1 flex-col min-w-full">
-      <div className=" flex gap-5">
-        <input
-          type="text"
-          placeholder="Search by name or regno"
-          className="w-full px-3 py-2 mb-4 border rounded-md"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <div>
-          <button
-            onClick={() => setShowModal(true)} // Open modal on button click
-            className="bg-green-600 p-2 rounded text-white"
-          >
-            New
-          </button>
-        </div>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-6">Learning Areas</h1>
+
+      {/* Button to show modal for adding new learning area */}
+      <button
+        onClick={() => setShowModal(true)}
+        className="mb-4 p-2 bg-green-600 text-white rounded-md"
+      >
+        Add New Learning Area
+      </button>
+
+      {/* Table of Learning Areas */}
+      <div className="overflow-hidden bg-white rounded-lg shadow-md">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Subject Name</th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Code</th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Description</th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Instructor</th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">No. of Students Enrolled</th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Student Registration Numbers</th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {learningAreas.map((learningArea) => (
+              <tr key={learningArea._id}>
+                <td className="px-4 py-2">{learningArea.subjectname}</td>
+                <td className="px-4 py-2">{learningArea.code}</td>
+                <td className="px-4 py-2">{learningArea.description}</td>
+                <td className="px-4 py-2">{learningArea.instructor?.email}</td>
+                <td className="px-4 py-2">{learningArea.studentsEnrolled.length}</td>
+                <td className="px-4 py-2">
+                  {learningArea.studentsEnrolled.map((student) => (
+                    <div key={student._id}>{student.regno}</div> // Display each student's registration number
+                  ))}
+                </td>
+                <td className="px-4 py-2">
+                  <button
+                    onClick={() => handleEdit(learningArea)}
+                    className="bg-blue-600 text-white py-1 px-3 rounded mr-2"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(learningArea._id)}
+                    className="bg-red-600 text-white py-1 px-3 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {/* Modal */}
+      {/* Modal for creating or editing a learning area */}
       {showModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3">
-            <div className="py-1">
-              <p className="text-lg font-semibold">Add New Learning Area</p>
-            </div>
-            <form onSubmit={handleSubmit}>
-              <div className="pt-2 flex flex-col md:flex-row gap-6">
-                <div className="w-full flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-3">
-                  {/* Subject Code */}
-                  <div className="min-w-full">
-                    <p className="text-sm text-gray-700">Subject Code</p>
-                    <input
-                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      type="text"
-                      name="subjectCode"
-                      value={formData.subjectCode}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  {/* Subject Name */}
-                  <div className="min-w-full">
-                    <p className="text-sm text-gray-700">Subject Name</p>
-                    <input
-                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  {/* Description */}
-                  <div className="min-w-full">
-                    <p className="text-sm text-gray-700">Description</p>
-                    <input
-                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      type="text"
-                      name="description"
-                      value={formData.description}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  {/* Level */}
-                  <div className="min-w-full">
-                    <p className="text-sm text-gray-700">Level</p>
-                    <input
-                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      type="text"
-                      name="level"
-                      value={formData.level}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  {/* Department */}
-                  <div className="min-w-full">
-                    <p className="text-sm text-gray-700">Department</p>
-                    <select
-                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      name="department"
-                      value={formData.department}
-                      onChange={handleChange}
-                    >
-                      <option value=""></option>
-                      {departments.map((department) => (
-                        <option key={department._id} value={department.name}>
-                         {department.departmentName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  {/* Teacher ID */}
-                  <div>
-                    <p>Instructor</p>
-                    <div className="relative">
-                      <select
-                        className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                        name="departmentHead"
-                        value={formData.teacher}
-                        onChange={(e) => setFormData({ ...formData, teacher: e.target.value })}
-                        style={{
-                          maxHeight: "100px",
-                          overflowY: "auto",
-                        }}
-                      >
-                        <option value=""></option>
-                        {teachers.map((teacher) => (
-                          <option
-                            key={teacher.fullname}
-                            value={teacher.fullname}
-                            className="border-b border-gray-300 last:border-b-0"
-                            style={{
-                              borderBottom: "1px solid #d1d5db", // Tailwind gray-300
-                            }}
-                          >
-                            {teacher.fullname}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Schedule */}
-                 
-
-                  {/* Number of Students */}
-                 
-                  {/* Maximum Capacity */}
-                
-
-                  {/* Assessment Type */}
-                  <div className="min-w-full">
-                    <p className="text-sm text-gray-700">Assessment Type</p>
-                    <input
-                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      type="text"
-                      name="assessmentType"
-                      value={formData.assessmentType}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  {/* Resources */}
-                 
-
-                  {/* Grade Weighting */}
-                 
-
-                  {/* Status */}
-                  <div className="min-w-full">
-                    <p className="text-sm text-gray-700">Status</p>
-                    <input
-                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      type="text"
-                      name="status"
-                      value={formData.status}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  {/* Language of Instruction */}
-                  <div className="min-w-full">
-                    <p className="text-sm text-gray-700">Language of Instruction</p>
-                    <input
-                      className="w-full py-2 px-3 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      type="text"
-                      name="languageOfInstruction"
-                      value={formData.languageOfInstruction}
-                      onChange={handleChange}
-                    />
-                  </div>
+          <div className="bg-white p-6 rounded-lg w-full md:w-2/3">
+            <h2 className="text-lg font-semibold">{editingId ? 'Edit Learning Area' : 'Add New Learning Area'}</h2>
+            <form onSubmit={editingId ? handleUpdate : handleCreate}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm text-gray-700">Subject Name</label>
+                  <input
+                    type="text"
+                    name="subjectname"
+                    value={formData.subjectname || ''}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded-md"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700">Code</label>
+                  <input
+                    type="text"
+                    name="code"
+                    value={formData.code || ''}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded-md"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700">Description</label>
+                  <input
+                    type="text"
+                    name="description"
+                    value={formData.description || ''}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded-md"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700">Status</label>
+                  <input
+                    type="text"
+                    name="status"
+                    value={formData.status || ''}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700">Language</label>
+                  <input
+                    type="text"
+                    name="language"
+                    value={formData.language || ''}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700">Duration (in weeks)</label>
+                  <input
+                    type="number"
+                    name="duration"
+                    value={formData.duration || 12}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded-md"
+                  />
                 </div>
               </div>
-              <div className="flex justify-end mt-4 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="px-4 py-2 bg-red-600 text-white rounded-md"
-                >
-                  Cancel
+
+              <div className="flex justify-end gap-4 mt-4">
+                <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded-md">
+                  {editingId ? 'Update' : 'Create'}
                 </button>
                 <button
-                  type="submit"
-                  className="px-4 py-2 bg-green-600 text-white rounded-md"
+                  type="button"
+                  onClick={toggleModal}
+                  className="bg-gray-400 text-white px-4 py-2 rounded-md"
                 >
-                  Save
+                  Cancel
                 </button>
               </div>
             </form>
@@ -319,60 +271,9 @@ const LearningArea = () => {
         </div>
       )}
 
-      {/* Learning Areas Table */}
-      <div className='mx-4 md:mx-0 grid gri-cols-1 max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
-        <table className="min-w-full bg-white shadow-md">
-          <thead>
-            <tr className="border-b-2">
-            <th className="py-2 px-4 text-left">No</th>
-              <th className="py-2 px-4 text-left">Subject Code</th>
-              <th className="py-2 px-4 text-left">Name</th>
-              <th className="py-2 px-4 text-left">Department</th>
-              <th className="py-2 px-4 text-left">Instuctor</th>
-              <th className="py-2 px-4 text-left">Delete</th>
-              <th className="py-2 px-4 text-left">Update</th>
-            </tr>
-          </thead>
-          <tbody>
-            {learningareas
-              .filter((learningarea) =>
-                learningarea.name.toLowerCase().includes(searchQuery.toLowerCase())
-              )
-              .map((learningarea,index) => (
-                <tr className='border border-b hover:bg-slate-100 courser-pointer' key={learningarea._id}>
-                    <td className="py-2 px-4">{index + 1}</td>
-                  <td className="py-2 px-4">{learningarea.subjectCode}</td>
-                  <td className="py-2 px-4">{learningarea.name}</td>
-                  <td className="py-2 px-4">{learningarea.department}</td>
-                  <td className="py-2 px-4">{learningarea.teacher}</td>
-                
-                  <td className="py-2 px-4">
-                    <button
-                      onClick={() => handleDelete(learningarea._id)}
-                      className="bg-red-600 text-white py-1 px-3 rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                  <td className="py-2 px-4">
-                    <button
-                   
-                      className="bg-green-600 text-white py-1 px-3 rounded"
-                    >
-                      Update
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-      
       <ToastContainer />
     </div>
   );
 };
+
 export default LearningArea;
-
-
-

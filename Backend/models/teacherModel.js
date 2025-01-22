@@ -50,5 +50,5 @@ const teacherSchema = new mongoose.Schema({
 }, {
   timestamps: true // Automatically adds `createdAt` and `updatedAt` fields
 });
-const Teacher = mongoose.models.Teacher || mongoose.model('Teacher', teacherSchema);
+const Teacher = mongoose.models.teacher || mongoose.model('teacher', teacherSchema);
 module.exports = Teacher;

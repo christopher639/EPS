@@ -278,7 +278,7 @@ const Assessments = () => {
                 {sortedSubjectCodes.map((subjectCode, idx) => (
                   <th key={idx} className="border sticky top-0 bg-white text-center  px-1">
                     <h4 className="text-yellow-700">{idx + 1}</h4>
-                    <p>{subjectCode.toUpperCase()}</p>
+                    <p>{subjectCode}</p>
                   </th>
                 ))}
                 <th className="border sticky top-0 bg-white px-1">Total</th>

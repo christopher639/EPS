@@ -3,12 +3,10 @@ const isAdmin = (req, res, next) => {
     if (!req.user) {
         return res.status(401).json({ message: 'Authentication required' });
     }
-
     // Check if the user has an 'admin' role
     if (req.user.role !== 'admin') {
         return res.status(403).json({ message: 'Permission denied' }); // Forbidden if not admin
     }
-
     next(); // If the user is an admin, allow them to proceed
 };
 

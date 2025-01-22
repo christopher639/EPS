@@ -85,11 +85,11 @@ const studentSchema = new mongoose.Schema(
       {
         amountPaid: {
           type: Number,
-          required: true,
+          required: false,
         },
         paymentDate: {
           type: Date,
-          required: true,
+          required: false,
         },
       },
     ],
