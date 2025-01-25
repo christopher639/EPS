@@ -1,19 +1,55 @@
 const studentModel = require("../models/studentModel");
+const upload = require("../config/upload");  // Import the multer setup
+
 // CREATE - Add new student
-exports.createStudent = async (req, res) => {
-  try {
-    const student = new studentModel(req.body);
-    await student.save();
-    res.status(201).json({
-      message: "Student created successfully",
-      student,
+exports.createStudent = (req, res) => {
+  // First, handle the image upload
+  upload(req, res, async (err) => {
+    if (err) {
+      return res.status(400).json({
+        message: "Error uploading image",
+        error: err.message,
+      });
+    }
+
+    // Ensure that the admissionNumber is provided
+    if (!req.body.admissionNumber) {
+      return res.status(400).json({
+        message: "Admission Number is required",
+      });
+    }
+
+    // Check for duplicates based on email or regno
+    const existingStudent = await studentModel.findOne({
+      $or: [{ email: req.body.email }, { regno: req.body.regno }],
     });
-  } catch (error) {
-    res.status(500).json({
-      message: "Error creating student",
-      error: error.message,
-    });
-  }
+
+    if (existingStudent) {
+      return res.status(400).json({
+        message: "Email or Regno already exists",
+      });
+    }
+
+    // Add the image path to the student's photo field if it exists
+    if (req.file) {
+      req.body.photo = `/uploads/${req.file.filename}`; // Assuming you serve static files from 'uploads/' folder
+    }
+
+    // If no duplicates, create a new student
+    try {
+      const student = new studentModel(req.body);
+      await student.save();
+      res.status(201).json({
+        message: "Student created successfully",
+        student,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Error creating student",
+        error: error.message,
+      });
+    }
+  });
 };
 
 // READ - Get all students
@@ -71,6 +107,7 @@ exports.updateStudent = async (req, res) => {
     });
   }
 };
+
 // DELETE - Delete a student
 exports.deleteStudent = async (req, res) => {
   try {

@@ -4,7 +4,7 @@ import UserAccount from "../components/UserAccount";
 
 const MergedAssessment = () => {
 {/**   state: { data: marksData, year, stream, term }, */}
-  const [stream, setClassValue] = useState("Form3");
+  const [stream, setClassValue] = useState("10");
   const [year, setYearValue] = useState("2024-2025");
   const [term, setTermValue] = useState("Term-1");
   const [marksData, setData] = useState([]);
@@ -224,7 +224,7 @@ const MergedAssessment = () => {
                       <td className="border py-2">{subject.openerScore ?? "-"}</td>
                       <td className="border py-2">{subject.midTermScore ?? "-"}</td>
                       <td className="border py-2">{subject.finalScore ?? "-"}</td>
-                      <td className="border py-2">{subject.avgScore.toFixed(2) ?? "-"}</td>
+                      <td className="border py-2">{((subject.openerScore+subject.midTermScore+subject.finalScore)/3).toFixed(2) ?? "-"}</td>
                     </tr>
                   ))
                 )}

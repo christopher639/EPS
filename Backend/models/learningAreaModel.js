@@ -5,28 +5,26 @@ const learningAreaSchema = new mongoose.Schema(
     subjectname: {
       type: String,
       required: true,
-      unique: true,
       trim: true, // Removes leading and trailing spaces
     },
     code: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
     description: {
       type: String,
-      required: false,
+      
     },
     department: {
       type: mongoose.Schema.Types.ObjectId,
       ref:"Department",//Assuming that Department model exist
-      required: true,
+      
     },
     instructor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "teacher", // Assumes a Teacher model exists
-      required: false,
+      
     },
     duration: {
       type: Number,

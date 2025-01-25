@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserAccount from "../components/UserAccount";
 const GeneralReport = () => {
-  const [classValue, setClassValue] = useState("Form3");
+  const [classValue, setClassValue] = useState("10");
   const [yearValue, setYearValue] = useState("2024-2025");
   const [termValue, setTermValue] = useState("Term-1");
   const [data, setData] = useState([]);
@@ -255,6 +255,7 @@ const GeneralReport = () => {
             <table className="min-w-full table-auto text-center mt-6">
               <thead className="sticky top-0 bg-white">
                 <tr  id='bo' className="bg-gray-200">
+                <th id='bo' className="border sticky top-0 bg-white  py-2">Name</th>
                   <th id='bo' className="border sticky top-0 bg-white  py-2">Reg No</th>
                   <th id='bo' className="border  sticky top-0 bg-white py-2">Stream</th>
                   {subjectTotalsAndAverages.map((subjectStat, index) => (
@@ -274,6 +275,7 @@ const GeneralReport = () => {
 
                   return (
                     <tr key={studentIndex} className="hover:bg-gray-100">
+                      <td className="border  py-2">{student.studentName}</td>
                       <td className="border  py-2">{student.regno}</td>
                       <td className="border  py-2">{student.stream}</td>
                       {subjectTotalsAndAverages.map((subjectStat, subjectIndex) => {
@@ -290,7 +292,7 @@ const GeneralReport = () => {
                   );
                 })}
                 <tr className="font-bold bg-gray-200">
-                  <td colSpan={2} className="border py-2">Total</td>
+                  <td colSpan={3} className="border py-2">Total</td>
                   {subjectTotalsAndAverages.map((subjectStat, index) => (
                     <td key={index} className="border  py-2">
                       {subjectStat.total.toFixed(2)}
@@ -299,7 +301,7 @@ const GeneralReport = () => {
                   <td className="border py-2">{classStats.total.toFixed(2)}</td>
                 </tr>
                 <tr className="font-bold bg-gray-200">
-                  <td colSpan={2} className="border  py-2">Average</td>
+                  <td colSpan={3} className="border  py-2">Average</td>
                   {subjectTotalsAndAverages.map((subjectStat, index) => (
                     <td key={index} className="border  py-2">
                       {subjectStat.average.toFixed(2)}

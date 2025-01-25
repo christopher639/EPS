@@ -39,6 +39,10 @@ const studentSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    admissionNumber: {  // Add this field
+      type: String,
+        // Make it required if you want this field to be mandatory
+    },
     admissionDate: {
       type: Date,
       required: true,
@@ -93,9 +97,9 @@ const studentSchema = new mongoose.Schema(
         },
       },
     ],
-   
   },
   { timestamps: true }
 );
-const studentModel =mongoose.model.student || mongoose.model("student", studentSchema);
+
+const studentModel = mongoose.model.student || mongoose.model("student", studentSchema);
 module.exports = studentModel;

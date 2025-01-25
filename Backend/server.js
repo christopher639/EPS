@@ -3,12 +3,15 @@ const cors = require("cors")
 const path = require("path");
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser");
+
+
 //middles wares
 const app = express()
 app.use(bodyParser.json());
 const port = process.env.PORT|| 3000;
 app.use(express.json())
 app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // importing the routes
 const streamRoutes = require("./Routes/streamRoutes");
 const learningAreaRoutes = require('./Routes/learningAreasRoutes.js');

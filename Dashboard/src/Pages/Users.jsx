@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import axios from "axios";
 import UserAccount from '../components/UserAccount';
-import { FaEnvelope,FaEdit,FaTrash,FaPlus,FaPaperPlane } from "react-icons/fa"; 
+import { FaEnvelope, FaEdit, FaTrash, FaPlus, FaPaperPlane } from "react-icons/fa";
 
 axios.defaults.baseURL = "http://localhost:3000";
 
@@ -11,9 +11,9 @@ const Users = () => {
   const [userform, setUserForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [emailModalOpen, setEmailModalOpen] = useState(false); // Modal visibility
-const [selectedUserId, setSelectedUserId] = useState(null);  // For sending to a specific user
-const [emailContent, setEmailContent] = useState(""); // Email content (subject, body)
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [emailContent, setEmailContent] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
   const [formData, setFormData] = useState({
@@ -31,7 +31,6 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
     rolesPermissions: [],
   });
 
-  // State for Delete Confirmation Modal
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
 
@@ -45,22 +44,21 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
-  
+
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("You are not authenticated. Please log in.");
       return;
     }
-  
+
     const payload = {
-      subject: "Important Notification", // Set subject as needed
-      text: emailContent, // Use the email content
-      html: `<p>${emailContent}</p>`, // Optionally, format the email content in HTML
+      subject: "Important Notification",
+      text: emailContent,
+      html: `<p>${emailContent}</p>`,
     };
-  
+
     try {
       if (selectedUserId) {
-        // Send to a specific user
         await axios.post(`/api/users/admin/send-email-to-single/${selectedUserId}`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,7 +66,6 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
         });
         toast.success("Email sent to the user!");
       } else {
-        // Send to all users
         await axios.post(`/api/users/admin/send-email-to-all`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -76,14 +73,12 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
         });
         toast.success("Email sent to all users!");
       }
-      setEmailModalOpen(false); // Close modal after sending
+      setEmailModalOpen(false);
     } catch (error) {
       toast.error("Failed to send email. Please try again.");
     }
   };
-  
 
-  // Delete user confirmation
   const confirmDelete = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -99,9 +94,9 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
       });
       toast.success("User deleted successfully!");
       setIsDeleteModalOpen(false);
-      getFetchData(); // Refresh the user list
+      getFetchData();
     } catch (error) {
-      toast.error("Permission Denied .Contact System Admin");
+      toast.error("Permission Denied. Contact System Admin");
     }
   };
 
@@ -191,89 +186,86 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
   }, []);
 
   return (
-    <div className="flex flex-col min-w-full bg-gray-100">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <ToastContainer />
-      <div className="flex justify-between mx-4 py-3">
-        <div className='hidden sm:flex' >
+      <div className="flex justify-between items-center p-4 bg-white shadow-sm">
+        <div className="hidden sm:flex">
           <input
-            className="outline-none min-w-full px-4 py-2 text-center border border-gray-300 rounded-md w-1/3"
+            className="outline-none px-4 py-2 border border-gray-300 rounded-md w-64"
             type="text"
             placeholder="Search"
             value={searchTerm}
             onChange={handleSearchChange}
           />
-        
         </div>
-        {/* For sending to all users */}
-            <button
-              onClick={() => {
-                setSelectedUserId(null); // No user selected
-                setEmailModalOpen(true); // Open email modal
-              }}
-              className="bg-blue-500 text-white px-3 py-1 rounded-md"
-            >
-              <FaPaperPlane />
-            </button>
+        <button
+          onClick={() => {
+            setSelectedUserId(null);
+            setEmailModalOpen(true);
+          }}
+          className="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition-colors"
+        >
+          <FaPaperPlane />
+        </button>
         <div>
           <button
             onClick={() => setUserForm(true)}
-            className="bg-green-700 flex text-white px-4 py-2 rounded-md hover:bg-green-600"
+            className="bg-green-700 flex items-center text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
           >
-            <FaPlus className='mt-1'/> <p className='hidden sm:flex'>Add</p>
+            <FaPlus className="mr-2" /> <span className="hidden sm:inline">Add</span>
           </button>
         </div>
         <UserAccount />
       </div>
-      <div  className='sm:hidden mx-4 pb-2'>
-          <input
-            className="outline-none min-w-full px-4 py-2 text-center border border-gray-300 rounded-md w-1/3"
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-        
+      <div className="sm:hidden p-4">
+        <input
+          className="outline-none w-full px-4 py-2 border border-gray-300 rounded-md"
+          type="text"
+          placeholder="Search"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </div>
+      {emailModalOpen && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full shadow-lg">
+            <h2 className="text-xl font-semibold mb-4">
+              {selectedUserId ? 'Send Email to User' : 'Send Email to All Users'}
+            </h2>
+            <form onSubmit={handleEmailSubmit}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium">Email Content</label>
+                <textarea
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                  placeholder="Type your email content here..."
+                  value={emailContent}
+                  onChange={(e) => setEmailContent(e.target.value)}
+                  rows="5"
+                />
+              </div>
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => setEmailModalOpen(false)}
+                  className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                >
+                  Send Email
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        {emailModalOpen && (
-  <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-    <div className="bg-white p-6 rounded-lg max-w-md w-full shadow-lg">
-      <h2 className="text-xl font-semibold mb-4">
-        {selectedUserId ? 'Send Email to User' : 'Send Email to All Users'}
-      </h2>
-      <form onSubmit={handleEmailSubmit}>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">Email Content</label>
-          <textarea
-            className="w-full p-2 border border-gray-300 rounded-md"
-            placeholder="Type your email content here..."
-            value={emailContent}
-            onChange={(e) => setEmailContent(e.target.value)}
-            rows="5"
-          />
-        </div>
-        <div className="flex justify-end gap-4">
-          <button
-            onClick={() => setEmailModalOpen(false)}
-            className="px-4 py-2 bg-gray-300 text-black rounded-md"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Send Email
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
+      )}
       {userform && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3 shadow-lg">
             <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-3">
-              <h2 className="text-xl font-semibold mb-4">{formData._id ? 'Update User' : 'Add New User'}</h2>
+              <h2 className="text-xl font-semibold mb-4 col-span-full">{formData._id ? 'Update User' : 'Add New User'}</h2>
 
               <div className="mb-4">
                 <label className="block text-sm font-medium">Username</label>
@@ -398,16 +390,16 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
                 />
               </div>
 
-              <div className="flex justify-end gap-4">
+              <div className="flex justify-end gap-4 col-span-full">
                 <button
                   onClick={() => setUserForm(false)}
-                  className="px-4 py-2 bg-gray-300 text-black rounded-md"
+                  className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type='submit'
-                  className="px-4 py-2 bg-green-500 text-white rounded-md"
+                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
                 >
                   {formData._id ? 'Update User' : 'Add User'}
                 </button>
@@ -424,13 +416,13 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setIsDeleteModalOpen(false)}
-                className="px-4 py-2 bg-gray-300 text-black rounded-md"
+                className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmDelete}
-                className="px-4 py-2 bg-red-500 text-white rounded-md"
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
               >
                 Yes, Delete
               </button>
@@ -439,54 +431,53 @@ const [emailContent, setEmailContent] = useState(""); // Email content (subject,
         </div>
       )}
 
-      <div className="overflow-x-auto overflow-y-auto  max-h-[86vh] mx-4 ">
+      <div className="overflow-x-auto overflow-y-auto max-h-[86vh] p-4">
         {loading ? (
           <p>Loading users...</p>
         ) : (
-          <table className="min-w-full bg-white">
-            <thead>
+          <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead className="bg-gray-50">
               <tr>
-                <th className="border px-4 py-2">Full Name</th>
-                <th className="border px-4 py-2">Email</th>
-                <th className="border px-4 py-2">Role</th>
-                <th className="border px-4 py-2">Status</th>
-                <th className="border px-4 py-2">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-200">
               {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="text-center py-2">No users found.</td>
+                  <td colSpan="5" className="text-center py-4">No users found.</td>
                 </tr>
               ) : (
                 filteredUsers.map((user) => (
-                  <tr key={user._id}>
-                    <td className="border px-4 py-2">{user.fullName}</td>
-                    <td className="border px-4 py-2">{user.email}</td>
-                    <td className="border px-4 py-2">{user.role}</td>
-                    <td className="border px-4 py-2">{user.status}</td>
-                    <td className="border flex gap-1 px-4 py-2">
-                                          {/* For sending to a specific user */}
+                  <tr key={user._id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4">{user.fullName}</td>
+                    <td className="px-6 py-4">{user.email}</td>
+                    <td className="px-6 py-4">{user.role}</td>
+                    <td className="px-6 py-4">{user.status}</td>
+                    <td className="px-6 py-4 flex gap-2">
                       <button
                         onClick={() => {
-                          setSelectedUserId(user._id); // Set specific user
-                          setEmailModalOpen(true); // Open email modal
+                          setSelectedUserId(user._id);
+                          setEmailModalOpen(true);
                         }}
-                        className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                        className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition-colors"
                       >
                         <FaPaperPlane />
                       </button>
                       <button
                         onClick={() => handleUpdate(user)}
-                        className="bg-green-700 text-white px-3 py-1 rounded-md mr-2"
+                        className="bg-green-700 text-white px-3 py-1 rounded-md hover:bg-green-600 transition-colors"
                       >
-                      <FaEdit/>
+                        <FaEdit />
                       </button>
                       <button
                         onClick={() => handleDelete(user._id)}
-                        className="bg-red-500 text-white px-3 py-1 rounded-md"
+                        className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition-colors"
                       >
-                       <FaTrash/>
+                        <FaTrash />
                       </button>
                     </td>
                   </tr>

@@ -188,7 +188,7 @@ const LearningArea = () => {
           <div className="bg-white p-6 rounded-lg w-full md:w-2/3">
             <h2 className="text-lg font-semibold">{editingId ? 'Edit Learning Area' : 'Add New Learning Area'}</h2>
             <form onSubmit={editingId ? handleUpdate : handleCreate}>
-              <div className="space-y-4">
+              <div className="space-y-4  grid grid-cols-3">
                 <div>
                   <label className="block text-sm text-gray-700">Subject Name</label>
                   <input

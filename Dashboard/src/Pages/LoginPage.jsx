@@ -37,14 +37,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center z-50">
       <div className="w-full h-full flex flex-col md:flex-row items-center gap-5 justify-center">
         {/* Kibabi Logo */}
-        <div className="p-4 rounded-full">
+        <div className="p-4 rounded-full bg-white bg-opacity-20 backdrop-blur-md">
           <img src="KIbabii-Logo.png" alt="Kibabi Logo" className="w-24 h-24 object-contain" />
         </div>
 
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md transform transition-all duration-300 hover:scale-105">
           {/* Loading Spinner */}
           {loading ? (
             <div className="flex justify-center items-center mb-6">
@@ -63,7 +63,7 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
               />
             </div>
 
@@ -75,7 +75,7 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
               />
             </div>
 

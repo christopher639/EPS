@@ -24,6 +24,7 @@ import Users from "./Pages/Users";
 import ReportCard from "./Pages/ReportCard"; // Import the ReportCard page
 import RightBar from "./components/RightBar";
 import SideBar from "./components/SideBar";
+import OpenerCard from "./Pages/OpenerCard";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -79,6 +80,10 @@ const App = () => {
           <Route
             path="/report-card"
             element={isAuthenticated ? <ReportCard /> : <Navigate to="/login" />}
+          />
+           <Route
+            path="/openercards"
+            element={isAuthenticated ? <OpenerCard/> : <Navigate to="/login" />}
           />
           <Route path="/report-card" element={isAuthenticated ? <ReportCard /> : <Navigate to="/login" />} />
 

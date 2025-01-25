@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserAccount from "../components/UserAccount";
 
 const Assessments = () => {
-  const [classValue, setClassValue] = useState("Form3");
+  const [classValue, setClassValue] = useState("10");
   const [yearValue, setYearValue] = useState("2024-2025");
   const [termValue, setTermValue] = useState("Term-1");
   const [categoryValue, setCategoryValue] = useState("Opener");
@@ -166,7 +166,13 @@ const Assessments = () => {
         </div>
        
         <div>
-          <button className="text-center bg-green-800 px-3 text-white text-sm w-full border border-1 border-slate-700 font-bold p-2 rounded hover:text-slate-900">
+          <button 
+           onClick={() =>
+            navigate("/openercards", {
+              state: { data: updatedData, classValue, yearValue, termValue },
+            })
+          }
+          className="text-center bg-green-800 px-3 text-white text-sm w-full border border-1 border-slate-700 font-bold p-2 rounded hover:text-slate-900">
             Reports
           </button>
         </div>
@@ -186,13 +192,13 @@ const Assessments = () => {
           <select
             className="px-3 py-2 w-full text-sm outline-none border rounded"
             value={stream}
-            onChange={(e) => setStream(e.target.value)}
+            onChange={(e) => setClassValue(e.target.value)}
           >
             <option value="">Class</option>
-            <option value="form3">Form 3</option>
-            <option value="form4">Form 4</option>
-            <option value="form5">Form 5</option>
-            <option value="form6">Form 6</option>
+            <option value="Form3">Form 3</option>
+            <option value="Form4">Form 4</option>
+            <option value="Form5">Form 5</option>
+            <option value="Form6">Form 6</option>
           </select>
         </div>
         <div >
