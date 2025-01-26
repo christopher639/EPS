@@ -12,10 +12,10 @@ exports.createStudent = (req, res) => {
       });
     }
 
-    // Ensure that the admissionNumber is provided
-    if (!req.body.admissionNumber) {
+    // Ensure that the regno is provided
+    if (!req.body.regno) {
       return res.status(400).json({
-        message: "Admission Number is required",
+        message: "regNo Number is required",
       });
     }
 

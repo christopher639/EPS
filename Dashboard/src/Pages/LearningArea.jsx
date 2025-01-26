@@ -16,7 +16,7 @@ const LearningArea = () => {
     status: '',
     language: '',
     duration: 12,
-    studentsEnrolled: [],
+  
   });
   const [editingId, setEditingId] = useState(null); // For identifying which learning area is being edited
 
@@ -106,7 +106,7 @@ const LearningArea = () => {
       status: learningArea.status,
       language: learningArea.language,
       duration: learningArea.duration,
-      studentsEnrolled: learningArea.studentsEnrolled,
+    
     });
     setEditingId(learningArea._id);
     setShowModal(true); // Open modal for editing
@@ -144,8 +144,7 @@ const LearningArea = () => {
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Code</th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Description</th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Instructor</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">No. of Students Enrolled</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Student Registration Numbers</th>
+            
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Actions</th>
             </tr>
           </thead>
@@ -155,13 +154,8 @@ const LearningArea = () => {
                 <td className="px-4 py-2">{learningArea.subjectname}</td>
                 <td className="px-4 py-2">{learningArea.code}</td>
                 <td className="px-4 py-2">{learningArea.description}</td>
-                <td className="px-4 py-2">{learningArea.instructor?.email}</td>
-                <td className="px-4 py-2">{learningArea.studentsEnrolled.length}</td>
-                <td className="px-4 py-2">
-                  {learningArea.studentsEnrolled.map((student) => (
-                    <div key={student._id}>{student.regno}</div> // Display each student's registration number
-                  ))}
-                </td>
+                <td className="px-4 py-2">{learningArea.instructor}</td>
+                
                 <td className="px-4 py-2">
                   <button
                     onClick={() => handleEdit(learningArea)}

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 // Define the schema for streams
 const streamSchema = new mongoose.Schema({
-  name: {
+  stream: {
     type: String,
     required: true,
     unique: true, // Ensures stream names are unique

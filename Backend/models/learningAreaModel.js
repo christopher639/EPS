@@ -17,13 +17,11 @@ const learningAreaSchema = new mongoose.Schema(
       
     },
     department: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref:"Department",//Assuming that Department model exist
+      type:String
       
     },
     instructor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "teacher", // Assumes a Teacher model exists
+      type:String
       
     },
     duration: {
@@ -40,12 +38,6 @@ const learningAreaSchema = new mongoose.Schema(
       type: String,
       default: "English",
     },
-    studentsEnrolled: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "student", // Assumes a Student model exists
-      },
-    ],
   },
   {
     timestamps: true, // Automatically adds `createdAt` and `updatedAt` fields

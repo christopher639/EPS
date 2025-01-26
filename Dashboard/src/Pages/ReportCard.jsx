@@ -47,7 +47,7 @@ const ReportCard = () => {
   const handlePrint = () => {
     const printContent = document.getElementById("printableTable").innerHTML;
     const printWindow = window.open("", "", "height=600,width=800");
-
+  
     // Gather all styles from the current page, including any dynamically applied ones
     const styles = Array.from(document.styleSheets)
       .map((sheet) => {
@@ -60,10 +60,24 @@ const ReportCard = () => {
         }
       })
       .join("\n");
-
+  
     // Write the styles and content to the print window
     printWindow.document.write("<html><head><title>Print</title>");
     printWindow.document.write(`<style>${styles}
+      /* Reduce text size and adjust layout for printing */
+      body {
+        font-size: 16px !important; /* Smaller font size */
+        margin: 0;
+        padding: 0;
+      }
+      table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+      }
+      th, td {
+        padding: 5px !important; /* Reduce padding */
+        font-size: 14px !important; /* Smaller font size */
+      }
       #bo { border: 1px solid black; }
       #floating-stamp {
         position: absolute;
@@ -94,7 +108,7 @@ const ReportCard = () => {
     printWindow.document.write(printContent);
     printWindow.document.write("</body></html>");
     printWindow.document.close();
-
+  
     // Trigger the print dialog once the content is loaded
     printWindow.onload = () => {
       printWindow.print();
@@ -172,13 +186,30 @@ const ReportCard = () => {
           return ( 
           <div key={index} className="page-break relative mb-8">
             <div className="mb-6 p-4 bg-white">
-              <div className="text-center">
+             <div className='flex justify-between w-3/4'>
+              <div>
+                
+              <img
+          className='w-20 h-20 rounded-full'
+          src={student.studentImage ? `http://localhost:3000${student.studentImage}` : '/avater.jpeg'}
+          alt="Student"
+        />
+              </div>
+              <p>KIBABII</p>
+             <div className="text-center">
                 <img
                   src="KIbabii-Logo.png"
                   alt="School Logo"
-                  className="w-14 h-14 mx-auto"
+                  className="w-20 h-20 mx-auto"
                 />
               </div>
+              <p>SCHOOL</p>
+             </div>
+            <div className='flex  justify-center'>
+            <div>
+            <p>Student Performance Report Card</p>
+            </div>
+            </div>
               <div className="text-center flex justify-center mb-4">
                 <div className="flex gap-5">
                   <p>
@@ -216,28 +247,28 @@ const ReportCard = () => {
               <table className="min-w-full table-auto text-center mt-4 border-collapse">
                 <thead>
                   <tr id="bo" className="bg-gray-200">
-                    <th id="bo" className="border px-3 py-2">
+                    <th id="bo" className="border text-left pl-1 py-2">
                       Code
                     </th>
-                    <th id="bo" className="border px-3 py-2">
+                    <th id="bo" className="border px-1 py-2">
                       Title
                     </th>
-                    <th id="bo" className="border px-3 py-2">
+                    <th id="bo" className="border px-1 py-2">
                       Tought_By
                     </th>
-                    <th id="bo" className="border px-3 py-2">
+                    <th id="bo" className="border px-1 py-2">
                       Opener
                     </th>
-                    <th id="bo" className="border px-3 py-2">
+                    <th id="bo" className="border px-1 py-2">
                       Mid_Term
                     </th>
-                    <th id="bo" className="border px-3 py-2">
+                    <th id="bo" className="border px-1 py-2">
                       End_Term
                     </th>
-                    <th id="bo" className="border px-3 py-2">
+                    <th id="bo" className="border px-1 py-2">
                       Average
                     </th>
-                    <th id="bo" className="border px-3 py-2">
+                    <th id="bo" className="border px-1 py-2">
                       Remark
                     </th>
                   </tr>
@@ -252,27 +283,27 @@ const ReportCard = () => {
 
                     return (
                       <tr id="bo" key={subIndex} className="border-b">
-                        <td id="bo" className="border px-3 py-2">
+                        <td id="bo" className="border text-left px-1 py-2">
                           {subject.code}
                         </td>
-                        <td id="bo" className="border px-3 py-2">
+                        <td id="bo" className="border px-1 py-2">
                           {subject.name}
                         </td>
-                        <td id="bo" className="border px-3 py-2">
+                        <td id="bo" className="border px-1 py-2">
                           {subject.teacherName}
                         </td>
-                        <td id="bo" className="border px-3 py-2">
+                        <td id="bo" className="border px-1 py-2">
                           {subject.openerScore ?? "-"}
                         </td>
-                        <td id="bo" className="border px-3 py-2">
+                        <td id="bo" className="border px-1 py-2">
                           {subject.midTermScore ?? "-"}
                         </td>
-                        <td id="bo" className="border px-3 py-2">
+                        <td id="bo" className="border px-1 py-2">
                           {subject.finalScore ?? "-"}
                         </td>
                         <td
                           id="bo"
-                          className="border px-3 text-yellow-700 py-2"
+                          className="border px-1 text-yellow-700 py-2"
                         >
                           {score.toFixed(2)}
                         </td>
@@ -329,6 +360,9 @@ const ReportCard = () => {
                     </tbody>
                   </table>
                 </div>
+                <div className='w-3/4'>
+                  <p>Parents or gurdians to {student.studentName} make sure the student does some revision while at home.Alway provide him with learning material to impove on academics coming next term </p>
+                </div>
               </div>
             </div>
             {/* Floating Stamp */}
@@ -339,6 +373,7 @@ const ReportCard = () => {
               <h2 className="text-blue-900 text-sm font-bold">
                 Dated - {getFormattedDate()} {/* Dynamically display the current date */}
               </h2>
+              
               <p className="font-semibold">Bungoma High School</p>
               <p className="text-sm">
                 Period: <strong>{yearValue} - {termValue}</strong>

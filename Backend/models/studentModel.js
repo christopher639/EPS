@@ -39,10 +39,7 @@ const studentSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    admissionNumber: {  // Add this field
-      type: String,
-        // Make it required if you want this field to be mandatory
-    },
+  
     admissionDate: {
       type: Date,
       required: true,

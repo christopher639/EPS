@@ -275,7 +275,7 @@ const GeneralReport = () => {
 
                   return (
                     <tr key={studentIndex} className="hover:bg-gray-100">
-                      <td className="border  py-2">{student.studentName}</td>
+                      <td className="border text-left  py-2">{student.studentName}</td>
                       <td className="border  py-2">{student.regno}</td>
                       <td className="border  py-2">{student.stream}</td>
                       {subjectTotalsAndAverages.map((subjectStat, subjectIndex) => {

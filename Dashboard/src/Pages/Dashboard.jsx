@@ -49,18 +49,9 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    // Simulate an increasing alumni count
-    let count = 0;
-    const interval = setInterval(() => {
-      if (count < 5457) {
-        count += 1;
-        setAlumniCount(count);
-      } else {
-        clearInterval(interval);
-      }
-    }, 5); // This controls the speed of incrementing
-    return () => clearInterval(interval);
-  }, []);
+    // Set alumni count to the number of students
+    setAlumniCount(students.length);
+  }, [students]); // Re-run this effect whenever `students` changes
 
   // Doughnut Chart Data
   const doughnutData = {

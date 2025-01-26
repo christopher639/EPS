@@ -345,7 +345,30 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
           studentName: { $ifNull: ["$studentData.name", null] },  // Add student name, if available
         },
       },
-
+      //
+      
+      // Lookup student details based on the student's regno
+      {
+        $lookup: {
+          from: "students",  // Lookup from the "students" collection
+          localField: "regno",  // Local field to match (student regno)
+          foreignField: "regno", // Foreign field in the "students" collection
+          as: "studentPhoto",  // Store student data in "studentData" field
+        },
+      },
+      {
+        $unwind: {
+          path: "$studentPhoto",  // Unwind the student data array into an object
+          preserveNullAndEmptyArrays: true,  // Allow missing student data
+        },
+      },
+      {
+        $addFields: {
+          studentImage: { $ifNull: ["$studentPhoto.photo", null] },  // Add student name, if available
+        },
+      },
+      //
+ 
       // Lookup subject details based on the subject code
       {
         $lookup: {
@@ -370,9 +393,9 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
       // Lookup teacher details based on the instructor's ID
       {
         $lookup: {
-          from: "teachers",  // Lookup from the "teachers" collection
-          localField: "subjectInfo.instructor",  // Local field to match (instructor ID)
-          foreignField: "_id",  // Foreign field in the "teachers" collection
+          from: "learningareas",  // Lookup from the "teachers" collection
+          localField: "code",  // Local field to match (instructor ID)
+          foreignField: "code",  // Foreign field in the "teachers" collection
           as: "teacherInfo",  // Store teacher info in "teacherInfo" field
         },
       },
@@ -384,7 +407,7 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
       },
       {
         $addFields: {
-          teacherName: { $ifNull: ["$teacherInfo.fullname", "Unknown"] },  // Add teacher name, if available
+          teacherName: { $ifNull: ["$teacherInfo.instructor", "Unknown"] },  // Add teacher name, if available
         },
       },
 
@@ -393,6 +416,7 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
         $group: {
           _id: "$regno",  // Group by student regno
           stream: { $first: "$stream" },  // Stream (e.g. Science, Arts) of the student
+          studentImage:{$first: "$studentImage"},
           studentName: { $first: "$studentName" },  // Student name
           subjects: {  // List of subjects and their scores
             $push: {
@@ -414,6 +438,7 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
         $project: {
           regno: "$_id",  // Return regno as _id
           stream: 1,  // Include stream info
+          studentImage:1,
           studentName: 1,  // Include student name
           subjects: 1,  // Include subjects and scores
           overallAvg: 1,  // Include overall average score
