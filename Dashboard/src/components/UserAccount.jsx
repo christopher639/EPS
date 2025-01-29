@@ -30,7 +30,7 @@ const UserAccount = () => {
       </div>
       <div>
         {/* Display welcome message with the username */}
-        {userName ? <div className="flex gap-2"><p>Welcome</p> <p  className="font-bold">{userName}</p> </div>: <p>Welcome Guest</p>}
+        {userName ? <div className="flex gap-1"><p>Hi</p> <p  className="font-bold">{userName}</p> </div>: <p>Guest</p>}
       </div>
       <div
         className="relative px-3"
@@ -41,7 +41,7 @@ const UserAccount = () => {
         {/* Show user options when hovering */}
         {userLinks && (
           <div className="absolute w-32 right-0 px-2 bg-white shadow-md rounded-md ">
-            <p className="cursor-pointer" onClick={() => navigate("/profile")}>
+            <p className="cursor-pointer text-slate-900" onClick={() => navigate("/profile")}>
               Profile
             </p>
             <p

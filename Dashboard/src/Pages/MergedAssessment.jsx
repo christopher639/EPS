@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserAccount from "../components/UserAccount";
-
+import SideBar from "../components/SideBar";
+import SidebarToggleButton from "../components/SidebarToggleButton"; // Import the Sidebar 
 const MergedAssessment = () => {
 {/**   state: { data: marksData, year, stream, term }, */}
   const [stream, setClassValue] = useState("10");
   const [year, setYearValue] = useState("2024-2025");
+   const [sideBar, setSideBar] = useState(false); // To control the visibility of the sidebar
   const [term, setTermValue] = useState("Term-1");
   const [marksData, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -93,11 +95,22 @@ const MergedAssessment = () => {
       <div className="text-center text-lg text-red-500">Error: {error}</div>
     );
   }
+  const toggleSideBar = () => {
+    setSideBar((prev) => !prev); // Toggle sidebar visibility
+  };
+
 
   return (
+   <div className="flex">
+     <div
+    className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+  >
+    <SideBar/> {/* Conditionally render based on sidebar state */}
+  </div>
     <div className="container mx-auto   bg-gray-50">
       {/* Top Controls */}
-      <div className="flex justify-between p-2">
+       <div className="flex justify-between p-2">
+      <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
       <button
             onClick={handlePrint}
             className="text-center px-3 bg-green-800 text-white text-sm  border border-1 border-slate-700 font-bold py-2 rounded hover:text-slate-900 whitespace-nowrap"
@@ -158,7 +171,7 @@ const MergedAssessment = () => {
       {updatedData.length === 0 ? (
         <p className="text-center text-lg text-gray-500">No data found</p>
       ) : (
-        <div  id="printableTable"  className=" bg-white shadow-lg rounded-lg px-4 overflow-x-auto overflow-y-auto max-h-[88vh]">
+        <div  id="printableTable"  className=" bg-white shadow-lg rounded-lg px-4 overflow-x-auto overflow-y-auto max-h-[80vh] pb-5">
          <div className="flex justify-center mb-4">
               <img
                 className="w-15 h-16  rounded-full"
@@ -201,13 +214,14 @@ const MergedAssessment = () => {
             <table className="min-w-full table-auto text-center">
               <thead className="sticky top-0 bg-white">
                 <tr className="bg-slate-800  text-yellow-900">
+                <th className="border  sticky top-0 bg-white py-2 ">Name</th>
                   <th className="border  sticky top-0 bg-white py-2 ">Reg No</th>
                   <th className="border sticky top-0 bg-white py-2 ">Stream</th>
                   <th className="border sticky top-0 bg-white py-2 ">Subject Code</th>
-                  <th className="border sticky top-0 bg-white py-2 ">Opener Score</th>
-                  <th className="border sticky top-0 bg-white py-2 ">Mid Term Score</th>
-                  <th className="border sticky top-0 bg-white py-2 ">Final Score</th>
-                  <th className="border sticky top-0 bg-white py-2 ">Average Score</th>
+                  <th className="border sticky top-0 bg-white py-2 ">Opener </th>
+                  <th className="border sticky top-0 bg-white py-2 ">Mid Term</th>
+                  <th className="border sticky top-0 bg-white py-2 ">Final </th>
+                  <th className="border sticky top-0 bg-white py-2 ">Average </th>
                 </tr>
               </thead>
               <tbody>
@@ -220,6 +234,8 @@ const MergedAssessment = () => {
                           <td rowSpan={student.subjects.length} className="border py-2">{student.stream}</td>
                         </>
                       ) : null}
+                    
+                       <td className="border py-2">{subject.name}</td>
                       <td className="border py-2">{subject.code}</td>
                       <td className="border py-2">{subject.openerScore ?? "-"}</td>
                       <td className="border py-2">{subject.midTermScore ?? "-"}</td>
@@ -235,6 +251,7 @@ const MergedAssessment = () => {
       )}
     </div>
     </div>
+   </div>
   );
 };
 

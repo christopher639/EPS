@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserAccount from "../components/UserAccount";
+import SidebarToggleButton from "../components/SidebarToggleButton"; // Import the Sidebar Toggle Button
+import SideBar from "../components/SideBar";
+
 const GeneralReport = () => {
   const [classValue, setClassValue] = useState("10");
+
+  const [sideBar, setSideBar] = useState(false); // To control the visibility of the sidebar
   const [yearValue, setYearValue] = useState("2024-2025");
   const [termValue, setTermValue] = useState("Term-1");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -147,11 +152,21 @@ const GeneralReport = () => {
     );
   }
 
+  const toggleSideBar = () => {
+    setSideBar((prev) => !prev); // Toggle sidebar visibility
+  };
+
   return (
-    <div className="container    p-2 bg-gray-50 ">
+   <div className="flex">
+    <div
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+      >
+        <SideBar/> {/* Conditionally render based on sidebar state */}
+      </div>
+     <div className="container    p-2 bg-gray-50 ">
       {/* Top Controls */}
       <div className="flex justify-between ">
-
+      <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
         <button
           onClick={handlePrint}
           className="bg-green-800 max-w-32 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition"
@@ -210,7 +225,7 @@ const GeneralReport = () => {
       
 
       {/* Table Section */}
-      <div className="overflow-x-auto   overflow-y-auto bg-white shadow-lg rounded-lg px-4 max-h-[86vh]">
+      <div className="overflow-x-auto   overflow-y-auto bg-white shadow-lg rounded-lg px-4 max-h-[82vh] pb-5">
         {updatedData.length === 0 ? (
           <p className="text-center text-lg text-gray-500">No data found</p>
         ) : (
@@ -252,7 +267,7 @@ const GeneralReport = () => {
               </tbody>
             </table>
 
-            <table className="min-w-full table-auto text-center mt-6">
+            <table className="min-w-full overflow-x-scroll table-auto text-center mt-6">
               <thead className="sticky top-0 bg-white">
                 <tr  id='bo' className="bg-gray-200">
                 <th id='bo' className="border sticky top-0 bg-white  py-2">Name</th>
@@ -261,7 +276,7 @@ const GeneralReport = () => {
                   {subjectTotalsAndAverages.map((subjectStat, index) => (
                     <th id='bo' key={index} className="border sticky top-0 bg-white  py-2">
                       <p className="text-yellow-600">{index + 1}</p>
-                      <p>{subjectStat.code}</p>
+                      <p className="px-1 text-sm">{subjectStat.code}</p>
                     </th>
                   ))}
                   <th id='bo' className="border sticky top-0 bg-white  py-2">Total</th>
@@ -275,7 +290,7 @@ const GeneralReport = () => {
 
                   return (
                     <tr key={studentIndex} className="hover:bg-gray-100">
-                      <td className="border text-left  py-2">{student.studentName}</td>
+                      <td className="border  text-left  py-2">{student.studentName}</td>
                       <td className="border  py-2">{student.regno}</td>
                       <td className="border  py-2">{student.stream}</td>
                       {subjectTotalsAndAverages.map((subjectStat, subjectIndex) => {
@@ -315,6 +330,7 @@ const GeneralReport = () => {
         )}
       </div>
     </div>
+   </div>
   );
 };
 

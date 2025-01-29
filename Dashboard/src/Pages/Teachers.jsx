@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import SideBar from "../components/SideBar";
+import IconSideBar from "../components/IconSideBar"; // Import IconSideBar component
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import UserAccount from '../components/UserAccount';
+import { FaBars } from "react-icons/fa"; // Import the hamburger icon for sidebar toggle
+import SidebarToggleButton from '../components/SidebarToggleButton';
 
 axios.defaults.baseURL = "http://localhost:3000";
 
 const Teachers = () => {
   const [teachers, setTeachers] = useState([]);
+  const [sideBar, setSideBar] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [learningareas, setLearningAreas] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -160,11 +165,24 @@ const Teachers = () => {
     });
     setShowModal(true);
   };
+  const toggleSideBar = () => {
+    setSideBar(prev => !prev); // Toggle sidebar visibility
+  };
 
   return (
-    <div className='flex bg-white flex-col min-w-full bg-gray-100'>
+    <div className='flex'>
+      <div
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+      >
+        <SideBar/> {/* Conditionally render based on sidebar state */}
+      </div>
+    <div className='flex bg-white flex-col w-full bg-gray-100'>
       <div className='px-6 py-4 flex gap-5 justify-between items-center bg-white shadow-md'>
-        <p>Teachers</p>
+      <div className='flex items-center gap-2'>
+      <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+          <h1 className="text-xl py-3 font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg">KIBABII SCHOOL</h1>
+          <p className="text-gray-500">Teachers</p>
+        </div>
         <input
           type="text"
           placeholder="Search by name or regno"
@@ -322,6 +340,7 @@ const Teachers = () => {
         </div>
       )}
       <ToastContainer />
+    </div>
     </div>
   );
 };

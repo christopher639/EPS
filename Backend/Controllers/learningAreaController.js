@@ -16,7 +16,7 @@ const getAllLearningAreas = async (req, res) => {
   try {
     const learningAreas = await LearningArea.find()
       .populate('instructor', 'fullName email') // Fetch instructor details
-      .populate('studentsEnrolled', 'fullName email'); // Fetch students details
+     
     res.status(200).json(learningAreas);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -28,7 +28,7 @@ const getLearningAreaById = async (req, res) => {
   try {
     const learningArea = await LearningArea.findById(req.params.id)
       .populate('instructor', 'fullname email') // Fetch instructor details (fullName and email)
-      .populate('studentsEnrolled', 'name email regno') // Fetch students' details (fullName, email, regno)
+     
       .populate('department', 'departmentName') // Fetch department details if needed (department name or other details)
       .exec(); // Use exec() for better error handling and to ensure the query is fully executed
 
@@ -53,7 +53,6 @@ const updateLearningArea = async (req, res) => {
       { new: true, runValidators: true }
     )
       .populate('instructor', 'fullName email') // Fetch instructor details
-      .populate('studentsEnrolled', 'fullName email'); // Fetch students details
     if (!updatedLearningArea) {
       return res.status(404).json({ message: 'Learning Area not found' });
     }

@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import axios from "axios";
+import { FaBars } from "react-icons/fa"; // Import the hamburger icon for sidebar toggle
 import UserAccount from '../components/UserAccount';
 import { FaEnvelope, FaEdit, FaTrash, FaPlus, FaPaperPlane } from "react-icons/fa";
-
+import SideBar from '../components/SideBar';
+import IconSideBar from '../components/IconSideBar';
+import SidebarToggleButton from '../components/SidebarToggleButton';
 axios.defaults.baseURL = "http://localhost:3000";
 
 const Users = () => {
   const [userform, setUserForm] = useState(false);
+  const [sideBar, setSideBar] = useState(true);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [emailModalOpen, setEmailModalOpen] = useState(false);
@@ -184,12 +188,24 @@ const Users = () => {
   useEffect(() => {
     getFetchData();
   }, []);
-
+  const toggleSideBar = () => {
+    setSideBar(prev => !prev); // Toggle sidebar visibility
+  };
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+   <div className='flex'>
+    {/**Side bar */}
+    <div
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+      >
+       <SideBar />  {/* Conditionally render based on sidebar state */}
+      </div>
+    {/**Main content */}
+    <div className="flex flex-col min-h-screen w-full bg-gray-100">
       <ToastContainer />
       <div className="flex justify-between items-center p-4 bg-white shadow-sm">
+      <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
         <div className="hidden sm:flex">
+
           <input
             className="outline-none px-4 py-2 border border-gray-300 rounded-md w-64"
             type="text"
@@ -488,6 +504,7 @@ const Users = () => {
         )}
       </div>
     </div>
+   </div>
   );
 };
 

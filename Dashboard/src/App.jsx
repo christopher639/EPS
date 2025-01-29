@@ -25,6 +25,7 @@ import ReportCard from "./Pages/ReportCard"; // Import the ReportCard page
 import RightBar from "./components/RightBar";
 import SideBar from "./components/SideBar";
 import OpenerCard from "./Pages/OpenerCard";
+import Streams from "./Pages/Streams";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,7 +45,7 @@ const App = () => {
       {/* Only render SideBar, TopBar, and RightBar if the user is authenticated */}
       {isAuthenticated && (
         <div className="flex flex-col items-center h-screen">
-          <SideBar />
+        
         </div>
       )}
 
@@ -64,7 +65,7 @@ const App = () => {
           <Route path="/users" element={isAuthenticated ? <Users /> : <Navigate to="/login" />} />
           <Route path="/reportform" element={isAuthenticated ? <ReportForm /> : <Navigate to="/login" />} />
           <Route path="/students" element={isAuthenticated ? <Students /> : <Navigate to="/login" />} />
-          <Route path="/streams" element={isAuthenticated ? <Academic /> : <Navigate to="/login" />} />
+          <Route path="/streams" element={isAuthenticated ? <Streams/> : <Navigate to="/login" />} />
           <Route path="/fees" element={isAuthenticated ? <Fees /> : <Navigate to="/login" />} />
           <Route path="/parents" element={isAuthenticated ? <Parents /> : <Navigate to="/login" />} />
           <Route path="/teachers" element={isAuthenticated ? <Teachers /> : <Navigate to="/login" />} />

@@ -40,7 +40,7 @@ const LoginPage = () => {
     <div className="fixed inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center z-50">
       <div className="w-full h-full flex flex-col md:flex-row items-center gap-5 justify-center">
         {/* Kibabi Logo */}
-        <div className="p-4 rounded-full bg-white bg-opacity-20 backdrop-blur-md">
+        <div className="p-4 rounded-full bg-opacity-20 backdrop-blur-md">
           <img src="KIbabii-Logo.png" alt="Kibabi Logo" className="w-24 h-24 object-contain" />
         </div>
 
@@ -84,7 +84,7 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-300 ${
+              className={`w-full py-2  bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-300 ${
                 loading ? "cursor-not-allowed opacity-50" : ""
               }`}
             >

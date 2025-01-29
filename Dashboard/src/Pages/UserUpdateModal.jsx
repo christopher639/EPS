@@ -62,7 +62,7 @@ const UserUpdateModal = () => {
           <label className="block text-sm font-medium">Full Name</label>
           <input
             type="text"
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-1 border border-gray-300 rounded-md"
             name='fullName'
             onChange={handleOnChange}
             value={formData.fullName}

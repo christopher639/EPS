@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import UserAccount from "../components/UserAccount";
+import SidebarToggleButton from "../components/SidebarToggleButton";
+import SideBar from "../components/SideBar";
 
 const Assessments = () => {
   const [classValue, setClassValue] = useState("10");
+  const [sideBar, setSideBar] = useState(false); // To control the visibility of the sidebar
   const [yearValue, setYearValue] = useState("2024-2025");
   const [termValue, setTermValue] = useState("Term-1");
   const [categoryValue, setCategoryValue] = useState("Opener");
@@ -152,10 +155,23 @@ const Assessments = () => {
 
     return regno.includes(searchQuery.toLowerCase()) || stream.includes(searchQuery.toLowerCase());
   });
+  const toggleSideBar = () => {
+    setSideBar((prev) => !prev); // Toggle sidebar visibility
+  };
 
   return (
-    <div className="container mx-auto max-w-screen">
-      <div className="flex justify-between gap-4 p-2 mb-4">
+   <div className="flex ">
+      {/* Sidebar */}
+      <div
+        className={`transition-all duration-700 ease-in-out ${
+          sideBar ? "w-72" : "w-16"
+        } bg-gray-800 min-h-screen`}
+      >
+       <SideBar /> {/* Conditionally render Sidebar */}
+      </div>
+    <div className="container mx-auto   bg-gray-50">
+      <div className="flex justify-between bg-white border-b p-3 gap-4  mb-4">
+       <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
         <div >
           <button
             onClick={handlePrint}
@@ -178,11 +194,11 @@ const Assessments = () => {
         </div>
         <UserAccount/>
       </div>
-        <div className="flex justify-between pb-2 px-3">
+        <div className="grid p-3 gap-3  grid-cols-2 md:grid-cols-3 lg:grid-cols-5 pb-2 px-3">
         <div >
           <input
             type="text"
-            className="text-center text-sm  border border-slate-300 outline-none py-2 px-3 text-sm rounded-md"
+            className="text-center max-w-32 text-sm  border border-slate-300 outline-none py-2 px-3 text-sm rounded-md"
             placeholder="regno or stream"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -190,7 +206,7 @@ const Assessments = () => {
         </div>
         <div >
           <select
-            className="px-3 py-2 w-full text-sm outline-none border rounded"
+            className="px-3 py-2  text-sm outline-none border rounded"
             value={stream}
             onChange={(e) => setClassValue(e.target.value)}
           >
@@ -203,7 +219,7 @@ const Assessments = () => {
         </div>
         <div >
           <select
-            className="px-3 py-2 w-full text-sm outline-none border rounded"
+            className="px-3 py-2  text-sm outline-none border rounded"
             value={yearValue}
             onChange={(e) => setYearValue(e.target.value)}
           >
@@ -214,7 +230,7 @@ const Assessments = () => {
         </div>
         <div >
           <select
-            className="px-3 py-2 w-full text-sm outline-none border rounded"
+            className="px-3 py-2  text-sm outline-none border rounded"
             value={termValue}
             onChange={(e) => setTermValue(e.target.value)}
           >
@@ -226,7 +242,7 @@ const Assessments = () => {
         </div>
         <div >
           <select
-            className="px-3 py-2 w-full text-sm outline-none border rounded"
+            className="px-3 py-2  text-sm outline-none border rounded"
             value={categoryValue}
             onChange={(e) => setCategoryValue(e.target.value)}
           >
@@ -240,45 +256,37 @@ const Assessments = () => {
       {filteredData.length === 0 ? (
         <p className="text-center text-lg text-red-500">No data found</p>
       ) : (
-        <div id="printableTable" className="mx-4 grid grid-cols-1 max-h-[72vh] md:max-h-[88vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0">
-          <div className="flex justify-center">
+        <div id="printableTable" className=" p-3 grid grid-cols-1 max-h-[72vh] md:max-h-[80vh] overflow-y-auto  w-full overflow-x-auto ">
+          <div className="flex mx-3  gap-5 justify-between">
             <div>
-              <img className="w-8 h-8 md:w-[60px] md:h-[48px] bg-gray-100" src="KIbabii-Logo.png" alt="Logo" />
+              <img className="w-24 h-14 md:w-[60px] md:h-[48px] bg-gray-100" src="KIbabii-Logo.png" alt="Logo" />
             </div>
-            <div>
-              <table className="min-w-full">
-                <thead>
-                  <tr className="text-gray-800">
-                    <th className="border  px-1 text-left">Academic Year</th>
-                    <th className="border  px-1 text-left">Class</th>
-                    <th className="border  px-1 text-left">Term</th>
-                    <th className="border  px-1 text-left">Exam Type</th>
-                    <th className="border  px-1 text-left">Best Subject</th>
-                    <th className="border  px-1 text-left">Least Subject</th>
-                    <th className="border  px-1 text-left">Mean Score</th>
-                    <th className="border  px-1 text-left">Grade</th>
-                    <th className="border  px-1 text-left">Remark</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-x ">
-                    <td className="border-r  text-yellow-700 px-1">{yearValue}</td>
-                    <td className="border-r  text-yellow-700 px-1 ">{classValue}</td>
-                    <td className="border-r  text-yellow-700 px-1 ">{termValue}</td>
-                    <td className="border-r  text-yellow-700 px-1 ">{categoryValue}</td>
-                    <td className="border-r  text-yellow-700 px-1">{/**best subject */}</td>
-                    <td className="border-r  text-yellow-700 px-1 ">{/**least subject */}</td>
-                    <td className="border-r  text-yellow-700 px-1 ">{/**Mean score */}</td>
-                    <td className="border-r  text-yellow-700 px-1 ">{/**Grade */}</td>
-                    <td className="border-r  text-yellow-700 px-1 ">{/**Remark */}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="grid -full gap-5 grid-cols-4">
+              <div className="flex gap-2">
+                 <p>Academic Year</p>
+                 <p  className="font-semibold ">{yearValue}</p>
+              </div>
+              <div  className="flex gap-5">
+                <p>Class</p>
+                <p  className="font-semibold ">{classValue}</p>
+                
+              </div>
+              <div  className="flex gap-5">
+                <p>Term</p>
+                <p  className="font-semibold ">{termValue}</p>
+               
+              </div>
+              <div  className="flex gap-5 " >
+                <p>Exam Type</p>
+                <p className="font-semibold ">{categoryValue}</p>
+              </div>
             </div>
           </div>
           <table className="w-full">
             <thead className="sticky top-0 bg-white" >
+           
               <tr className="bg-slate-800  text-gray-900 ">
+              <th className="border sticky top-0 bg-white px-1">Name</th>
                 <th className="border  sticky top-0 bg-white px-1">Reg. No.</th>
                 <th className="border sticky top-0 bg-white  px-1">Stream</th>
                 {sortedSubjectCodes.map((subjectCode, idx) => (
@@ -288,12 +296,14 @@ const Assessments = () => {
                   </th>
                 ))}
                 <th className="border sticky top-0 bg-white px-1">Total</th>
+                
                 <th className="border sticky top-0 bg-white  px-1">Average</th>
               </tr>
             </thead>
             <tbody>
               {studentWithScores.map((student, index) => (
                 <tr className="hover:bg-slate-300 text-black" key={student.regno}>
+                   <td className="border sticky top-0 bg-white px-1">{student.studentName}</td>
                   <td className="border flex  gap-3 px-1 py-1">{student.regno}</td>
                   <td className="border  px-1 py-1">{student.stream}</td>
                   {student.studentScores.map((score, idx) => (
@@ -340,6 +350,7 @@ const Assessments = () => {
         </div>
       )}
     </div>
+   </div>
   );
 };
 

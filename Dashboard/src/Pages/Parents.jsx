@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import SideBar from '../components/SideBar';
+import SidebarToggleButton from '../components/SidebarToggleButton';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import UserAccount from '../components/UserAccount';
 
 axios.defaults.baseURL = "http://localhost:3000";
 
@@ -10,6 +13,7 @@ const Parents = () => {
   const [students, setStudents] = useState([]);
  
   const [searchQuery, setSearchQuery] = useState("");
+  const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const [formData, setFormData] = useState({
@@ -96,14 +100,28 @@ const Parents = () => {
     student.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     student.regno.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  const toggleSideBar = () => {
+    setSideBar((prev) => !prev); // Toggle sidebar visibility
+  };
   return (
-    <div className='flex flex-col min-w-full'>
-      <div className='px-4 flex gap-5'>
+    <div className='flex'>
+  <div
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+      >
+        <SideBar/> {/* Conditionally render based on sidebar state */}
+      </div>
+      <div className='flex   flex-col w-full'>
+      
+      <div className='flex justify-between items-center bg-white shadow-sm p-4 border-b'>
+      <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+      <div className='flex items-center gap-2'>
+          <h1 className="text-xl font-bold text-gray-800">KIBABII SCHOOL</h1>
+          <p className="text-gray-500">Dashboard</p>
+        </div>
         <input
           type="text"
           placeholder="Search by name or regno"
-          className="w-full px-3 py-2 mb-4 border rounded-md"
+          className=" px-3 py-2 mb-4 border rounded-md"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -115,6 +133,7 @@ const Parents = () => {
            Message
           </button>
         </div>
+        <UserAccount/>
       </div>
 
       {/* Modal */}
@@ -163,9 +182,9 @@ const Parents = () => {
           <p className="text-lg font-semibold text-gray-600"> loading...</p>
         </div>
       ) : (
-        <div className='mx-4 md:mx-0 grid gri-cols-1 max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
+        <div className='mx-4 px-2 border rounded shadow-sm md:mx-0 grid gri-cols-1 max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto mr-5 md:mr-0'>
           <table className='min-w-full mt-2'>
-            <thead className='bg-slate-800 px-1 h-10 text-white'>
+            <thead className='bg-slate-800 px-1 h-10 text-slate-700'>
               <tr>
                 <th className='border whitespace-nowrap px-1'>NO</th>
                 <th className='border whitespace-nowrap px-1'>PG NAME</th>
@@ -215,6 +234,7 @@ const Parents = () => {
       )}
 
       <ToastContainer />
+    </div>
     </div>
   );
 };

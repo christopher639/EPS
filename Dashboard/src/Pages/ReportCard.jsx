@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import UserAccount from '../components/UserAccount';
+import SideBar from '../components/SideBar';
+import SidebarToggleButton from '../components/SidebarToggleButton';
 
 const ReportCard = () => {
+   const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
   const { state } = useLocation(); // Retrieve the state passed from GeneralReport
   const { data, classValue, yearValue, termValue } = state || {}; // Destructure the data
 
@@ -126,18 +129,30 @@ const ReportCard = () => {
     return "F"; // Failed or not attended
   };
 
+  const toggleSideBar = () => {
+    setSideBar((prev) => !prev); // Toggle sidebar visibility
+  };
   return (
-    <div className="p-4 bg-gray-50">
-     <div className='flex justify-between'>
-      <div>
-         <h2 className="text-2xl font-bold text-center mb-6">Student Report Card</h2>
+   <div className='flex'>
+       <div
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+      >
+        <SideBar/> {/* Conditionally render based on sidebar state */}
       </div>
+     <div className=" bg-gray-50">
+     <div className='flex px-4 justify-between items-center bg-white shadow-sm  border-b'>
+     <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+
+     <div className='flex items-center gap-2'>
+          <h1 className="text-xl py-3 font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg">KIBABII SCHOOL</h1>
+          <p className="text-gray-500">Student Report Cards</p>
+        </div>
       <div>
          <UserAccount/>
       </div>
      </div>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 mx-4">
+      <div className="flex mt-2 flex-col sm:flex-row justify-between items-center mb-6 mx-4">
         {/* Search Input */}
         <div className="hidden sm:flex w-full sm:w-auto mb-4 sm:mb-0">
           <input
@@ -178,14 +193,14 @@ const ReportCard = () => {
         />
       </div>
 
-      <div id="printableTable" className="container p-4 bg-white shadow-lg rounded-lg overflow-y-scroll max-h-[84vh]">
+      <div id="printableTable" className="container p-4 bg-white shadow-lg rounded-lg overflow-y-scroll max-h-[78vh] pb-2">
         {/* Loop through the filtered student data and display the report */}
         {filteredData.map((student, index) =>{
             const studentTotal = student.subjects.reduce((sum, subject) => sum + subject.avgScore, 0);
             const studentAverage = studentTotal / student.subjects.length;
           return ( 
-          <div key={index} className="page-break relative mb-8">
-            <div className="mb-6 p-4 bg-white">
+          <div key={index} className="page-break relative mb-4">
+            <div className="mb-3 p-2 bg-white">
              <div className='flex justify-between w-3/4'>
               <div>
                 
@@ -195,7 +210,7 @@ const ReportCard = () => {
           alt="Student"
         />
               </div>
-              <p>KIBABII</p>
+              <p className='text-lg font-semibold'>KIBABII</p>
              <div className="text-center">
                 <img
                   src="KIbabii-Logo.png"
@@ -203,11 +218,11 @@ const ReportCard = () => {
                   className="w-20 h-20 mx-auto"
                 />
               </div>
-              <p>SCHOOL</p>
+              <p className='text-lg font-semibold'>SCHOOL</p>
              </div>
             <div className='flex  justify-center'>
             <div>
-            <p>Student Performance Report Card</p>
+            <p className='font-semibold text-lg'>Student Performance Report Card</p>
             </div>
             </div>
               <div className="text-center flex justify-center mb-4">
@@ -318,7 +333,7 @@ const ReportCard = () => {
                   })}
                 </tbody>
               </table>
-              <div className="flex flex-col md:flex-row gap-5 mt-5">
+              <div className="flex flex-col md:flex-row gap-1 mt-2">
                 <div className="w-full">
                   <table className="w-full">
                     <tr>
@@ -388,6 +403,7 @@ const ReportCard = () => {
         )})}
       </div>
     </div>
+   </div>
   );
 };
 
