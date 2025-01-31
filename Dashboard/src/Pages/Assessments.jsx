@@ -99,9 +99,9 @@ const Assessments = () => {
     };
   };
 
-  if (loading) {
-    return <div className="text-center text-lg text-gray-500">Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div className="text-center text-lg text-gray-500">Loading...</div>;
+  // }
 
   if (error) {
     return <div className="text-center text-lg text-red-500">Error: {error}</div>;
@@ -180,7 +180,7 @@ const Assessments = () => {
             Print Sheet
           </button>
         </div>
-       
+        
         <div>
           <button 
            onClick={() =>

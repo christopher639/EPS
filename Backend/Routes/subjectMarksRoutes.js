@@ -3,7 +3,7 @@ const router = express.Router();
 const subjectsMarksController = require("../Controllers/subjectsMarksController");
 
 // CRUD Routes
-router.post("/", subjectsMarksController.createSubjectMark);
+router.post("/", subjectsMarksController.createSubjectMarks);
 router.get("/", subjectsMarksController.getAllSubjectMarks);
 router.get("/:id", subjectsMarksController.getSubjectMarkById);
 router.put("/:id", subjectsMarksController.updateSubjectMark);

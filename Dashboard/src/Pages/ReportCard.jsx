@@ -133,16 +133,15 @@ const ReportCard = () => {
     setSideBar((prev) => !prev); // Toggle sidebar visibility
   };
   return (
-   <div className='flex'>
+   <div className='flex '>
        <div
         className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
       >
         <SideBar/> {/* Conditionally render based on sidebar state */}
       </div>
-     <div className=" bg-gray-50">
+     <div className=" bg-gray-50  ">
      <div className='flex px-4 justify-between items-center bg-white shadow-sm  border-b'>
-     <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-
+        <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
      <div className='flex items-center gap-2'>
           <h1 className="text-xl py-3 font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg">KIBABII SCHOOL</h1>
           <p className="text-gray-500">Student Report Cards</p>
@@ -152,15 +151,15 @@ const ReportCard = () => {
       </div>
      </div>
 
-      <div className="flex mt-2 flex-col sm:flex-row justify-between items-center mb-6 mx-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 mt-2  items-center mb-6 mx-4">
         {/* Search Input */}
-        <div className="hidden sm:flex w-full sm:w-auto mb-4 sm:mb-0">
+        <div className="hidden sm:flex  sm:w-auto mb-4 sm:mb-0">
           <input
             type="text"
-            placeholder="Search by RegNo or Stream"
+            placeholder="Search "
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="p-2 border border-gray-300 rounded-lg w-full sm:w-64"
+            className="p-2 border  border-gray-300 rounded-lg max-w-32 "
           />
         </div>
         <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
@@ -176,7 +175,7 @@ const ReportCard = () => {
         </div>
         <button
           onClick={handlePrint}
-          className="bg-green-800 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition mt-4 sm:mt-0"
+          className="bg-green-800 max-w-32 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition mt-4 sm:mt-0"
         >
           Print Sheet
         </button>
@@ -186,10 +185,10 @@ const ReportCard = () => {
       <div className="sm:hidden mb-4 mx-4">
         <input
           type="text"
-          placeholder="Search by RegNo or Stream"
+          placeholder="Search "
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2 border border-gray-300 rounded-lg w-full"
+          className="p-2 border border-gray-300 rounded-lg  "
         />
       </div>
 

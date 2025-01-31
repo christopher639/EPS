@@ -15,20 +15,19 @@ import {
 } from "react-icons/fa"; // Importing icons from react-icons
 
 const navItems = [
-  { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
-  { to: "/students", label: "Students", icon: <FaUsers /> },
+  { to: "", label: "Dashboard", icon: <FaTachometerAlt /> },
   { label: "Academics", icon: <FaBook /> },
-  { to: "/departments", label: "Departments", icon: <FaUniversity /> },
-  { to: "/streams", label: "Streams", icon: <FaBook /> },
-  { to: "/teachers", label: "Teachers", icon: <FaChalkboardTeacher /> },
-  { to: "/learningarea", label: "Learning Areas", icon: <FaClipboardList /> },
-  { to: "/parents", label: "Parents", icon: <FaUsers /> },
-  { to: "/finance", label: "Finance", icon: <FaMoneyBillAlt /> },
-  { to: "/users", label: "Users", icon: <FaUsers /> },
-  { to: "/analytics", label: "Analytics", icon: <FaChartLine /> },
+  { to: "/", label: "Lessons", icon: <FaUniversity /> },
+  { to: "/", label: "Assignments", icon: <FaBook /> },
+  { to: "/", label: "Finance", icon: <FaChalkboardTeacher /> },
+  { to: "/", label: "LMS", icon: <FaClipboardList /> },
+  { to: "/", label: "Time Table", icon: <FaUsers /> },
+  { to: "/", label: "Notices", icon: <FaMoneyBillAlt /> },
+  { to: "/", label: "News", icon: <FaUsers /> },
+  { to: "/", label: "Analytics", icon: <FaChartLine /> },
 ];
 
-const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
+const StudentSideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
   const [isAcademicsOpen, setIsAcademicsOpen] = useState(false); // State to manage Academics section
 
   const toggleAcademics = () => {
@@ -52,7 +51,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
     >
       {/* Logo Section */}
       <div className="flex  justify-center mb-2">
-        <NavLink to="/dashboard">
+        <NavLink to="">
           <img
             className="w-20 h-20 object-contain"
             src="KIbabii-Logo.png"
@@ -76,9 +75,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                   className="flex items-center justify-between  py-2 px-5  text-white hover:bg-gray-700 cursor-pointer rounded-md"
                 >
                   {item.icon}
-                  {!isSidebarCollapsed && (
-                    <span className="">Academics</span>
-                  )}
+                  {!isSidebarCollapsed && <span className="">Academics</span>}
                   {isAcademicsOpen ? (
                     <FaChevronDown className="text-xl" />
                   ) : (
@@ -91,22 +88,36 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     isAcademicsOpen ? "max-h-96" : "max-h-0"
                   }`} // Apply max-height and transition to create a smooth opening/closing
                 >
-                  <NavLink to="/assessments">
+                  <NavLink to="">
                     <div className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
                       <FaFileAlt className="text-white text-2xl" />
-                      {!isSidebarCollapsed && <span className="pl-4">Assessments</span>}
+                      {!isSidebarCollapsed && (
+                        <span className="pl-4">Notes</span>
+                      )}
                     </div>
                   </NavLink>
-                  <NavLink to="/merged-assessment">
+                  <NavLink to="">
                     <div className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
                       <FaFileAlt className="text-white text-2xl" />
-                      {!isSidebarCollapsed && <span className="pl-4">Merged Assessment</span>}
+                      {!isSidebarCollapsed && (
+                        <span className="pl-4">Lessons</span>
+                      )}
                     </div>
                   </NavLink>
-                  <NavLink to="/general-report">
+                  <NavLink to="">
                     <div className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
                       <FaFileAlt className="text-white text-2xl" />
-                      {!isSidebarCollapsed && <span className="pl-4">General Report</span>}
+                      {!isSidebarCollapsed && (
+                        <span className="pl-4">Assignments</span>
+                      )}
+                    </div>
+                  </NavLink>
+                  <NavLink to="">
+                    <div className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
+                      <FaFileAlt className="text-white text-2xl" />
+                      {!isSidebarCollapsed && (
+                        <span className="pl-4">Performance</span>
+                      )}
                     </div>
                   </NavLink>
                 </div>
@@ -122,7 +133,9 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
               activeClassName="bg-gray-600"
             >
               <div className="text-white px-2  text-2xl">{item.icon}</div>
-              {!isSidebarCollapsed && <span className="ml-8">{item.label}</span>}
+              {!isSidebarCollapsed && (
+                <span className="ml-8">{item.label}</span>
+              )}
             </NavLink>
           );
         })}
@@ -136,4 +149,4 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
   );
 };
 
-export default SideBar;
+export default StudentSideBar;

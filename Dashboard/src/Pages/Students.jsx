@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import UserAccount from '../components/UserAccount';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import SideBar from '../components/SideBar';
+import { FaPlus } from 'react-icons/fa';
 
 axios.defaults.baseURL = "http://localhost:3000";
 
@@ -106,6 +107,7 @@ const Students = () => {
         }
       } else {
         const response = await axios.post("/api/students", formDataToSend, { headers: { 'Content-Type': 'multipart/form-data' } });
+        console.log(formDataToSend)
         if (response.data.success) {
           toast.success("Student added successfully");
           setShowModal(false);
@@ -217,8 +219,8 @@ const Students = () => {
               onClick={() => { setShowModal(true); resetFormData(); }}
               className='bg-green-600 flex  p-2 rounded-full text-white'
             >
-             <p>+</p>
-             <p className='hidden md:flex'> New</p>
+             <p><FaPlus/> </p>
+             
             </button>
           </div>
           <UserAccount />

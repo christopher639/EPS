@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import UserAccount from "../components/UserAccount";
 import SidebarToggleButton from "../components/SidebarToggleButton"; // Import the Sidebar Toggle Button
 import SideBar from "../components/SideBar";
+import { FaFile, FaPrint } from "react-icons/fa";
 
 const GeneralReport = () => {
   const [classValue, setClassValue] = useState("10");
@@ -138,9 +139,9 @@ const GeneralReport = () => {
 
   const subjectTotalsAndAverages = calculateSubjectTotalsAndAverages();
 
-  if (loading) {
-    return <div className="text-center text-lg text-gray-500">Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div className="text-center text-lg text-gray-500">Loading...</div>;
+  // }
 
   if (error) {
     return (
@@ -163,15 +164,15 @@ const GeneralReport = () => {
       >
         <SideBar/> {/* Conditionally render based on sidebar state */}
       </div>
-     <div className="container    p-2 bg-gray-50 ">
+     <div className="container    px-2 bg-gray-50 ">
       {/* Top Controls */}
-      <div className="flex justify-between ">
+      <div  className='flex p-2 justify-between items-center bg-white shadow-sm  border-b'>
       <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
         <button
           onClick={handlePrint}
-          className="bg-green-800 max-w-32 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition"
+          className="bg-green-800 flex  text-white px-4 py-2 rounded- text-sm font-semibold hover:bg-green-700 transition"
         >
-          Print Sheet
+          <FaPrint className="md:hidden"/> <p className="hidden md:flex"> Print </p> 
         </button>
        
         
@@ -181,23 +182,25 @@ const GeneralReport = () => {
               state: { data: updatedData, classValue, yearValue, termValue },
             })
           }
-          className="bg-green-800  text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition"
+          className="bg-green-800 flex   text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition"
         >
-          Reports
+        
+        <p className="hidden md:flex"> Reports</p>
+         <FaFile className="md:hidden"/>
         </button>
         <UserAccount/>
       </div>
-        <div className="flex justify-between  p-2">
+        <div className="grid p-3 gap-3  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-2 px-3">
           <input
             type="text"
             className="text-center text-sm  border border-slate-300 outline-none py-2 px-3 text-sm rounded-md"
-            placeholder="regno or stream"
+            placeholder="Search"
             
           />
             <select
           value={classValue}
           onChange={(e) => setClassValue(e.target.value)}
-          className="border border-gray-300 p-2 rounded-md"
+          className="border  border-gray-300 p-2 rounded-md"
         >
           <option value="Form3">Form 3</option>
           <option value="Form4">Form 4</option>
@@ -225,49 +228,30 @@ const GeneralReport = () => {
       
 
       {/* Table Section */}
-      <div className="overflow-x-auto   overflow-y-auto bg-white shadow-lg rounded-lg px-4 max-h-[82vh] pb-5">
+      <div className='px-3 grid grid-cols-1 pb-4 max-h-[92vh] overflow-y-auto  w-full overflow-x-auto'>
         {updatedData.length === 0 ? (
           <p className="text-center text-lg text-gray-500">No data found</p>
         ) : (
           <div id="printableTable">
-            <div className="flex justify-center mb-4">
-              <img
-                className="w-15 h-16  rounded-full"
-                src="KIbabii-Logo.png"
-                alt="School Logo"
-              />
+          <div className="flex w-full mx-3  gap-5 justify-center">
+            <div className="flex gap-2">
+            <p>KIABAII class </p>
+             <p  className="font-semibold ">{classValue}</p>
             </div>
-
-            <table className="min-w-full text-left border-collapse">
-              <thead>
-                <tr  id='bo'  className="bg-gray-200 text-gray-800">
-                  <th id='bo'  className=" py-2 border-b">Academic Year</th>
-                  <th id='bo'  className=" py-2 border-b">Class</th>
-                  <th id='bo'  className=" py-2 border-b">Term</th>
-                  <th id='bo'  className=" py-2 border-b">Exam Type</th>
-                  <th  id='bo' className=" py-2 border-b">Best Subject</th>
-                  <th id='bo'  className=" py-2 border-b">Least Subject</th>
-                  <th id='bo'  className=" py-2 border-b">Mean Score</th>
-                  <th id='bo'  className=" py-2 border-b">Grade</th>
-                  <th id='bo'  className=" py-2 border-b">Remark</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr id='bo' className="border-b">
-                  <td  id='bo'className="px-3 py-2 text-yellow-600">{yearValue}</td>
-                  <td id='bo' className="px-3 py-2 text-yellow-600">{classValue}</td>
-                  <td id='bo' className="px-3 py-2 text-yellow-600">{termValue}</td>
-                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
-                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
-                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
-                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
-                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
-                  <td id='bo' className="px-3 py-2 text-yellow-600"></td>
-                </tr>
-              </tbody>
-            </table>
-
-            <table className="min-w-full overflow-x-scroll table-auto text-center mt-6">
+            <div className="flex gap-2 justify-between">
+              <div className="flex gap-2">
+                 <p>Academic Year</p>
+                 <p  className="font-semibold ">{yearValue}</p>
+              </div>
+              <div  className="flex gap-5">
+                <p>Term</p>
+                <p  className="font-semibold ">{termValue}</p>
+               
+              </div>
+            </div>
+          </div>
+       
+            <table className="w-full table-auto  px-2 border   ">
               <thead className="sticky top-0 bg-white">
                 <tr  id='bo' className="bg-gray-200">
                 <th id='bo' className="border sticky top-0 bg-white  py-2">Name</th>

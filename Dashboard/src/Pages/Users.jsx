@@ -192,7 +192,7 @@ const Users = () => {
     setSideBar(prev => !prev); // Toggle sidebar visibility
   };
   return (
-   <div className='flex'>
+   <div className='flex w-full'>
     {/**Side bar */}
     <div
         className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
@@ -200,7 +200,7 @@ const Users = () => {
        <SideBar />  {/* Conditionally render based on sidebar state */}
       </div>
     {/**Main content */}
-    <div className="flex flex-col min-h-screen w-full bg-gray-100">
+    <div className="flex w-full flex-col min-h-screen bg-gray-100">
       <ToastContainer />
       <div className="flex justify-between items-center p-4 bg-white shadow-sm">
       <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
@@ -235,7 +235,7 @@ const Users = () => {
       </div>
       <div className="sm:hidden p-4">
         <input
-          className="outline-none w-full px-4 py-2 border border-gray-300 rounded-md"
+          className="outline-none px-4 py-2 border border-gray-300 rounded-md"
           type="text"
           placeholder="Search"
           value={searchTerm}
@@ -447,11 +447,11 @@ const Users = () => {
         </div>
       )}
 
-      <div className="overflow-x-auto overflow-y-auto max-h-[86vh] p-4">
+      <div className='p-3 grid grid-cols-1 pb-4 max-h-[92vh] overflow-y-auto  w-full overflow-x-auto'>
         {loading ? (
           <p>Loading users...</p>
         ) : (
-          <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <table className="w-full table-auto  px-2 border  shadow-lg ">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>

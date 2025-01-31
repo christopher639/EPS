@@ -21,13 +21,23 @@ const LoginPage = () => {
 
       const token = response.data.token; // Get token from response
       const username = response.data.username; // Get username from response
+      const role = response.data.role
 
       // Store both token and username in localStorage
       localStorage.setItem('token', token);
       localStorage.setItem('userName', username);
-
+      localStorage.setItem('role', role);
+      if(role === "admin" || role === "modarator"){
+        navigate('/dashboard');
+      }
+      if(role === "student"){
+        navigate('/studentdashboard');
+      }
+      if(role === "instructor"){
+        navigate('/instructordashboard');
+      }
       // Navigate to the dashboard or any other page after login
-      navigate('/dashboard');
+      // navigate('/dashboard');
     } catch (error) {
       console.error("Login failed", error);
       setErrorMessage("Login failed, please check your credentials");

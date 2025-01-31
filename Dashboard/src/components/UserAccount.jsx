@@ -22,8 +22,9 @@ const UserAccount = () => {
     navigate("/login"); // Redirect to login page
   };
 
+
   return (
-    <div className="flex justify-between  gap-3">
+    <div className="flex justify-between  gap-1">
       <div className="p-1 flex">
         <FaBell className="text-slate-800 text-lg" />
         <p className="text-sm text-red-600">2</p>

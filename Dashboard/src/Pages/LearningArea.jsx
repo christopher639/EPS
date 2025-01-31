@@ -124,9 +124,9 @@ const LearningArea = () => {
     setEditingId(null); // Reset editing ID when closing
   };
 
-  if (loading) {
-    return <div>Loading...</div>; // Loading state
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>; // Loading state
+  // }
 
   const toggleSideBar = () => {
     setSideBar((prev) => !prev); // Toggle sidebar visibility

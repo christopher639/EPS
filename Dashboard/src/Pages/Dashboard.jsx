@@ -104,8 +104,8 @@ const Dashboard = () => {
         <div className='flex justify-between items-center bg-white shadow-sm p-4 border-b'>
           <div className='flex items-center gap-3'>
           <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-            <h1 className="text-xl font-bold text-gray-800">KIBABII SCHOOL</h1>
-            <p className="text-gray-500">Dashboard</p>
+            <h1 className="text-sm md:text-md lg:text-xl font-bold text-gray-800">KIBABII SCHOOL</h1>
+            <p className=" hidden md:flex text-gray-500"> Admin Dashboard</p>
           </div>
           <div className='flex items-center gap-4'>
             <UserAccount />

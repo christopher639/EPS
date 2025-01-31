@@ -1,13 +1,34 @@
 const subjectsMarksModel = require('../models/subjectsMarksModel'); // Import the model
 
-// CREATE - Add new subject marks
-exports.createSubjectMark = async (req, res) => {
+// CREATE - Add multiple subject marks
+exports.createSubjectMarks = async (req, res) => {
+  const marks = req.body.marks; // Assuming `marks` is an array of objects
+  
+  if (!marks || marks.length === 0) {
+    return res.status(400).json({
+      message: "No marks provided. Please provide at least one mark.",
+    });
+  }
+
   try {
-    const subjectMark = new subjectsMarksModel(req.body);
-    await subjectMark.save();
+    // Create an array of subjectMark instances
+    const subjectMarks = marks.map(mark => new subjectsMarksModel({
+      year: mark.year,
+      term: mark.term,
+      stream: mark.stream,
+      class: mark.class,
+      category: mark.category,
+      code: mark.code,
+      regno: mark.regno,
+      score: mark.score,
+    }));
+
+    // Save all subject marks at once using Promise.all
+    await Promise.all(subjectMarks.map(subjectMark => subjectMark.save()));
+
     res.status(201).json({
-      message: "Subject marks added successfully",
-      subjectMark,
+      message: `${marks.length} subject marks added successfully.`,
+      marks: marks,
     });
   } catch (error) {
     res.status(500).json({
@@ -92,6 +113,7 @@ exports.deleteSubjectMark = async (req, res) => {
     });
   }
 };
+
 
 // exports.getSubjectMarksByClassYearTerm = async (req, res) => {
 //   try {

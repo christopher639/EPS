@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import UserAccount from '../components/UserAccount';
-import { FaBars } from "react-icons/fa"; // Import the hamburger icon for sidebar toggle
+import { FaBars, FaPlus } from "react-icons/fa"; // Import the hamburger icon for sidebar toggle
 import SidebarToggleButton from '../components/SidebarToggleButton';
 
 axios.defaults.baseURL = "http://localhost:3000";
@@ -177,16 +177,16 @@ const Teachers = () => {
         <SideBar/> {/* Conditionally render based on sidebar state */}
       </div>
     <div className='flex bg-white flex-col w-full bg-gray-100'>
-      <div className='px-6 py-4 flex gap-5 justify-between items-center bg-white shadow-md'>
+      <div className='px-2 py-2 flex gap-5 justify-between items-center bg-white shadow-md'>
       <div className='flex items-center gap-2'>
       <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-          <h1 className="text-xl py-3 font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg">KIBABII SCHOOL</h1>
-          <p className="text-gray-500">Teachers</p>
+          <h1 className="text-sm py-3 hidden md:flex font-bold text-gray-800 md:text-md lg:text-lg ">KIBABII SCHOOL</h1>
+          <p className="text-gray-500 hidden  md:flex">Teachers</p>
         </div>
         <input
           type="text"
-          placeholder="Search by name or regno"
-          className="w-full hidden sm:flex sm:w-2/3 md:w-1/3 px-4 py-2 mb-4 border rounded-md text-gray-700 shadow-sm focus:ring-2 focus:ring-blue-500"
+          placeholder="Search "
+          className="w-full hidden  px-4 py-2 mb-4 border rounded-md text-gray-700 shadow-sm focus:ring-2 focus:ring-blue-500"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -194,11 +194,14 @@ const Teachers = () => {
           onClick={handleAddClick} // Open modal on button click for adding
           className='bg-green-600 flex text-white py-2 px-4 rounded-md hover:bg-green-700 transition'
         >
-          <p>+</p> <p className='hidden md:flex'>Add Teacher</p>
+          <p><FaPlus/></p> <p className='hidden md:flex'>Add Teacher</p>
         </button>
         <UserAccount/>
       </div>
-
+     <div className='flex gap-2'>
+     <h1 className="text-sm py-3 md:hidden px-2 font-bold text-gray-800 md:text-md lg:text-lg ">KIBABII SCHOOL</h1>
+     <p className='text-sm py-3 md:hidden'>Teachers</p>
+     </div>
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
@@ -295,8 +298,8 @@ const Teachers = () => {
           <p className="text-xl text-gray-700">Loading...</p>
         </div>
       ) : (
-        <div className=" overflow-x-auto px-5  bg-white overflow-y-auto max-h-[82vh]">
-          <table className="min-w-full table-auto  px-5 border  shadow-lg " >
+        <div className='p-3 grid grid-cols-1 pb-4 max-h-[92vh] overflow-y-auto  w-full overflow-x-auto'>
+          <table className="w-full table-auto  px-2 border  shadow-lg " >
             <thead className=" text-slate-700">
               <tr>
                 {["NO", "Full Name", "TSE NO", "Salary", "Type", "Gender", "Delete", "Update"].map((header, index) => (

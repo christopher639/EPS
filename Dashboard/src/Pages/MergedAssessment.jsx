@@ -86,9 +86,9 @@ const MergedAssessment = () => {
 
   const updatedData = calculateAvgScores(marksData);
 
-  if (loading) {
-    return <div className="text-center text-lg text-gray-500">Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div className="text-center text-lg text-gray-500">Loading...</div>;
+  // }
 
   if (error) {
     return (

@@ -4,7 +4,7 @@ import axios from 'axios';
 import SideBar from '../components/SideBar';
 import IconSideBar from '../components/IconSideBar';
 import { FaBars } from 'react-icons/fa'; // Import the hamburger icon for sidebar toggle
-import { toast } from 'react-toastify'; // Import React Toastify
+import { toast, ToastContainer } from 'react-toastify';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 
 axios.defaults.baseURL = 'http://localhost:3000';
@@ -81,6 +81,7 @@ const Streams = () => {
     axios
       .post('/api/streams', newStream)
       .then((response) => {
+        console.log(newStream)
         setStreams([...streams, response.data]);
         setShowAddStreamModal(false); // Close add stream modal
         toast.success('Stream added successfully!');
@@ -125,7 +126,7 @@ const Streams = () => {
         </div>
 
         {/* Body */}
-        <div className='grid gap-6 px-6 py-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+        <div className='grid overflow-y-auto max-h-[90vh] gap-6 px-6 py-8 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {streams.map((stream, index) => (
             <div
               key={index}
@@ -315,6 +316,7 @@ const Streams = () => {
           </div>
         )}
       </div>
+       <ToastContainer />
     </div>
   );
 };

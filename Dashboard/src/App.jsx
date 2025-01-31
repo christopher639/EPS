@@ -26,6 +26,9 @@ import RightBar from "./components/RightBar";
 import SideBar from "./components/SideBar";
 import OpenerCard from "./Pages/OpenerCard";
 import Streams from "./Pages/Streams";
+import AddMarks from "./InstructorsPortal/InstructorPages/AddMarks";
+import StudDashBoard from "./StudentPortal/StudentPages/StudDashBoard";
+import InstructorDashboard from "./InstructorsPortal/InstructorPages/InstructorDashboard";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -39,20 +42,9 @@ const App = () => {
   }, []);
 
   return (
-    <div className="flex min-h-full bg-gray-100 w-full fixed flex-row">
+    <div className="min-w-full  bg-gray-100  fixed">
       <ToastContainer />
-
-      {/* Only render SideBar, TopBar, and RightBar if the user is authenticated */}
-      {isAuthenticated && (
-        <div className="flex flex-col items-center h-screen">
-        
-        </div>
-      )}
-
-      <div className="w-full min-h-full md:mx-0">
-        {/* Only render TopBar if authenticated */}
-        {isAuthenticated && <TopBar />}
-
+     
         <Routes>
           {/* Redirect root to login page if not authenticated */}
           <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
@@ -91,16 +83,12 @@ const App = () => {
           <Route path="/report-card" element={isAuthenticated ? <MergerReportForm /> : <Navigate to="/login" />} />
           <Route path="/merged-assessment" element={isAuthenticated ? <MergedAssessment /> : <Navigate to="/login" />} />
           <Route path="/assessments" element={isAuthenticated ? <Assessments /> : <Navigate to="/login" />} />
+          <Route path="/instructordashboard" element={isAuthenticated ? <InstructorDashboard/> : <Navigate to="/login" />} />
+          <Route path="/studentdashboard" element={isAuthenticated ? <StudDashBoard/> : <Navigate to="/login" />} />
+          <Route path="/addmarks" element={isAuthenticated ? <AddMarks/> : <Navigate to="/login" />} />
         </Routes>
       </div>
-
-      {/* Only render RightBar if authenticated */}
-      {isAuthenticated && (
-        <div className="md:mr-0">
-          <RightBar />
-        </div>
-      )}
-    </div>
+   
   );
 };
 
