@@ -51,7 +51,7 @@ const ReportForm = () => {
             {/* Header with student personal details */}
             <div className="text-center">
               <img
-                src="KIbabii-Logo.png"
+                src="lion.jpg"
                 alt="School Logo"
                 className="w-[54px] h-[54px] mx-auto "
               /> 

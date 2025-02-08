@@ -1,19 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import SideBar from "../components/SideBar";
+import SidebarToggleButton from "../components/SidebarToggleButton";
+import UserAccount from "../components/UserAccount";
+import { FaPaperPlane } from "react-icons/fa";
+import avater from '../assets/lion.jpg';
 axios.defaults.baseURL = "http://localhost:3000";
 
 const StudentDetail = () => {
-  const { id } = useParams(); // Get the student ID from the URL
+  const { id } = useParams(); // Get student ID from URL
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
+  const [sideBar, setSideBar] = useState(true);
+  const [academicData, setAcademicData] = useState(null); // New state for academic data
+  const [year, setYear] = useState("2024-2025");
+  const [term, setTerm] = useState("Term-1");
+  const [category, setCategory] = useState("Opener");
+  const [regno, setRegno] = useState(""); // Initialize regno as an empty string
+
+  // Fetch student details
   useEffect(() => {
     const fetchStudentDetails = async () => {
       try {
         const response = await axios.get(`/api/students/${id}`);
         setStudent(response.data);
+        setRegno(response.data.regno); // Set the regno once the student data is fetched
         setLoading(false);
       } catch (error) {
         console.error("Error fetching student details:", error);
@@ -24,111 +37,194 @@ const StudentDetail = () => {
     fetchStudentDetails();
   }, [id]);
 
-  if (loading) {
-    return <div className='flex  mx-32 justify-center'><div>Loading...</div></div>;
-  }
+  // Fetch academic data when year, term, category, or regno changes
+  useEffect(() => {
+    if (regno) {  // Only fetch academic data if regno is available
+      const fetchAcademicData = async () => {
+        try {
+          const response = await axios.get(`/api/marks/marks/${year}/${term}/${category}/${regno}`);
+          setAcademicData(response.data);
+        } catch (error) {
+          console.error("Error fetching academic data:", error);
+        }
+      };
 
-  if (!student) {
-    return <div>Student not found</div>;
-  }
+      fetchAcademicData();
+    }
+  }, [year, term, category, regno]); // Fetch academic data when these params change
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Submit student data here
-    axios.post("/api/students", formData)
-      .then(response => {
-        toast.success("Student added successfully");
-        setShowModal(false); // Close modal after successful submission
-        getFetchData(); // Reload student data
-      })
-      .catch(error => {
-        toast.error("Sending message will be available soon");
-      });
+  // Toggle Sidebar
+  const toggleSideBar = () => {
+    setSideBar((prev) => !prev); // Toggle sidebar visibility
   };
+  // Function to get remarks based on the score
+const getRemark = (score) => {
+  if (score >= 75) return "E.E"; // Exceeding Expectation
+  if (score >= 50) return "M.E"; // Meeting Expectation
+  if (score >= 0) return "B.E";  // Below Expectation
+  return "F"; // Failed or not attended
+};
 
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full h-screen bg-gray-100">
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
-   <div>
-       <div className='flex justify-center mx-4 mt-4'>
-       <div className='flex w-full justify-between'>
-       <div className='flex  gap-2'>
-         
-         <button className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600'>
-           Print
-         </button>
-       </div>
-       <div>
-         <button
-           onClick={() =>setShowModal(true)}
-           className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600'
-         >
-           Message
-         </button>
-       </div>
-       </div>
+    <div className="flex">
+      <div
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+      >
+        <SideBar /> {/* Conditionally render based on sidebar state */}
       </div>
-      {showModal && (
-        <div className="fixed  inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg  max-h-[72vh] md:max-h-[90vh] overflow-y-auto  w-full mx-5  md:w-2/3 ">
-            <div className='py-1 '>
-              <p className='text-lg font-semibold'>Compose Message any or both   </p>
-            </div>
-            <form onSubmit={handleSubmit}>
-             <div className='flex flex-col gap-5 md:flex-row justify-between'>
-              <div className='flex-1'>
-                <p>Inbox message</p>
-                
-                <input className='w-full py-2 px-3 h-32 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500' type="text" />
-              </div>
-              <div className='flex-1'>
-               <p> Email Message</p>
-               <input className='w-full py-2 px-3 h-32 outline-none border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500' type="text" />
-                </div>
-             </div>
-
-             
-              <div className='mt-6 flex justify-end'>
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className='bg-gray-500 text-white py-2 px-4 rounded-md mr-2'
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className='bg-green-600 text-white py-2 px-4 rounded-md'
-                >
-                  Send
-                </button>
-              </div>
-            </form>
-          </div>
+      <div className="flex bg-white flex-col w-full  bg-gray-100">
+        {/* Header */}
+        <div className="flex px-6 py-4 border-b bg-white shadow-md justify-between items-center">
+          <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+          <p className="text-xl font-semibold hidden sm:flex text-gray-800">Learner Information </p>
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-green-600 flex text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300"
+          >
+           <p><FaPaperPlane/> </p> <p className="hidden sm:flex"> Message</p>
+          </button>
+          <UserAccount />
         </div>
-      )}
-     <div className="p-4 flex flex-col  flex max-h-[72vh] md:max-h-[76vh] overflow-y-auto overflow-x-auto justify-center">
-     <div>
-        <img className='w-24 object-cover rounded-full mx-auto' src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar" />
-
+        <p className="text-xl sm:hidden font-semibold text-gray-800">Learner Information </p>
+      <div >
+          {/* Student Details Section */}
+          <div className="p-6 flex flex-col gap-5 shadow-lg rounded-lg overflow-y-auto max-h-[88vh]">
+          <div className="flex flex-col md:flex-row justify-between gap-10">
+            {/* Student Image */}
+              <div className="flex flex-col mb-2 md:mb-0">
+                <p className="text-lg font-bold text-gray-800 mb-4">Student Image</p>
+                <img
+                  className="w-56 h-56 rounded-lg border-4 border-gray-200 object-cover shadow-sm"
+                  src={student?.photo ? `http://localhost:3000${student.photo}` :`${avater}`}
+                  alt="Student"
+                />
+              </div>
+              <div className="space-y-4">
+                <p className="text-gray-700"><strong>Name:</strong> {student?.name}</p>
+                <p className="text-gray-700"><strong>Admission Number:</strong> {student?.regno}</p>
+                <p className="text-gray-700"><strong>Gender:</strong> {student?.gender}</p>
+                <p className="text-gray-700"><strong>Date of Birth:</strong> {student?.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString('en-GB') : "N/A"}</p>
+                <p className="text-gray-700"><strong>Nationality:</strong> {student?.nationality}</p>
+                <p className="text-gray-700"><strong>Admission Date:</strong> {student?.admissionDate ? new Date(student.admissionDate).toLocaleDateString('en-GB') : "N/A"}</p>
+              </div>
+              <div className="space-y-4">
+                <p className="text-gray-700"><strong>Stream:</strong> {student?.stream}</p>
+                <p className="text-gray-700"><strong>Guardian Name:</strong> {student?.guardianName}</p>
+                <p className="text-gray-700"><strong>Guardian Relationship:</strong> {student?.guardianRelationship}</p>
+                <p className="text-gray-700"><strong>Phone Number:</strong> {student?.phoneNumber}</p>
+                <p className="text-gray-700"><strong>Email:</strong> {student?.email}</p>
+                <p className="text-gray-700"><strong>Address:</strong> {student?.address}</p>
+                <p className="text-gray-700"><strong>Fee Status:</strong> {student?.feeStatus}</p>
+              </div>
+          </div>
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+             <div className="">
+                <p className="text-gray-700"><strong>Medical History:</strong> {student?.medicalHistory}</p>
+                <p className="text-gray-700"><strong>Scholarships:</strong> {student?.scholarships.join(", ")}</p>
+                <p className="text-gray-700"><strong>Physical Disability:</strong> {student?.physicalDisability ? "Yes" : "No"}</p>
+              </div>
+              <div className="">
+                <p className="text-gray-700"><strong>Type:</strong> {student?.studentType}</p>
+                <p className="text-gray-700"><strong>Birth Certificate No:</strong> {student?.birthCertificateNo}</p>
+                <p className="text-gray-700"><strong>Belongs To Staff:</strong> {student?.belongToStaff? "Yes" : "No"}</p>
+              </div>
+              <div className="">
+                <p className="text-gray-700"><strong>Previous school:</strong> {student?.studentType}</p>
+                <p className="text-gray-700"><strong>Previous School Grade:</strong> {student?.birthCertificateNo}</p>
+              </div>
+             </div>
+               {/* Academic Section */}
+        <div className="p-6 mt-10 flex flex-col gap-5 shadow-lg rounded-lg bg-white">
+          <h2 className="text-xl font-semibold mb-4">Academic Information</h2>
+          
+          {/* Display Academic Data */}
+          {academicData ? (
+      <div className="overflow-x-auto">
+      <table className="min-w-full table-auto border-collapse border border-gray-300">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Subject Name</th>
+            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Score</th>
+            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Grade</th> {/* New Grade column */}
+          </tr>
+        </thead>
+        <tbody>
+          {academicData[0]?.subjects.map((subject) => (
+            <tr key={subject.code}>
+              <td className="px-6 py-3 text-sm text-gray-700">{subject.name}</td>
+              <td className="px-6 py-3 text-sm text-gray-700">{subject.filteredScore}</td>
+              <td className="px-6 py-3 text-sm text-gray-700">
+                {/* Call getRemark function to display grade based on score */}
+                {getRemark(subject.filteredScore)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-     <div  className='flex gap-1 md:gap-5 justify-center'>
-       <div className='grid  grid-cols-1 md:grid-cols-2 gap-3'>
-      <p className='flex justify-between'><strong className=''>STUDENT NAME :</strong><span className='text-yellow-800 ' > {student.name.toUpperCase()}</span></p>
-      <p className='flex justify-between'><strong  className=''>ADM :</strong> <span className='text-yellow-800 ' >{student.regno.toUpperCase()}</span></p>
-      <p  className='flex justify-between'><strong  className=''>GENDER :</strong><span className='text-yellow-800'> {student.gender.toUpperCase()}</span></p>
-      <p  className='flex justify-between' ><strong  className=''>ADMITTED ON :</strong><span className='text-yellow-800 '>  {new Date(student.dot).toLocaleDateString('en-GB')}</span></p>
-      <p  className='flex justify-between ' ><strong  className=''>DATE OF BIRTH :</strong><span className='text-yellow-800'>  {new Date(student.dob).toLocaleDateString('en-GB')}</span></p>
-      <p  className='flex justify-between '><strong  className=''>CLASS STREAM :</strong><span className='text-yellow-800'> {student.stream.toUpperCase()}</span></p>
-      <p  className='flex justify-between'><strong  className=''>PARENT/G  NAME :</strong> <span className='text-yellow-800 '>{student.parentname.toUpperCase()}</span></p>
-      <p  className='flex justify-between '><strong  className=''>PARENT/G PHONE :</strong><span  className='text-yellow-800 '> +254{student.phone}</span></p>
-      <p  className='flex justify-between sm:text-sm lg:text-lg'><strong  className=''>PARENT/G  EMAIL :</strong><span  className='text-yellow-800 '> {student.email}</span></p>
-      <p  className='flex justify-between'><strong  className=''>PREVIOUS SCHOOL :</strong> <span  className='text-yellow-800  '>{student.previous.toUpperCase()}</span></p>
+    
+      
+         
+          ) : (
+            <p>No academic data available.</p>
+          )}
+        </div>
+        </div>
 
-      {/* Add more fields as necessary */}
-       </div>
-     </div>
+      
+      </div>
+
+        {/* Modal for Messaging */}
+        {showModal && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white p-6 rounded-lg w-full mx-5 md:w-2/3 lg:w-1/2">
+              <h2 className="text-lg font-semibold mb-4">Send a Message</h2>
+              <form>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block mb-2 text-gray-700">Inbox Message</label>
+                    <textarea
+                      className="w-full h-24 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Type message here..."
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-gray-700">Email Message</label>
+                    <textarea
+                      className="w-full h-24 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Type email message..."
+                    ></textarea>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                    className="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600 transition duration-300"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300">
+                    Send
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
-   </div>
   );
 };
 

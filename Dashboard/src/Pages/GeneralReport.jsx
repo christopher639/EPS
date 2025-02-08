@@ -43,6 +43,19 @@ const GeneralReport = () => {
     const printContent = document.getElementById("printableTable").innerHTML;
     const printWindow = window.open("", "", "height=600,width=800");
   
+    // Function to add background colors to odd and even rows
+    const addRowBackgroundColors = (content) => {
+      const rows = content.querySelectorAll('tr');
+      rows.forEach((row, index) => {
+        if (index % 2 === 0) {
+          row.style.backgroundColor = '#e6f7ff'; // Light blue for even rows
+        } else {
+          row.style.backgroundColor = '#e6ffe6'; // Light green for odd rows
+        }
+      });
+      return content;
+    };
+  
     // Gather all styles from the current page, including any dynamically applied ones
     const styles = Array.from(document.styleSheets)
       .map((sheet) => {
@@ -58,9 +71,33 @@ const GeneralReport = () => {
   
     // Write the styles and content to the print window
     printWindow.document.write("<html><head><title>Print</title>");
-    printWindow.document.write(`<style>${styles} #bo{border:1px solid black} </style>`);  // Include the styles in the print window
+    printWindow.document.write(`
+      <style>
+        ${styles}
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          border: 2px solid black;
+        }
+        th, td {
+          border: 2px solid black;
+          padding: 8px;
+          text-align: center;
+        }
+        #bo {
+          border: 1px solid black;
+        }
+      </style>
+    `); // Add custom styles to the print window
     printWindow.document.write("</head><body>");
-    printWindow.document.write(printContent);
+    
+    // Create a temporary element to hold the content and apply row background colors
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = printContent;
+    addRowBackgroundColors(tempDiv);
+  
+    // Write the modified content (with row background colors) to the print window
+    printWindow.document.write(tempDiv.innerHTML);
     printWindow.document.write("</body></html>");
     printWindow.document.close();
   
@@ -72,6 +109,10 @@ const GeneralReport = () => {
       }, 1000);
     };
   };
+  
+  
+
+  
   const calculateStudentTotalsAndAverages = (students) => {
     return students.map((student) => {
       const totalScores = student.subjects.reduce((total, subject) => {
@@ -193,14 +234,14 @@ const GeneralReport = () => {
         <div className="grid p-3 gap-3  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-2 px-3">
           <input
             type="text"
-            className="text-center text-sm  border border-slate-300 outline-none py-2 px-3 text-sm rounded-md"
+            className="text-center max-w-32 text-sm  border border-slate-300 outline-none py-2 px-3 text-sm rounded-md"
             placeholder="Search"
             
           />
             <select
           value={classValue}
           onChange={(e) => setClassValue(e.target.value)}
-          className="border  border-gray-300 p-2 rounded-md"
+          className="border max-w-32  border-gray-300 p-2 rounded-md"
         >
           <option value="Form3">Form 3</option>
           <option value="Form4">Form 4</option>
@@ -210,15 +251,15 @@ const GeneralReport = () => {
         <select
           value={yearValue}
           onChange={(e) => setYearValue(e.target.value)}
-          className="border border-gray-300 p-2 rounded-md"
+          className="border max-w-32 border-gray-300 p-2 rounded-md"
         >
           <option value="2024-2025">2024-2025</option>
           <option value="2025-2026">2025-2026</option>
-        </select>
+        </select> 
         <select
           value={termValue}
           onChange={(e) => setTermValue(e.target.value)}
-          className="border border-gray-300 p-2 rounded-md"
+          className="border max-w-32 border-gray-300 p-2 rounded-md"
         >
           <option value="Term-1">Term-1</option>
           <option value="Term-2">Term-2</option>
@@ -235,7 +276,7 @@ const GeneralReport = () => {
           <div id="printableTable">
           <div className="flex w-full mx-3  gap-5 justify-center">
             <div className="flex gap-2">
-            <p>KIABAII class </p>
+            <p>SAMGE class </p>
              <p  className="font-semibold ">{classValue}</p>
             </div>
             <div className="flex gap-2 justify-between">
@@ -273,7 +314,7 @@ const GeneralReport = () => {
                   const studentAverage = studentTotal / student.subjects.length;
 
                   return (
-                    <tr key={studentIndex} className="hover:bg-gray-100">
+                    <tr key={studentIndex} className="hover:bg-gray-100 p-2">
                       <td className="border  text-left  py-2">{student.studentName}</td>
                       <td className="border  py-2">{student.regno}</td>
                       <td className="border  py-2">{student.stream}</td>

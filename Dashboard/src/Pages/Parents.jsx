@@ -115,7 +115,7 @@ const Parents = () => {
       <div className='flex justify-between items-center bg-white shadow-sm p-4 border-b'>
       <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
       <div className='flex items-center gap-2'>
-          <h1 className="text-xl font-bold text-gray-800">KIBABII SCHOOL</h1>
+          <h1 className="text-xl font-bold text-gray-800">SAMGE  SCHOOL</h1>
           <p className="text-gray-500">Dashboard</p>
         </div>
         <input

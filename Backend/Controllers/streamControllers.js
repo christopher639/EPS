@@ -87,3 +87,27 @@ exports.deleteStream = async (req, res) => {
     });
   }
 };
+
+// Get all students by stream
+exports.getStudentsByStream = async (req, res) => {
+  try {
+    const streamId = req.params.streamId;
+
+    // Check if the stream exists
+    const stream = await Stream.findById(streamId);
+    if (!stream) {
+      return res.status(404).json({
+        message: "Stream not found",
+      });
+    }
+
+    // Fetch students that belong to the stream
+    const students = await Student.find({ stream: streamId }).populate('stream');
+    res.status(200).json(students);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching students",
+      error: error.message,
+    });
+  }
+};

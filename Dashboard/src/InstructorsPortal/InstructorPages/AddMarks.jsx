@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InstructorSideBar from "../../components/InstuctorSideBar";
 import UserAccount from "../../components/UserAccount";
 
 const AddMarks = () => {
+   const [learningAreas, setLearningAreas] = useState([]);
+  
   const [formData, setFormData] = useState({
     year: "",
     term: "",
@@ -27,6 +29,23 @@ const AddMarks = () => {
     }
     setFormData(updatedData);
   };
+    // Fetch learning areas from the API
+    const fetchLearningAreas = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get('http://localhost:3000/api/learning-areas');
+        setLearningAreas(response.data);
+       
+      } catch (error) {
+        console.error('Error fetching learning areas:', error);
+        
+      }
+    };
+  
+    // Fetch data when the component mounts
+    useEffect(() => {
+      fetchLearningAreas();
+    }, []);
 
   const handleAddStudent = () => {
     setFormData({

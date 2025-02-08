@@ -143,7 +143,7 @@ const ReportCard = () => {
      <div className='flex px-4 justify-between items-center bg-white shadow-sm  border-b'>
         <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
      <div className='flex items-center gap-2'>
-          <h1 className="text-xl py-3 font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg">KIBABII SCHOOL</h1>
+          <h1 className="text-xl py-3 font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg">SAMGE SCHOOL</h1>
           <p className="text-gray-500">Student Report Cards</p>
         </div>
       <div>
@@ -209,10 +209,10 @@ const ReportCard = () => {
           alt="Student"
         />
               </div>
-              <p className='text-lg font-semibold'>KIBABII</p>
+              <p className='text-lg font-semibold'>SAMGE</p>
              <div className="text-center">
                 <img
-                  src="KIbabii-Logo.png"
+                  src="lion.jpg"
                   alt="School Logo"
                   className="w-20 h-20 mx-auto"
                 />
@@ -221,7 +221,7 @@ const ReportCard = () => {
              </div>
             <div className='flex  justify-center'>
             <div>
-            <p className='font-semibold text-lg'>Student Performance Report Card</p>
+            <p className='font-semibold text-lg'>Lerner Performance Report Card</p>
             </div>
             </div>
               <div className="text-center flex justify-center mb-4">
@@ -388,14 +388,14 @@ const ReportCard = () => {
                 Dated - {getFormattedDate()} {/* Dynamically display the current date */}
               </h2>
               
-              <p className="font-semibold">Bungoma High School</p>
+              <p className="font-semibold">Samge Bording School</p>
               <p className="text-sm">
                 Period: <strong>{yearValue} - {termValue}</strong>
               </p>
               <p className="text-sm">Class Master____________</p>
-              <p className="text-blue-900 text-sm">www.bungomahigh.ac.ke</p>
+              <p className="text-blue-900 text-sm">Cell: 0721790694</p>
               <p className="text-sm">
-                P.O. BOX 123 - 50200, BUNGOMA
+                P.O. BOX 109-30102, Burnt Forest
               </p>
             </div>
           </div>

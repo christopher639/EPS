@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import lion from '../assets/lion.jpg';
 import {
   FaTachometerAlt,
   FaUniversity,
@@ -46,18 +47,49 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
 
   return (
     <div
-      className={`transition-all  duration-700 bg-gray-900 min-h-screen md:flex flex-col ${
+      className={`transition-all    duration-700 bg-blue-800 min-h-screen md:flex flex-col ${
         isSidebarCollapsed ? "w-20" : "w-64"
       } `}
     >
       {/* Logo Section */}
-      <div className="flex  justify-center mb-2">
-        <NavLink to="/dashboard">
-          <img
-            className="w-20 h-20 object-contain"
-            src="KIbabii-Logo.png"
-            alt="Logo"
+      <div className="flex  bg-red-950 py-2  justify-between mb-2">
+        <NavLink to="/dashboard" className="flex justify-between">
+       <div className="flex justify-between  gap-5  ">
+     <div>
+     <img
+            className="w-16 bg-white  rounded-full h-16 object-contain"
+          src={lion} alt="Logo"
           />
+     </div>
+          <div  className="mt-2">
+            <p className="text-white flex gap-4 font-bold text-2xl">
+              <p>S</p>
+              <p>A</p>
+              <p>M</p>
+              <p>G</p>
+              <p>E</p>
+            </p>
+           <div className="flex">
+            <p className="  flex gap-1 text-[12px] text-white">
+                  <p>B</p>
+                  <p>O</p>
+                  <p>R</p>
+                  <p>D</p>
+                  <p>I</p>
+                  <p>N</p>
+                  <p>G</p>
+            </p>
+             <p className=" pl-3 flex gap-1 text-[12px] text-white">
+                  <p>S</p>
+                  <p>C</p>
+                  <p>H</p>
+                  <p>O</p>
+                  <p>O</p>
+                  <p>L</p>
+              </p>
+           </div>
+          </div>
+       </div>
         </NavLink>
       </div>
 
@@ -68,7 +100,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
             return (
               <div
                 key={item.label}
-                onMouseEnter={handleMouseEnter}
+                onClick={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
                 <div

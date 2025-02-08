@@ -169,7 +169,7 @@ const Assessments = () => {
       >
        <SideBar /> {/* Conditionally render Sidebar */}
       </div>
-    <div className="container mx-auto   bg-gray-50">
+    <div className="container mx-auto   bg-white">
       <div className="flex justify-between bg-white border-b p-3 gap-4  mb-4">
        <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
         <div >
@@ -259,7 +259,7 @@ const Assessments = () => {
         <div id="printableTable" className=" p-3 grid grid-cols-1 max-h-[72vh] md:max-h-[80vh] overflow-y-auto  w-full overflow-x-auto ">
           <div className="flex mx-3  gap-5 justify-between">
             <div>
-              <img className="w-24 h-14 md:w-[60px] md:h-[48px] bg-gray-100" src="KIbabii-Logo.png" alt="Logo" />
+              <img className="w-16 h-16 bg-gray-100" src="lion.jpg" alt="Logo" />
             </div>
             <div className="grid -full gap-5 grid-cols-4">
               <div className="flex gap-2">

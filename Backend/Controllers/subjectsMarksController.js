@@ -487,9 +487,6 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
   }
 };
 
-
-
-
 // exports.getSubjectMarksByClassYearTermCategory = async (req, res) => {
 //   try {
 //     // Destructure the parameters from the URL
@@ -780,3 +777,170 @@ exports.getSubjectMarksByClassYearTermCategory = async (req, res) => {
     });
   }
 };
+
+// In subjectsMarksController.js
+exports.getStudentPerformanceByRegno = async (req, res) => {
+  try {
+    // Extract the parameters from the request
+    const { year, term, category, regno } = req.params;
+
+    // Build the match object for MongoDB query
+    const match = {
+      year: year,             // Filter by academic year
+      term: term,             // Filter by term
+      category: category,     // Filter by category (Opener, Mid-Term, Final)
+      regno: regno,           // Filter by student's regno
+    };
+
+    // Use MongoDB aggregation to fetch the student performance data
+    const marks = await subjectsMarksModel.aggregate([
+      { $match: match },  // Apply the match filter
+
+      {
+        $group: {
+          _id: { regno: "$regno", code: "$code" },  // Group by student (regno) and subject (code)
+          regno: { $first: "$regno" },
+          code: { $first: "$code" },
+          stream: { $first: "$stream" },
+          scores: {
+            $push: {
+              category: "$category",
+              score: "$score",
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          filteredScores: {
+            $filter: {
+              input: "$scores",
+              as: "score",
+              cond: { $eq: ["$$score.category", category] }, // Filter by category
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          filteredScore: { $avg: "$filteredScores.score" }, // Average the filtered category scores
+        },
+      },
+      {
+        $lookup: {
+          from: "students",  // Lookup student details
+          localField: "regno",
+          foreignField: "regno",
+          as: "studentData",
+        },
+      },
+      {
+        $unwind: {
+          path: "$studentData",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $addFields: {
+          studentName: { $ifNull: ["$studentData.name", null] }, // Add student name
+        },
+      },
+      {
+        $lookup: {
+          from: "learningareas",  // Lookup subject details
+          localField: "code",
+          foreignField: "code",
+          as: "subjectInfo",
+        },
+      },
+      {
+        $unwind: {
+          path: "$subjectInfo",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $addFields: {
+          subjectName: { $ifNull: ["$subjectInfo.subjectname", "Unknown"] }, // Add subject name
+        },
+      },
+      {
+        $lookup: {
+          from: "teachers",  // Lookup teacher details
+          localField: "subjectInfo.instructor",
+          foreignField: "_id",
+          as: "teacherInfo",
+        },
+      },
+      {
+        $unwind: {
+          path: "$teacherInfo",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $addFields: {
+          teacherName: { $ifNull: ["$teacherInfo.fullname", "Unknown"] }, // Add teacher name
+        },
+      },
+      {
+        $group: {
+          _id: "$regno",  // Group by regno (student)
+          stream: { $first: "$stream" },
+          studentName: { $first: "$studentName" },
+          subjects: {
+            $push: {
+              code: "$code",
+              name: "$subjectName",
+              teacherName: "$teacherName",
+              filteredScore: "$filteredScore",
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          totalScore: { $sum: "$subjects.filteredScore" },
+          averageScore: {
+            $cond: {
+              if: { $eq: [{ $size: "$subjects" }, 0] },
+              then: 0,
+              else: { $divide: [{ $sum: "$subjects.filteredScore" }, { $size: "$subjects" }] },
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          regno: "$_id",   // Include regno in final output
+          stream: 1,
+          studentName: 1,
+          subjects: 1,
+          totalScore: 1,
+          averageScore: 1,
+          _id: 0,
+        },
+      },
+      {
+        $sort: { averageScore: -1 }  // Sort by average score
+      },
+    ]);
+
+    // If no data is found
+    if (marks.length === 0) {
+      return res.status(404).json({
+        message: `No marks found for student ${regno} in ${category}, ${term}, ${year}`,
+      });
+    }
+
+    // Respond with the student performance data
+    res.status(200).json(marks);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Error retrieving data",
+      error: error.message,
+    });
+  }
+};
+

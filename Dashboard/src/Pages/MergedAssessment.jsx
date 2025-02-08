@@ -175,7 +175,7 @@ const MergedAssessment = () => {
          <div className="flex justify-center mb-4">
               <img
                 className="w-15 h-16  rounded-full"
-                src="KIbabii-Logo.png"
+                src="lion.jpg"
                 alt="School Logo"
               />
             </div>

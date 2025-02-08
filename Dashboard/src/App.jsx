@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom"; // Import Navigate
-import TopBar from "./components/TopBar";
+
 import Dashboard from "./Pages/Dashboard";
 import { ToastContainer } from "react-toastify";
 import ReportForm from "./Pages/ReportForm";
 import Students from "./Pages/Students";
-import Academic from "./Pages/Academic";
+
 import Fees from "./Pages/Fees";
 import Parents from "./Pages/Parents";
 import StudentDetail from "./Pages/StudentDetail";
@@ -22,8 +22,7 @@ import GeneralReport from "./Pages/GeneralReport";
 import LoginPage from "./Pages/LoginPage"; // Import LoginPage
 import Users from "./Pages/Users";
 import ReportCard from "./Pages/ReportCard"; // Import the ReportCard page
-import RightBar from "./components/RightBar";
-import SideBar from "./components/SideBar";
+
 import OpenerCard from "./Pages/OpenerCard";
 import Streams from "./Pages/Streams";
 import AddMarks from "./InstructorsPortal/InstructorPages/AddMarks";
@@ -86,6 +85,7 @@ const App = () => {
           <Route path="/instructordashboard" element={isAuthenticated ? <InstructorDashboard/> : <Navigate to="/login" />} />
           <Route path="/studentdashboard" element={isAuthenticated ? <StudDashBoard/> : <Navigate to="/login" />} />
           <Route path="/addmarks" element={isAuthenticated ? <AddMarks/> : <Navigate to="/login" />} />
+          <Route path="/student" element={isAuthenticated ? <StudentDetail/> : <Navigate to="/login" />} />
         </Routes>
       </div>
    

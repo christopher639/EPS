@@ -93,7 +93,7 @@ const MergedReportForm = () => {
                 <div key={regno} className="page-break" style={{ marginBottom: '20px', border: '', padding: '10px' }}>
                   <div className="text-center">
                     <img
-                      src="KIbabii-Logo.png"
+                      src="lion.jpg"
                       alt="School Logo"
                       className="w-[54px] h-[54px] mx-auto"
                     />

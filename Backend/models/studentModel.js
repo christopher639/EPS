@@ -7,7 +7,6 @@ const studentSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
       unique: true,
       match: /.+\@.+\..+/,
     },
@@ -18,11 +17,11 @@ const studentSchema = new mongoose.Schema(
     },
     dateOfBirth: {
       type: Date,
-      required: true,
+      
     },
     nationality: {
       type: String,
-      required: true,
+      
     },
     photo: {
       type: String,
@@ -39,7 +38,19 @@ const studentSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-  
+     birthCertificateNo :{
+       type:String
+     },
+     belongToStaff:{
+      type: String,
+      enum: ["NO", "YES"],
+      default: "NO",
+     },
+     studentType:{
+      type: String,
+      enum: ["Border", "Day Schooler"],
+      default: "Border",
+     },
     admissionDate: {
       type: Date,
       required: true,

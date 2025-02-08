@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
+import lion from '../assets/lion.jpg';
 import SidebarToggleButton from "../components/SidebarToggleButton"; // Import the Sidebar Toggle Button
 import UserAccount from '../components/UserAccount';
 import {  FaUsers, FaChalkboardTeacher, FaUniversity, FaUserGraduate, FaMoneyBillAlt, FaBuilding, FaUserCircle } from "react-icons/fa";
@@ -74,12 +75,42 @@ const Dashboard = () => {
       tooltip: {
         enabled: true,
       },
+      beforeDraw: (chart) => {
+        const ctx = chart.ctx;
+        const { width, height } = chart;
+        const imgSize = Math.min(width, height) / 4; // Adjust size as needed
+  
+        // Ensure the image is properly loaded
+        if (!chart.customImage) {
+          chart.customImage = new Image();
+          chart.customImage.src = lion; // Use the imported image
+          chart.customImage.onload = () => {
+            chart.draw(); // Redraw chart once the image loads
+          };
+          return;
+        }
+  
+        // Draw the image at the center of the chart
+        ctx.save();
+        ctx.drawImage(
+          chart.customImage,
+          width / 2 - imgSize / 2,
+          height / 2 - imgSize / 2,
+          imgSize,
+          imgSize
+        );
+        ctx.restore();
+      },
     },
     animation: {
       animateRotate: true,
       animateScale: true,
     },
+    cutout: "60%", // Ensures space in the center for the image
   };
+  
+
+  
 
  
 
@@ -104,7 +135,7 @@ const Dashboard = () => {
         <div className='flex justify-between items-center bg-white shadow-sm p-4 border-b'>
           <div className='flex items-center gap-3'>
           <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-            <h1 className="text-sm md:text-md lg:text-xl font-bold text-gray-800">KIBABII SCHOOL</h1>
+            <h1 className="text-sm md:text-md lg:text-xl font-bold text-gray-800">SAMGE  SCHOOL</h1>
             <p className=" hidden md:flex text-gray-500"> Admin Dashboard</p>
           </div>
           <div className='flex items-center gap-4'>
@@ -118,35 +149,41 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {/* Students Count */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex justify-between items-center">
+             <NavLink to="/students">
+             <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-gray-600 font-medium">Students</p>
+                  <p className="text-gray-600 font-medium">Learners</p>
                   <p className="text-3xl font-bold text-gray-800">{students.length}</p>
                 </div>
                 <FaUsers className="text-4xl text-blue-500" />
               </div>
+             </NavLink>
             </div>
 
             {/* Teachers Count */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex justify-between items-center">
+            <NavLink to="/teachers">
+            <div className="flex justify-between items-center">
                 <div>
                   <p className="text-gray-600 font-medium">Teachers</p>
                   <p className="text-3xl font-bold text-gray-800">{teachers.length}</p>
                 </div>
                 <FaChalkboardTeacher className="text-4xl text-green-500" />
               </div>
+            </NavLink>
             </div>
 
             {/* Streams Count */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex justify-between items-center">
+             <NavLink to='/streams'>
+             <div className="flex justify-between items-center">
                 <div>
                   <p className="text-gray-600 font-medium">Streams</p>
                   <p className="text-3xl font-bold text-gray-800">{stream.length}</p>
                 </div>
                 <FaUniversity className="text-4xl text-yellow-500" />
               </div>
+             </NavLink>
             </div>
 
             {/* Alumni Count */}
@@ -166,7 +203,7 @@ const Dashboard = () => {
             {/* Doughnut Chart */}
             <div className="bg-white rounded-lg shadow-md p-2">
               <h2 className="text-xl font-semibold text-gray-800 ">Distribution Overview</h2>
-              <div className="flex justify-center">
+              <div className="flex justify-center relative">
                 <Doughnut data={doughnutData} options={doughnutOptions} />
               </div>
             </div>

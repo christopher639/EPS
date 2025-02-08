@@ -51,7 +51,7 @@ const LoginPage = () => {
       <div className="w-full h-full flex flex-col md:flex-row items-center gap-5 justify-center">
         {/* Kibabi Logo */}
         <div className="p-4 rounded-full bg-opacity-20 backdrop-blur-md">
-          <img src="KIbabii-Logo.png" alt="Kibabi Logo" className="w-24 h-24 object-contain" />
+          <img src="lion.jpg" alt="Kibabi Logo" className="w-24 rounded-full h-24 object-contain" />
         </div>
 
         <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md transform transition-all duration-300 hover:scale-105">
@@ -61,7 +61,7 @@ const LoginPage = () => {
               <ClipLoader color="#4F46E5" loading={loading} size={50} />
             </div>
           ) : (
-            <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">KIBABII SCHOOL</h2>
+            <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">SAMGE SCHOOL</h2>
           )}
 
           <form onSubmit={handleLogin} className={`${loading && "opacity-50 pointer-events-none"}`}>

@@ -180,7 +180,7 @@ const Teachers = () => {
       <div className='px-2 py-2 flex gap-5 justify-between items-center bg-white shadow-md'>
       <div className='flex items-center gap-2'>
       <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-          <h1 className="text-sm py-3 hidden md:flex font-bold text-gray-800 md:text-md lg:text-lg ">KIBABII SCHOOL</h1>
+          <h1 className="text-sm py-3 hidden md:flex font-bold text-gray-800 md:text-md lg:text-lg ">SAMGE SCHOOL</h1>
           <p className="text-gray-500 hidden  md:flex">Teachers</p>
         </div>
         <input
@@ -199,7 +199,7 @@ const Teachers = () => {
         <UserAccount/>
       </div>
      <div className='flex gap-2'>
-     <h1 className="text-sm py-3 md:hidden px-2 font-bold text-gray-800 md:text-md lg:text-lg ">KIBABII SCHOOL</h1>
+     <h1 className="text-sm py-3 md:hidden px-2 font-bold text-gray-800 md:text-md lg:text-lg ">SAMGE SCHOOL</h1>
      <p className='text-sm py-3 md:hidden'>Teachers</p>
      </div>
       {/* Modal */}
@@ -302,7 +302,7 @@ const Teachers = () => {
           <table className="w-full table-auto  px-2 border  shadow-lg " >
             <thead className=" text-slate-700">
               <tr>
-                {["NO", "Full Name", "TSE NO", "Salary", "Type", "Gender", "Delete", "Update"].map((header, index) => (
+                {["NO", "Full Name", "TSEE NO",  "Type", "Gender", "Delete", "Update"].map((header, index) => (
                   <th key={index} className="py-2 px-4 text-left">{header}</th>
                 ))}
               </tr>
@@ -317,7 +317,7 @@ const Teachers = () => {
                   <td className="py-2 px-4">{teachers.length - index}</td>
                   <td className="py-2 px-4">{teacher.fullname}</td>
                   <td className="py-2 px-4">{teacher.tse}</td>
-                  <td className="py-2 px-4">{`KSH. ${teacher.salary}`}</td>
+                 
                   <td className="py-2 px-4">{teacher.type}</td>
                   <td className="py-2 px-4">{teacher.gender}</td>
                   <td className="py-2 px-4">

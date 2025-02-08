@@ -132,7 +132,7 @@ const Departments = () => {
             {/* Render the SidebarToggleButton here */}
             <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
           
-            <h1 className="text-xl font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg">KIBABII SCHOOL</h1>
+            <h1 className="text-xl font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg">SAMGE SCHOOL</h1>
             <p className="text-gray-500">Departments</p>
           </div>
           <input
