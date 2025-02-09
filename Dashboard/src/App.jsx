@@ -28,6 +28,7 @@ import Streams from "./Pages/Streams";
 import AddMarks from "./InstructorsPortal/InstructorPages/AddMarks";
 import StudDashBoard from "./StudentPortal/StudentPages/StudDashBoard";
 import InstructorDashboard from "./InstructorsPortal/InstructorPages/InstructorDashboard";
+import StudentPerStream from "./Pages/StudentPerStream";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -86,6 +87,7 @@ const App = () => {
           <Route path="/studentdashboard" element={isAuthenticated ? <StudDashBoard/> : <Navigate to="/login" />} />
           <Route path="/addmarks" element={isAuthenticated ? <AddMarks/> : <Navigate to="/login" />} />
           <Route path="/student" element={isAuthenticated ? <StudentDetail/> : <Navigate to="/login" />} />
+          <Route path="/students/:streamName/:year" element={<StudentPerStream/>} />
         </Routes>
       </div>
    

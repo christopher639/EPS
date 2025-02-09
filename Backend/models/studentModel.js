@@ -41,6 +41,9 @@ const studentSchema = new mongoose.Schema(
      birthCertificateNo :{
        type:String
      },
+     year:{
+       type:String
+     },
      belongToStaff:{
       type: String,
       enum: ["NO", "YES"],

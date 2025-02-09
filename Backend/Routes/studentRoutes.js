@@ -12,4 +12,6 @@ router.get("/:id", studentControllers.getStudentById);
 router.put("/:id", studentControllers.updateStudent);
 // DELETE - Delete a student
 router.delete("/:id",isAdmin, studentControllers.deleteStudent);
+// Add a route for filtering students by stream and year
+router.get("/:stream/:year", studentControllers.getStudentsByStreamAndYear);
 module.exports = router;

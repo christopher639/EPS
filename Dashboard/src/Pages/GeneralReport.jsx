@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import lion from '../assets/lion.jpg';
 import UserAccount from "../components/UserAccount";
-import SidebarToggleButton from "../components/SidebarToggleButton"; // Import the Sidebar Toggle Button
+import SidebarToggleButton from "../components/SidebarToggleButton";
 import SideBar from "../components/SideBar";
 import { FaFile, FaPrint } from "react-icons/fa";
 
 const GeneralReport = () => {
   const [classValue, setClassValue] = useState("10");
-
   const [sideBar, setSideBar] = useState(false); // To control the visibility of the sidebar
   const [yearValue, setYearValue] = useState("2024-2025");
   const [termValue, setTermValue] = useState("Term-1");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +41,7 @@ const GeneralReport = () => {
   const handlePrint = () => {
     const printContent = document.getElementById("printableTable").innerHTML;
     const printWindow = window.open("", "", "height=600,width=800");
-  
+
     // Function to add background colors to odd and even rows
     const addRowBackgroundColors = (content) => {
       const rows = content.querySelectorAll('tr');
@@ -50,12 +49,12 @@ const GeneralReport = () => {
         if (index % 2 === 0) {
           row.style.backgroundColor = '#e6f7ff'; // Light blue for even rows
         } else {
-          row.style.backgroundColor = '#e6ffe6'; // Light green for odd rows
+          row.style.backgroundColor = '#f0f8ff'; // Lighter blue for odd rows
         }
       });
       return content;
     };
-  
+
     // Gather all styles from the current page, including any dynamically applied ones
     const styles = Array.from(document.styleSheets)
       .map((sheet) => {
@@ -68,7 +67,7 @@ const GeneralReport = () => {
         }
       })
       .join("\n");
-  
+
     // Write the styles and content to the print window
     printWindow.document.write("<html><head><title>Print</title>");
     printWindow.document.write(`
@@ -77,15 +76,15 @@ const GeneralReport = () => {
         table {
           width: 100%;
           border-collapse: collapse;
-          border: 2px solid black;
+          border: 2px solid #4a90e2;
         }
         th, td {
-          border: 2px solid black;
-          padding: 8px;
+          border: 2px solid #ddd;
+          padding: 10px;
           text-align: center;
         }
         #bo {
-          border: 1px solid black;
+          border: 1px solid #4a90e2;
         }
       </style>
     `); // Add custom styles to the print window
@@ -95,12 +94,12 @@ const GeneralReport = () => {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = printContent;
     addRowBackgroundColors(tempDiv);
-  
+
     // Write the modified content (with row background colors) to the print window
     printWindow.document.write(tempDiv.innerHTML);
     printWindow.document.write("</body></html>");
     printWindow.document.close();
-  
+
     // Trigger the print dialog once the content is loaded
     printWindow.onload = () => {
       printWindow.print();
@@ -109,10 +108,7 @@ const GeneralReport = () => {
       }, 1000);
     };
   };
-  
-  
 
-  
   const calculateStudentTotalsAndAverages = (students) => {
     return students.map((student) => {
       const totalScores = student.subjects.reduce((total, subject) => {
@@ -180,16 +176,10 @@ const GeneralReport = () => {
 
   const subjectTotalsAndAverages = calculateSubjectTotalsAndAverages();
 
-  // if (loading) {
-  //   return <div className="text-center text-lg text-gray-500">Loading...</div>;
-  // }
-
   if (error) {
     return (
       <div className="text-center flex justify-center items-center text-lg text-red-500">
-       <div>
-       Error: {error}
-       </div>
+        <div>Error: {error}</div>
       </div>
     );
   }
@@ -199,83 +189,81 @@ const GeneralReport = () => {
   };
 
   return (
-   <div className="flex">
-    <div
-        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
-      >
-        <SideBar/> {/* Conditionally render based on sidebar state */}
+    <div className="flex">
+      <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}>
+        <SideBar />
       </div>
-     <div className="container    px-2 bg-gray-50 ">
-      {/* Top Controls */}
-      <div  className='flex p-2 justify-between items-center bg-white shadow-sm  border-b'>
-      <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-        <button
-          onClick={handlePrint}
-          className="bg-green-800 flex  text-white px-4 py-2 rounded- text-sm font-semibold hover:bg-green-700 transition"
-        >
-          <FaPrint className="md:hidden"/> <p className="hidden md:flex"> Print </p> 
-        </button>
-       
-        
-        <button
-          onClick={() =>
-            navigate("/report-card", {
-              state: { data: updatedData, classValue, yearValue, termValue },
-            })
-          }
-          className="bg-green-800 flex   text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition"
-        >
-        
-        <p className="hidden md:flex"> Reports</p>
-         <FaFile className="md:hidden"/>
-        </button>
-        <UserAccount/>
-      </div>
-        <div className="grid p-3 gap-3  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-2 px-3">
+      <div className="container  bg-gray-100">
+        {/* Top Controls */}
+        <div className="flex p-4 justify-between items-center bg-white ">
+          <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+          <button
+            onClick={handlePrint}
+            className="bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
+          >
+            <FaPrint className="md:hidden" /> <p className="hidden md:flex"> Print </p>
+          </button>
+          <button
+            onClick={() =>
+              navigate("/report-card", {
+                state: { data: updatedData, classValue, yearValue, termValue },
+              })
+            }
+            className="bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
+          >
+            <p className="hidden md:flex"> Reports</p>
+            <FaFile className="md:hidden" />
+          </button>
+          <UserAccount />
+        </div>
+
+        {/* Filter Section */}
+        <div className="grid p-4 gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-2 px-3">
           <input
             type="text"
-            className="text-center max-w-32 text-sm  border border-slate-300 outline-none py-2 px-3 text-sm rounded-md"
+            className="text-center max-w-xs text-sm border border-gray-300 py-2 px-3 rounded-md"
             placeholder="Search"
-            
           />
-            <select
-          value={classValue}
-          onChange={(e) => setClassValue(e.target.value)}
-          className="border max-w-32  border-gray-300 p-2 rounded-md"
-        >
-          <option value="Form3">Form 3</option>
-          <option value="Form4">Form 4</option>
-          <option value="Form5">Form 5</option>
-          <option value="Form6">Form 6</option>
-        </select>
-        <select
-          value={yearValue}
-          onChange={(e) => setYearValue(e.target.value)}
-          className="border max-w-32 border-gray-300 p-2 rounded-md"
-        >
-          <option value="2024-2025">2024-2025</option>
-          <option value="2025-2026">2025-2026</option>
-        </select> 
-        <select
-          value={termValue}
-          onChange={(e) => setTermValue(e.target.value)}
-          className="border max-w-32 border-gray-300 p-2 rounded-md"
-        >
-          <option value="Term-1">Term-1</option>
-          <option value="Term-2">Term-2</option>
-          <option value="Term-3">Term-3</option>
-        </select>
+          <select
+            value={classValue}
+            onChange={(e) => setClassValue(e.target.value)}
+            className="border max-w-xs border-gray-300 p-2 rounded-md"
+          >
+            <option value="Form3">Form 3</option>
+            <option value="Form4">Form 4</option>
+            <option value="Form5">Form 5</option>
+            <option value="Form6">Form 6</option>
+          </select>
+          <select
+            value={yearValue}
+            onChange={(e) => setYearValue(e.target.value)}
+            className="border max-w-xs border-gray-300 p-2 rounded-md"
+          >
+            <option value="2024-2025">2024-2025</option>
+            <option value="2025-2026">2025-2026</option>
+          </select>
+          <select
+            value={termValue}
+            onChange={(e) => setTermValue(e.target.value)}
+            className="border max-w-xs border-gray-300 p-2 rounded-md"
+          >
+            <option value="Term-1">Term-1</option>
+            <option value="Term-2">Term-2</option>
+            <option value="Term-3">Term-3</option>
+          </select>
         </div>
-      
 
-      {/* Table Section */}
-      <div className='px-3 grid grid-cols-1 pb-4 max-h-[92vh] overflow-y-auto  w-full overflow-x-auto'>
-        {updatedData.length === 0 ? (
-          <p className="text-center text-lg text-gray-500">No data found</p>
-        ) : (
-          <div id="printableTable">
-          <div className="flex w-full mx-3  gap-5 justify-center">
-            <div className="flex gap-2">
+        {/* Table Section */}
+        <div className="px-4 grid grid-cols-1 pb-4 max-h-[92vh] overflow-y-auto w-full overflow-x-auto">
+          {updatedData.length === 0 ? (
+            <p className="text-center text-lg text-gray-500">No data found</p>
+          ) : (
+            <div id="printableTable">
+          <div className="flex w-full mx-3  gap-5 justify-between">
+            <div>
+              <img className="w-24 h-24 rounded-full" src={lion} alt="" />
+            </div>
+            <div className="flex   gap-2">
             <p>SAMGE class </p>
              <p  className="font-semibold ">{classValue}</p>
             </div>
@@ -317,7 +305,7 @@ const GeneralReport = () => {
                     <tr key={studentIndex} className="hover:bg-gray-100 p-2">
                       <td className="border  text-left  py-2">{student.studentName}</td>
                       <td className="border  py-2">{student.regno}</td>
-                      <td className="border  py-2">{student.stream}</td>
+                      <td className="border  text-center p-2">{student.stream}</td>
                       {subjectTotalsAndAverages.map((subjectStat, subjectIndex) => {
                         const subject = student.subjects.find((sub) => sub.code === subjectStat.code);
                         return (
@@ -352,10 +340,10 @@ const GeneralReport = () => {
               </tbody>
             </table>
           </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
-   </div>
   );
 };
 

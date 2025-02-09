@@ -214,7 +214,7 @@ const ReportCard = () => {
                 <img
                   src="lion.jpg"
                   alt="School Logo"
-                  className="w-20 h-20 mx-auto"
+                  className="w-[110px] h-[108px] mx-auto"
                 />
               </div>
               <p className='text-lg font-semibold'>SCHOOL</p>
@@ -261,9 +261,9 @@ const ReportCard = () => {
               <table className="min-w-full table-auto text-center mt-4 border-collapse">
                 <thead>
                   <tr id="bo" className="bg-gray-200">
-                    <th id="bo" className="border text-left pl-1 py-2">
+                    {/* <th id="bo" className="border text-left pl-1 py-2">
                       Code
-                    </th>
+                    </th> */}
                     <th id="bo" className="border px-1 py-2">
                       Title
                     </th>
@@ -297,9 +297,9 @@ const ReportCard = () => {
 
                     return (
                       <tr id="bo" key={subIndex} className="border-b">
-                        <td id="bo" className="border text-left px-1 py-2">
+                        {/* <td id="bo" className="border text-left px-1 py-2">
                           {subject.code}
-                        </td>
+                        </td> */}
                         <td id="bo" className="border px-1 py-2">
                           {subject.name}
                         </td>

@@ -66,15 +66,15 @@ const getRemark = (score) => {
 };
 
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center w-full h-screen bg-gray-100">
-        <div className="spinner-border" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex justify-center items-center w-full h-screen bg-gray-100">
+  //       <div className="spinner-border" role="status">
+  //         <span className="sr-only">Loading...</span>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex">
@@ -102,10 +102,10 @@ const getRemark = (score) => {
           <div className="p-6 flex flex-col gap-5 shadow-lg rounded-lg overflow-y-auto max-h-[88vh]">
           <div className="flex flex-col md:flex-row justify-between gap-10">
             {/* Student Image */}
-              <div className="flex flex-col mb-2 md:mb-0">
-                <p className="text-lg font-bold text-gray-800 mb-4">Student Image</p>
+              <div className="flex flex-col  md:mb-0">
+                <p className="text-lg font-bold text-gray-800 ">Student Image</p>
                 <img
-                  className="w-56 h-56 rounded-lg border-4 border-gray-200 object-cover shadow-sm"
+                  className="w-64 h-64 rounded-lg border-4 border-gray-200 object-cover shadow-sm"
                   src={student?.photo ? `http://localhost:3000${student.photo}` :`${avater}`}
                   alt="Student"
                 />
@@ -113,45 +113,50 @@ const getRemark = (score) => {
               <div className="space-y-4">
                 <p className="text-gray-700"><strong>Name:</strong> {student?.name}</p>
                 <p className="text-gray-700"><strong>Admission Number:</strong> {student?.regno}</p>
+                <p className="text-gray-700"><strong>Stream:</strong> {student?.stream}</p>
                 <p className="text-gray-700"><strong>Gender:</strong> {student?.gender}</p>
                 <p className="text-gray-700"><strong>Date of Birth:</strong> {student?.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString('en-GB') : "N/A"}</p>
                 <p className="text-gray-700"><strong>Nationality:</strong> {student?.nationality}</p>
+                <p className="text-gray-700"><strong>Birth Certificate No:</strong> {student?.birthCertificateNo}</p>
                 <p className="text-gray-700"><strong>Admission Date:</strong> {student?.admissionDate ? new Date(student.admissionDate).toLocaleDateString('en-GB') : "N/A"}</p>
               </div>
               <div className="space-y-4">
-                <p className="text-gray-700"><strong>Stream:</strong> {student?.stream}</p>
-                <p className="text-gray-700"><strong>Guardian Name:</strong> {student?.guardianName}</p>
-                <p className="text-gray-700"><strong>Guardian Relationship:</strong> {student?.guardianRelationship}</p>
-                <p className="text-gray-700"><strong>Phone Number:</strong> {student?.phoneNumber}</p>
-                <p className="text-gray-700"><strong>Email:</strong> {student?.email}</p>
-                <p className="text-gray-700"><strong>Address:</strong> {student?.address}</p>
+              <p className="text-gray-700"><strong>Medical History:</strong> {student?.medicalHistory}</p>
+                <p className="text-gray-700"><strong>Scholarships:</strong> {student?.scholarships.join(", ")}</p>
+                <p className="text-gray-700"><strong>Physical Disability:</strong> {student?.physicalDisability ? "Yes" : "No"}</p>
+                <p className="text-gray-700"><strong>Type:</strong> {student?.studentType}</p>
+              
+                <p className="text-gray-700"><strong>Belongs To Staff:</strong> {student?.belongToStaff? "Yes" : "No"}</p>
+                <p className="text-gray-700"><strong>Previous school:</strong> {student?.studentType}</p>
+                <p className="text-gray-700"><strong>Previous School Grade:</strong> {student?.birthCertificateNo}</p>
                 <p className="text-gray-700"><strong>Fee Status:</strong> {student?.feeStatus}</p>
               </div>
           </div>
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
              <div className="">
-                <p className="text-gray-700"><strong>Medical History:</strong> {student?.medicalHistory}</p>
-                <p className="text-gray-700"><strong>Scholarships:</strong> {student?.scholarships.join(", ")}</p>
-                <p className="text-gray-700"><strong>Physical Disability:</strong> {student?.physicalDisability ? "Yes" : "No"}</p>
+             <p className="text-gray-700"><strong>Guardian Name:</strong> {student?.guardianName}</p>
+                <p className="text-gray-700"><strong>Guardian Relationship:</strong> {student?.guardianRelationship}</p>
+               
+               
+              
               </div>
               <div className="">
-                <p className="text-gray-700"><strong>Type:</strong> {student?.studentType}</p>
-                <p className="text-gray-700"><strong>Birth Certificate No:</strong> {student?.birthCertificateNo}</p>
-                <p className="text-gray-700"><strong>Belongs To Staff:</strong> {student?.belongToStaff? "Yes" : "No"}</p>
+              <p className="text-gray-700"><strong>Primary Phone:</strong> {student?.phoneNumber}</p>
+              <p className="text-gray-700"><strong>Secondary Phone:</strong> {student?.phoneNumber}</p>
               </div>
               <div className="">
-                <p className="text-gray-700"><strong>Previous school:</strong> {student?.studentType}</p>
-                <p className="text-gray-700"><strong>Previous School Grade:</strong> {student?.birthCertificateNo}</p>
+              <p className="text-gray-700"><strong>Email:</strong> {student?.email}</p>
+              <p className="text-gray-700"><strong>Address:</strong> {student?.address}</p>
               </div>
              </div>
                {/* Academic Section */}
-        <div className="p-6 mt-10 flex flex-col gap-5 shadow-lg rounded-lg bg-white">
+        <div className="py-6 px-2 mt-10 flex flex-col gap-5   bg-white">
           <h2 className="text-xl font-semibold mb-4">Academic Information</h2>
           
           {/* Display Academic Data */}
           {academicData ? (
       <div className="overflow-x-auto">
-      <table className="min-w-full table-auto border-collapse border border-gray-300">
+      <table className="min-w-full  table-auto border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-200">
             <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Subject Name</th>

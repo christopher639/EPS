@@ -202,7 +202,7 @@ const Parents = () => {
                   onClick={() => navigate(`/student/${student._id}`)}
                 >
                   <td className='border py-1 text-center'>{filteredStudents.length - index}</td>
-                  <td className='border whitespace-nowrap px-4 py-1'>{student.parentname}</td>
+                  <td className='border whitespace-nowrap px-4 py-1'>{student.guardianName}</td>
                   <td className='border whitespace-nowrap px-4 py-1 text-center'>+254{student.phone}</td>
                   <td className='border whitespace-nowrap px-4 py-1 text-center'>{student.email}</td>
                 

@@ -87,16 +87,16 @@ const Students = () => {
   // Handle form submission (add or update)
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Prepare the data to send
     const payload = { ...formData };
-
+  
     try {
       let response;
-
+  
       if (isEditing) {
         // If editing, perform an update (PUT request)
-        if (formData.photo) {
+        if (formData.photo instanceof File) {
           const formDataToSend = new FormData();
           for (let key in payload) {
             if (key === 'photo' && formData[key]) {
@@ -105,24 +105,27 @@ const Students = () => {
               formDataToSend.append(key, payload[key]); // Append other fields
             }
           }
-
+  
           response = await axios.put(`/api/students/${currentStudentId}`, formDataToSend, {
             headers: { 'Content-Type': 'multipart/form-data' },
           });
         } else {
+          // If no new photo is uploaded, send JSON data
           response = await axios.put(`/api/students/${currentStudentId}`, payload, {
             headers: { 'Content-Type': 'application/json' },
           });
         }
-
+  
         if (response.data.success) {
           toast.success("Student updated successfully");
           setShowModal(false);
           getFetchData(); // Reload the student data after update
+        } else {
+          toast.error("Failed to update student.");
         }
       } else {
         // If adding a new student, perform a POST request
-        if (formData.photo) {
+        if (formData.photo instanceof File) {
           const formDataToSend = new FormData();
           for (let key in payload) {
             if (key === 'photo' && formData[key]) {
@@ -131,20 +134,23 @@ const Students = () => {
               formDataToSend.append(key, payload[key]); // Append other fields
             }
           }
-
+  
           response = await axios.post("/api/students", formDataToSend, {
             headers: { 'Content-Type': 'multipart/form-data' },
           });
         } else {
+          // If no photo is uploaded, send JSON data
           response = await axios.post("/api/students", payload, {
             headers: { 'Content-Type': 'application/json' },
           });
         }
-
+  
         if (response.data.success) {
           toast.success("Student added successfully");
           setShowModal(false);
           getFetchData(); // Reload the student data after adding
+        } else {
+          toast.error("Failed to add student.");
         }
       }
     } catch (error) {
@@ -254,7 +260,7 @@ const Students = () => {
         {/* Multi-Step Modal */}
         {showModal && (
   <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-    <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-5/6 border border-gray-300 shadow-xl">
+    <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[95vh] overflow-y-auto w-full mx-5 md:w-5/6 border border-gray-300 shadow-xl">
       {/* Modal Header */}
       <div className="flex justify-between items-center border-b border-gray-300 pb-4 mb-4">
         <p className="text-lg font-semibold text-gray-800">

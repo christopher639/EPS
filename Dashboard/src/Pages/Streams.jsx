@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // For navigation
 import UserAccount from '../components/UserAccount';
 import axios from 'axios';
 import SideBar from '../components/SideBar';
-import IconSideBar from '../components/IconSideBar';
-import { FaBars } from 'react-icons/fa'; // Import the hamburger icon for sidebar toggle
 import { toast, ToastContainer } from 'react-toastify';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 
@@ -12,16 +11,16 @@ axios.defaults.baseURL = 'http://localhost:3000';
 const Streams = () => {
   const [streams, setStreams] = useState([]);
   const [sideBar, setSideBar] = useState(true);
-  const [selectedStream, setSelectedStream] = useState(null); // Selected stream for update or delete
+  const [selectedStream, setSelectedStream] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [showAddStreamModal, setShowAddStreamModal] = useState(false); // State for Add Stream Modal
-  const [updatedStream, setUpdatedStream] = useState({
-    name: '',
-    teacher: ''
-  });
-  const [newStream, setNewStream] = useState({ name: '', teacher: '' }); // New stream data
+  const [showAddStreamModal, setShowAddStreamModal] = useState(false);
+  const [updatedStream, setUpdatedStream] = useState({ name: '', teacher: '' });
+  const [newStream, setNewStream] = useState({ name: '', teacher: '' });
 
+  const navigate = useNavigate(); // Initialize useNavigate for navigation
+
+  // Fetch streams from the API
   useEffect(() => {
     const fetchData = () => {
       axios
@@ -34,31 +33,36 @@ const Streams = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Handle navigation to StudentPerStream.jsx
+  const handleStreamClick = (streamName) => {
+    const year = '2024-2025'; // You can dynamically set the year if needed
+    navigate(`/students/${streamName}/${year}`);
+  };
+
   // Handle Delete Stream
   const handleDelete = () => {
     axios
       .delete(`/api/streams/${selectedStream.id}`)
       .then(() => {
-        // Remove deleted stream from state
         setStreams(streams.filter((stream) => stream.id !== selectedStream.id));
-        setShowDeleteModal(false); // Close delete modal
+        setShowDeleteModal(false);
         toast.success('Stream deleted successfully!');
       })
       .catch((err) => console.log(err));
   };
 
-  // Handle Update Stream (open the update modal)
+  // Handle Update Stream
   const handleUpdate = (id) => {
     const streamToUpdate = streams.find((stream) => stream.id === id);
     setUpdatedStream({
       name: streamToUpdate.name,
-      teacher: streamToUpdate.teacher
+      teacher: streamToUpdate.teacher,
     });
     setSelectedStream(streamToUpdate);
     setShowUpdateModal(true);
   };
 
-  // Handle updating stream data
+  // Handle Update Submit
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
     axios
@@ -69,44 +73,47 @@ const Streams = () => {
             stream.id === selectedStream.id ? response.data : stream
           )
         );
-        setShowUpdateModal(false); // Close update modal
+        setShowUpdateModal(false);
         toast.success('Stream updated successfully!');
       })
       .catch((err) => console.log(err));
   };
 
-  // Handle adding new stream
+  // Handle Add Stream Submit
   const handleAddStreamSubmit = (e) => {
     e.preventDefault();
     axios
       .post('/api/streams', newStream)
       .then((response) => {
-        console.log(newStream)
         setStreams([...streams, response.data]);
-        setShowAddStreamModal(false); // Close add stream modal
+        setShowAddStreamModal(false);
         toast.success('Stream added successfully!');
-        setNewStream({ name: '', teacher: '' }); // Reset the form
+        setNewStream({ name: '', teacher: '' });
       })
       .catch((err) => console.log(err));
   };
 
   // Toggle Sidebar
   const toggleSideBar = () => {
-    setSideBar((prev) => !prev); // Toggle sidebar visibility
+    setSideBar((prev) => !prev);
   };
 
   return (
     <div className='flex'>
-    
-    <div
-        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+      <div
+        className={`transition-all duration-700 ease-in-out ${
+          sideBar ? 'w-72' : 'w-16'
+        } bg-gray-800 min-h-screen`}
       >
-        <SideBar/> {/* Conditionally render based on sidebar state */}
+        <SideBar />
       </div>
       <div className='bg-gray-50 w-full min-h-screen'>
         {/* Header */}
         <div className='flex px-6 py-4 border-b bg-white shadow-md justify-between items-center'>
-        <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+          <SidebarToggleButton
+            toggleSidebar={toggleSideBar}
+            isSidebarCollapsed={!sideBar}
+          />
           <p className='text-xl font-semibold text-gray-800'>Streams</p>
           <div className='hidden md:flex flex-grow max-w-xs'>
             <input
@@ -116,7 +123,7 @@ const Streams = () => {
             />
           </div>
           <button
-            onClick={() => setShowAddStreamModal(true)} // Open the Add Stream Modal
+            onClick={() => setShowAddStreamModal(true)}
             className='bg-green-700 px-4 py-2 text-white rounded-full hover:bg-green-600 transition duration-300'
           >
             <p className='hidden md:flex'>+ Add Stream</p>
@@ -130,10 +137,13 @@ const Streams = () => {
           {streams.map((stream, index) => (
             <div
               key={index}
-              className='border rounded-lg bg-white shadow-md hover:shadow-xl transition duration-300'
+              className='border rounded-lg bg-white shadow-md hover:shadow-xl transition duration-300 cursor-pointer'
+              onClick={() => handleStreamClick(stream.name)} // Navigate on click
             >
               <div className='p-4'>
-                <p className='font-semibold text-lg text-gray-800'>{stream.name}</p>
+                <p className='font-semibold text-lg text-gray-800'>
+                  {stream.name}
+                </p>
                 <p className='text-sm text-gray-600'>{stream.teacher}</p>
                 <p className='text-xs text-gray-500 mt-2'>
                   {new Date(stream.createdAt).toLocaleString()}
@@ -144,17 +154,18 @@ const Streams = () => {
 
                 {/* Action Buttons */}
                 <div className='flex space-x-4 mt-4'>
-                  {/* Update Button */}
                   <button
-                    onClick={() => handleUpdate(stream.id)}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent navigation
+                      handleUpdate(stream.id);
+                    }}
                     className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400 transition duration-300'
                   >
                     Update
                   </button>
-
-                  {/* Delete Button */}
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent navigation
                       setSelectedStream(stream);
                       setShowDeleteModal(true);
                     }}
@@ -168,7 +179,7 @@ const Streams = () => {
           ))}
         </div>
 
-        {/* Delete Confirmation Modal */}
+        {/* Modals (Delete, Update, Add Stream) */}
         {showDeleteModal && (
           <div className='fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center'>
             <div className='bg-white p-6 rounded-lg shadow-lg w-80'>
@@ -196,7 +207,6 @@ const Streams = () => {
           </div>
         )}
 
-        {/* Update Stream Modal */}
         {showUpdateModal && (
           <div className='fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center'>
             <div className='bg-white p-6 rounded-lg shadow-lg w-80'>
@@ -256,7 +266,6 @@ const Streams = () => {
           </div>
         )}
 
-        {/* Add Stream Modal */}
         {showAddStreamModal && (
           <div className='fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center'>
             <div className='bg-white p-6 rounded-lg shadow-lg w-80'>
@@ -316,7 +325,7 @@ const Streams = () => {
           </div>
         )}
       </div>
-       <ToastContainer />
+      <ToastContainer />
     </div>
   );
 };

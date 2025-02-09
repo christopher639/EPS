@@ -1,42 +1,169 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SideBar from '../components/SideBar';
+import SidebarToggleButton from '../components/SidebarToggleButton'; 
+import UserAccount from '../components/UserAccount'; 
+import { Bar, Line, Pie } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  PointElement,
+  LineElement,
+} from 'chart.js';
+
+// Register Chart.js components
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  PointElement,
+  LineElement
+);
 
 const Analytics = () => {
+  const [sideBar, setSideBar] = useState(true); 
+
+  // Dummy data for demonstration
+  const studentPerformanceData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [
+      {
+        label: 'Average Grades',
+        data: [75, 78, 80, 82, 85, 88],
+        backgroundColor: '#4CAF50',
+      },
+    ],
+  };
+
+  const attendanceData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [
+      {
+        label: 'Attendance Rate (%)',
+        data: [92, 94, 93, 95, 96, 97],
+        backgroundColor: '#2196F3',
+        borderColor: '#2196F3',
+        borderWidth: 2,
+        fill: false,
+      },
+    ],
+  };
+
+  const feeCollectionData = {
+    labels: ['Tuition', 'Transport', 'Meals', 'Extracurricular'],
+    datasets: [
+      {
+        data: [300000, 100000, 80000, 20000],
+        backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#FF5722'],
+      },
+    ],
+  };
+
+  const teacherPerformanceData = {
+    labels: ['Mr. Smith', 'Ms. Johnson', 'Mr. Brown', 'Ms. Davis'],
+    datasets: [
+      {
+        label: 'Student Feedback Score',
+        data: [4.5, 4.7, 4.6, 4.8],
+        backgroundColor: '#FF9800',
+      },
+    ],
+  };
+
+  const admissionTrendsData = {
+    labels: ['2020', '2021', '2022', '2023'],
+    datasets: [
+      {
+        label: 'Admissions',
+        data: [120, 150, 180, 200],
+        backgroundColor: '#9C27B0',
+        borderColor: '#9C27B0',
+        borderWidth: 2,
+        fill: false,
+      },
+    ],
+  };
+
+  // Toggle sidebar visibility
+  const toggleSideBar = () => {
+    setSideBar((prev) => !prev);
+  };
+
   return (
-   <div className='flex'>
-    <div>
-      <SideBar/>
-    </div>
-     <div className="flex   w-full flex-col items-center justify-center min-h-screen bg-gray-700 text-white px-4">
-      {/* Coming Soon Section */}
-      <div className="text-center">
-        <p className="text-5xl font-bold mb-4">Coming Soon!</p>
-        <p className="text-lg mb-8">
-          We're currently working on bringing you powerful analytical tools. Stay tuned for updates!
-        </p>
+    <div className='flex bg-gray-50 min-h-screen'>
+      {/* Sidebar */}
+      <div
+        className={`transition-width duration-300 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+      >
+        <SideBar />
       </div>
 
-      {/* Importance of Analytics */}
-      <div className="max-w-2xl text-center bg-yellow-700 p-6 rounded-lg shadow-lg mt-6">
-        <h2 className="text-3xl font-semibold mb-4">Why Analytics is Essential</h2>
-        <p className="text-lg">
-          Analytics are crucial for making informed decisions. Once available, this feature will help you understand
-          patterns, track progress, and gain actionable insights into various aspects of your system. With analytics,
-          you'll be able to:
-        </p>
-        <ul className="list-disc list-inside mt-4 text-left">
-          <li>Track key performance metrics</li>
-          <li>Make data-driven decisions</li>
-          <li>Identify growth opportunities</li>
-          <li>Monitor trends and performance over time</li>
-        </ul>
-        <p className="mt-4">
-          We're excited to bring this functionality to you as soon as possible. Stay tuned!
-        </p>
+      {/* Main Content */}
+      <div className='flex w-full flex-col flex-grow p-5'>
+        {/* Header */}
+        <div className='flex justify-between items-center mb-8'>
+          <div className='flex items-center gap-3'>
+            <SidebarToggleButton
+              toggleSidebar={toggleSideBar}
+              isSidebarCollapsed={!sideBar}
+            />
+            <h1 className='text-3xl font-bold text-gray-800'>Analytics Dashboard</h1>
+          </div>
+          <UserAccount />
+        </div>
+
+        {/* Graphs in a 2-column grid */}
+        <div className='grid grid-cols-1  md:grid-cols-2 gap-8 overflow-y-auto max-h-[80vh]'>
+          {/* Student Performance Analytics */}
+          <div className='bg-white p-6 rounded-lg shadow-md'>
+            <h2 className='text-xl font-bold text-gray-800 mb-4'>Student Performance Trends</h2>
+            <Bar data={studentPerformanceData} />
+          </div>
+
+          {/* Attendance Analytics */}
+          <div className='bg-white p-6 rounded-lg shadow-md'>
+            <h2 className='text-xl font-bold text-gray-800 mb-4'>Attendance Trends</h2>
+            <Line data={attendanceData} />
+          </div>
+
+          {/* Fee Collection Analytics */}
+          <div className='bg-white p-6 rounded-lg shadow-md'>
+            <h2 className='text-xl font-bold text-gray-800 mb-4'>Fee Distribution</h2>
+            <Pie data={feeCollectionData} />
+          </div>
+
+          {/* Teacher Performance Analytics */}
+          <div className='bg-white p-6 rounded-lg shadow-md'>
+            <h2 className='text-xl font-bold text-gray-800 mb-4'>Teacher Performance</h2>
+            <Bar data={teacherPerformanceData} />
+          </div>
+
+          {/* Admission Trends */}
+          <div className='bg-white p-6 rounded-lg shadow-md'>
+            <h2 className='text-xl font-bold text-gray-800 mb-4'>Admission Trends</h2>
+            <Line data={admissionTrendsData} />
+          </div>
+
+          {/* Customizable Reports */}
+          <div className='bg-white p-6 rounded-lg shadow-md col-span-2'>
+            <h2 className='text-xl font-bold text-gray-800 mb-4'>Generate Custom Reports</h2>
+            <button className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600'>
+              Download Report
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-   </div>
   );
-}
+};
 
 export default Analytics;

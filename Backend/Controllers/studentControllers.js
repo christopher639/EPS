@@ -127,3 +127,26 @@ exports.deleteStudent = async (req, res) => {
     });
   }
 };
+
+// READ - Get students by stream and year
+exports.getStudentsByStreamAndYear = async (req, res) => {
+  const { stream, year } = req.params; // Extract stream and year from the URL
+
+  try {
+    // Query the students that match the stream and year
+    const students = await studentModel.find({ stream, year });
+
+    if (students.length === 0) {
+      return res.status(404).json({
+        message: `No students found for stream: ${stream} and year: ${year}`,
+      });
+    }
+
+    res.status(200).json(students); // Return the list of students that match the criteria
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching students",
+      error: error.message,
+    });
+  }
+};

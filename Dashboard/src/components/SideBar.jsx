@@ -69,6 +69,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
               <p>G</p>
               <p>E</p>
             </p>
+            
            <div className="flex">
             <p className="  flex gap-1 text-[12px] text-white">
                   <p>B</p>

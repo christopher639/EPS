@@ -36,8 +36,6 @@ const LoginPage = () => {
       if(role === "instructor"){
         navigate('/instructordashboard');
       }
-      // Navigate to the dashboard or any other page after login
-      // navigate('/dashboard');
     } catch (error) {
       console.error("Login failed", error);
       setErrorMessage("Login failed, please check your credentials");
@@ -47,37 +45,37 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center z-50">
-      <div className="w-full h-full flex flex-col md:flex-row items-center gap-5 justify-center">
+    <div className="fixed inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 flex items-center justify-center z-50">
+      <div className="w-full h-full flex flex-col md:flex-row items-center gap-8 justify-center">
         {/* Kibabi Logo */}
-        <div className="p-4 rounded-full bg-opacity-20 backdrop-blur-md">
-          <img src="lion.jpg" alt="Kibabi Logo" className="w-24 rounded-full h-24 object-contain" />
+        <div className="p-4 rounded-full bg-opacity-40 backdrop-blur-md shadow-lg">
+          <img src="lion.jpg" alt="Kibabi Logo" className="w-28 rounded-full h-28 object-contain" />
         </div>
 
-        <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md transform transition-all duration-300 hover:scale-105">
+        <div className="bg-white p-10 rounded-lg shadow-xl w-full max-w-lg transform transition-all duration-300 hover:scale-105">
           {/* Loading Spinner */}
           {loading ? (
             <div className="flex justify-center items-center mb-6">
               <ClipLoader color="#4F46E5" loading={loading} size={50} />
             </div>
           ) : (
-            <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">SAMGE SCHOOL</h2>
+            <h2 className="text-4xl font-bold text-center text-gray-700 mb-6">SAMGE SCHOOL</h2>
           )}
 
           <form onSubmit={handleLogin} className={`${loading && "opacity-50 pointer-events-none"}`}>
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-600 text-sm font-medium mb-2">Email:</label>
+            <div className="mb-6">
+              <label htmlFor="email" className="block text-gray-600 text-sm font-medium mb-2">Email Address:</label>
               <input
                 type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-6">
               <label htmlFor="password" className="block text-gray-600 text-sm font-medium mb-2">Password:</label>
               <input
                 type="password"
@@ -85,22 +83,26 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
               />
             </div>
 
-            {errorMessage && <p className="text-red-500 text-sm text-center mb-4">{errorMessage}</p>}
+            {errorMessage && <p className="text-red-600 text-sm text-center mb-4">{errorMessage}</p>}
 
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-2  bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-300 ${
+              className={`w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300 ${
                 loading ? "cursor-not-allowed opacity-50" : ""
               }`}
             >
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
+
+          <div className="mt-6 text-center text-gray-600">
+            <p>Don't have an account? <a href="/register" className="text-indigo-500 hover:underline">Sign Up</a></p>
+          </div>
         </div>
       </div>
     </div>
