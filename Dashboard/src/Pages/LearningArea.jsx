@@ -180,7 +180,7 @@ const LearningArea = () => {
         {/* Grid layout for Learning Areas */}
         <div className="overflow-x-auto overflow-y-auto max-h-[86vh] bg-white rounded-lg p-4">
           {/* Grid container for learning areas */}
-          <div className="grid grid-cols-1  gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6">
             {filteredLearningAreas.map((learningArea) => (
               <div key={learningArea._id} className="bg-gray-100 p-4 rounded-lg shadow-lg flex flex-col">
                 {/* Learning Area Info */}

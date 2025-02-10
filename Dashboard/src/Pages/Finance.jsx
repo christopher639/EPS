@@ -17,7 +17,7 @@ const Finance = () => {
   }
 
   // Dummy data for demonstration
-  const feeData = {
+  const feeDistribution = {
     expectedFees:5000000,
     paidFees: 500000,
     pendingFees: 120000,
@@ -37,10 +37,10 @@ const Finance = () => {
 
   // Doughnut Chart Data
   const doughnutData = {
-    labels: feeData.feeCategories.map((category) => category.name),
+    labels: feeDistribution.feeCategories.map((category) => category.name),
     datasets: [
       {
-        data: feeData.feeCategories.map((category) => category.amount),
+        data: feeDistribution.feeCategories.map((category) => category.amount),
         backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#FF5722'],
         hoverOffset: 4,
       },
@@ -93,13 +93,15 @@ const Finance = () => {
       <div className='flex bg-gray-50 flex-col w-full p-4'>
         {/* Header */}
         <div className='flex justify-between items-center mb-4'>
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center  gap-2'>
             <SidebarToggleButton
               toggleSidebar={toggleSideBar}
               isSidebarCollapsed={!sideBar}
             />
             <h1 className='text-sm sm:text-lg md:text-xl lg:text-3xl font-bold text-gray-800'>Finance Management</h1>
+           
           </div>
+          <button  className='bg-blue-700 p-2 rounded text-white'>Fees Structures</button>
           <UserAccount />
         </div>
 
@@ -112,7 +114,7 @@ const Finance = () => {
             <div className='flex items-center justify-between'>
               <div>
                 <p className='text-gray-600'>Expected Fees</p>
-                <p className='text-xl font-bold text-gray-800'>Ksh {feeData.expectedFees.toLocaleString()}</p>
+                <p className='text-xl font-bold text-gray-800'>Ksh {feeDistribution.expectedFees.toLocaleString()}</p>
               </div>
               <FaFileInvoiceDollar className='text-2xl text-blue-500' />
             </div>
@@ -121,7 +123,7 @@ const Finance = () => {
             <div className='flex items-center justify-between'>
               <div>
                 <p className='text-gray-600'>Total Fees Collected</p>
-                <p className='text-xl font-bold text-gray-800'>Ksh {feeData.paidFees.toLocaleString()}</p>
+                <p className='text-xl font-bold text-gray-800'>Ksh {feeDistribution.paidFees.toLocaleString()}</p>
               </div>
               <FaFileInvoiceDollar className='text-2xl text-blue-500' />
             </div>
@@ -130,7 +132,7 @@ const Finance = () => {
             <div className='flex items-center justify-between'>
               <div>
                 <p className='text-gray-600'>Pending Fees</p>
-                <p className='text-xl font-bold text-gray-800'>Ksh {((feeData.expectedFees)-(feeData.paidFees)).toLocaleString()}</p>
+                <p className='text-xl font-bold text-gray-800'>Ksh {((feeDistribution.expectedFees)-(feeDistribution.paidFees)).toLocaleString()}</p>
               </div>
               <FaMoneyCheckAlt className='text-2xl text-yellow-500' />
             </div>
@@ -148,7 +150,7 @@ const Finance = () => {
             <div className='flex items-center justify-between'>
               <div>
                 <p className='text-gray-600'>Overdue Fees</p>
-                <p className='text-xl font-bold text-gray-800'>Ksh {feeData.overdueFees.toLocaleString()}</p>
+                <p className='text-xl font-bold text-gray-800'>Ksh {feeDistribution.overdueFees.toLocaleString()}</p>
               </div>
               <FaBell className='text-2xl text-red-500' />
             </div>
@@ -157,7 +159,7 @@ const Finance = () => {
             <div className='flex items-center justify-between'>
               <div>
                 <p className='text-gray-600'>Total Income</p>
-                <p className='text-xl font-bold text-gray-800'>Ksh {((feeData.paidFees)-(expenses.total)).toLocaleString()}</p>
+                <p className='text-xl font-bold text-gray-800'>Ksh {((feeDistribution.paidFees)-(expenses.total)).toLocaleString()}</p>
               </div>
               <FaBell className='text-2xl text-red-500' />
             </div>
@@ -195,7 +197,7 @@ const Finance = () => {
                 </tr>
               </thead>
               <tbody className='divide-y divide-gray-200'>
-                {feeData.paymentRecords.map((record) => (
+                {feeDistribution.paymentRecords.map((record) => (
                   <tr key={record.id} className='hover:bg-gray-50'>
                     <td className='px-6 py-4'>{record.student}</td>
                     <td className='px-6 py-4'>{record.amount.toLocaleString()}</td>

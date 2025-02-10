@@ -13,6 +13,7 @@ app.use(express.json())
 app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // importing the routes
+const feeDistributionRoutes = require('./Routes/feeDistributionRoutes');
 const streamRoutes = require("./Routes/streamRoutes");
 const learningAreaRoutes = require('./Routes/learningAreasRoutes.js');
 const userRoutes = require('./Routes/userRoutes');
@@ -20,8 +21,13 @@ const studentRoutes = require('./Routes/studentRoutes.js');
 const departmentRoutes =require("./Routes/departmentRoutes.js")
 const subjectMarksRoutes = require("./Routes/subjectMarksRoutes");
 const teacherRoutes = require('./Routes/teacherRoutes');
+const expenseRoutes = require('./Routes/expenseRoutes');
+const feesPaymentRoutes = require('./Routes/feesPaymentRoutes'); 
 
 // using Routes
+app.use('/api/fees-payments', feesPaymentRoutes);
+app.use('/api/expenses', expenseRoutes); 
+app.use('/api/fee-distributions', feeDistributionRoutes);
 app.use("/api/streams", streamRoutes);
 app.use('/api/learning-areas', learningAreaRoutes);
 app.use("/api/students",studentRoutes);
