@@ -34,7 +34,7 @@ body{
 
   /* Custom Scrollbar */
 .scrollbar-custom::-webkit-scrollbar {
-  width: 6px; /* Decrease the scrollbar thickness */
+  width: 3px; /* Decrease the scrollbar thickness */
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {

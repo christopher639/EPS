@@ -29,6 +29,9 @@ import AddMarks from "./InstructorsPortal/InstructorPages/AddMarks";
 import StudDashBoard from "./StudentPortal/StudentPages/StudDashBoard";
 import InstructorDashboard from "./InstructorsPortal/InstructorPages/InstructorDashboard";
 import StudentPerStream from "./Pages/StudentPerStream";
+import Expenses from "./Pages/Expenses";
+import FeesDistribution from "./Pages/FeesDistribution";
+import FeeStructure from "./Pages/FeeStructure";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,11 +47,9 @@ const App = () => {
   return (
     <div className="min-w-full  bg-gray-100  fixed">
       <ToastContainer />
-     
         <Routes>
           {/* Redirect root to login page if not authenticated */}
           <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
-          
           {/* Login Route */}
           <Route path="/login" element={<LoginPage setIsAuthenticated={setIsAuthenticated} />} />
 
@@ -87,6 +88,11 @@ const App = () => {
           <Route path="/studentdashboard" element={isAuthenticated ? <StudDashBoard/> : <Navigate to="/login" />} />
           <Route path="/addmarks" element={isAuthenticated ? <AddMarks/> : <Navigate to="/login" />} />
           <Route path="/student" element={isAuthenticated ? <StudentDetail/> : <Navigate to="/login" />} />
+          <Route path="/expenses" element={isAuthenticated ? <Expenses/> : <Navigate to="/login" />} />
+
+          <Route path="/fees-distribution" element={isAuthenticated ? <FeesDistribution/> : <Navigate to="/login" />} />
+          <Route path="/fees-structure" element={isAuthenticated ? <FeeStructure/> : <Navigate to="/login" />} />
+          
           <Route path="/students/:streamName/:year" element={<StudentPerStream/>} />
         </Routes>
       </div>

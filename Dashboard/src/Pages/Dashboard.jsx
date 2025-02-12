@@ -162,11 +162,10 @@ const Dashboard = () => {
             <UserAccount />
           </div>
         </div>
-
         {/* Main Content */}
-        <div className='bg-gradient-to-br from-gray-50 to-gray-100 overflow-x-auto overflow-y-auto max-h-[90vh] p-6'>
+        <div className='bg-gradient-to-br from-gray-50 to-gray-100 overflow-x-auto overflow-y-auto max-h-[90vh] p-6 '>
           {/* Stats Grid */}
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-4'>
             {/* Students Count */}
             <div className='bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow'>
               <NavLink to='/students'>

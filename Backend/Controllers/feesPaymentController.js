@@ -10,7 +10,6 @@ exports.createFeesPayment = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-
 // Get all fees payment records
 exports.getAllFeesPayments = async (req, res) => {
     try {

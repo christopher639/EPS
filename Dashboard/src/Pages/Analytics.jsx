@@ -108,7 +108,7 @@ const Analytics = () => {
       </div>
 
       {/* Main Content */}
-      <div className='flex w-full flex-col flex-grow p-5'>
+      <div className='flex w-full bg-gray-50 flex-col flex-grow p-5'>
         {/* Header */}
         <div className='flex justify-between items-center mb-8'>
           <div className='flex items-center gap-3'>

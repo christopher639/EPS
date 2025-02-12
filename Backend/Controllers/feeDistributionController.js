@@ -60,36 +60,80 @@ exports.deleteFeeDistribution = async (req, res) => {
     }
 };
 
-// Get total fee amounts by category, grouped by grade, term, and year
-exports.getTotalFeeAmountsByCategory = async (req, res) => {
+// Get fee distributions and overall fee amount by year, grade, term, and studentType
+exports.getFeeDistributionsByGroup = async (req, res) => {
     try {
-        const { year, term, grade } = req.params;
+        const { year, grade, term, studentType } = req.params;
 
         // Validate required parameters
-        if (!year || !term || !grade) {
-            return res.status(400).json({ message: 'Year, term, and grade are required in the URL path.' });
+        if (!year || !grade || !term || !studentType) {
+            return res.status(400).json({ message: 'Year, grade, term, and studentType are required in the URL path.' });
         }
 
-        // Aggregation pipeline to group by category and calculate total fee amounts
+        // Find matching records
+        const feeDistributions = await FeeDistribution.find({
+            year: year,
+            grade: grade,
+            term: term,
+            studentType: studentType
+        }).select("_id dateDistributed feesCategory feeAmount grade term year studentType");
+
+        // Calculate total fees amount
+        const overallFeesAmount = feeDistributions.reduce((sum, item) => sum + item.feeAmount, 0);
+
+        // Return data with overall fees amount
+        res.status(200).json({
+            overallFeesAmount,
+            feeDistributions
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Get organized fee structure grouped by year and term
+exports.getOrganizedFeeStructure = async (req, res) => {
+    try {
+        const { year, term } = req.params;
+
+        // Validate required parameters
+        if (!year || !term) {
+            return res.status(400).json({ message: 'Year and term are required in the URL path.' });
+        }
+
+        // Aggregation pipeline
         const result = await FeeDistribution.aggregate([
             {
-                $match: { 
-                    grade: grade, 
-                    term: term, 
-                    year: parseInt(year) // Convert year to a number
+                $match: { year: year, term: term } // Filter by year and term
+            },
+            {
+                $group: {
+                    _id: {
+                        grade: "$grade",
+                        feesCategory: "$feesCategory"
+                    },
+                    totalAmount: { $sum: "$feeAmount" }
                 }
             },
             {
                 $group: {
-                    _id: "$feesCategory", // Group by fees category
-                    totalAmount: { $sum: "$feeAmount" } // Calculate total fee amount for each category
+                    _id: "$_id.grade",
+                    feeCategories: {
+                        $push: {
+                            category: "$_id.feesCategory",
+                            amount: "$totalAmount"
+                        }
+                    },
+                    totalFeesAmount: { $sum: "$totalAmount" }
                 }
             },
             {
                 $project: {
-                    _id: 0, // Exclude the default _id field
-                    category: "$_id", // Rename _id to category
-                    totalAmount: 1 // Include totalAmount field
+                    _id: 0,
+                    grade: "$_id",
+                    feeCategories: 1,
+                    totalFeesAmount: 1
                 }
             }
         ]);
@@ -99,3 +143,5 @@ exports.getTotalFeeAmountsByCategory = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+

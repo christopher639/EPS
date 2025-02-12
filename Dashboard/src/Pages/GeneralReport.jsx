@@ -8,7 +8,7 @@ import { FaFile, FaPrint } from "react-icons/fa";
 
 const GeneralReport = () => {
   const [classValue, setClassValue] = useState("10");
-  const [sideBar, setSideBar] = useState(false); // To control the visibility of the sidebar
+  const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
   const [yearValue, setYearValue] = useState("2024-2025");
   const [termValue, setTermValue] = useState("Term-1");
   const [data, setData] = useState([]);
@@ -193,7 +193,7 @@ const GeneralReport = () => {
       <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
-      <div className="container  bg-gray-100">
+      <div className="container max-w-full  bg-gray-100">
         {/* Top Controls */}
         <div className="flex p-4 justify-between items-center bg-white ">
           <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
@@ -221,13 +221,13 @@ const GeneralReport = () => {
         <div className="grid p-4 gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-2 px-3">
           <input
             type="text"
-            className="text-center max-w-xs text-sm border border-gray-300 py-2 px-3 rounded-md"
+            className="text-center max-w-48 text-sm border border-gray-300 py-2 px-3 rounded-md"
             placeholder="Search"
           />
           <select
             value={classValue}
             onChange={(e) => setClassValue(e.target.value)}
-            className="border max-w-xs border-gray-300 p-2 rounded-md"
+            className="border max-w-48 border-gray-300 p-2 rounded-md"
           >
             <option value="Form3">Form 3</option>
             <option value="Form4">Form 4</option>
@@ -237,7 +237,7 @@ const GeneralReport = () => {
           <select
             value={yearValue}
             onChange={(e) => setYearValue(e.target.value)}
-            className="border max-w-xs border-gray-300 p-2 rounded-md"
+            className="border max-w-48 border-gray-300 p-2 rounded-md"
           >
             <option value="2024-2025">2024-2025</option>
             <option value="2025-2026">2025-2026</option>
@@ -245,7 +245,7 @@ const GeneralReport = () => {
           <select
             value={termValue}
             onChange={(e) => setTermValue(e.target.value)}
-            className="border max-w-xs border-gray-300 p-2 rounded-md"
+            className="border max-w-48 border-gray-300 p-2 rounded-md"
           >
             <option value="Term-1">Term-1</option>
             <option value="Term-2">Term-2</option>
@@ -254,15 +254,15 @@ const GeneralReport = () => {
         </div>
 
         {/* Table Section */}
-        <div className="px-4 grid grid-cols-1 pb-4 max-h-[92vh] overflow-y-auto w-full overflow-x-auto">
+        <div className="px-4 grid grid-cols-1 pb-4 max-h-[80vh] pb-8 overflow-y-auto w-full overflow-x-auto">
           {updatedData.length === 0 ? (
             <p className="text-center text-lg text-gray-500">No data found</p>
           ) : (
             <div id="printableTable">
           <div className="flex w-full mx-3  gap-5 justify-between">
-            <div>
+            {/* <div>
               <img className="w-24 h-24 rounded-full" src={lion} alt="" />
-            </div>
+            </div> */}
             <div className="flex   gap-2">
             <p>SAMGE class </p>
              <p  className="font-semibold ">{classValue}</p>
@@ -280,16 +280,16 @@ const GeneralReport = () => {
             </div>
           </div>
        
-            <table className="w-full table-auto  px-2 border   ">
+            <table className="w-full overflow-x-auto table-auto  px-2 border   ">
               <thead className="sticky top-0 bg-white">
                 <tr  id='bo' className="bg-gray-200">
-                <th id='bo' className="border sticky top-0 bg-white  py-2">Name</th>
-                  <th id='bo' className="border sticky top-0 bg-white  py-2">Reg No</th>
-                  <th id='bo' className="border  sticky top-0 bg-white py-2">Stream</th>
+                <th id='bo' className="border px-3 sticky top-0 bg-white  py-2">Name</th>
+                  <th id='bo' className="border  px-3 sticky top-0 bg-white  py-2">Reg No</th>
+                  <th id='bo' className="border px-3 sticky top-0 bg-white py-2">Stream</th>
                   {subjectTotalsAndAverages.map((subjectStat, index) => (
                     <th id='bo' key={index} className="border sticky top-0 bg-white  py-2">
                       <p className="text-yellow-600">{index + 1}</p>
-                      <p className="px-1 text-sm">{subjectStat.code}</p>
+                      <p className="px-3 text-sm">{subjectStat.code}</p>
                     </th>
                   ))}
                   <th id='bo' className="border sticky top-0 bg-white  py-2">Total</th>
@@ -303,39 +303,39 @@ const GeneralReport = () => {
 
                   return (
                     <tr key={studentIndex} className="hover:bg-gray-100 p-2">
-                      <td className="border  text-left  py-2">{student.studentName}</td>
-                      <td className="border  py-2">{student.regno}</td>
+                      <td className="border  px-3  whitespace-nowrap text-left  py-2">{student.studentName}</td>
+                      <td className="border  px-3 py-2">{student.regno}</td>
                       <td className="border  text-center p-2">{student.stream}</td>
                       {subjectTotalsAndAverages.map((subjectStat, subjectIndex) => {
                         const subject = student.subjects.find((sub) => sub.code === subjectStat.code);
                         return (
-                          <td key={subjectIndex} className="border  py-2">
+                          <td key={subjectIndex} className="border  px-3  py-2">
                             {subject ? subject.avgScore.toFixed(2) : "-"}
                           </td>
                         );
                       })}
-                      <td className="border  py-2">{studentTotal.toFixed(2)}</td>
-                      <td className="border  py-2">{studentAverage.toFixed(2)}</td>
+                      <td className="border  px-3  py-2">{studentTotal.toFixed(2)}</td>
+                      <td className="border  px-3  py-2">{studentAverage.toFixed(2)}</td>
                     </tr>
                   );
                 })}
                 <tr className="font-bold bg-gray-200">
-                  <td colSpan={3} className="border py-2">Total</td>
+                  <td colSpan={3} className="border  px-3 py-2">Total</td>
                   {subjectTotalsAndAverages.map((subjectStat, index) => (
-                    <td key={index} className="border  py-2">
+                    <td key={index} className="border  px-3 py-2">
                       {subjectStat.total.toFixed(2)}
                     </td>
                   ))}
-                  <td className="border py-2">{classStats.total.toFixed(2)}</td>
+                  <td className="border  px-3 py-2">{classStats.total.toFixed(2)}</td>
                 </tr>
-                <tr className="font-bold bg-gray-200">
-                  <td colSpan={3} className="border  py-2">Average</td>
+                <tr className="font-bold  bg-gray-200">
+                  <td colSpan={3} className="border  px-3 py-2">Average</td>
                   {subjectTotalsAndAverages.map((subjectStat, index) => (
-                    <td key={index} className="border  py-2">
+                    <td key={index} className="border   px-3 py-2">
                       {subjectStat.average.toFixed(2)}
                     </td>
                   ))}
-                  <td className="border  py-2">{classStats.average.toFixed(2)}</td>
+                  <td className="border  px-3 py-2">{classStats.average.toFixed(2)}</td>
                 </tr>
               </tbody>
             </table>

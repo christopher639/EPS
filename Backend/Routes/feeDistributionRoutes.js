@@ -17,5 +17,7 @@ router.put('/:id', feeDistributionController.updateFeeDistribution);
 // Delete a fee distribution by ID
 router.delete('/:id', feeDistributionController.deleteFeeDistribution);
 // New route for getting total fee amounts by category
-router.get('/:year/:term/:grade', feeDistributionController.getTotalFeeAmountsByCategory);
+router.get('/:year/:grade/:term/:studentType', feeDistributionController.getFeeDistributionsByGroup);
+
+router.get('/:year/:term', feeDistributionController.getOrganizedFeeStructure);
 module.exports = router;

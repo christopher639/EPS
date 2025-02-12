@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const expenseController = require('../Controllers/expenseController');
-
+const isAdmin = require('../middleware/isAdmin');
 // Create a new expense
 router.post('/', expenseController.createExpense);
 
@@ -15,6 +15,6 @@ router.get('/:id', expenseController.getExpenseById);
 router.put('/:id', expenseController.updateExpense);
 
 // Delete an expense by ID
-router.delete('/:id', expenseController.deleteExpense);
+router.delete('/:id',  expenseController.deleteExpense);
 
 module.exports = router;

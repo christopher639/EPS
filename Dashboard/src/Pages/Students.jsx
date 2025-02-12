@@ -52,7 +52,6 @@ const Students = () => {
         setLoading(false);
       });
   };
-
   // Fetch streams for dropdown
   const fetchStreams = () => {
     axios.get("/api/streams")
@@ -63,12 +62,10 @@ const Students = () => {
         console.log(err);
       });
   };
-
   useEffect(() => {
     getFetchData();
     fetchStreams();
   }, []);
-
   // Handle delete student
   const handleDelete = async (id) => {
     try {
@@ -83,17 +80,13 @@ const Students = () => {
       toast.error("Error deleting student. Please try again.");
     }
   };
-
   // Handle form submission (add or update)
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     // Prepare the data to send
     const payload = { ...formData };
-  
     try {
       let response;
-  
       if (isEditing) {
         // If editing, perform an update (PUT request)
         if (formData.photo instanceof File) {

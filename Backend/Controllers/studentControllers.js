@@ -1,132 +1,91 @@
-const studentModel = require("../models/studentModel");
-const upload = require("../config/upload");  // Import the multer setup
+const Student = require("../models/studentModel");
+const multer = require("multer");
+const path = require("path");
 
-// CREATE - Add new student
-exports.createStudent = (req, res) => {
-  // First, handle the image upload
-  upload(req, res, async (err) => {
-    if (err) {
-      return res.status(400).json({
-        message: "Error uploading image",
-        error: err.message,
-      });
-    }
+// Multer Configuration for Image Upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Ensure this folder exists
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
 
-    // Ensure that the regno is provided
-    if (!req.body.regno) {
-      return res.status(400).json({
-        message: "regNo Number is required",
-      });
-    }
+const upload = multer({ storage: storage });
 
-    // Check for duplicates based on email or regno
-    const existingStudent = await studentModel.findOne({
-      $or: [{ email: req.body.email }, { regno: req.body.regno }],
+// 📌 Create Student
+exports.createStudent = async (req, res) => {
+  try {
+    const { name, email, regno } = req.body;
+    const photo = req.file ? req.file.filename : null;
+
+    const newStudent = new Student({
+      ...req.body,
+      photo: photo,
     });
 
-    if (existingStudent) {
-      return res.status(400).json({
-        message: "Email or Regno already exists",
-      });
-    }
-
-    // Add the image path to the student's photo field if it exists
-    if (req.file) {
-      req.body.photo = `/uploads/${req.file.filename}`; // Assuming you serve static files from 'uploads/' folder
-    }
-
-    // If no duplicates, create a new student
-    try {
-      const student = new studentModel(req.body);
-      await student.save();
-      res.status(201).json({
-        message: "Student created successfully",
-        student,
-      });
-    } catch (error) {
-      res.status(500).json({
-        message: "Error creating student",
-        error: error.message,
-      });
-    }
-  });
+    await newStudent.save();
+    res.status(201).json({ message: "Student added successfully", student: newStudent });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-// READ - Get all students
-exports.getAllStudents = async (req, res) => {
+// 📌 Get All Students
+exports.getStudents = async (req, res) => {
   try {
-    const students = await studentModel.find();
+    const students = await Student.find();
     res.status(200).json(students);
   } catch (error) {
-    res.status(500).json({
-      message: "Error fetching students",
-      error: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
-// READ - Get a single student by ID
+// 📌 Get Single Student
 exports.getStudentById = async (req, res) => {
   try {
-    const student = await studentModel.findById(req.params.id);
-    if (!student) {
-      return res.status(404).json({
-        message: "Student not found",
-      });
-    }
+    const student = await Student.findById(req.params.id);
+    if (!student) return res.status(404).json({ message: "Student not found" });
+
     res.status(200).json(student);
   } catch (error) {
-    res.status(500).json({
-      message: "Error fetching student",
-      error: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
-// UPDATE - Update student information
+// 📌 Update Student
 exports.updateStudent = async (req, res) => {
   try {
-    const student = await studentModel.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!student) {
-      return res.status(404).json({
-        message: "Student not found",
-      });
+    const student = await Student.findById(req.params.id);
+    if (!student) return res.status(404).json({ message: "Student not found" });
+
+    if (req.file) {
+      req.body.photo = req.file.filename;
     }
-    res.status(200).json({
-      message: "Student updated successfully",
-      student,
-    });
+
+    const updatedStudent = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.status(200).json({ message: "Student updated successfully", student: updatedStudent });
   } catch (error) {
-    res.status(500).json({
-      message: "Error updating student",
-      error: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
-// DELETE - Delete a student
+// 📌 Delete Student
 exports.deleteStudent = async (req, res) => {
   try {
-    const student = await studentModel.findByIdAndDelete(req.params.id);
-    if (!student) {
-      return res.status(404).json({
-        message: "Student not found",
-      });
-    }
-    res.status(200).json({
-      message: "Student deleted successfully",
-    });
+    const student = await Student.findById(req.params.id);
+    if (!student) return res.status(404).json({ message: "Student not found" });
+
+    await Student.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Student deleted successfully" });
   } catch (error) {
-    res.status(500).json({
-      message: "Error deleting student",
-      error: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 };
+
+// Export multer middleware
+exports.upload = upload;
 
 // READ - Get students by stream and year
 exports.getStudentsByStreamAndYear = async (req, res) => {
