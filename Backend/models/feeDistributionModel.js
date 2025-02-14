@@ -10,11 +10,9 @@ const feeDistributionSchema = new mongoose.Schema({
     grade:
      { type: String },
     term:
-     { type: String },
-    year:
-     { type: String },
-    studentType: 
-    { type: String }
+     { type: String }
+},{
+    timestamps:true
 });
 
 const FeeDistribution = mongoose.model('FeeDistribution', feeDistributionSchema);

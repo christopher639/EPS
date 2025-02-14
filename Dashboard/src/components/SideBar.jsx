@@ -136,7 +136,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                   className="flex items-center justify-start gap-6 py-2 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
                 >
                   {item.icon}
-                  {!isSidebarCollapsed && <span>Finance</span>}
+                  {!isSidebarCollapsed && <span>Financials</span>}
                   {isFinanceOpen ? <FaChevronDown className="text-xl" /> : <FaChevronRight className="text-xl" />}
                 </div>
                 <div
@@ -150,9 +150,13 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     <FaFileAlt className="text-white text-2xl" />
                     {!isSidebarCollapsed && <span className="pl-4">Fees Structure</span>}
                   </NavLink>
-                  <NavLink to="" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
+                  <NavLink to="/fees-payments" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
                     <FaFileAlt className="text-white text-2xl" />
                     {!isSidebarCollapsed && <span className="pl-4">Fees Payments</span>}
+                  </NavLink>
+                  <NavLink to="/learner" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
+                    <FaFileAlt className="text-white text-2xl" />
+                    {!isSidebarCollapsed && <span className="pl-4">Fees Balances</span>}
                   </NavLink>
                   <NavLink to="/expenses" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
                     <FaFileAlt className="text-white text-2xl" />

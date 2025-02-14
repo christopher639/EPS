@@ -7,7 +7,6 @@ const feesPaymentSchema = new mongoose.Schema({
     paymentMethod: { type: String, required: true },
     receiptNumber: { type: String, required: true, unique: true },
     paidBy: { type: String, required: true },
-    remarks: { type: String }
 });
 
 const FeesPayment = mongoose.model('FeesPayment', feesPaymentSchema);

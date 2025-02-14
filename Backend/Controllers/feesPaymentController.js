@@ -58,3 +58,79 @@ exports.deleteFeesPayment = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.getPaymentsWithStudentDetails = async (req, res) => {
+    try {
+        // Fetch payments with student details
+        const paymentsWithStudents = await FeesPayment.aggregate([
+            {
+                $lookup: {
+                    from: "students", // Ensure this matches your students collection name
+                    localField: "regno",
+                    foreignField: "regno",
+                    as: "studentDetails"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$studentDetails",
+                    preserveNullAndEmptyArrays: true // Keeps payments even if no student is found
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    regno: 1,
+                    paymentDate: 1,
+                    amountPaid: 1,
+                    paymentMethod: 1,
+                    receiptNumber: 1,
+                    paidBy: 1,
+                    remarks: 1,
+                    "studentDetails.name": 1,
+                    "studentDetails.stream": 1,
+                    "studentDetails.class": 1
+                }
+            }
+        ]);
+
+        // Calculate total fees paid across all students
+        const totalFees = await FeesPayment.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: "$amountPaid" } // Sum all payments
+                }
+            }
+        ]);
+
+        const totalAmountPaid = totalFees.length > 0 ? totalFees[0].totalAmount : 0;
+
+        // Send response including payments and total fees
+        res.status(200).json({
+            totalFeesPaid: totalAmountPaid,
+            payments: paymentsWithStudents
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
+// Get fees payment records by Reg No.
+exports.getFeesPaymentsByRegNo = async (req, res) => {
+    try {
+        const { regno } = req.params;
+        const feesPayments = await FeesPayment.find({ regno });
+
+        if (!feesPayments.length) {
+            return res.status(404).json({ message: "No payment records found for this registration number" });
+        }
+
+        res.status(200).json(feesPayments);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

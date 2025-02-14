@@ -2,22 +2,16 @@ const express = require('express');
 const router = express.Router();
 const feeDistributionController = require('../Controllers/feeDistributionController');
 
-// Create a new fee distribution
+// 📌 FIX: Place specific routes before dynamic ones to avoid conflicts
+router.get('/feeStructure', feeDistributionController.getFeeStructureByGrade);
+router.get('/:grade/:term/:studentType', feeDistributionController.getFeeDistributionsByGroup);
+
+// CRUD Routes
 router.post('/', feeDistributionController.createFeeDistribution);
-
-// Get all fee distributions
 router.get('/', feeDistributionController.getAllFeeDistributions);
-
-// Get a single fee distribution by ID
 router.get('/:id', feeDistributionController.getFeeDistributionById);
-
-// Update a fee distribution by ID
 router.put('/:id', feeDistributionController.updateFeeDistribution);
-
-// Delete a fee distribution by ID
 router.delete('/:id', feeDistributionController.deleteFeeDistribution);
-// New route for getting total fee amounts by category
-router.get('/:year/:grade/:term/:studentType', feeDistributionController.getFeeDistributionsByGroup);
+router.get('/student/:grade', feeDistributionController.getFeeStructureByStudentGrade);
 
-router.get('/:year/:term', feeDistributionController.getOrganizedFeeStructure);
 module.exports = router;

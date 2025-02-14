@@ -1,6 +1,6 @@
 const FeeDistribution = require('../models/feeDistributionModel');
 
-// Create a new fee distribution
+// 📌 Create a new fee distribution
 exports.createFeeDistribution = async (req, res) => {
     try {
         const newFeeDistribution = new FeeDistribution(req.body);
@@ -11,7 +11,7 @@ exports.createFeeDistribution = async (req, res) => {
     }
 };
 
-// Get all fee distributions
+// 📌 Get all fee distributions
 exports.getAllFeeDistributions = async (req, res) => {
     try {
         const feeDistributions = await FeeDistribution.find();
@@ -21,7 +21,7 @@ exports.getAllFeeDistributions = async (req, res) => {
     }
 };
 
-// Get a single fee distribution by ID
+// 📌 Get a single fee distribution by ID
 exports.getFeeDistributionById = async (req, res) => {
     try {
         const feeDistribution = await FeeDistribution.findById(req.params.id);
@@ -34,10 +34,12 @@ exports.getFeeDistributionById = async (req, res) => {
     }
 };
 
-// Update a fee distribution by ID
+// 📌 Update a fee distribution by ID
 exports.updateFeeDistribution = async (req, res) => {
     try {
-        const updatedFeeDistribution = await FeeDistribution.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedFeeDistribution = await FeeDistribution.findByIdAndUpdate(
+            req.params.id, req.body, { new: true }
+        );
         if (!updatedFeeDistribution) {
             return res.status(404).json({ message: 'Fee distribution not found' });
         }
@@ -47,7 +49,7 @@ exports.updateFeeDistribution = async (req, res) => {
     }
 };
 
-// Delete a fee distribution by ID
+// 📌 Delete a fee distribution by ID
 exports.deleteFeeDistribution = async (req, res) => {
     try {
         const deletedFeeDistribution = await FeeDistribution.findByIdAndDelete(req.params.id);
@@ -60,81 +62,80 @@ exports.deleteFeeDistribution = async (req, res) => {
     }
 };
 
-// Get fee distributions and overall fee amount by year, grade, term, and studentType
+// 📌 Get total fee amounts by grade, term, and studentType
 exports.getFeeDistributionsByGroup = async (req, res) => {
     try {
-        const { year, grade, term, studentType } = req.params;
+        const { grade, term, studentType } = req.params;
 
-        // Validate required parameters
-        if (!year || !grade || !term || !studentType) {
-            return res.status(400).json({ message: 'Year, grade, term, and studentType are required in the URL path.' });
+        if (!grade || !term || !studentType) {
+            return res.status(400).json({ message: "Grade, term, and studentType are required in the URL path." });
         }
 
-        // Find matching records
         const feeDistributions = await FeeDistribution.find({
-            year: year,
             grade: grade,
             term: term,
             studentType: studentType
-        }).select("_id dateDistributed feesCategory feeAmount grade term year studentType");
+        }).select("_id dateDistributed feesCategory feeAmount grade term studentType").lean();
 
-        // Calculate total fees amount
-        const overallFeesAmount = feeDistributions.reduce((sum, item) => sum + item.feeAmount, 0);
+        if (!feeDistributions.length) {
+            return res.status(404).json({ message: "No fee distributions found for the given criteria." });
+        }
 
-        // Return data with overall fees amount
+        const overallFeesAmount = feeDistributions.reduce((sum, item) => sum + (item.feeAmount || 0), 0);
+
         res.status(200).json({
             overallFeesAmount,
             feeDistributions
         });
 
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Error in getFeeDistributionsByGroup:", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 };
 
-// Get organized fee structure grouped by year and term
-exports.getOrganizedFeeStructure = async (req, res) => {
+// 📌 Get fee structure for every grade across all terms
+exports.getFeeStructureByGrade = async (req, res) => {
     try {
-        const { year, term } = req.params;
-
-        // Validate required parameters
-        if (!year || !term) {
-            return res.status(400).json({ message: 'Year and term are required in the URL path.' });
-        }
-
-        // Aggregation pipeline
         const result = await FeeDistribution.aggregate([
-            {
-                $match: { year: year, term: term } // Filter by year and term
-            },
             {
                 $group: {
                     _id: {
                         grade: "$grade",
-                        feesCategory: "$feesCategory"
+                        term: "$term"
                     },
-                    totalAmount: { $sum: "$feeAmount" }
+                    totalAmountPerTerm: { $sum: "$feeAmount" },
+                    feeCategories: {
+                        $push: {
+                            category: "$feesCategory",
+                            amount: "$feeAmount"
+                        }
+                    }
                 }
             },
             {
                 $group: {
                     _id: "$_id.grade",
-                    feeCategories: {
+                    terms: {
                         $push: {
-                            category: "$_id.feesCategory",
-                            amount: "$totalAmount"
+                            term: "$_id.term",
+                            totalAmount: "$totalAmountPerTerm",
+                            feeCategories: "$feeCategories"
                         }
                     },
-                    totalFeesAmount: { $sum: "$totalAmount" }
+                    totalAmountAllTerms: { $sum: "$totalAmountPerTerm" }
                 }
             },
             {
                 $project: {
                     _id: 0,
                     grade: "$_id",
-                    feeCategories: 1,
-                    totalFeesAmount: 1
+                    terms: 1,
+                    totalAmountAllTerms: 1
                 }
+            },
+            {
+                $sort: { grade: 1 }
             }
         ]);
 
@@ -144,4 +145,59 @@ exports.getOrganizedFeeStructure = async (req, res) => {
     }
 };
 
+exports.getFeeStructureByStudentGrade = async (req, res) => {
+    try {
+        const { grade } = req.params;
 
+        // Find the fee structure for the given grade
+        const feeStructure = await FeeDistribution.aggregate([
+            {
+                $match: { grade: grade }
+            },
+            {
+                $group: {
+                    _id: {
+                        grade: "$grade",
+                        term: "$term"
+                    },
+                    totalAmountPerTerm: { $sum: "$feeAmount" },
+                    feeCategories: {
+                        $push: {
+                            category: "$feesCategory",
+                            amount: "$feeAmount"
+                        }
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: "$_id.grade",
+                    terms: {
+                        $push: {
+                            term: "$_id.term",
+                            totalAmount: "$totalAmountPerTerm",
+                            feeCategories: "$feeCategories"
+                        }
+                    },
+                    totalAmountAllTerms: { $sum: "$totalAmountPerTerm" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    grade: "$_id",
+                    terms: 1,
+                    totalAmountAllTerms: 1
+                }
+            }
+        ]);
+
+        if (!feeStructure.length) {
+            return res.status(404).json({ message: "Fee structure not found for this grade" });
+        }
+
+        res.status(200).json(feeStructure[0]); // Return only the first matching grade
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

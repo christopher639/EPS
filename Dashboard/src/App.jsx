@@ -32,6 +32,10 @@ import StudentPerStream from "./Pages/StudentPerStream";
 import Expenses from "./Pages/Expenses";
 import FeesDistribution from "./Pages/FeesDistribution";
 import FeeStructure from "./Pages/FeeStructure";
+import FeesPayment from "./Pages/FeesPayment";
+import LearnerManagement from "./Pages/LearnerManagement";
+import LearnerDetail from "./Pages/LearnerDetail";
+
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -94,6 +98,9 @@ const App = () => {
           <Route path="/fees-structure" element={isAuthenticated ? <FeeStructure/> : <Navigate to="/login" />} />
           
           <Route path="/students/:streamName/:year" element={<StudentPerStream/>} />
+          <Route path="/fees-payments" element={isAuthenticated ? <FeesPayment/> : <Navigate to="/login" />} />
+          <Route path="/learner" element={isAuthenticated ? <LearnerManagement/> : <Navigate to="/login" />} />
+          <Route path="/learner/:id"  element={isAuthenticated ? <LearnerDetail /> : <Navigate to="/login" />} /> 
         </Routes>
       </div>
    

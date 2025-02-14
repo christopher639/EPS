@@ -27,6 +27,8 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 const Finance = () => {
   const [sideBar, setSideBar] = useState(true); // State to manage sidebar visibility
   const [expenses, setExpenses] = useState([]);
+  const [totalFeesPaid, setTotalFeesPaid] = useState(0);
+  const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
 
    // Fetch all expenses from the backend
@@ -40,20 +42,33 @@ const Finance = () => {
     }
     setLoading(false);
   };
+   // Fetch payments from API
+   const fetchPayments = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get("/api/fees-payments");
+      setPayments(res.data.payments);
+      setTotalFeesPaid(res.data.totalFeesPaid);
+    } catch (error) {
+      console.error("Failed to fetch payments", error);
+    }
+    setLoading(false);
+  };
+
 
   useEffect(() => {
     fetchExpenses();
+    fetchPayments();
   }, []);
-
   // Calculate total expense amount
   const totalExpense = expenses.reduce((total, expense) => total + expense.amount, 0);
 
   // Dummy data for demonstration
   const feeDistribution = {
-    expectedFees: 5000000,
+    expectedFees: 0,
     paidFees: 500000,
-    pendingFees: 120000,
-    overdueFees: 80000,
+    pendingFees: 0,
+    overdueFees: 0,
     feeCategories: [
       { name: 'Tuition', amount: 300000 },
       { name: 'Transport', amount: 100000 },
@@ -166,22 +181,24 @@ const Finance = () => {
                 </div>
               </div>
               <div className='bg-white p-6 rounded-lg '>
-                <div className='flex items-center justify-between'>
+              <NavLink to="/fees-payments">
+              <div className='flex items-center justify-between'>
                   <div>
                     <p className='text-gray-600'>Total Fees Collected</p>
                     <p className='text-xl font-bold text-gray-800'>
-                      Ksh {feeDistribution.paidFees.toLocaleString()}
+                  Ksh   {new Intl.NumberFormat("en-US").format(totalFeesPaid)}
                     </p>
                   </div>
                   <FaFileInvoiceDollar className='text-2xl text-blue-500' />
                 </div>
+              </NavLink>
               </div>
               <div className='bg-white p-6 rounded-lg '>
                 <div className='flex items-center justify-between'>
                   <div>
                     <p className='text-gray-600'>Pending Fees</p>
                     <p className='text-xl font-bold text-gray-800'>
-                      Ksh {(feeDistribution.expectedFees - feeDistribution.paidFees).toLocaleString()}
+                      Ksh 0.00
                     </p>
                   </div>
                   <FaMoneyCheckAlt className='text-2xl text-yellow-500' />
@@ -222,7 +239,7 @@ const Finance = () => {
                   <div>
                     <p className='text-gray-600'>Total Income</p>
                     <p className='text-xl font-bold text-gray-800'>
-                      Ksh {(feeDistribution.paidFees - totalExpense).toLocaleString()}
+                      Ksh {(totalFeesPaid - totalExpense).toLocaleString()}
                     </p>
                   </div>
                   <FaBell className='text-2xl text-red-500' />

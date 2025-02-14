@@ -6,7 +6,7 @@ const feesPaymentController = require('../Controllers/feesPaymentController');
 router.post('/', feesPaymentController.createFeesPayment);
 
 // Get all fees payment records
-router.get('/', feesPaymentController.getAllFeesPayments);
+router.get('/', feesPaymentController.getPaymentsWithStudentDetails);
 
 // Get a single fees payment record by ID
 router.get('/:id', feesPaymentController.getFeesPaymentById);
@@ -16,5 +16,7 @@ router.put('/:id', feesPaymentController.updateFeesPayment);
 
 // Delete a fees payment record by ID
 router.delete('/:id', feesPaymentController.deleteFeesPayment);
+// Get fees payments by Reg No.
+router.get("/regno/:regno", feesPaymentController.getFeesPaymentsByRegNo);
 
 module.exports = router;

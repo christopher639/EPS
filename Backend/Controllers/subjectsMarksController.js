@@ -185,7 +185,7 @@ exports.deleteSubjectMark = async (req, res) => {
 //       },
 //       {
 //         $lookup: {
-//           from: "students",  // Assuming the student model is in the "students" collection
+//           from: "learners",  // Assuming the student model is in the "learners" collection
 //           localField: "regno",
 //           foreignField: "regno",
 //           as: "studentData",
@@ -350,9 +350,9 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
       // Lookup student details based on the student's regno
       {
         $lookup: {
-          from: "students",  // Lookup from the "students" collection
+          from: "learners",  // Lookup from the "learners" collection
           localField: "regno",  // Local field to match (student regno)
-          foreignField: "regno", // Foreign field in the "students" collection
+          foreignField: "regno", // Foreign field in the "learners" collection
           as: "studentData",  // Store student data in "studentData" field
         },
       },
@@ -372,9 +372,9 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
       // Lookup student details based on the student's regno
       {
         $lookup: {
-          from: "students",  // Lookup from the "students" collection
+          from: "learners",  // Lookup from the "learners" collection
           localField: "regno",  // Local field to match (student regno)
-          foreignField: "regno", // Foreign field in the "students" collection
+          foreignField: "regno", // Foreign field in the "learners" collection
           as: "studentPhoto",  // Store student data in "studentData" field
         },
       },
@@ -386,7 +386,7 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
       },
       {
         $addFields: {
-          studentImage: { $ifNull: ["$studentPhoto.photo", null] },  // Add student name, if available
+          studentImage: { $ifNull: ["$studentPhoto.learnerImage", null] },  // Add student name, if available
         },
       },
       //
@@ -537,9 +537,9 @@ exports.getSubjectMarksByClassYearTerm = async (req, res) => {
 //       },
 //       {
 //         $lookup: {
-//           from: "students",  // Assuming the student model is in the "students" collection
+//           from: "learners",  // Assuming the student model is in the "learners" collection
 //           localField: "regno",  // Match based on regno
-//           foreignField: "regno", // Match regno in the students collection
+//           foreignField: "regno", // Match regno in the learners collection
 //           as: "studentData"  // Name of the new array field to store the student data
 //         },
 //       },
@@ -662,7 +662,7 @@ exports.getSubjectMarksByClassYearTermCategory = async (req, res) => {
       },
       {
         $lookup: {
-          from: "students",  // Lookup student details
+          from: "learners",  // Lookup student details
           localField: "regno",
           foreignField: "regno",
           as: "studentData",
@@ -828,7 +828,7 @@ exports.getStudentPerformanceByRegno = async (req, res) => {
       },
       {
         $lookup: {
-          from: "students",  // Lookup student details
+          from: "learners",  // Lookup student details
           localField: "regno",
           foreignField: "regno",
           as: "studentData",

@@ -22,6 +22,7 @@ const subjectMarksRoutes = require("./Routes/subjectMarksRoutes");
 const teacherRoutes = require('./Routes/teacherRoutes');
 const expenseRoutes = require('./Routes/expenseRoutes');
 const feesPaymentRoutes = require('./Routes/feesPaymentRoutes'); 
+const learnerRoutes = require("./Routes/LearnerRoutes");
 // using Routes
 app.use('/api/fees-payments', feesPaymentRoutes);
 app.use('/api/expenses', expenseRoutes); 
@@ -30,6 +31,7 @@ app.use("/api/streams", streamRoutes);
 app.use('/api/learning-areas', learningAreaRoutes);
 app.use("/api/students",studentRoutes);
 app.use('/api/users', userRoutes);
+app.use("/api/learners", learnerRoutes);
 app.use('/api/departments', departmentRoutes);
 app.use('/api/teachers', teacherRoutes);
 app.use("/uploads", express.static("uploads")); // To serve uploaded images

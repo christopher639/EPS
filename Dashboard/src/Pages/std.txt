@@ -1,0 +1,331 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+
+axios.defaults.baseURL = "http://localhost:3000";
+
+const LearnerManagement = () => {
+  const [learners, setLearners] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false); // State for update modal
+  const [selectedLearner, setSelectedLearner] = useState(null);
+  const [learnerToUpdate, setLearnerToUpdate] = useState(null); // State for learner to update
+  const [newLearner, setNewLearner] = useState({
+    name: "",
+    regNo: "",
+    grade: "",
+    stream: "",
+    gender: "",
+    dateOfBirth: "",
+    nationality: "",
+    guardianName: "",
+    guardianPhone: "",
+    address: "",
+    learnerImage: null,
+  });
+
+  const navigate = useNavigate();
+
+  // Add this function to handle row click
+  const handleRowClick = (learnerId) => {
+    navigate(`/learner/${learnerId}`);
+  };
+
+  // Fetch all learners
+  useEffect(() => {
+    fetchLearners();
+  }, []);
+
+  const fetchLearners = async () => {
+    try {
+      const response = await axios.get("/api/learners");
+      setLearners(response.data.learners);
+    } catch (error) {
+      console.error("Error fetching learners:", error);
+      toast.error("Failed to fetch learners");
+    }
+  };
+
+  // Handle file input change
+  const handleFileChange = (e) => {
+    setNewLearner({ ...newLearner, learnerImage: e.target.files[0] });
+  };
+
+  // Handle input change for adding a new learner
+  const handleChange = (e) => {
+    setNewLearner({ ...newLearner, [e.target.name]: e.target.value });
+  };
+
+  // Add a new learner
+  const addLearner = async () => {
+    const formData = new FormData();
+    Object.keys(newLearner).forEach((key) => {
+      formData.append(key, newLearner[key]);
+    });
+
+    try {
+      await axios.post("/api/learners/add", formData);
+      setModalOpen(false);
+      fetchLearners();
+      toast.success("Learner added successfully!");
+    } catch (error) {
+      console.error("Error adding learner:", error);
+      toast.error("Failed to add learner");
+    }
+  };
+
+  // Delete a learner
+  const deleteLearner = async (id) => {
+    try {
+      await axios.delete(`/api/learners/${id}`);
+      setDeleteModalOpen(false);
+      fetchLearners();
+      toast.success("Learner deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting learner:", error);
+      toast.error("Failed to delete learner");
+    }
+  };
+
+  // Open update modal and set learner to update
+  const handleUpdateClick = (learner) => {
+    setLearnerToUpdate({
+      ...learner,
+      learnerImage: null, // Reset the image to allow for a new upload
+    });
+    setUpdateModalOpen(true);
+  };
+
+  // Handle input change for updating a learner
+  const handleUpdateChange = (e) => {
+    setLearnerToUpdate({ ...learnerToUpdate, [e.target.name]: e.target.value });
+  };
+
+  // Handle file input change for updating a learner
+  const handleUpdateFileChange = (e) => {
+    setLearnerToUpdate({ ...learnerToUpdate, learnerImage: e.target.files[0] });
+  };
+
+  // Update a learner
+  const updateLearner = async () => {
+    const formData = new FormData();
+    Object.keys(learnerToUpdate).forEach((key) => {
+      if (key !== "learnerImage" || learnerToUpdate[key] !== null) {
+        formData.append(key, learnerToUpdate[key]);
+      }
+    });
+
+    try {
+      await axios.put(`/api/learners/${learnerToUpdate._id}`, formData);
+      setUpdateModalOpen(false);
+      fetchLearners();
+      toast.success("Learner updated successfully!");
+    } catch (error) {
+      console.error("Error updating learner:", error);
+      toast.error("Failed to update learner");
+    }
+  };
+
+  return (
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <ToastContainer />
+
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-semibold">Learner Management</h1>
+        <button
+          onClick={() => setModalOpen(true)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          Add Learner
+        </button>
+      </div>
+
+      {/* Add Learner Modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white w-3/4 p-6 grid grid-cols-1 md:grid-cols-3 gap-5 rounded-lg shadow-lg">
+            <input type="text" name="name" placeholder="Name" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="text" name="regNo" placeholder="Registration Number" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="text" name="grade" placeholder="Grade" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="text" name="stream" placeholder="Stream" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <select name="gender" className="border p-2 w-full mb-2" onChange={handleChange} required>
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <input type="date" name="dateOfBirth" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="text" name="nationality" placeholder="Nationality" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="text" name="guardianName" placeholder="Guardian Name" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="text" name="guardianPhone" placeholder="Guardian Phone" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="text" name="address" placeholder="Address" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="file" className="border p-2 w-full mb-2" onChange={handleFileChange} required />
+            {newLearner.learnerImage && (
+              <img src={URL.createObjectURL(newLearner.learnerImage)} alt="Preview" className="w-full h-32 object-cover mb-2" />
+            )}
+            <div className="flex justify-end">
+              <button
+                onClick={addLearner}
+                className="bg-green-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-green-700 transition"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Update Learner Modal */}
+      {updateModalOpen && learnerToUpdate && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white w-3/4 p-6 grid grid-cols-1 md:grid-cols-3 gap-5 rounded-lg shadow-lg">
+            <input type="text" name="name" placeholder="Name" className="border p-2 w-full mb-2" value={learnerToUpdate.name} onChange={handleUpdateChange} required />
+            <input type="text" name="regNo" placeholder="Registration Number" className="border p-2 w-full mb-2" value={learnerToUpdate.regNo} onChange={handleUpdateChange} required />
+            <input type="text" name="grade" placeholder="Grade" className="border p-2 w-full mb-2" value={learnerToUpdate.grade} onChange={handleUpdateChange} required />
+            <input type="text" name="stream" placeholder="Stream" className="border p-2 w-full mb-2" value={learnerToUpdate.stream} onChange={handleUpdateChange} required />
+            <select name="gender" className="border p-2 w-full mb-2" value={learnerToUpdate.gender} onChange={handleUpdateChange} required>
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <input type="date" name="dateOfBirth" className="border p-2 w-full mb-2" value={learnerToUpdate.dateOfBirth} onChange={handleUpdateChange} required />
+            <input type="text" name="nationality" placeholder="Nationality" className="border p-2 w-full mb-2" value={learnerToUpdate.nationality} onChange={handleUpdateChange} required />
+            <input type="text" name="guardianName" placeholder="Guardian Name" className="border p-2 w-full mb-2" value={learnerToUpdate.guardianName} onChange={handleUpdateChange} required />
+            <input type="text" name="guardianPhone" placeholder="Guardian Phone" className="border p-2 w-full mb-2" value={learnerToUpdate.guardianPhone} onChange={handleUpdateChange} required />
+            <input type="text" name="address" placeholder="Address" className="border p-2 w-full mb-2" value={learnerToUpdate.address} onChange={handleUpdateChange} required />
+            <input type="file" className="border p-2 w-full mb-2" onChange={handleUpdateFileChange} />
+            {learnerToUpdate.learnerImage && (
+              <img
+                src={
+                  learnerToUpdate.learnerImage instanceof File
+                    ? URL.createObjectURL(learnerToUpdate.learnerImage)
+                    : `http://localhost:3000${learnerToUpdate.learnerImage}`
+                }
+                alt="Preview"
+                className="w-full h-32 object-cover mb-2"
+              />
+            )}
+            <div className="flex justify-end">
+              <button
+                onClick={updateLearner}
+                className="bg-green-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-green-700 transition"
+              >
+                Update
+              </button>
+              <button
+                onClick={() => setUpdateModalOpen(false)}
+                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Learners List */}
+      <div className="bg-white shadow-lg rounded-lg p-4">
+        <h2 className="text-xl font-semibold mb-4">Learner List</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-gray-300 p-2">Image</th>
+                <th className="border border-gray-300 p-2">Name</th>
+                <th className="border border-gray-300 p-2">Reg No</th>
+                <th className="border border-gray-300 p-2">Grade</th>
+                <th className="border border-gray-300 p-2">Stream</th>
+                <th className="border border-gray-300 p-2">Gender</th>
+                <th className="border border-gray-300 p-2">DOB</th>
+                <th className="border border-gray-300 p-2">Nationality</th>
+                <th className="border border-gray-300 p-2">Guardian</th>
+                <th className="border border-gray-300 p-2">Phone</th>
+                <th className="border border-gray-300 p-2">Address</th>
+                <th className="border border-gray-300 p-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {learners.map((learner) => (
+                <tr
+                key={learner._id}
+                className="text-center hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleRowClick(learner._id)} // Navigate to LearnerDetail
+              >
+                  <td className="border border-gray-300 p-2">
+                    <img
+                      src={`http://localhost:3000${learner.learnerImage}`}
+                      alt={learner.name}
+                      className="w-16 h-16 object-cover rounded-md"
+                    />
+                  </td>
+                  <td className="border border-gray-300 p-2">{learner.name}</td>
+                  <td className="border border-gray-300 p-2">{learner.regNo}</td>
+                  <td className="border border-gray-300 p-2">{learner.grade}</td>
+                  <td className="border border-gray-300 p-2">{learner.stream}</td>
+                  <td className="border border-gray-300 p-2">{learner.gender}</td>
+                  <td className="border border-gray-300 p-2">{new Date(learner.dateOfBirth).toLocaleDateString()}</td>
+                  <td className="border border-gray-300 p-2">{learner.nationality}</td>
+                  <td className="border border-gray-300 p-2">{learner.guardianName}</td>
+                  <td className="border border-gray-300 p-2">{learner.guardianPhone}</td>
+                  <td className="border border-gray-300 p-2">{learner.address}</td>
+                  <td className="border flex gap-2 border-gray-300 p-2">
+                    <button
+                      onClick={() => handleUpdateClick(learner)}
+                      className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition mr-2"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSelectedLearner(learner);
+                        setDeleteModalOpen(true);
+                      }}
+                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteModalOpen && selectedLearner && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+            <h2 className="text-xl font-semibold mb-4">
+              Are you sure you want to delete {selectedLearner.name}?
+            </h2>
+            <div className="flex justify-end">
+              <button
+                onClick={() => deleteLearner(selectedLearner._id)}
+                className="bg-red-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-red-700 transition"
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={() => setDeleteModalOpen(false)}
+                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default LearnerManagement;

@@ -12,20 +12,19 @@ const FeesStructures = () => {
   const [sideBar, setSideBar] = useState(true);
   const [fees, setFees] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filterGrade, setFilterGrade] = useState(""); // State for filtering
-  const [filteredFees, setFilteredFees] = useState([]); // State for filtered fees
+  const [filterGrade, setFilterGrade] = useState("");
+  const [filteredFees, setFilteredFees] = useState([]);
 
   useEffect(() => {
     fetchFeesStructures();
   }, []);
 
-
   const fetchFeesStructures = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/fee-distributions/2025/FirstTerm");
+      const res = await axios.get("/api/fee-distributions/feeStructure");
       setFees(res.data);
-      setFilteredFees(res.data); // Initially, show all fees
+      setFilteredFees(res.data); 
     } catch (error) {
       toast.error("Failed to fetch fees structures");
     }
@@ -38,29 +37,19 @@ const FeesStructures = () => {
 
   const handleFilter = () => {
     if (filterGrade.trim() === "") {
-      setFilteredFees(fees); // If no grade is entered, show all fees
+      setFilteredFees(fees);
     } else {
-      const filtered = fees.filter(fee => fee.grade.toLowerCase() === filterGrade.toLowerCase());
+      const filtered = fees.filter(
+        (fee) => fee.grade.toLowerCase() === filterGrade.toLowerCase()
+      );
       setFilteredFees(filtered);
     }
   };
+
   const handlePrint = () => {
     const printContent = document.getElementById("printableTable").innerHTML;
     const printWindow = window.open("", "", "height=600,width=800");
-
-    // Function to add background colors to odd and even rows
-    const addRowBackgroundColors = (content) => {
-      const rows = content.querySelectorAll('tr');
-      rows.forEach((row, index) => {
-        if (index % 2 === 0) {
-          row.style.backgroundColor = '#e6f7ff'; // Light blue for even rows
-        } else {
-          row.style.backgroundColor = '#f0f8ff'; // Lighter blue for odd rows
-        }
-      });
-      return content;
-    };
-
+  
     // Gather all styles from the current page, including any dynamically applied ones
     const styles = Array.from(document.styleSheets)
       .map((sheet) => {
@@ -73,39 +62,55 @@ const FeesStructures = () => {
         }
       })
       .join("\n");
-
+  
     // Write the styles and content to the print window
     printWindow.document.write("<html><head><title>Print</title>");
-    printWindow.document.write(`
-      <style>
-        ${styles}
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          border: 2px solid #4a90e2;
+    printWindow.document.write(`<style>${styles}
+      /* Reduce text size and adjust layout for printing */
+      body {
+        font-size: 16px !important; /* Smaller font size */
+        margin: 0;
+        padding: 0;
+      }
+      table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+      }
+      th, td {
+        padding: 5px !important; /* Reduce padding */
+        font-size: 14px !important; /* Smaller font size */
+      }
+      #bo { border: 1px solid black; }
+      #floating-stamp {
+        position: absolute;
+        bottom: 1.25rem; /* 5 * 0.25rem */
+        right: 180px; /* Position from the right */
+        transform: rotate(-12deg);
+        background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent */
+        border: 2px solid #1e40af; /* border-blue-900 */
+        padding: 0.5rem; /* p-2 */
+        max-width: 28rem; /* max-w-md */
+        max-height: auto; /* max-h-auto */
+        text-align: center;
+        font-family: 'Sans-Serif', Arial, sans-serif; /* font-sans */
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0.4; /* Make the stamp slightly transparent */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a shadow for a realistic effect */
+      }
+      @media print {
+        #floating-stamp {
+          opacity: 0.8; /* Make the stamp slightly transparent when printing */
+          background-color: rgba(255, 255, 255, 0.8); /* Ensure the background is visible */
         }
-        th, td {
-          border: 2px solid #ddd;
-          padding: 10px;
-          text-align: center;
-        }
-        #bo {
-          border: 1px solid #4a90e2;
-        }
-      </style>
-    `); // Add custom styles to the print window
+      }
+    </style>`); // Include the styles in the print window
     printWindow.document.write("</head><body>");
-    
-    // Create a temporary element to hold the content and apply row background colors
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = printContent;
-    addRowBackgroundColors(tempDiv);
-
-    // Write the modified content (with row background colors) to the print window
-    printWindow.document.write(tempDiv.innerHTML);
+    printWindow.document.write(printContent);
     printWindow.document.write("</body></html>");
     printWindow.document.close();
-
+  
     // Trigger the print dialog once the content is loaded
     printWindow.onload = () => {
       printWindow.print();
@@ -130,7 +135,10 @@ const FeesStructures = () => {
       <div className="flex flex-col bg-white w-full">
         {/* Header */}
         <div className="flex justify-between items-center bg-white shadow-sm p-4 border-b">
-          <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+          <SidebarToggleButton
+            toggleSidebar={toggleSideBar}
+            isSidebarCollapsed={!sideBar}
+          />
           <h1 className="text-xl font-bold text-gray-800">Fees Structures</h1>
           <UserAccount />
         </div>
@@ -153,11 +161,11 @@ const FeesStructures = () => {
               Filter
             </button>
             <button
-          onClick={handlePrint}
-          className="bg-green-800 max-w-32 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition mt-4 sm:mt-0"
-        >
-          Print 
-        </button>
+              onClick={handlePrint}
+              className="bg-green-800 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition"
+            >
+              Print
+            </button>
           </div>
 
           {/* Fees Structure Tables */}
@@ -169,28 +177,66 @@ const FeesStructures = () => {
             <div id="printableTable" className="space-y-6">
               {filteredFees.length > 0 ? (
                 filteredFees.map((feeStructure, index) => (
-                  <div key={index} className="overflow-x-auto page-break   border rounded">
-                    <h3 className="text-lg font-bold bg-gray-100 px-4 py-2">
+                  <div key={index} className=" p-4 ">
+                     <div className="text-center">
+                <img
+                  src="lion.jpg"
+                  alt="School Logo"
+                  className="w-[110px] h-[108px] mx-auto"
+                />
+              </div> <p>
+                Fees Structure
+              </p>
+                    <h3 className="text-lg font-bold bg-gray-200 p-2 rounded">
                       Grade: {feeStructure.grade}
                     </h3>
-                    <table className="min-w-full bg-white">
-                      <thead className="bg-gray-200">
-                        <tr>
-                          <th className="py-3 px-4 border-b text-left">Fees Category</th>
-                          <th className="py-3 px-4 border-b text-left">Amount (Ksh)</th>
+
+                    <table className="w-full bg-white border-collapse mt-2">
+                      <thead>
+                        <tr className="bg-gray-300">
+                          
+                          <th className="py-3 px-4 border text-left">FeesStructure</th>
+                          <th className="py-3 px-4 border text-left"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        {feeStructure.feeCategories.map((fee, idx) => (
-                          <tr key={idx} className="hover:bg-gray-100 transition-colors">
-                            <td className="py-3 px-4 border-b">{fee.category}</td>
-                            <td className="py-3 px-4 border-b">Ksh {fee.amount.toLocaleString()}</td>
-                          </tr>
+                        {feeStructure.terms.map((term, termIdx) => (
+                          <React.Fragment key={termIdx}>
+                            {/* Term Header Row */}
+                            <tr className="term-header">
+                              <td className="py-3 px-4 border font-bold" >
+                                {term.term}
+                              </td>
+                              <td className="py-3 px-4 border font-bold">
+                              Amount (Ksh)
+                              </td>
+
+                            </tr>
+                            {/* Fee Categories for Term */}
+                            {term.feeCategories.map((fee, feeIdx) => (
+                              <tr key={feeIdx} className="hover:bg-gray-100 transition">
+                              
+                                <td className="py-3 px-4 border">{fee.category}</td>
+                                <td className="py-3 px-4 border">
+                                  Ksh {fee.amount.toLocaleString()}
+                                </td>
+                              </tr>
+                            ))}
+                            {/* Term Total Row */}
+                            <tr className="total-row">
+                              <td className="py-3 px-4 border font-bold">Total for {term.term}</td>
+                              
+                              <td className="py-3 px-4 border font-bold">
+                                Ksh {term.totalAmount.toLocaleString()}
+                              </td>
+                            </tr>
+                          </React.Fragment>
                         ))}
-                        {/* Total row */}
-                        <tr className="bg-gray-100 font-bold">
-                          <td className="py-3 px-4 border-t">Total</td>
-                          <td className="py-3 px-4 border-t">Ksh {feeStructure.totalFeesAmount.toLocaleString()}</td>
+                        {/* Overall Total Row */}
+                        <tr className="bg-gray-300 font-bold">
+                          <td className="py-3 px-4 border">Overall Total</td>
+                
+                          <td className="py-3 px-4 border">Ksh {feeStructure.totalAmountAllTerms.toLocaleString()}</td>
                         </tr>
                       </tbody>
                     </table>

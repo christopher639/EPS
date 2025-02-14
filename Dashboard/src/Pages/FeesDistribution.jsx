@@ -161,7 +161,7 @@ const FeesDistribution = () => {
             onClick={() => openModal()}
             className="bg-blue-500 text-white px-4 py-2 rounded-md  hover:bg-blue-600"
           >
-            Add New Fee Distribution
+            New Allocation
           </button>
             {/* Filter by Grade */}
         <div className=" flex items-center">
@@ -196,30 +196,32 @@ const FeesDistribution = () => {
             <table className="min-w-full">
               <thead>
                 <tr className="bg-gray-200">
-                  <th className="px-6 py-3 text-left">Date</th>
+                  <th className="px-6 py-3 text-left">Created on</th>
+                  <th className="px-6 py-3 text-left">Modified on</th>
                   <th className="px-6 py-3 text-left">Category</th>
                   <th className="px-6 py-3 text-left">Amount</th>
                   <th className="px-6 py-3 text-left">Grade</th>
                   <th className="px-6 py-3 text-left">Term</th>
-                  <th className="px-6 py-3 text-left">Year</th>
+                
                   <th className="px-6 py-3 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredFees.map((fee) => (
                   <tr key={fee._id} className="border-b">
-                    <td className="px-6 py-4">{new Date(fee.dateDistributed).toLocaleDateString()}</td>
+                    <td className="px-6 py-4">{new Date(fee.createdAt).toLocaleDateString()}</td>
+                    <td className="px-6 py-4">{new Date(fee.updatedAt).toLocaleDateString()}</td>
                     <td className="px-6 py-4">{fee.feesCategory}</td>
-                    <td className="px-6 py-4">${fee.feeAmount}</td>
+                    <td className="px-6 py-4">ksh{fee.feeAmount}</td>
                     <td className="px-6 py-4">{fee.grade}</td>
                     <td className="px-6 py-4">{fee.term}</td>
-                    <td className="px-6 py-4">{fee.year}</td>
+                   
                     <td className="px-6 py-4">
                       <button
                         onClick={() => openModal(fee)}
                         className="bg-yellow-500 text-white px-3 py-1 rounded-md mr-2 hover:bg-yellow-600"
                       >
-                        Edit
+                        Modify
                       </button>
                       <button
                         onClick={() => handleDelete(fee._id)}
@@ -244,32 +246,7 @@ const FeesDistribution = () => {
               </h2>
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="date"
-                    name="dateDistributed"
-                    value={currentFeeDistribution.dateDistributed}
-                    onChange={handleInputChange}
-                    className="p-2 border rounded-md"
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="feesCategory"
-                    placeholder="Fees Category"
-                    value={currentFeeDistribution.feesCategory}
-                    onChange={handleInputChange}
-                    className="p-2 border rounded-md"
-                    required
-                  />
-                  <input
-                    type="number"
-                    name="feeAmount"
-                    placeholder="Fee Amount"
-                    value={currentFeeDistribution.feeAmount}
-                    onChange={handleInputChange}
-                    className="p-2 border rounded-md"
-                    required
-                  />
+  
                   <input
                     type="text"
                     name="grade"
@@ -290,18 +267,18 @@ const FeesDistribution = () => {
                   />
                   <input
                     type="text"
-                    name="year"
-                    placeholder="Year"
-                    value={currentFeeDistribution.year}
+                    name="feesCategory"
+                    placeholder="Fees Category"
+                    value={currentFeeDistribution.feesCategory}
                     onChange={handleInputChange}
                     className="p-2 border rounded-md"
                     required
                   />
                   <input
-                    type="text"
-                    name="studentType"
-                    placeholder="Student Type"
-                    value={currentFeeDistribution.studentType}
+                    type="number"
+                    name="feeAmount"
+                    placeholder="Fee Amount"
+                    value={currentFeeDistribution.feeAmount}
                     onChange={handleInputChange}
                     className="p-2 border rounded-md"
                     required
