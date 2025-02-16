@@ -65,7 +65,7 @@ exports.getPaymentsWithStudentDetails = async (req, res) => {
         const paymentsWithStudents = await FeesPayment.aggregate([
             {
                 $lookup: {
-                    from: "students", // Ensure this matches your students collection name
+                    from: "learners", // Ensure this matches your learners collection name
                     localField: "regno",
                     foreignField: "regno",
                     as: "studentDetails"
@@ -94,7 +94,7 @@ exports.getPaymentsWithStudentDetails = async (req, res) => {
             }
         ]);
 
-        // Calculate total fees paid across all students
+        // Calculate total fees paid across all learners
         const totalFees = await FeesPayment.aggregate([
             {
                 $group: {

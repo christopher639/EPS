@@ -17,7 +17,7 @@ import {
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
-  { to: "/students", label: "Students", icon: <FaUsers /> },
+  { to: "/learner", label: "Leaners", icon: <FaUsers /> },
   { label: "Academics", icon: <FaBook /> },
   { label: "Finance", icon: <FaMoneyBillAlt /> },
   { to: "/departments", label: "Departments", icon: <FaUniversity /> },
@@ -99,10 +99,10 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
         {navItems.map((item) => {
           if (item.label === "Academics") {
             return (
-              <div key={item.label}>
+              <div className="" key={item.label}>
                 <div
                   onClick={toggleAcademics}
-                  className="flex items-center justify-start gap-6 py-2 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
+                  className="flex items-center justify-start gap-7 py-2 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
                 >
                   {item.icon}
                   {!isSidebarCollapsed && <span>Academics</span>}
@@ -133,7 +133,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
               <div key={item.label}>
                 <div
                   onClick={toggleFinance}
-                  className="flex items-center justify-start gap-6 py-2 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
+                  className="flex items-center justify-start gap-7 py-2 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
                 >
                   {item.icon}
                   {!isSidebarCollapsed && <span>Financials</span>}
@@ -176,10 +176,10 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
               <div key={item.label}>
                 <div
                   onClick={toggleHR}
-                  className="flex items-center justify-start gap-6 py-1 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
+                  className="flex items-center justify-start gap-7 py-1 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
                 >
                   {item.icon}
-                  {!isSidebarCollapsed && <span>Human Resource</span>}
+                  {!isSidebarCollapsed && <span>H R</span>}
                   {isHROpen ? <FaChevronDown className="text-xl" /> : <FaChevronRight className="text-xl" />}
                 </div>
                 <div

@@ -18,6 +18,11 @@ const Dashboard = () => {
   const [students, setMarks] = useState([]);
   const [stream, setStream] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [leaners, setLearners] = useState([]); 
+  const [currentPage, setCurrentPage] = useState(1); // Current page number
+  const [totalPages, setTotalPages] = useState(1); // Total number of pages
+  const [totalLeaners, setTotalLeaners] = useState(0); // Total number of learners
+  const [learnersPerPage, setLearnersPerPage] = useState(10); // Learners per page
   const [alumniCount, setAlumniCount] = useState(0);
   const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
 
@@ -34,6 +39,16 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
+    const fetchData = () => {
+      axios
+        .get('/api/learners')
+        .then((leaners) => setLearners(leaners.data))
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     const getFetchData = () => {
       axios
         .get('/api/teachers')
@@ -42,6 +57,22 @@ const Dashboard = () => {
     };
     getFetchData();
   }, []);
+
+  // Fetch all learners with pagination
+  const fetchLearners = async () => {
+    try {
+      const response = await axios.get(`/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
+      setLearners(response.data.learners); // Set learners data
+      setTotalPages(response.data.totalPages); // Set total pages
+      setTotalLeaners(response.data.totalLearners); // Set total learners
+    } catch (error) {
+      console.error("Failed to fetch learners:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLearners();
+  }, [currentPage, learnersPerPage]); // Fetch learners when page or learnersPerPage changes
 
   useEffect(() => {
     const fetchData = () => {
@@ -166,13 +197,13 @@ const Dashboard = () => {
         <div className='bg-gradient-to-br from-gray-50 to-gray-100 overflow-x-auto overflow-y-auto max-h-[90vh] p-6 '>
           {/* Stats Grid */}
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-4'>
-            {/* Students Count */}
+            {/* Learners Count */}
             <div className='bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow'>
-              <NavLink to='/students'>
+              <NavLink to='/learner'>
                 <div className='flex justify-between items-center'>
                   <div>
                     <p className='text-gray-600 font-medium'>Learners</p>
-                    <p className='text-3xl font-bold text-gray-800'>{students.length}</p>
+                    <p className='text-3xl font-bold text-gray-800'>{totalLeaners}</p>
                   </div>
                   <FaUsers className='text-4xl text-blue-500' />
                 </div>
@@ -252,7 +283,7 @@ const Dashboard = () => {
             <h2 className='text-xl font-semibold text-gray-800 mb-4'>Quick Links</h2>
             <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
               {[
-                { to: '/students', icon: <FaUsers className='text-xl' />, text: 'Students' },
+                { to: '/learner', icon: <FaUsers className='text-xl' />, text: 'Leaners' },
                 { to: '/teachers', icon: <FaChalkboardTeacher className='text-xl' />, text: 'Teachers' },
                 { to: '/streams', icon: <FaUniversity className='text-xl' />, text: 'Streams' },
                 { to: '/departments', icon: <FaBuilding className='text-xl' />, text: 'Departments' },

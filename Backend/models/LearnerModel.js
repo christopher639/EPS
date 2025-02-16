@@ -10,6 +10,7 @@ const LearnerSchema = new mongoose.Schema({
   nationality: { type: String, required: true },
   guardianName: { type: String, required: true },
   guardianPhone: { type: String, required: true },
+  birthCertificateNo: { type: Number },
   address: { type: String, required: true },
   learnerImage: { type: String}, // Image is compulsory
 });

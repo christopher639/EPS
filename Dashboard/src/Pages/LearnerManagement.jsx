@@ -3,12 +3,15 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import SideBar from "../components/SideBar";
+import { FaPlus, FaSearch } from "react-icons/fa";
+import SidebarToggleButton from "../components/SidebarToggleButton";
+import UserAccount from "../components/UserAccount";
 
 axios.defaults.baseURL = "http://localhost:3000";
 
 const LearnerManagement = () => {
-  const [learners, setLearners] = useState([]);
-  const [filteredLearners, setFilteredLearners] = useState([]); // State for filtered learners
+  const [filteredLearners, setFilteredLearners] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedLearner, setSelectedLearner] = useState(null);
@@ -23,33 +26,36 @@ const LearnerManagement = () => {
     guardianName: "",
     guardianPhone: "",
     address: "",
+    birthCertificateNo: "",
     learnerImage: null,
   });
-  const [isLoading, setIsLoading] = useState(false); // State for loading spinner
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
-  const [currentPage, setCurrentPage] = useState(1); // Current page number
-  const [totalPages, setTotalPages] = useState(1); // Total number of pages
-  const [learnersPerPage, setLearnersPerPage] = useState(10); // Learners per page
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sideBar, setSideBar] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalLearners, setTotalLearners] = useState(0);
+  const [learnersPerPage, setLearnersPerPage] = useState(50);
   const navigate = useNavigate();
 
   // Fetch all learners with pagination
   const fetchLearners = async () => {
-    setIsLoading(true); // Show loading spinner
+    setIsLoading(true);
     try {
       const response = await axios.get(`/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
-      setLearners(response.data.learners);
-      setFilteredLearners(response.data.learners); // Initialize filtered learners
-      setTotalPages(response.data.totalPages); // Set total pages
+      setFilteredLearners(response.data.learners);
+      setTotalPages(response.data.totalPages);
+      setTotalLearners(response.data.totalLearners);
     } catch (error) {
       toast.error("Failed to fetch learners");
     } finally {
-      setIsLoading(false); // Hide loading spinner
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     fetchLearners();
-  }, [currentPage, learnersPerPage]); // Fetch learners when page or learnersPerPage changes
+  }, [currentPage, learnersPerPage]);
 
   // Handle input change for adding a new learner
   const handleChange = (e) => {
@@ -67,46 +73,36 @@ const LearnerManagement = () => {
     Object.keys(newLearner).forEach((key) => {
       formData.append(key, newLearner[key]);
     });
-
     try {
       await axios.post("/api/learners/add", formData);
       setModalOpen(false);
-      fetchLearners(); // Refresh the list after adding a learner
+      fetchLearners();
       toast.success("Learner added successfully!");
     } catch (error) {
       toast.error("Failed to add learner");
     }
   };
 
-  // Delete learner
-  const deleteLearner = async (id) => {
-    try {
-      await axios.delete(`/api/learners/${id}`);
-      setDeleteModalOpen(false);
-      fetchLearners(); // Refresh the list after deleting a learner
-      toast.success("Learner deleted successfully!");
-    } catch (error) {
-      toast.error("Failed to delete learner");
-    }
-  };
-
   // Handle search by registration number
   const handleSearch = async () => {
     if (!searchTerm) {
-      fetchLearners(); // Reset to all learners if search term is empty
+      fetchLearners();
       return;
     }
-
-    setIsLoading(true); // Show loading spinner
+    setIsLoading(true);
     try {
       const response = await axios.get(`/api/learners/search?regno=${searchTerm}`);
       setFilteredLearners(response.data.learners);
-      setTotalPages(1); // Reset pagination for search results
+      setTotalPages(1);
     } catch (error) {
       toast.error("Failed to search learners");
     } finally {
-      setIsLoading(false); // Hide loading spinner
+      setIsLoading(false);
     }
+  };
+
+  const toggleSideBar = () => {
+    setSideBar((prev) => !prev);
   };
 
   // Handle row click to navigate to learner detail page
@@ -114,45 +110,79 @@ const LearnerManagement = () => {
     navigate(`/learner/${learnerId}`);
   };
 
-  return (
-    <div className="p-4 sm:p-6 bg-gray-100 min-h-screen">
-      <ToastContainer />
-
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-        <h1 className="text-2xl font-semibold mb-4 sm:mb-0">Learner Management</h1>
+  // Generate page numbers for pagination
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(
         <button
-          onClick={() => setModalOpen(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          key={i}
+          onClick={() => setCurrentPage(i)}
+          className={`px-4 py-2 mx-1 rounded-lg ${
+            currentPage === i
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
         >
-          Add Learner
+          {i}
         </button>
-      </div>
+      );
+    }
+    return pageNumbers;
+  };
 
-      {/* Search Bar */}
-      <div className="mb-4">
-        <div className="flex items-center">
-          <input
+  return (
+    <div className="flex">
+      <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}>
+        <SideBar />
+      </div>
+      <div className="p-4 w-full sm:p-6 bg-gray-100 min-h-screen">
+        <ToastContainer />
+        {/* Search Bar */}
+        <div className="mb-4">
+        <div className="flex flex-col md:flex-row   gap-2 justify-between">
+         <div className="flex gap-2 justify-between">
+         <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+         <h1 className="text-lg  text-2xl  font-semibold  sm:mb-0">Learner Management</h1>
+         </div>
+         <div className="flex justify-between gap-3">
+           <div className="flex  focus:outline-none focus:ring-blue-500 focus:ring-2 rounded-lg">
+           <input
             type="text"
-            placeholder="Search by Registration Number"
+            placeholder="Search by RegNO"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border p-2 w-full sm:w-64 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className=" p-2 w-full sm:w-64  max-w-40 "
           />
           <button
             onClick={handleSearch}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-700 transition"
+            className="bg-blue-600  text-white px-2 hover:bg-blue-700 transition"
           >
-            Search
+            <p> <FaSearch/></p>
+        
           </button>
+           </div>
+          <button
+          onClick={() => setModalOpen(true)}
+          className="bg-blue-600 flex gap-1 max-w-64 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          <p  className="pt-1"> <FaPlus/> </p>
+        <p className="hidden md:flex"> Add Learner</p>
+          </button>
+         </div>
+        <div className="hidden md:flex ">
+          <UserAccount/>
+        </div>
         </div>
       </div>
 
-      {/* Add Learner Modal */}
-      {modalOpen && (
+        {/* Add Learner Modal */}
+        {modalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-          <div className="bg-white w-full sm:w-3/4 p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 rounded-lg shadow-lg overflow-y-auto max-h-screen">
+          <div className="bg-white max-h-[94vh] pb-20 md:pb-4 w-full sm:w-3/4 p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <input type="text" name="name" placeholder="Name" className="border p-2 w-full mb-2" onChange={handleChange} required />
-            <input type="text" name="regno" placeholder="Registration Number" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="text" name="birthCertificateNo" placeholder="birthCertificateNo" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            <input type="text" name="regno" placeholder="Reg NO" className="border p-2 w-full mb-2" onChange={handleChange} required />
             <input type="text" name="grade" placeholder="Grade" className="border p-2 w-full mb-2" onChange={handleChange} required />
             <input type="text" name="stream" placeholder="Stream" className="border p-2 w-full mb-2" onChange={handleChange} required />
             <select name="gender" className="border p-2 w-full mb-2" onChange={handleChange} required>
@@ -187,128 +217,90 @@ const LearnerManagement = () => {
         </div>
       )}
 
-      {/* Loading Spinner */}
-      {isLoading && (
-        <div className="flex justify-center items-center mt-6">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-        </div>
-      )}
-
-      {/* Learners List */}
-      {!isLoading && (
-        <div className="bg-white shadow-lg md:mx-0 grid gri-cols-1 pb-6 max-h-[72vh] md:max-h-[75vh] overflow-y-auto overflow-x-auto md:mr-0 rounded-lg p-4">
-          <h2 className="text-xl font-semibold mb-4">Learner List</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse border border-gray-300">
-              <thead>
-                <tr className="bg-gray-200">
-                  <th className="border border-gray-300 p-2">Image</th>
-                  <th className="border border-gray-300 p-2">Name</th>
-                  <th className="border border-gray-300 p-2">Reg No</th>
-                  <th className="border border-gray-300 p-2">Grade</th>
-                  <th className="border border-gray-300 p-2">Stream</th>
-                  <th className="border border-gray-300 p-2">Gender</th>
-                  <th className="border border-gray-300 p-2">DOB</th>
-                  <th className="border border-gray-300 p-2">Nationality</th>
-                  <th className="border border-gray-300 p-2">Guardian</th>
-                  <th className="border border-gray-300 p-2">Phone</th>
-                  <th className="border border-gray-300 p-2">Address</th>
-                  <th className="border border-gray-300 p-2">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredLearners.map((learner) => (
-                  <tr
-                    key={learner._id}
-                    className="text-center hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleRowClick(learner._id)}
-                  >
-                    <td className="border border-gray-300 p-2">
-                      <img
-                        src={`http://localhost:3000${learner.learnerImage}`}
-                        alt={learner.name}
-                        className="w-16 h-16 object-cover rounded-md"
-                      />
-                    </td>
-                    <td className="border border-gray-300 p-2">{learner.name}</td>
-                    <td className="border border-gray-300 p-2">{learner.regno}</td>
-                    <td className="border border-gray-300 p-2">{learner.grade}</td>
-                    <td className="border border-gray-300 p-2">{learner.stream}</td>
-                    <td className="border border-gray-300 p-2">{learner.gender}</td>
-                    <td className="border border-gray-300 p-2">{new Date(learner.dateOfBirth).toLocaleDateString()}</td>
-                    <td className="border border-gray-300 p-2">{learner.nationality}</td>
-                    <td className="border border-gray-300 p-2">{learner.guardianName}</td>
-                    <td className="border border-gray-300 p-2">{learner.guardianPhone}</td>
-                    <td className="border border-gray-300 p-2">{learner.address}</td>
-                    <td className="border flex gap-2 border-gray-300 p-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation(); // Stop event propagation
-                          setSelectedLearner(learner);
-                          setDeleteModalOpen(true);
-                        }}
-                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        {/* Loading Spinner */}
+        {isLoading && (
+          <div className="flex justify-center items-center mt-6">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
-        {/* Pagination Controls */}
-        <div className="flex justify-center mt-6">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-blue-700 transition disabled:bg-gray-400"
-        >
-          Previous
-        </button>
-        <span className="flex items-center mx-2">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={currentPage === totalPages}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-700 transition disabled:bg-gray-400"
-        >
-          Next
-        </button>
-      </div>
-        </div>
-      )}
+        )}
 
-    
-
-      {/* Delete Confirmation Modal */}
-      {deleteModalOpen && selectedLearner && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
-            <h2 className="text-xl font-semibold mb-4">
-              Are you sure you want to delete {selectedLearner.name}?
-            </h2>
-            <p className="text-gray-600 mb-4">
-              This action is irreversible, and the student data will disappear permanently.
-            </p>
-            <div className="flex justify-end">
+        {/* Learners List */}
+        {!isLoading && (
+          <div className="bg-white shadow-lg md:mx-0 grid gri-cols-1 pb-48 md:pb-6 max-h-screen md:max-h-[85vh] overflow-y-auto overflow-x-auto md:mr-0 rounded-lg p-4">
+            <div className="flex mb-4 gap-2">
+              <h2 className="text-xl font-semibold">Total Learners</h2>
+              <p className="text-slate-800 bg-gray-50 border px-2 rounded-lg text-slate-700 font-semibold text-lg">{totalLearners}</p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-200">
+                    <th className="border border-gray-300 p-2">Image</th>
+                    <th className="border border-gray-300 p-2">Full Name</th>
+                    <th className="border border-gray-300 p-2">Reg No</th>
+                    <th className="border border-gray-300 p-2">Grade</th>
+                    <th className="border border-gray-300 p-2">Stream</th>
+                    <th className="border border-gray-300 p-2">Gender</th>
+                    <th className="border border-gray-300 p-2">P/G Name</th>
+                    <th className="border border-gray-300 p-2">P/G Phone</th>
+                    <th className="border border-gray-300 p-2">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredLearners.map((learner) => (
+                    <tr key={learner._id} className="text-center hover:bg-gray-100">
+                      <td className="border border-gray-300 p-2">
+                        <img
+                          src={`http://localhost:3000${learner.learnerImage}`}
+                          alt={learner.name}
+                          className="w-16 h-16 object-cover rounded-md"
+                        />
+                      </td>
+                      <td className="border border-gray-300 p-2">{learner.name}</td>
+                      <td className="border border-gray-300 p-2">{learner.regno}</td>
+                      <td className="border border-gray-300 p-2">{learner.grade}</td>
+                      <td className="border border-gray-300 p-2">{learner.stream}</td>
+                      <td className="border border-gray-300 p-2">{learner.gender}</td>
+                      <td className="border border-gray-300 p-2">{learner.guardianName}</td>
+                      <td className="border border-gray-300 p-2">{learner.guardianPhone}</td>
+                      <td className="border flex gap-2 border-gray-300 p-2">
+                        <button
+                          onClick={() => handleRowClick(learner._id)}
+                          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-red-900 transition"
+                        >
+                          View More
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+               {/* Pagination Controls */}
+            <div className="flex justify-center  mt-6">
               <button
-                onClick={() => deleteLearner(selectedLearner._id)}
-                className="bg-red-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-red-700 transition"
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-blue-700 transition disabled:bg-gray-400"
               >
-                Yes, Delete
+                Previous
               </button>
+              {renderPageNumbers()}
               <button
-                onClick={() => setDeleteModalOpen(false)}
-                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-700 transition disabled:bg-gray-400"
               >
-                Cancel
+                Next
               </button>
             </div>
+            </div>
+
+           
           </div>
-        </div>
-      )}
+        )}
+
+       
+      </div>
     </div>
   );
 };
