@@ -318,7 +318,7 @@ const Assessments = () => {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={2} className="border  px-1 text-center py-1">
+                <td colSpan={3} className="border  px-1 text-center py-1">
                   <strong>Total Scores</strong>
                 </td>
                 {totalScoresPerSubject.map((total, idx) => (
@@ -330,7 +330,7 @@ const Assessments = () => {
                 <td className="border  text-center px-1 py-1">{overallAverageScore}</td>
               </tr>
               <tr>
-                <td colSpan={2} className="border text-center  px-1 py-1">
+                <td colSpan={3} className="border text-center  px-1 py-1">
                   <strong>Average Scores</strong>
                 </td>
                 {totalScoresPerSubject.map((total, idx) => (

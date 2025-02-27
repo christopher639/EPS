@@ -6,6 +6,7 @@ import UserAccount from '../components/UserAccount';
 import SideBar from '../components/SideBar';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import 'react-toastify/dist/ReactToastify.css';
+import PendingUsersModal from './PendingUsersModal';
 
 axios.defaults.baseURL = "http://localhost:3000";
 
@@ -17,6 +18,7 @@ const Users = () => {
   const [emailModalOpen, setEmailModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [emailContent, setEmailContent] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [formData, setFormData] = useState({
     username: "",
@@ -219,6 +221,17 @@ const Users = () => {
           >
             <FaPaperPlane />
           </button>
+          <div>
+      <button
+        onClick={() => setModalOpen(true)}
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        View Pending Users
+      </button>
+
+      <PendingUsersModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+    </div>
+
           <div>
             <button
               onClick={() => setUserForm(true)}

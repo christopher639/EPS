@@ -1,67 +1,19 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: /.+\@.+\..+/,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    fullName: {
-        type: String,
-        required: true,
-    },
-    phoneNumber: {
-        type: String,
-        required: false,
-    },
-    profilePicture: {
-        type: String,
-        required: false,
-    },
-    role: {
-        type: String,
-        enum: ['admin', 'user', 'moderator','student','instructor'],
-        default: 'user',
-    },
-    status: {
-        type: String,
-        enum: ['active', 'inactive', 'suspended'],
-        default: 'active',
-    },
-    address: {
-        type: String,
-        required: false,
-    },
-    dateOfBirth: {
-        type: Date,
-        required: false,
-    },
-    lastLogin: {
-        type: Date,
-        required: false,
-    },
-    preferences: {
-        type: Object,
-        required: false,
-    },
-    rolesPermissions: {
-        type: [String],
-        default: [],
-    }
-}, {
-    timestamps: true
+  email: { type: String, unique: true, sparse: true }, // Unique but optional for Google users
+  password: { type: String }, // Optional for Google users
+  fullName: { type: String, required: true },
+  username: { type: String, unique: true, sparse: true }, // Unique but optional for Google users
+  phoneNumber: { type: String },
+  profilePicture: { type: String },
+  role: { type: String, default: "instructor" }, // Default role
+  status: { type: String, default: "pending" }, // Needs admin approval
+  address: { type: String },
+  dateOfBirth: { type: Date },
+  preferences: { type: String },
+  googleId: { type: String, unique: true, sparse: true }, // Google OAuth ID
+  googleEmail: { type: String, unique: true, sparse: true }, // Google email
 });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);
