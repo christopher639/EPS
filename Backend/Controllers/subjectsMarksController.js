@@ -2,8 +2,13 @@ const subjectsMarksModel = require('../models/subjectsMarksModel'); // Import th
 
 // CREATE - Add multiple subject marks
 exports.createSubjectMarks = async (req, res) => {
-  const marks = req.body.marks; // Assuming `marks` is an array of objects
-  
+  let marks = req.body.marks; // Expecting an array
+
+  // If a single object is sent instead of an array, wrap it in an array
+  if (!Array.isArray(marks)) {
+    marks = [req.body]; // Convert a single object to an array
+  }
+
   if (!marks || marks.length === 0) {
     return res.status(400).json({
       message: "No marks provided. Please provide at least one mark.",
@@ -11,24 +16,13 @@ exports.createSubjectMarks = async (req, res) => {
   }
 
   try {
-    // Create an array of subjectMark instances
-    const subjectMarks = marks.map(mark => new subjectsMarksModel({
-      year: mark.year,
-      term: mark.term,
-      stream: mark.stream,
-      class: mark.class,
-      category: mark.category,
-      code: mark.code,
-      regno: mark.regno,
-      score: mark.score,
-    }));
+    const subjectMarks = marks.map(mark => new subjectsMarksModel(mark));
 
-    // Save all subject marks at once using Promise.all
-    await Promise.all(subjectMarks.map(subjectMark => subjectMark.save()));
+    await subjectsMarksModel.insertMany(subjectMarks); // More efficient than Promise.all()
 
     res.status(201).json({
       message: `${marks.length} subject marks added successfully.`,
-      marks: marks,
+      marks,
     });
   } catch (error) {
     res.status(500).json({

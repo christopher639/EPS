@@ -47,25 +47,16 @@ app.use(express.static(path.join(__dirname, "client/build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
-//database online connections
-mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system")
-.then(()=>{
-console.log("Database connected")
-})
-//database local connections
 
-
-
-
-// // Database connection
-// mongoose
-//   .connect("mongodb://localhost:27017/dreamhomehouse")
-//   .then(() => {
-//     console.log("Database connected");
-//   })
-//   .catch((err) => {
-//     console.error("Database connection error:", err);
-//   });
+// Database connection
+mongoose
+  .connect("mongodb://localhost:27017/dreamhomehouse")
+  .then(() => {
+    console.log("Database connected");
+  })
+  .catch((err) => {
+    console.error("Database connection error:", err);
+  });
 
 // Start the server
 const port = process.env.PORT || 3000;
@@ -78,3 +69,9 @@ app.get("/", (req, res) => {
   res.send("API is working - Christopher Bundi");
 });
 
+//database online connections
+// mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system")
+// .then(()=>{
+// console.log("Database connected")
+// })
+//database local connections

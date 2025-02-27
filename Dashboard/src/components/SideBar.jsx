@@ -111,6 +111,10 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                 <div
                   className={`bg-yellow-700 transition-all duration-500 ease-in-out overflow-hidden ${isAcademicsOpen ? "max-h-96" : "max-h-0"}`}
                 >
+                    <NavLink to="/addmarks" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
+                    <FaFileAlt className="text-white text-2xl" />
+                    {!isSidebarCollapsed && <span className="pl-4">Upload Marks</span>}
+                  </NavLink>
                   <NavLink to="/assessments" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
                     <FaFileAlt className="text-white text-2xl" />
                     {!isSidebarCollapsed && <span className="pl-4">Assessments</span>}

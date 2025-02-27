@@ -1,66 +1,70 @@
-import React, { useState,useEffect } from "react";
-import { toast } from "react-toastify";
+import React, { useState, useRef } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InstructorSideBar from "../../components/InstuctorSideBar";
 import UserAccount from "../../components/UserAccount";
 
 const AddMarks = () => {
-   const [learningAreas, setLearningAreas] = useState([]);
-  
-  const [formData, setFormData] = useState({
+  const [loading, setLoading] = useState(false);
+  const [commonData, setCommonData] = useState({
     year: "",
     term: "",
     stream: "",
     class: "",
     category: "",
     code: "",
-    students: [{ regno: "", score: "" }],
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    const updatedData = { ...formData };
+  const [marks, setMarks] = useState([{ regno: "", score: "" }]);
+  const lastStudentRef = useRef(null);
 
-    if (name === "students") {
-      const index = e.target.dataset.index;
-      updatedData[name][index][e.target.dataset.field] = value;
-    } else {
-      updatedData[name] = value;
-    }
-    setFormData(updatedData);
+  const handleCommonChange = (e) => {
+    setCommonData({ ...commonData, [e.target.name]: e.target.value });
   };
-    // Fetch learning areas from the API
-    const fetchLearningAreas = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get('http://localhost:3000/api/learning-areas');
-        setLearningAreas(response.data);
-       
-      } catch (error) {
-        console.error('Error fetching learning areas:', error);
-        
-      }
-    };
-  
-    // Fetch data when the component mounts
-    useEffect(() => {
-      fetchLearningAreas();
-    }, []);
 
-  const handleAddStudent = () => {
-    setFormData({
-      ...formData,
-      students: [...formData.students, { regno: "", score: "" }],
+  const handleMarksChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedMarks = [...marks];
+    updatedMarks[index][name] = value;
+    setMarks(updatedMarks);
+  };
+
+  const addStudent = () => {
+    setMarks((prevMarks) => {
+      const newMarks = [...prevMarks, { regno: "", score: "" }];
+
+      // Scroll to the newly added student input
+      setTimeout(() => {
+        if (lastStudentRef.current) {
+          lastStudentRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+
+      return newMarks;
     });
   };
 
-  const handleRemoveStudent = (index) => {
-    const updatedStudents = formData.students.filter((_, i) => i !== index);
-    setFormData({ ...formData, students: updatedStudents });
+  const removeStudent = (index) => {
+    setMarks(marks.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    // Validate scores
+    const invalidScore = marks.some((mark) => mark.score < 0 || mark.score > 100);
+    if (invalidScore) {
+      toast.error("Score must be between 0 and 100.");
+      setLoading(false);
+      return;
+    }
+
+    // Combine common data with student marks
+    const payload = marks.map((mark) => ({
+      ...commonData,
+      ...mark,
+    }));
 
     try {
       const response = await fetch("http://localhost:3000/api/marks", {
@@ -68,20 +72,20 @@ const AddMarks = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ marks: payload }),
       });
 
       if (response.ok) {
         const data = await response.json();
         toast.success(data.message);
-        setFormData({
+        setMarks([{ regno: "", score: "" }]); // Reset student marks
+        setCommonData({
           year: "",
           term: "",
           stream: "",
           class: "",
           category: "",
           code: "",
-          students: [{ regno: "", score: "" }],
         });
       } else {
         const errorData = await response.json();
@@ -89,104 +93,123 @@ const AddMarks = () => {
       }
     } catch (error) {
       toast.error(`Error: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <InstructorSideBar />
-      <div className="flex-1 p-3">
-        <div className="flex justify-between items-center mb-3">
+    <div className="min-h-screen bg-gray-100 flex">
+      <div className="flex-1 px-6 ">
+        <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-800">Post Marks</h1>
           <UserAccount />
         </div>
-        <div className="bg-white rounded-lg shadow-md p-3">
-          <h2 className="text-xl font-semibold text-gray-700 ">Set Your Parameters</h2>
-          <form onSubmit={handleSubmit} className="space-y-2">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-              {[
-                { label: "Year", name: "year", type: "text" },
-                { label: "Term", name: "term", type: "text" },
-                { label: "Stream", name: "stream", type: "text" },
-                { label: "Class", name: "class", type: "text" },
-                { label: "Category", name: "category", type: "text" },
-                { label: "Subject Code", name: "code", type: "text" },
-              ].map(({ label, name, type }) => (
+
+        <div className="bg-white overflow-y-auto max-h-[90vh] rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">Set Your Parameters</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Common Data Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {["year", "term", "stream", "class", "category", "code"].map((name) => (
                 <div key={name} className="flex flex-col">
-                  <label className="text-sm font-medium text-gray-600">{label}</label>
+                  <label className="text-sm font-medium text-gray-600 mb-1">
+                    {name.toUpperCase()}
+                  </label>
                   <input
-                    type={type}
+                    type="text"
                     name={name}
-                    value={formData[name]}
-                    onChange={handleChange}
+                    value={commonData[name]}
+                    onChange={handleCommonChange}
                     required
-                    className="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               ))}
             </div>
 
-            <div className=" overflow-y-auto max-h-[45vh]">
-              <h3 className="text-lg font-semibold text-gray-700 mb-4">Add Students Marks</h3>
-              <div className="space-y-3 ">
-                {formData.students.map((student, index) => (
-                  <div key={index} className="flex flex-col md:flex-row gap-4 items-center">
-                    <input
-                      type="text"
-                      name="regno"
-                      data-index={index}
-                      data-field="regno"
-                      value={student.regno}
-                      onChange={handleChange}
-                      placeholder="Registration Number"
-                      className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                    <input
-                      type="number"
-                      name="score"
-                      data-index={index}
-                      data-field="score"
-                      value={student.score}
-                      onChange={handleChange}
-                      placeholder="Score"
-                      min="0"
-                      max="100"
-                      className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveStudent(index)}
-                      className="w-full md:w-auto px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ))}
+            {/* Student Marks Section */}
+            <div className="mt-6">
+              <h2 className="text-xl font-semibold text-gray-700 mb-4">Add Student Marks</h2>
+              <div className="overflow-y-auto max-h-[40vh]">
+                <table className="w-full">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="p-2 text-left text-sm font-medium text-gray-600">Reg No</th>
+                      <th className="p-2 text-left text-sm font-medium text-gray-600">Score</th>
+                      <th className="p-2 text-left text-sm font-medium text-gray-600">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {marks.map((mark, index) => (
+                      <tr
+                        key={index}
+                        className="border-b border-gray-200"
+                        ref={index === marks.length - 1 ? lastStudentRef : null}
+                      >
+                        <td className="p-2">
+                          <input
+                            type="text"
+                            name="regno"
+                            value={mark.regno}
+                            onChange={(e) => handleMarksChange(index, e)}
+                            required
+                            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </td>
+                        <td className="p-2">
+                          <input
+                            type="number"
+                            name="score"
+                            value={mark.score}
+                            onChange={(e) => handleMarksChange(index, e)}
+                            required
+                            min="0"
+                            max="100"
+                            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </td>
+                        <td className="p-2">
+                          {marks.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => removeStudent(index)}
+                              className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
+                            >
+                              Remove
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-              
             </div>
-           <div className="flex  justify-between">
-           <button
+
+            {/* Buttons */}
+            <div className="flex justify-between mt-6">
+              <button
                 type="button"
-                onClick={handleAddStudent}
-                className=" w-full md:w-auto px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200"
+                onClick={addStudent}
+                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
               >
-                Add More Students
+                + Add Student
               </button>
-            <div>
               <button
                 type="submit"
-                className="w-full md:w-auto px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
+                disabled={loading}
+                className={`px-6 py-2 ${
+                  loading ? "bg-blue-300" : "bg-blue-500"
+                } text-white rounded-lg hover:bg-blue-600 transition`}
               >
-                Submit
+                {loading ? "Submitting..." : "Submit"}
               </button>
-           </div>
             </div>
           </form>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>
   );
 };

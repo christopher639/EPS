@@ -34,7 +34,7 @@ const LoginPage = () => {
       } else if (role === "student") {
         navigate('/studentdashboard');
       } else if (role === "instructor") {
-        navigate('/instructordashboard');
+        navigate('/addmarks');
       }
     } catch (error) {
       console.error("Login failed", error);
