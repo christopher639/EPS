@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import UserAccount from "../components/UserAccount";
 import axios from "axios";
 import SidebarToggleButton from "../components/SidebarToggleButton";
-// import SideBar from "../components/SideBar";
+import SideBar from "../components/SideBar";
 // import BASE_URL from "../config";
 
-axios.defaults.baseURL = BASE_URL;
+// axios.defaults.baseURL = BASE_URL;
 const Assessments = () => {
   const [classValue, setClassValue] = useState("10");
   const [sideBar, setSideBar] = useState(false); // To control the visibility of the sidebar
