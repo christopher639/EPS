@@ -7,8 +7,8 @@ import SideBar from "../components/SideBar";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import UserAccount from "../components/UserAccount";
-import BASE_URL from "../config";
-axios.defaults.baseURL = BASE_URL;
+// import BASE_URL from "../config";
+// axios.defaults.baseURL = BASE_URL;
 
 const LearnerManagement = () => {
   const [filteredLearners, setFilteredLearners] = useState([]);
@@ -41,7 +41,7 @@ const LearnerManagement = () => {
   const fetchLearners = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
+      const response = await axios.get(`https://eps-dashboard.onrender.com/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
       setFilteredLearners(response.data.learners);
       setTotalPages(response.data.totalPages);
       setTotalLearners(response.data.totalLearners);
@@ -73,7 +73,7 @@ const LearnerManagement = () => {
       formData.append(key, newLearner[key]);
     });
     try {
-      await axios.post("/api/learners/add", formData);
+      await axios.post("https://eps-dashboard.onrender.com/api/learners/add", formData);
       setModalOpen(false);
       fetchLearners();
       toast.success("Learner added successfully!");
@@ -90,7 +90,7 @@ const LearnerManagement = () => {
     }
     setIsLoading(true);
     try {
-      const response = await axios.get(`/api/learners/search?regno=${searchTerm}`);
+      const response = await axios.get(`https://eps-dashboard.onrender.com/api/learners/search?regno=${searchTerm}`);
       setFilteredLearners(response.data.learners);
       setTotalPages(1);
     } catch (error) {

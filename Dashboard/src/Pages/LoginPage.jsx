@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import BASE_URL from "../config";
-axios.defaults.baseURL = BASE_URL;
+// import BASE_URL from "../config";
+// axios.defaults.baseURL = BASE_URL;
 const LoginPage = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState({
@@ -35,11 +35,11 @@ const LoginPage = () => {
           setLoading(false);
           return;
         }
-        await axios.post("/api/users/register", formData);
+        await axios.post("https://eps-dashboard.onrender.com/api/users/register", formData);
         setIsRegister(false);
         setErrorMessage("Registration successful! Awaiting admin approval.");
       } else {
-        const response = await axios.post("/api/users/login", {
+        const response = await axios.post("https://eps-dashboard.onrender.com/api/users/login", {
           email: formData.email,
           password: formData.password,
         });
@@ -57,7 +57,7 @@ const LoginPage = () => {
 
   // Handle Google Sign-In
   const handleGoogleSignIn = () => {
-    window.location.href = "/api/auth/google"; // Adjust to your backend Google OAuth route
+    window.location.href = "https://eps-dashboard.onrender.com/api/auth/google"; // Adjust to your backend Google OAuth route
   };
 
   return (
