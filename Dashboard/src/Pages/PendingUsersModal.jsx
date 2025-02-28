@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 import BASE_URL from "../config";
 axios.defaults.baseURL = BASE_URL;
 const PendingUsersModal = ({ isOpen, onClose }) => {
