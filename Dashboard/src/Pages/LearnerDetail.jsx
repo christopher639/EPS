@@ -112,6 +112,7 @@ const LearnerDetail = () => {
     return "F"; // Failed
   };
 
+  //remove this part and do not replace it with anything
   if (!learner) {
     return <div>Loading...</div>;
   }
