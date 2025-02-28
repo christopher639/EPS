@@ -50,14 +50,11 @@ app.get("*", (req, res) => {
 //atlas 1 connection   mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system
 //database online connections
 mongoose.connect("mongodb+srv://christopherbundi639:xDFLqAKg7G78hcuu@cluster0.uosxzen.mongodb.net/samge")
-.then(()=>{
+.then((error)=>{
 console.log("Database connected")
 })
 
-
-
 //database local connections
-// Database connection
 // mongoose
 //   .connect("mongodb://localhost:27017/dreamhomehouse")
 //   .then(() => {

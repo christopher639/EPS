@@ -7,8 +7,8 @@ import SideBar from "../components/SideBar";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import UserAccount from "../components/UserAccount";
-
-axios.defaults.baseURL = "http://localhost:3000";
+import BASE_URL from "../config";
+axios.defaults.baseURL = BASE_URL;
 
 const LearnerManagement = () => {
   const [filteredLearners, setFilteredLearners] = useState([]);
