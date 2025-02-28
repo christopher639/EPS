@@ -1,47 +1,37 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 import BASE_URL from "../config";
+
+// Set Axios Base URL globally
 axios.defaults.baseURL = BASE_URL;
+
 const PendingUsersModal = ({ isOpen, onClose }) => {
   const [pendingUsers, setPendingUsers] = useState([]);
 
   // Fetch pending users when the modal opens
   useEffect(() => {
-    fetch("/api/users/admin/pending-users")
-      .then((res) => res.json())
-      .then((data) => {
-        setPendingUsers(data.filter((user) => user.status === "pending"));
-      })
-      .catch((error) => {
-        toast.error("Failed to fetch pending users.");
-        console.error("Error fetching pending users:", error);
-      });
-  }, []);
+    if (isOpen) {
+      axios.get("/api/users/admin/pending-users")
+        .then((res) => {
+          setPendingUsers(res.data.filter((user) => user.status === "pending"));
+        })
+        .catch((error) => {
+          toast.error("Failed to fetch pending users.");
+          console.error("Error fetching pending users:", error);
+        });
+    }
+  }, [isOpen]);
 
   // Handle user approval
   const handleApprove = async (userId) => {
     try {
-      const response = await fetch(
-        `/api/users/admin/approve/${userId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status: "approved" }),
-        }
-      );
-
-      if (response.ok) {
-        toast.success("User approved successfully!");
-        setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
-      } else {
-        toast.error("Failed to approve user.");
-      }
+      await axios.put(`/api/users/admin/approve/${userId}`, { status: "approved" });
+      toast.success("User approved successfully!");
+      setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
     } catch (error) {
-      toast.error("Error approving user.");
+      toast.error("Failed to approve user.");
       console.error("Error approving user:", error);
     }
   };
@@ -49,25 +39,11 @@ const PendingUsersModal = ({ isOpen, onClose }) => {
   // Handle user rejection
   const handleReject = async (userId) => {
     try {
-      const response = await fetch(
-        `/api/users/admin/approve/${userId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status: "rejected" }),
-        }
-      );
-
-      if (response.ok) {
-        toast.success("User rejected successfully!");
-        setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
-      } else {
-        toast.error("Failed to reject user.");
-      }
+      await axios.put(`/api/users/admin/approve/${userId}`, { status: "rejected" });
+      toast.success("User rejected successfully!");
+      setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
     } catch (error) {
-      toast.error("Error rejecting user.");
+      toast.error("Failed to reject user.");
       console.error("Error rejecting user:", error);
     }
   };

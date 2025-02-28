@@ -61,8 +61,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 flex items-center justify-center p-4">
-      <div className="w-full max-w-3xl bg-white p-6 md:p-8 rounded-lg shadow-xl flex flex-col md:flex-row items-center gap-6">
+    <div className="fixed inset-0 overflow-y-auto   bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 flex items-center justify-center p-4">
+      <div className="w-full max-w-3xl bg-white overflow-y-auto max-h-[90vh]   p-6 md:p-8 rounded-lg shadow-xl flex flex-col md:flex-row items-center gap-6">
         
         {/* School Logo */}
         <div className="p-4 rounded-full bg-opacity-40 backdrop-blur-md shadow-md">

@@ -9,7 +9,7 @@ require("dotenv").config(); // Load environment variables
 const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin:"*"}));
 
 // Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
