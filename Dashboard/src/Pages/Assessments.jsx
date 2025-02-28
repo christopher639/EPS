@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import UserAccount from "../components/UserAccount";
 import axios from "axios";
 import SidebarToggleButton from "../components/SidebarToggleButton";
-import SideBar from "../components/SideBar";
-import BASE_URL from "../config";
+// import SideBar from "../components/SideBar";
+// import BASE_URL from "../config";
 
 axios.defaults.baseURL = BASE_URL;
 const Assessments = () => {
@@ -38,7 +38,7 @@ const Assessments = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `/api/marks/${classValue}/${yearValue}/${termValue}/${categoryValue}`
+          `https://eps-dashboard.onrender.com/api/marks/${classValue}/${yearValue}/${termValue}/${categoryValue}`
         );
         setData(response.data); // Axios automatically parses JSON
       } catch (error) {
@@ -163,7 +163,7 @@ const Assessments = () => {
       {/* Sidebar */}
       <div
         className={`transition-all duration-700 ease-in-out ${
-          sideBar ? "w-72" : "w-16"
+          sideBar ? "w-0 md:w-72" : "w-0"
         } bg-gray-800 min-h-screen`}
       >
        <SideBar /> {/* Conditionally render Sidebar */}

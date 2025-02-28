@@ -8,8 +8,8 @@ import { FaUsers, FaChalkboardTeacher, FaUniversity, FaUserGraduate, FaMoneyBill
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import SideBar from '../components/SideBar';
-import BASE_URL from '../config';
-axios.defaults.baseURL = BASE_URL;
+// import BASE_URL from '../config';
+// axios.defaults.baseURL = BASE_URL;
 // Registering Chart.js plugins
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Dashboard = () => {
@@ -27,7 +27,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get('/api/students')
+        .get('https://eps-dashboard.onrender.com/api/students')
         .then((students) => setMarks(students.data))
         .catch((err) => console.log(err));
     };
@@ -39,7 +39,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get('/api/learners')
+        .get('https://eps-dashboard.onrender.com/api/learners')
         .then((leaners) => setLearners(leaners.data))
         .catch((err) => console.log(err));
     };
@@ -59,7 +59,7 @@ const Dashboard = () => {
   // Fetch all learners with pagination
   const fetchLearners = async () => {
     try {
-      const response = await axios.get(`/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
+      const response = await axios.get(`https://eps-dashboard.onrender.com/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
       setLearners(response.data.learners); // Set learners data
       setTotalPages(response.data.totalPages); // Set total pages
       setTotalLeaners(response.data.totalLearners); // Set total learners
@@ -75,7 +75,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get('/api/streams')
+        .get('https://eps-dashboard.onrender.com/api/streams')
         .then((stream) => setStream(stream.data))
         .catch((err) => console.log(err));
     };

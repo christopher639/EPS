@@ -7,8 +7,8 @@ import SideBar from '../components/SideBar';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import 'react-toastify/dist/ReactToastify.css';
 import PendingUsersModal from './PendingUsersModal';
-import BASE_URL from '../config';
-axios.defaults.baseURL = BASE_URL;
+// import BASE_URL from '../config';
+// axios.defaults.baseURL = BASE_URL;
 
 const Users = () => {
   const [userform, setUserForm] = useState(false);
@@ -61,14 +61,14 @@ const Users = () => {
 
     try {
       if (selectedUserId) {
-        await axios.post(`/api/users/admin/send-email-to-single/${selectedUserId}`, payload, {
+        await axios.post(`https://eps-dashboard.onrender.com/api/users/admin/send-email-to-single/${selectedUserId}`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         toast.success("Email sent to the user!");
       } else {
-        await axios.post(`/api/users/admin/send-email-to-all`, payload, {
+        await axios.post(`https://eps-dashboard.onrender.com/api/users/admin/send-email-to-all`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -89,7 +89,7 @@ const Users = () => {
         return;
       }
 
-      await axios.delete(`/api/users/${userToDelete}`, {
+      await axios.delete(`https://eps-dashboard.onrender.com/api/users/${userToDelete}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -109,7 +109,7 @@ const Users = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const endpoint = formData._id ? `/api/users/${formData._id}` : "/api/users";
+    const endpoint = formData._id ? `https://eps-dashboard.onrender.com/api/users/${formData._id}` : "/api/users";
     const method = formData._id ? "put" : "post";
 
     const token = localStorage.getItem("token");
@@ -162,7 +162,7 @@ const Users = () => {
       return;
     }
 
-    axios.get("/api/users/admin/approved-users", {
+    axios.get("https://eps-dashboard.onrender.com/api/users/admin/approved-users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -194,7 +194,7 @@ const Users = () => {
   return (
     <div className='flex w-full'>
       {/** Sidebar */}
-      <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}>
+      <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
 
@@ -217,16 +217,16 @@ const Users = () => {
               setSelectedUserId(null);
               setEmailModalOpen(true);
             }}
-            className="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition-colors"
+            className="bg-blue-500 hidden md:flex text-white px-3 py-2 rounded-md hover:bg-blue-600 transition-colors"
           >
             <FaPaperPlane />
           </button>
           <div>
       <button
         onClick={() => setModalOpen(true)}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
+        className="bg-blue-500 hidden md:flex text-white px-4 py-2 rounded"
       >
-        View Pending Users
+       <span className=''> View Pending Users</span>
       </button>
 
       <PendingUsersModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
@@ -242,7 +242,7 @@ const Users = () => {
           </div>
           <UserAccount />
         </div>
-        <div className="sm:hidden p-4">
+        <div className="sm:hidden flex justify-between p-4">
           <input
             className="outline-none px-4 py-2 border border-gray-300 rounded-md"
             type="text"
@@ -250,6 +250,21 @@ const Users = () => {
             value={searchTerm}
             onChange={handleSearchChange}
           />
+            <button
+            onClick={() => {
+              setSelectedUserId(null);
+              setEmailModalOpen(true);
+            }}
+            className="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition-colors"
+          >
+            <FaPaperPlane />
+          </button>
+          <button
+        onClick={() => setModalOpen(true)}
+        className="bg-blue-500  text-white px-4 py-2 rounded"
+      >
+       <span className=''> View Pending Users</span>
+      </button>
         </div>
 
         {emailModalOpen && (
