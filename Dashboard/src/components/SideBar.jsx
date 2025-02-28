@@ -49,7 +49,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
 
   return (
     <div
-      className={`transition-all   duration-700 bg-blue-800 min-h-screen md:flex flex-col ${isSidebarCollapsed ? "w-20" : "w-64"}`}
+      className={`transition-all  hidden md:flex  duration-700 bg-blue-800 min-h-screen md:flex flex-col ${isSidebarCollapsed ? "w-20" : "w-64"}`}
     >
       {/* Logo Section */}
       <div className="flex bg-red-950 py-2 justify-between ">

@@ -167,7 +167,7 @@ const Dashboard = () => {
       {/* Sidebar */}
       <div
         className={`transition-all duration-700 ease-in-out ${
-          sideBar ? 'w-72' : 'w-16'
+          sideBar ? 'w-0 md:w-72' : 'w-0'
         } bg-gray-800 min-h-screen`}
       >
         <SideBar />

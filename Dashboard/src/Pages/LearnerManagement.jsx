@@ -132,7 +132,7 @@ const LearnerManagement = () => {
 
   return (
     <div className="flex">
-      <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}>
+      <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
       <div className="p-4 w-full sm:p-6 bg-gray-100 min-h-screen">
