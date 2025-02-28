@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import BASE_URL from '../config';
+axios.defaults.baseURL = BASE_URL;
 const AverageMarks = () => {
   const [marksData, setMarksData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ const AverageMarks = () => {
 
   // Function to fetch data with selected parameters
   const fetchMarksData = async () => {
-    const url = `http://localhost:3000/api/marks/${stream}/${year}/${term}`;
+    const url = `/api/marks/${stream}/${year}/${term}`;
     
     try {
       const response = await axios.get(url);

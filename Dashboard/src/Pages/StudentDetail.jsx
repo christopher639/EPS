@@ -6,8 +6,8 @@ import SidebarToggleButton from "../components/SidebarToggleButton";
 import UserAccount from "../components/UserAccount";
 import { FaPaperPlane } from "react-icons/fa";
 import avater from '../assets/lion.jpg';
-
-axios.defaults.baseURL = "http://localhost:3000";
+import BASE_URL from "../config";
+axios.defaults.baseURL = BASE_URL;
 
 const StudentDetail = () => {
   const { id } = useParams(); // Get student ID from URL

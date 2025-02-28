@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import BASE_URL from "./config"; // Adjust path if needed
+
+axios.defaults.baseURL = BASE_URL;
 
 const Academic = () => {
   // State variables to track selected values for the filters
@@ -18,7 +21,7 @@ const Academic = () => {
   const fetchData = async () => {
     try {
       // Dynamically construct the URL using the selected filter values
-      const url = `http://localhost:3000/api/marks/${classInput}/${yearInput}/${streamInput}/${termInput}/${categoryInput}`;
+      const url = `/api/marks/${classInput}/${yearInput}/${streamInput}/${termInput}/${categoryInput}`;
       const response = await axios.get(url);
       const data = response.data;
       // Extract unique subject codes from the fetched data

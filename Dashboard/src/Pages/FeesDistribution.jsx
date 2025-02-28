@@ -6,7 +6,8 @@ import SideBar from "../components/SideBar";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import UserAccount from "../components/UserAccount";
 import { NavLink } from "react-router-dom";
-
+import BASE_URL from "../config";
+axios.defaults.baseURL = BASE_URL;
 const FeesDistribution = () => {
   const [feeDistributions, setFeeDistributions] = useState([]);
   const [filteredFees, setFilteredFees] = useState([]);
@@ -30,7 +31,7 @@ const FeesDistribution = () => {
   // Fetch all fee distributions
   const fetchFeeDistributions = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/fee-distributions");
+      const response = await axios.get("/api/fee-distributions");
       setFeeDistributions(response.data);
       setFilteredFees(response.data); // Initialize filteredFees with all data
     } catch (error) {
@@ -46,7 +47,7 @@ const FeesDistribution = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/fees-distribution/${year}/${term}/${grade}`
+        `/api/fees-distribution/${year}/${term}/${grade}`
       );
       setTotalsByCategory(response.data);
     } catch (error) {
@@ -95,13 +96,13 @@ const FeesDistribution = () => {
     try {
       if (isEditMode) {
         await axios.put(
-          `http://localhost:3000/api/fee-distributions/${currentFeeDistribution._id}`,
+          `/api/fee-distributions/${currentFeeDistribution._id}`,
           currentFeeDistribution
         );
         toast.success("Fee distribution updated successfully!");
       } else {
         await axios.post(
-          "http://localhost:3000/api/fee-distributions",
+          "/api/fee-distributions",
           currentFeeDistribution
         );
         toast.success("Fee distribution added successfully!");
@@ -125,7 +126,7 @@ const FeesDistribution = () => {
   // Handle delete fee distribution
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/fee-distributions/${id}`);
+      await axios.delete(`/api/fee-distributions/${id}`);
       toast.success("Fee distribution deleted successfully!");
       fetchFeeDistributions();
     } catch (error) {

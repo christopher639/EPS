@@ -13,6 +13,8 @@ const LearnerSchema = new mongoose.Schema({
   birthCertificateNo: { type: Number },
   address: { type: String, required: true },
   learnerImage: { type: String}, // Image is compulsory
+},{
+   timestamps: true  // Enables createdAt and updatedAt fields
 });
 
 const Learner = mongoose.model("Learner", LearnerSchema);

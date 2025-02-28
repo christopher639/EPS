@@ -5,7 +5,8 @@ import UserAccount from '../components/UserAccount';
 import 'react-toastify/dist/ReactToastify.css';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import SideBar from '../components/SideBar';
-
+import BASE_URL from '../config';
+axios.defaults.baseURL = BASE_URL;
 const LearningArea = () => {
   const [learningAreas, setLearningAreas] = useState([]);
   const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
@@ -29,7 +30,7 @@ const LearningArea = () => {
   const fetchLearningAreas = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/api/learning-areas');
+      const response = await axios.get('/api/learning-areas');
       setLearningAreas(response.data);
       setLoading(false);
     } catch (error) {
@@ -61,7 +62,7 @@ const LearningArea = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/learning-areas', formData);
+      const response = await axios.post('/api/learning-areas', formData);
       toast.success('Learning area created successfully!');
       fetchLearningAreas(); // Refresh the list
       setShowModal(false); // Close the modal
@@ -79,7 +80,7 @@ const LearningArea = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/api/learning-areas/${editingId}`, formData);
+      await axios.put(`/api/learning-areas/${editingId}`, formData);
       toast.success('Learning area updated successfully!');
       fetchLearningAreas(); // Refresh the list
       setShowModal(false); // Close the modal
@@ -92,7 +93,7 @@ const LearningArea = () => {
   // Handle delete action
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/learning-areas/${id}`);
+      await axios.delete(`/api/learning-areas/${id}`);
       toast.success('Learning area deleted successfully!');
       fetchLearningAreas(); // Refresh the list
     } catch (error) {

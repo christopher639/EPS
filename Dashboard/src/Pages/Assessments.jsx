@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import UserAccount from "../components/UserAccount";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import SideBar from "../components/SideBar";
-
+import BASE_URL from "../config";
+import axios from "axios";
+axios.defaults.baseURL = BASE_URL;
 const Assessments = () => {
   const [classValue, setClassValue] = useState("10");
   const [sideBar, setSideBar] = useState(false); // To control the visibility of the sidebar
@@ -36,7 +38,7 @@ const Assessments = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:3000/api/marks/${classValue}/${yearValue}/${termValue}/${categoryValue}`
+          `/api/marks/${classValue}/${yearValue}/${termValue}/${categoryValue}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");

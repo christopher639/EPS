@@ -17,7 +17,6 @@ const LearnerManagement = () => {
   const [selectedLearner, setSelectedLearner] = useState(null);
   const [newLearner, setNewLearner] = useState({
     name: "",
-    regno: "",
     grade: "",
     stream: "",
     gender: "",
@@ -182,7 +181,7 @@ const LearnerManagement = () => {
           <div className="bg-white max-h-[94vh] pb-20 md:pb-4 w-full sm:w-3/4 p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <input type="text" name="name" placeholder="Name" className="border p-2 w-full mb-2" onChange={handleChange} required />
             <input type="text" name="birthCertificateNo" placeholder="birthCertificateNo" className="border p-2 w-full mb-2" onChange={handleChange} required />
-            <input type="text" name="regno" placeholder="Reg NO" className="border p-2 w-full mb-2" onChange={handleChange} required />
+            
             <input type="text" name="grade" placeholder="Grade" className="border p-2 w-full mb-2" onChange={handleChange} required />
             <input type="text" name="stream" placeholder="Stream" className="border p-2 w-full mb-2" onChange={handleChange} required />
             <select name="gender" className="border p-2 w-full mb-2" onChange={handleChange} required>

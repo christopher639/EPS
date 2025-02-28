@@ -7,8 +7,8 @@ import SideBar from '../components/SideBar';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import 'react-toastify/dist/ReactToastify.css';
 import PendingUsersModal from './PendingUsersModal';
-
-axios.defaults.baseURL = "http://localhost:3000";
+import BASE_URL from '../config';
+axios.defaults.baseURL = BASE_URL;
 
 const Users = () => {
   const [userform, setUserForm] = useState(false);

@@ -3,8 +3,8 @@ import axios from "axios";
 import SideBar from "../components/SideBar";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import UserAccount from "../components/UserAccount";
-
-axios.defaults.baseURL = "http://localhost:3000";
+import BASE_URL from "../config";
+axios.defaults.baseURL = BASE_URL;
 
 const FeesPayment = () => {
   const [sideBar, setSideBar] = useState(true);

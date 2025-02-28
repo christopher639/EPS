@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserAccount from "../components/UserAccount";
 import SideBar from "../components/SideBar";
+import axios from "axios";
+
 import SidebarToggleButton from "../components/SidebarToggleButton"; // Import the Sidebar 
+import BASE_URL from "../config";
+axios.defaults.baseURL = BASE_URL;
 const MergedAssessment = () => {
 {/**   state: { data: marksData, year, stream, term }, */}
   const [stream, setClassValue] = useState("10");
@@ -20,7 +24,7 @@ const MergedAssessment = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:3000/api/marks/${stream}/${year}/${term}`
+          `/api/marks/${stream}/${year}/${term}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");

@@ -6,8 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import UserAccount from "../components/UserAccount";
 import SideBar from "../components/SideBar";
 import SidebarToggleButton from "../components/SidebarToggleButton"; // Import SidebarToggleButton
-
-axios.defaults.baseURL = "http://localhost:3000";
+import BASE_URL from '../config';
+axios.defaults.baseURL = BASE_URL;
 
 const Departments = () => {
   const [departments, setDepartments] = useState([]);

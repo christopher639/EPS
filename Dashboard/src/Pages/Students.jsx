@@ -7,8 +7,9 @@ import UserAccount from '../components/UserAccount';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import SideBar from '../components/SideBar';
 import { FaPlus, FaTimes } from 'react-icons/fa';
+import BASE_URL from '../config';
+axios.defaults.baseURL = BASE_URL;
 
-axios.defaults.baseURL = "http://localhost:3000";
 
 const Students = () => {
   const [students, setStudents] = useState([]);
@@ -42,7 +43,7 @@ const Students = () => {
   // Fetch all students
   const getFetchData = () => {
     setLoading(true);
-    axios.get("/api/students")
+    axios.get("/api/learners")
       .then(response => {
         setStudents(response.data.reverse());
         setLoading(false);

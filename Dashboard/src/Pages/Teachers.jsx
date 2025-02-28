@@ -8,8 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import UserAccount from '../components/UserAccount';
 import { FaBars, FaPlus } from "react-icons/fa"; // Import the hamburger icon for sidebar toggle
 import SidebarToggleButton from '../components/SidebarToggleButton';
-
-axios.defaults.baseURL = "http://localhost:3000";
+import BASE_URL from '../config';
+axios.defaults.baseURL = BASE_URL;
 
 const Teachers = () => {
   const [teachers, setTeachers] = useState([]);
@@ -130,7 +130,7 @@ const Teachers = () => {
         });
     } else {
       // Add new teacher
-      axios.post("http://localhost:3000/api/teachers", formData)
+      axios.post("/api/teachers", formData)
         .then(response => {
           toast.success("Teacher added successfully");
           setShowModal(false);

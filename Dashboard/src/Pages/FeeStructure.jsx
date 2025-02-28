@@ -5,8 +5,8 @@ import SidebarToggleButton from "../components/SidebarToggleButton";
 import UserAccount from "../components/UserAccount";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-axios.defaults.baseURL = "http://localhost:3000";
+import BASE_URL from "../config";
+axios.defaults.baseURL = BASE_URL;
 
 const FeesStructures = () => {
   const [sideBar, setSideBar] = useState(true);

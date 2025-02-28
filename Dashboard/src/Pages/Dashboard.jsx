@@ -8,12 +8,10 @@ import { FaUsers, FaChalkboardTeacher, FaUniversity, FaUserGraduate, FaMoneyBill
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import SideBar from '../components/SideBar';
-
+import BASE_URL from '../config';
+axios.defaults.baseURL = BASE_URL;
 // Registering Chart.js plugins
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-axios.defaults.baseURL = 'http://localhost:3000';
-
 const Dashboard = () => {
   const [students, setMarks] = useState([]);
   const [stream, setStream] = useState([]);

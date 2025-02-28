@@ -18,8 +18,8 @@ import { FaFileInvoiceDollar, FaMoneyCheckAlt, FaBell, FaDownload } from 'react-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from 'react-router-dom';
-
-axios.defaults.baseURL = "http://localhost:3000";
+import BASE_URL from '../config';
+axios.defaults.baseURL = BASE_URL;
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);

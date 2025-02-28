@@ -1,19 +1,36 @@
 const Learner = require("../models/LearnerModel");
 const path = require("path");
 const fs = require("fs");
+const Counter = require("../models/Counter");
 
-// Add Learner
+// Add Learner with Auto-Incremented RegNo in "0001" format
 exports.addLearner = async (req, res) => {
   try {
-    const { name, regno, grade, stream, gender, dateOfBirth, nationality, guardianName, guardianPhone, address } = req.body;
+    const { name, grade, stream, gender, dateOfBirth, nationality, guardianName, guardianPhone, address } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ message: "Learner image is required" });
     }
 
+    // Get the latest regno from the Counter collection
+    let counter = await Counter.findById("learnerRegNo");
+
+    if (!counter) {
+      counter = new Counter({ _id: "learnerRegNo", sequence_value: 1 });
+    } else {
+      counter.sequence_value += 1;
+    }
+
+    // Save updated counter value
+    await counter.save();
+
+    // Format regno to be 4 digits (e.g., "0001", "0002", etc.)
+    const formattedRegNo = counter.sequence_value.toString().padStart(4, "0");
+
+    // Create a new learner with the formatted regno
     const learner = new Learner({
       name,
-      regno,
+      regno: formattedRegNo, // Auto-incremented and formatted RegNo
       grade,
       stream,
       gender,
@@ -33,16 +50,18 @@ exports.addLearner = async (req, res) => {
 };
 
 // Get All Learners with Pagination
+// Get All Learners with Pagination (Newest First)
 exports.getAllLearners = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1; // Default to page 1
-    const limit = parseInt(req.query.limit) || 10; // Default to 50 learners per page
+    const limit = parseInt(req.query.limit) || 10; // Default to 10 learners per page
 
     // Calculate the number of documents to skip
     const skip = (page - 1) * limit;
 
-    // Fetch learners with pagination
+    // Fetch learners sorted by creation date (newest first) with pagination
     const learners = await Learner.find()
+      .sort({ createdAt: -1 }) // Sort by newest first
       .skip(skip) // Skip documents for previous pages
       .limit(limit); // Limit the number of documents per page
 
@@ -63,6 +82,7 @@ exports.getAllLearners = async (req, res) => {
     res.status(500).json({ message: "Error retrieving learners", error });
   }
 };
+
 
 // Update Learner
 exports.updateLearner = async (req, res) => {

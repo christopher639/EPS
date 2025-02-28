@@ -6,8 +6,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import UserAccount from '../components/UserAccount';
+import BASE_URL from '../config';
+axios.defaults.baseURL = BASE_URL;
 
-axios.defaults.baseURL = "http://localhost:3000";
 
 const Parents = () => {
   const [students, setStudents] = useState([]);
