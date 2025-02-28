@@ -9,7 +9,19 @@ require("dotenv").config(); // Load environment variables
 const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(cors({origin:"*"}));
+
+// CORS Configuration
+const allowedOrigins = ["https://samge.onrender.com", "http://localhost:3000"];
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
 
 // Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -48,21 +60,14 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
-//database online connections
-mongoose.connect("mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system")
-.then(()=>{
-console.log("Database connected")
-})
-//database local connections
 // Database connection
-// mongoose
-//   .connect("mongodb://localhost:27017/dreamhomehouse")
-//   .then(() => {
-//     console.log("Database connected");
-//   })
-//   .catch((err) => {
-//     console.error("Database connection error:", err);
-//   });
+mongoose.connect("mongodb+srv://christopherbundi639:xDFLqAKg7G78hcuu@cluster0.uosxzen.mongodb.net/samge")
+  .then(() => {
+    console.log("Database connected");
+  })
+  .catch((err) => {
+    console.error("Database connection error:", err);
+  });
 
 // Start the server
 const port = process.env.PORT || 3000;
@@ -75,3 +80,8 @@ app.get("/", (req, res) => {
   res.send("API is working - Christopher Bundi");
 });
 
+// Error-handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Something went wrong!" });
+});

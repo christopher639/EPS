@@ -90,10 +90,10 @@ const Dashboard = () => {
 
   // Doughnut Chart Data
   const doughnutData = {
-    labels: ['Students', 'Teachers', 'Streams', 'Departments'],
+    labels: ['Leaners', 'Teachers', 'Streams', 'Departments'],
     datasets: [
       {
-        data: [students.length, teachers.length, stream.length, 5],
+        data: [totalLeaners, teachers.length, stream.length, 5],
         backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#FF5722'],
         hoverOffset: 4,
       },
