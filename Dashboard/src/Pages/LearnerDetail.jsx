@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SideBar from "../components/SideBar";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://eps-dashboard.onrender.com";
 
 const LearnerDetail = () => {
   const { id } = useParams(); // Get the learner ID from the URL
@@ -29,7 +29,7 @@ const LearnerDetail = () => {
   // Fetch learner details
   const fetchLearner = async () => {
     try {
-      const response = await axios.get(`/api/learners/${id}`);
+      const response = await axios.get(`https://eps-dashboard.onrender.com/api/learners/${id}`);
       setLearner(response.data);
       setRegno(response.data.regno); // Set the regno
       setUpdatedLearner(response.data.learner); // Initialize updatedLearner with fetched data
@@ -61,7 +61,7 @@ const LearnerDetail = () => {
     }
 
     try {
-      await axios.put(`/api/learners/${id}`, formData);
+      await axios.put(`https://eps-dashboard.onrender.com/api/learners/${id}`, formData);
       setIsEditing(false); // Exit edit mode
       fetchLearner(); // Refresh learner data
       toast.success("Learner updated successfully!");
@@ -77,7 +77,7 @@ const LearnerDetail = () => {
     if (regno) {
       const fetchAcademicData = async () => {
         try {
-          const response = await axios.get(`/api/marks/marks/${year}/${term}/${category}/${regno}`);
+          const response = await axios.get(`https://eps-dashboard.onrender.com/api/marks/marks/${year}/${term}/${category}/${regno}`);
           setAcademicData(response.data);
         } catch (error) {
           console.error("Error fetching academic data:", error);
@@ -92,7 +92,7 @@ const LearnerDetail = () => {
     if (regno) {
       const fetchFeesPayments = async () => {
         try {
-          const response = await axios.get(`/api/fees-payments/regno/${regno}`);
+          const response = await axios.get(`https://eps-dashboard.onrender.com/api/fees-payments/regno/${regno}`);
           setFeesPayments(response.data);
           
         } catch (error) {
@@ -138,7 +138,7 @@ const LearnerDetail = () => {
               src={
                 newImage
                   ? URL.createObjectURL(newImage)
-                  : `http://localhost:3000${learner.learner.learnerImage}`
+                  : `https://eps-dashboard.onrender.com${learner.learner.learnerImage}`
               }
               alt={learner.learner.name}
               className="w-48 h-48 object-cover rounded-md mb-4"
