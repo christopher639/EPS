@@ -31,7 +31,7 @@ const loginUser = async (req, res) => {
     res.json({ token, username: user.username, role: user.role });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message:err.message });
   }
 };
 
@@ -117,7 +117,7 @@ const approveUser = async (req, res) => {
         res.json({ message: `User has been ${status}.`, user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ message:err.message });
     }
 };
 
