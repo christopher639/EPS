@@ -250,7 +250,7 @@ const LearnerManagement = () => {
                     <tr key={learner._id} className="text-center hover:bg-gray-100">
                       <td className="border border-gray-300 p-2">
                         <img
-                          src={`http://localhost:3000${learner.learnerImage}`}
+                          src={`https://eps-dashboard.onrender.com${learner.learnerImage}`}
                           alt={learner.name}
                           className="w-16 h-16 object-cover rounded-md"
                         />
