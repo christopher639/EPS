@@ -15,6 +15,7 @@ const {
   sendEmailToSingleUser,
   getPendingUsers,
   approveUser,
+  getApprovedUsers,
 } = require("../Controllers/userController");
 
 // Import middlewares
@@ -48,7 +49,7 @@ router.get("/admin/users", authenticateUser, isAdmin, async (req, res) => {
 
 // Route to get all pending users (awaiting approval)
 router.get("/admin/pending-users", getPendingUsers);
-
+router.get("/admin/approved-users", getApprovedUsers);
 // Route for admin to approve/reject users
 router.put("/admin/approve/:userId",  approveUser);
 

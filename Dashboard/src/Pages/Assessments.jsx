@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import UserAccount from "../components/UserAccount";
+import axios from "axios";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import SideBar from "../components/SideBar";
 import BASE_URL from "../config";
-import axios from "axios";
+
 axios.defaults.baseURL = BASE_URL;
 const Assessments = () => {
   const [classValue, setClassValue] = useState("10");
@@ -32,29 +33,25 @@ const Assessments = () => {
     }
   };
 
-  // Fetch Data with Updated Parameters
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
+        const response = await axios.get(
           `/api/marks/${classValue}/${yearValue}/${termValue}/${categoryValue}`
         );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const result = await response.json();
-        setData(result);
-        setLoading(false);
+        setData(response.data); // Axios automatically parses JSON
       } catch (error) {
-        setError(error.message);
+        setError(error.response?.data?.message || error.message);
+      } finally {
         setLoading(false);
       }
     };
-
+  
     fetchData();
     restoreScrollPosition(); // Restore scroll position after data is loaded
   }, [classValue, yearValue, termValue, categoryValue]);
+  
 
   // Handle Print Functionality
   const handlePrint = () => {
@@ -78,6 +75,7 @@ const Assessments = () => {
         }
       })
       .join("\n");
+
 
     // Inject the styles into the print window
     printWindow.document.write(`<style>${styles}</style>`);
@@ -160,7 +158,6 @@ const Assessments = () => {
   const toggleSideBar = () => {
     setSideBar((prev) => !prev); // Toggle sidebar visibility
   };
-
   return (
    <div className="flex ">
       {/* Sidebar */}
@@ -171,7 +168,7 @@ const Assessments = () => {
       >
        <SideBar /> {/* Conditionally render Sidebar */}
       </div>
-    <div className="container mx-auto   bg-white">
+    <div className="container mx-auto max-w-full  bg-white">
       <div className="flex justify-between bg-white border-b p-3 gap-4  mb-4">
        <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
         <div >

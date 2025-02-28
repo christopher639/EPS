@@ -56,20 +56,37 @@ const LearningArea = () => {
   // Handle creating a new learning area
   const handleCreate = async (e) => {
     e.preventDefault();
+    console.log("Submitting form data:", formData); // Debugging line
+  
     if (!formData.subjectname || !formData.code || !formData.description || !formData.content) {
       toast.error('Subject Name, Code, Description, and Content are required!');
       return;
     }
-
+  
     try {
       const response = await axios.post('/api/learning-areas', formData);
+      console.log("Server response:", response.data); // Debugging line
+  
       toast.success('Learning area created successfully!');
       fetchLearningAreas(); // Refresh the list
       setShowModal(false); // Close the modal
+      setFormData({  // Reset form fields after successful creation
+        subjectname: '',
+        code: '',
+        description: '',
+        department: '',
+        instructor: '',
+        status: '',
+        language: '',
+        duration: 12,
+        content: '',
+      });
     } catch (error) {
-      toast.error('Error creating learning area.');
+      console.error('Error creating learning area:', error.response?.data || error.message);
+      toast.error(error.response?.data?.message || 'Error creating learning area.');
     }
   };
+  
 
   // Handle updating an existing learning area
   const handleUpdate = async (e) => {

@@ -22,22 +22,21 @@ const GeneralReport = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
+        setError(null); // Reset error before a new request
+        const response = await axios.get(
           `/api/marks/${classValue}/${yearValue}/${termValue}`
         );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const result = await response.json();
-        setData(result);
-        setLoading(false);
+        setData(response.data);
       } catch (error) {
-        setError(error.message);
+        setError(error.response?.data?.message || "Failed to fetch data");
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    if (classValue && yearValue && termValue) {
+      fetchData();
+    }
   }, [classValue, yearValue, termValue]);
 
   const handlePrint = () => {

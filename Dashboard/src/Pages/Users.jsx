@@ -162,7 +162,7 @@ const Users = () => {
       return;
     }
 
-    axios.get("/api/users/admin/users", {
+    axios.get("/api/users/admin/approved-users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

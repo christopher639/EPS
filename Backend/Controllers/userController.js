@@ -134,6 +134,16 @@ const getUserById = async (req, res) => {
 };
 
 // Get all pending users
+const getApprovedUsers = async (req, res) => {
+  try {
+      const users = await User.find({ status: "approved" });
+      res.json(users);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+  }
+};
+// Get all pending users
 const getPendingUsers = async (req, res) => {
     try {
         const users = await User.find({ status: "pending" });
@@ -213,5 +223,6 @@ module.exports = {
   updateUser,
   deleteUser,
   sendEmailToAllUsers,
-  sendEmailToSingleUser
+  sendEmailToSingleUser,
+  getApprovedUsers
 };
