@@ -139,7 +139,7 @@ const ReportCard = () => {
       >
         <SideBar/> {/* Conditionally render based on sidebar state */}
       </div>
-     <div className=" bg-gray-50  ">
+     <div className=" bg-gray-50  w-full ">
      <div className='flex px-4 justify-between items-center bg-white shadow-sm  border-b'>
         <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
      <div className='flex items-center gap-2'>
@@ -192,7 +192,7 @@ const ReportCard = () => {
         />
       </div>
 
-      <div id="printableTable" className="container p-4 bg-white shadow-lg rounded-lg overflow-y-scroll max-h-[78vh] pb-2">
+      <div id="printableTable" className="container min-w-full p-4 bg-white shadow-lg rounded-lg overflow-y-scroll max-h-[78vh] pb-2">
         {/* Loop through the filtered student data and display the report */}
         {filteredData.map((student, index) =>{
             const studentTotal = student.subjects.reduce((sum, subject) => sum + subject.avgScore, 0);
