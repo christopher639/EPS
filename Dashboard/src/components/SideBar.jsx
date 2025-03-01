@@ -109,7 +109,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                   {isAcademicsOpen ? <FaChevronDown className="text-xl" /> : <FaChevronRight className="text-xl" />}
                 </div>
                 <div
-                  className={`bg-yellow-700 transition-all duration-500 ease-in-out overflow-hidden ${isAcademicsOpen ? "max-h-96" : "max-h-0"}`}
+                  className={`bg-red-950 transition-all duration-500 ease-in-out overflow-hidden ${isAcademicsOpen ? "max-h-96" : "max-h-0"}`}
                 >
                     <NavLink to="/addmarks" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
                     <FaFileAlt className="text-white text-2xl" />
@@ -140,7 +140,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                   {isFinanceOpen ? <FaChevronDown className="text-xl" /> : <FaChevronRight className="text-xl" />}
                 </div>
                 <div
-                  className={`bg-yellow-700 transition-all duration-500 ease-in-out overflow-hidden ${isFinanceOpen ? "max-h-96" : "max-h-0"}`}
+                  className={`bg-red-950 transition-all duration-500 ease-in-out overflow-hidden ${isFinanceOpen ? "max-h-96" : "max-h-0"}`}
                 >
                   <NavLink to="/fees-distribution" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
                     <FaFileAlt className="text-white text-2xl" />
@@ -183,7 +183,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                   {isHROpen ? <FaChevronDown className="text-xl" /> : <FaChevronRight className="text-xl" />}
                 </div>
                 <div
-                  className={`bg-yellow-700 transition-all duration-500 ease-in-out overflow-hidden ${isHROpen ? "max-h-96" : "max-h-0"}`}
+                  className={`bg-red-950 transition-all duration-500 ease-in-out overflow-hidden ${isHROpen ? "max-h-96" : "max-h-0"}`}
                 >
                   <NavLink to="/teachers" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
                     <FaFileAlt className="text-white text-2xl" />
@@ -199,7 +199,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
             <NavLink
               to={item.to}
               key={item.to}
-              className="flex px-2 items-center pr-8 py-1 hover:bg-yellow-700 text-white mb-2"
+              className="flex px-2 items-center pr-8 py-1 hover:bg-red-950 text-white mb-2"
               activeClassName="bg-gray-600"
             >
               <div className="text-white px-2 text-2xl">{item.icon}</div>
