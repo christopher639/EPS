@@ -102,7 +102,7 @@ const AddMarks = () => {
     <div className="min-h-screen bg-gray-100 flex">
       <div className="flex-1 px-6 ">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">Post Marks</h1>
+          <h1 className=" font-bold text-gray-800">Post Marks</h1>
           <UserAccount />
         </div>
 
