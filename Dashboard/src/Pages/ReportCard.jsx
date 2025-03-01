@@ -135,7 +135,7 @@ const ReportCard = () => {
   return (
    <div className='flex '>
        <div
-        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}
       >
         <SideBar/> {/* Conditionally render based on sidebar state */}
       </div>
@@ -205,7 +205,7 @@ const ReportCard = () => {
                 
               <img
           className='w-20 h-20 rounded-full'
-          src={student.studentImage ? `http://localhost:3000${student.studentImage}` : '/avater.jpeg'}
+          src={student.studentImage ? `https://eps-dashboard.onrender.com${student.studentImage}` : '/avater.jpeg'}
           alt="Student"
         />
               </div>

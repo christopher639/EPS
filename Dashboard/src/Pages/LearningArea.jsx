@@ -30,7 +30,7 @@ const LearningArea = () => {
   const fetchLearningAreas = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/learning-areas');
+      const response = await axios.get('https://eps-dashboard.onrender.com/api/learning-areas');
       setLearningAreas(response.data);
       setLoading(false);
     } catch (error) {
@@ -64,7 +64,7 @@ const LearningArea = () => {
     }
   
     try {
-      const response = await axios.post('/api/learning-areas', formData);
+      const response = await axios.post('https://eps-dashboard.onrender.com/api/learning-areas', formData);
       console.log("Server response:", response.data); // Debugging line
   
       toast.success('Learning area created successfully!');
@@ -97,7 +97,7 @@ const LearningArea = () => {
     }
 
     try {
-      await axios.put(`/api/learning-areas/${editingId}`, formData);
+      await axios.put(`https://eps-dashboard.onrender.com/api/learning-areas/${editingId}`, formData);
       toast.success('Learning area updated successfully!');
       fetchLearningAreas(); // Refresh the list
       setShowModal(false); // Close the modal
@@ -110,7 +110,7 @@ const LearningArea = () => {
   // Handle delete action
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/learning-areas/${id}`);
+      await axios.delete(`https://eps-dashboard.onrender.com/api/learning-areas/${id}`);
       toast.success('Learning area deleted successfully!');
       fetchLearningAreas(); // Refresh the list
     } catch (error) {
@@ -160,7 +160,7 @@ const LearningArea = () => {
   return (
     <div className="flex">
       <div
-        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}
       >
         <SideBar /> {/* Conditionally render based on sidebar state */}
       </div>
