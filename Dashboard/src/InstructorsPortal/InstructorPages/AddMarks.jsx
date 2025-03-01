@@ -67,7 +67,7 @@ const AddMarks = () => {
     }));
 
     try {
-      const response = await fetch("http://localhost:3000/api/marks", {
+      const response = await fetch("https://eps-dashboard.onrender.com/api/marks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
