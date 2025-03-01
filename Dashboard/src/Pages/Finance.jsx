@@ -141,7 +141,7 @@ const Finance = () => {
       {/* Main Content */}
       <div className='flex bg-gray-50 flex-col w-full p-4'>
         {/* Header */}
-        <div className='flex justify-between items-center mb-4'>
+        <div className='flex justify-between  mb-4'>
           <div className='flex items-center gap-2'>
             <SidebarToggleButton
               toggleSidebar={toggleSideBar}
@@ -151,14 +151,18 @@ const Finance = () => {
               Finance Management
             </h1>
           </div>
-          <button className='bg-blue-700 p-2 rounded text-white'><span className='hidden md:flex'>Fees Structures</span> <span  className='flex md:hidden'> <FaMoneyBillAlt className='text-lg'/></span> </button>
+          <button className='bg-blue-700 p-2 hidden md:flex rounded text-white'><span className='hidden md:flex'>Fees Structures</span> <span  className='flex md:hidden'> <FaMoneyBillAlt className='text-lg'/></span> </button>
           <UserAccount />
         </div>
-        <h1 className='text-sm  md:hidden '>
+       <div className='  flex justify-between  md:hidden'>
+       <h1 className='text-sm   '>
               Finance Management
             </h1>
 
-        <div className='overflow-y-auto max-h-[85vh]'>
+            <button className=' bg-blue-700 px-2 rounded text-white text-sm py-1'>Fees Structures </button>
+       </div>
+
+        <div className='overflow-y-auto max-h-[85vh] pb-8'>
           <div className='grid grid-cols-1'>
             {/* Fee Overview Cards */}
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8'>
@@ -271,7 +275,7 @@ const Finance = () => {
           </div>
 
           {/* Payment Records Table */}
-          <div className='bg-white p-6 rounded-lg shadow-md mb-8'>
+          <div className='bg-white p-6 rounded-lg shadow-md mb-8 overflow-x-auto hidden'>
             <h2 className='text-xl font-bold text-gray-800 mb-4'>Payment Records</h2>
             <div className='overflow-x-auto'>
               <table className='w-full table-auto'>
