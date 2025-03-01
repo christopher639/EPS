@@ -161,7 +161,7 @@ const Streams = () => {
               placeholder='Search stream'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className='w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500'
+              className='max-w-40 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500'
             />
           </div>
           <button
@@ -175,7 +175,7 @@ const Streams = () => {
             onClick={() => setShowPromoteModal(true)}
             className='bg-purple-700 hidden md:flex px-4 py-2 text-white rounded-full hover:bg-purple-600 transition duration-300'
           >
-            Promote Learners
+            Promote 
           </button>
           <UserAccount />
         </div>
