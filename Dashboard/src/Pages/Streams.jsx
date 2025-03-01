@@ -154,7 +154,7 @@ const Streams = () => {
             toggleSidebar={toggleSideBar}
             isSidebarCollapsed={!sideBar}
           />
-          <p className='text-xl font-semibold text-gray-800'>Streams</p>
+          <p className='text-xl font-semibold text-gray-800  hidden md:flex'>Streams</p>
           <div className='hidden md:flex flex-grow max-w-xs'>
             <input
               type='text'
@@ -179,6 +179,7 @@ const Streams = () => {
           </button>
           <UserAccount />
         </div>
+        <p className='text-xl font-semibold text-gray-800 md:hidden  mx-5'>Streams</p>
         <div className=' flex mt-2 justify-between  mx-3  md:hidden'>
         <div className=' flex-grow max-w-xs'>
             <input
