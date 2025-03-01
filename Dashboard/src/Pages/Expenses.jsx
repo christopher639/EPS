@@ -141,7 +141,7 @@ const Expenses = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col  bg-white w-full">
         {/* Header */}
         <div className="flex justify-between items-center bg-white shadow-sm p-4 border-b">
           <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />

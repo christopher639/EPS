@@ -100,7 +100,7 @@ const LoginPage = () => {
             {errorMessage && <p className="text-red-600 text-sm text-center">{errorMessage}</p>}
 
             <button type="submit" disabled={loading} className="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-lg hover:from-indigo-600 hover:to-purple-700 transition duration-300">
-              {loading ? "Processing..." : isRegister ? "Register" : "Login"}
+              {loading ? "Validating..." : isRegister ? "Register" : "Login"}
             </button>
           </form>
 

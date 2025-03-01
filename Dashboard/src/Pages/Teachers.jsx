@@ -177,7 +177,7 @@ const Teachers = () => {
         <SideBar/> {/* Conditionally render based on sidebar state */}
       </div>
     <div className='flex bg-white flex-col w-full bg-gray-100'>
-      <div className='px-2 py-2 flex gap-5 justify-between items-center bg-white shadow-md'>
+      <div className='px-2 py-2 flex gap-5 justify-between items-center bg-white '>
       <div className='flex items-center gap-2'>
       <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
           <h1 className="text-sm py-3 hidden md:flex font-bold text-gray-800 md:text-md lg:text-lg ">SAMGE SCHOOL</h1>
@@ -186,7 +186,7 @@ const Teachers = () => {
         <input
           type="text"
           placeholder="Search "
-          className="w-full hidden  px-4 py-2 mb-4 border rounded-md text-gray-700 shadow-sm focus:ring-2 focus:ring-blue-500"
+          className="w-full hidden  px-4 py-2 mb-4 border rounded-md text-gray-700  focus:ring-2 focus:ring-blue-500"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -205,7 +205,7 @@ const Teachers = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3 shadow-lg">
+          <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3">
             <div className="py-2 text-center">
               <p className="text-lg font-semibold">{isUpdating ? 'Update Teacher' : 'Add New Teacher'}</p>
             </div>
@@ -299,7 +299,7 @@ const Teachers = () => {
         </div>
       ) : (
         <div className='p-3 grid grid-cols-1 pb-4 max-h-[92vh] overflow-y-auto  w-full overflow-x-auto'>
-          <table className="w-full table-auto  px-2 border  shadow-lg " >
+          <table className="w-full table-auto  px-2 border   " >
             <thead className=" text-slate-700">
               <tr>
                 {["NO", "Full Name", "TSEE NO",  "Type", "Gender", "Delete", "Update"].map((header, index) => (

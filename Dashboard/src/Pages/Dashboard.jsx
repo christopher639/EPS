@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import lion from '../assets/lion.jpg'; // Import the lion image
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import UserAccount from '../components/UserAccount';
-import { FaUsers, FaChalkboardTeacher, FaUniversity, FaUserGraduate, FaMoneyBillAlt, FaBuilding, FaUserCircle } from 'react-icons/fa';
+import { FaUsers, FaChalkboardTeacher, FaUniversity, FaUserGraduate, FaMoneyBillAlt, FaBuilding, FaUserCircle, FaBook, FaClipboard } from 'react-icons/fa';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import SideBar from '../components/SideBar';
@@ -196,7 +196,7 @@ const Dashboard = () => {
           {/* Stats Grid */}
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-4'>
             {/* Learners Count */}
-            <div className='bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow'>
+            <div className='bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-shadow'>
               <NavLink to='/learner'>
                 <div className='flex justify-between items-center'>
                   <div>
@@ -209,7 +209,7 @@ const Dashboard = () => {
             </div>
 
             {/* Teachers Count */}
-            <div className='bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow'>
+            <div className='bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-shadow'>
               <NavLink to='/teachers'>
                 <div className='flex justify-between items-center'>
                   <div>
@@ -222,7 +222,7 @@ const Dashboard = () => {
             </div>
 
             {/* Streams Count */}
-            <div className='bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow'>
+            <div className='bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-shadow'>
               <NavLink to='/streams'>
                 <div className='flex justify-between items-center'>
                   <div>
@@ -235,7 +235,7 @@ const Dashboard = () => {
             </div>
 
             {/* Alumni Count */}
-            <div className='bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow'>
+            <div className='bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-shadow'>
               <div className='flex justify-between items-center'>
                 <div>
                   <p className='text-gray-600 font-medium'>Alumni</p>
@@ -249,7 +249,7 @@ const Dashboard = () => {
           {/* Charts and Analytics */}
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-4'>
             {/* Doughnut Chart */}
-            <div className='bg-white rounded-lg shadow-md p-2'>
+            <div className='bg-white rounded-lg shadow-sm p-2'>
               <h2 className='text-xl font-semibold text-gray-800 '>Distribution Overview</h2>
               <div className='flex justify-center relative'>
                 <Doughnut data={doughnutData} options={doughnutOptions} />
@@ -257,7 +257,7 @@ const Dashboard = () => {
             </div>
 
             {/* Analytics Section */}
-            <div className='bg-white rounded-lg shadow-md p-6'>
+            <div className='bg-white rounded-lg shadow-sm p-6'>
               <h2 className='text-xl font-semibold text-gray-800 mb-4'>Analytics</h2>
               <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                 <div className='bg-gray-50 p-4 rounded-lg'>
@@ -277,7 +277,7 @@ const Dashboard = () => {
           </div>
 
           {/* Quick Links */}
-          <div id='quick-links' className='bg-white rounded-lg shadow-md p-6'>
+          <div id='quick-links' className='bg-white rounded-lg mb-8 shadow-sm p-6'>
             <h2 className='text-xl font-semibold text-gray-800 mb-4'>Quick Links</h2>
             <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
               {[
@@ -287,6 +287,10 @@ const Dashboard = () => {
                 { to: '/departments', icon: <FaBuilding className='text-xl' />, text: 'Departments' },
                 { to: '/finance', icon: <FaMoneyBillAlt className='text-xl' />, text: 'Finances' },
                 { to: '/users', icon: <FaUserCircle className='text-xl' />, text: 'Users' },
+                 { to: "/learningarea",icon: <FaClipboard  className='text-xl' />, text: "Learning Areas" },
+                 { to: "/Assessments",icon: <FaClipboard  className='text-xl' />, text: "Assessments" },
+                 { to: "/general-report",icon: <FaClipboard  className='text-xl' />, text: "General Reports" },
+                
               ].map((link, index) => (
                 <NavLink
                   key={index}

@@ -140,7 +140,7 @@ const Streams = () => {
       {/* Sidebar */}
       <div
         className={`transition-all duration-700 ease-in-out ${
-          sideBar ? 'w-72' : 'w-16'
+          sideBar ? 'w-0 md:w-72' : 'w-0'
         } bg-gray-800 min-h-screen`}
       >
         <SideBar />
@@ -149,7 +149,7 @@ const Streams = () => {
       {/* Main Content */}
       <div className='bg-gray-50 w-full min-h-screen'>
         {/* Header */}
-        <div className='flex px-6 py-4 border-b bg-white shadow-md justify-between items-center'>
+        <div className='flex px-6 py-4 border-b bg-white  justify-between items-center'>
           <SidebarToggleButton
             toggleSidebar={toggleSideBar}
             isSidebarCollapsed={!sideBar}
@@ -173,11 +173,28 @@ const Streams = () => {
           </button>
           <button
             onClick={() => setShowPromoteModal(true)}
-            className='bg-purple-700 px-4 py-2 text-white rounded-full hover:bg-purple-600 transition duration-300'
+            className='bg-purple-700 hidden md:flex px-4 py-2 text-white rounded-full hover:bg-purple-600 transition duration-300'
           >
             Promote Learners
           </button>
           <UserAccount />
+        </div>
+        <div className=' flex mt-2 justify-between  mx-3  md:hidden'>
+        <div className=' flex-grow max-w-xs'>
+            <input
+              type='text'
+              placeholder='Search stream'
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className='max-w-64 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500'
+            />
+          </div>
+        <button
+            onClick={() => setShowPromoteModal(true)}
+            className='bg-purple-700 px-4 py-2 text-white rounded-full hover:bg-purple-600 transition duration-300'
+          >
+            Promote Learners
+          </button>
         </div>
 
         {/* Body */}

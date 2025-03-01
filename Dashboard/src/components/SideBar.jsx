@@ -189,14 +189,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     <FaFileAlt className="text-white text-2xl" />
                     {!isSidebarCollapsed && <span className="pl-4">Teachers</span>}
                   </NavLink>
-                  <NavLink to="/director" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Director</span>}
-                  </NavLink>
-                  <NavLink to="/record-keeping" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Record Keeping</span>}
-                  </NavLink>
+              
                 </div>
               </div>
             );

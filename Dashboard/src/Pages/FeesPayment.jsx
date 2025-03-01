@@ -70,18 +70,18 @@ const FeesPayment = () => {
   };
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex bg-gray-100  min-h-screen">
       {/* Sidebar */}
       <div className={`transition-all duration-700 ease-in-out ${sideBar ? "w-0 md:w-72" : "w-0"} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col w-full">
+      <div className="flex bg-white flex-col w-full">
         {/* Header */}
-        <div className="flex justify-between items-center bg-white shadow-md p-4 border-b">
+        <div className="flex justify-between items-center bg-white  p-4 border-b">
           <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-          <h1 className="text-2xl font-semibold text-gray-800">Fees Payment Transactions</h1>
+          <h1 className="text-2xl font-semibold text-gray-800 hidden md:flex">Fees Payment Transactions</h1>
           <UserAccount />
         </div>
 
@@ -102,7 +102,7 @@ const FeesPayment = () => {
         </div>
 
         {/* Transactions Table */}
-        <div className="px-6">
+        <div className="px-6 ">
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <p className="text-lg font-semibold text-gray-600">Loading transactions...</p>
@@ -112,30 +112,30 @@ const FeesPayment = () => {
               <table className="min-w-full border-collapse text-sm text-left">
                 <thead className="bg-gray-900 text-black uppercase text-xs">
                   <tr>
-                    <th className="py-2 px-3 border">Transaction ID</th>
-                    <th className="py-2 px-3 border">Reg No.</th>
-                    <th className="py-2 px-3 border">Student Name</th>
-                    <th className="py-2 px-3 border">Amount Paid (Ksh)</th>
-                    <th className="py-2 px-3 border">Payment Method</th>
-                    <th className="py-2 px-3 border">Receipt No.</th>
-                    <th className="py-2 px-3 border">Date Paid</th>
+                    <th className="py-2 px-1 border">Transaction ID</th>
+                    <th className="py-2 px-1 border">Reg No.</th>
+                    <th className="py-2 px-1 border">Student Name</th>
+                    <th className="py-2 px-1 border">Amount Paid (Ksh)</th>
+                    <th className="py-2 px-1 border">Payment Method</th>
+                    <th className="py-2 px-1 border">Receipt No.</th>
+                    <th className="py-2 px-1 border">Date Paid</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white">
                   {payments.length > 0 ? (
                     payments.map((payment) => (
                       <tr key={payment._id} className="border hover:bg-gray-50 text-sm">
-                        <td className="py-2 px-3 border">{payment._id}</td>
-                        <td className="py-2 px-3 border">{payment.regno}</td>
-                        <td className="py-2 px-3 border">
+                        <td className="py-2 px-1 border">{payment._id}</td>
+                        <td className="py-2 px-1 border">{payment.regno}</td>
+                        <td className="py-2 px-1 border">
                           {payment.studentDetails ? payment.studentDetails.name : "N/A"}
                         </td>
-                        <td className="py-2 px-3 border text-right font-semibold">
+                        <td className="py-2 px-1 border text-right font-semibold">
                           {new Intl.NumberFormat("en-US").format(payment.amountPaid)}
                         </td>
-                        <td className="py-2 px-3 border">{payment.paymentMethod}</td>
-                        <td className="py-2 px-3 border">{payment.receiptNumber || "N/A"}</td>
-                        <td className="py-2 px-3 border">
+                        <td className="py-2 px-1 border">{payment.paymentMethod}</td>
+                        <td className="py-2 px-1 border">{payment.receiptNumber || "N/A"}</td>
+                        <td className="py-2 px-1 border">
                           {new Date(payment.paymentDate).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "short",
