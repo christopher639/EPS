@@ -106,7 +106,7 @@ const AddMarks = () => {
           <UserAccount />
         </div>
 
-        <div className="bg-white overflow-y-auto max-h-[90vh] rounded-lg shadow-md p-6">
+        <div className="bg-white overflow-y-auto max-h-[90vh] rounded-lg shadow-md pb-24 p-6">
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Set Your Parameters</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Common Data Fields */}
@@ -194,7 +194,7 @@ const AddMarks = () => {
                 onClick={addStudent}
                 className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
               >
-                + Add Student
+                + more
               </button>
               <button
                 type="submit"

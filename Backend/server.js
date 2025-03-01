@@ -41,11 +41,11 @@ app.use("/api/teachers", teacherRoutes);
 app.use("/api/marks", subjectMarksRoutes);
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static(path.join(__dirname, "dashboard/build")));
 
 // Handle React routing, return all requests to React app
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  res.sendFile(path.join(__dirname, "dashboard/build", "index.html"));
 });
 //atlas 1 connection   mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system
 //database online connections
