@@ -122,7 +122,7 @@ const LearnerDetail = () => {
 
   return (
     <div className="flex">
-        <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}>
+        <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
       <div className="p-6 w-full bg-gray-100 max-h-[100vh] overflow-y-auto min-h-screen">
