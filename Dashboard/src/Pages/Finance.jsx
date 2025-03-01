@@ -147,13 +147,16 @@ const Finance = () => {
               toggleSidebar={toggleSideBar}
               isSidebarCollapsed={!sideBar}
             />
-            <h1 className='text-sm sm:text-lg md:text-xl lg:text-3xl font-bold text-gray-800'>
+            <h1 className='text-sm hidden md:flex sm:text-lg md:text-xl lg:text-3xl font-bold text-gray-800'>
               Finance Management
             </h1>
           </div>
           <button className='bg-blue-700 p-2 rounded text-white'><span className='hidden md:flex'>Fees Structures</span> <span  className='flex md:hidden'> <FaMoneyBillAlt className='text-lg'/></span> </button>
           <UserAccount />
         </div>
+        <h1 className='text-sm  md:hidden '>
+              Finance Management
+            </h1>
 
         <div className='overflow-y-auto max-h-[85vh]'>
           <div className='grid grid-cols-1'>
