@@ -34,7 +34,7 @@ const Departments = () => {
   const fetchDepartments = () => {
     setLoading(true);
     axios
-      .get("/api/departments")
+      .get("https://eps-dashboard.onrender.com/api/departments")
       .then((response) => {
         setDepartments(response.data);
         setLoading(false);
@@ -48,7 +48,7 @@ const Departments = () => {
   const getFetchData = () => {
     setLoading(true);
     axios
-      .get("/api/teachers")
+      .get("https://eps-dashboard.onrender.com/api/teachers")
       .then((response) => {
         setTeachers(response.data.reverse());
         setLoading(false);
@@ -61,7 +61,7 @@ const Departments = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`/api/departments/${id}`);
+      const response = await axios.delete(`https://eps-dashboard.onrender.com/api/departments/${id}`);
       if (response.data.success) {
         toast.success("Department deleted successfully");
         setDepartments((prevDepartments) =>
@@ -84,7 +84,7 @@ const Departments = () => {
     }
 
     axios
-      .post("/api/departments", formData)
+      .post("https://eps-dashboard.onrender.com/api/departments", formData)
       .then(() => {
         toast.success("New department added successfully");
         setShowModal(false);
@@ -118,7 +118,7 @@ const Departments = () => {
       {/* Sidebar */}
       <div
         className={`transition-all duration-700 ease-in-out ${
-          sideBar ? "w-72" : "w-16"
+          sideBar ? "w-0 md:w-72" : "w-0"
         } bg-gray-800 min-h-screen`}
       >
        <SideBar /> {/* Conditionally render Sidebar */}

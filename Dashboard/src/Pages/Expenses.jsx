@@ -42,7 +42,7 @@ const Expenses = () => {
   const fetchExpenses = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('/api/expenses');
+      const res = await axios.get('https://eps-dashboard.onrender.com/api/expenses');
       setExpenses(res.data);
     } catch (error) {
       toast.error("Failed to fetch expenses");
@@ -66,7 +66,7 @@ const Expenses = () => {
         ...formData,
         amount: Number(formData.amount)
       };
-      await axios.post('/api/expenses', expenseData);
+      await axios.post('https://eps-dashboard.onrender.com/api/expenses', expenseData);
       toast.success("Expense added successfully");
       setShowAddModal(false);
       setFormData({
@@ -95,7 +95,7 @@ const Expenses = () => {
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/expenses/${updateFormData._id}`, {
+      await axios.put(`https://eps-dashboard.onrender.com/api/expenses/${updateFormData._id}`, {
         ...updateFormData,
         amount: Number(updateFormData.amount)
       });
@@ -118,7 +118,7 @@ const Expenses = () => {
   // Confirm deletion
   const confirmDeleteExpense = async () => {
     try {
-      await axios.delete(`/api/expenses/${expenseToDelete}`);
+      await axios.delete(`https://eps-dashboard.onrender.com/api/expenses/${expenseToDelete}`);
       toast.success("Expense deleted successfully");
       setShowDeleteModal(false);
       setExpenseToDelete(null);
@@ -136,7 +136,7 @@ const Expenses = () => {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}>
+      <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
 

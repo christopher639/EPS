@@ -31,7 +31,7 @@ const FeesDistribution = () => {
   // Fetch all fee distributions
   const fetchFeeDistributions = async () => {
     try {
-      const response = await axios.get("/api/fee-distributions");
+      const response = await axios.get("https://eps-dashboard.onrender.com/api/fee-distributions");
       setFeeDistributions(response.data);
       setFilteredFees(response.data); // Initialize filteredFees with all data
     } catch (error) {
@@ -47,7 +47,7 @@ const FeesDistribution = () => {
     }
     try {
       const response = await axios.get(
-        `/api/fees-distribution/${year}/${term}/${grade}`
+        `https://eps-dashboard.onrender.com/api/fees-distribution/${year}/${term}/${grade}`
       );
       setTotalsByCategory(response.data);
     } catch (error) {
@@ -96,13 +96,13 @@ const FeesDistribution = () => {
     try {
       if (isEditMode) {
         await axios.put(
-          `/api/fee-distributions/${currentFeeDistribution._id}`,
+          `https://eps-dashboard.onrender.com/api/fee-distributions/${currentFeeDistribution._id}`,
           currentFeeDistribution
         );
         toast.success("Fee distribution updated successfully!");
       } else {
         await axios.post(
-          "/api/fee-distributions",
+          "https://eps-dashboard.onrender.com/api/fee-distributions",
           currentFeeDistribution
         );
         toast.success("Fee distribution added successfully!");
@@ -126,7 +126,7 @@ const FeesDistribution = () => {
   // Handle delete fee distribution
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/fee-distributions/${id}`);
+      await axios.delete(`https://eps-dashboard.onrender.com/api/fee-distributions/${id}`);
       toast.success("Fee distribution deleted successfully!");
       fetchFeeDistributions();
     } catch (error) {
@@ -142,7 +142,7 @@ const FeesDistribution = () => {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <div className={`transition-all duration-700 ease-in-out ${sideBar ? "w-72" : "w-16"} bg-gray-800 min-h-screen`}>
+      <div className={`transition-all duration-700 ease-in-out ${sideBar ? "w-0 md:w-72" : "w-0"} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
 

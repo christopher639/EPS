@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SideBar from '../components/SideBar';
+import { FaMoneyBillAlt } from "react-icons/fa";
 import SidebarToggleButton from '../components/SidebarToggleButton'; // Import the Sidebar Toggle Button
 import UserAccount from '../components/UserAccount'; // Import the User Account component
 import { Doughnut, Bar, Line } from 'react-chartjs-2';
@@ -34,7 +35,7 @@ const Finance = () => {
    // Fetch all expenses from the backend
    const fetchExpenses = async () => {
     try {
-      const res = await axios.get('/api/expenses');
+      const res = await axios.get('https://eps-dashboard.onrender.com/api/expenses');
       setExpenses(res.data);
     } catch (error) {
       toast.error("Failed to fetch expenses");
@@ -46,7 +47,7 @@ const Finance = () => {
    const fetchPayments = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/fees-payments");
+      const res = await axios.get("https://eps-dashboard.onrender.com/api/fees-payments");
       setPayments(res.data.payments);
       setTotalFeesPaid(res.data.totalFeesPaid);
     } catch (error) {
@@ -132,7 +133,7 @@ const Finance = () => {
     <div className='flex bg-gray-50 min-h-screen'>
       {/* Sidebar */}
       <div
-        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}
       >
         <SideBar />
       </div>
@@ -150,7 +151,7 @@ const Finance = () => {
               Finance Management
             </h1>
           </div>
-          <button className='bg-blue-700 p-2 rounded text-white'>Fees Structures</button>
+          <button className='bg-blue-700 p-2 rounded text-white'><span className='hidden md:flex'>Fees Structures</span> <span  className='flex md:hidden'> <FaMoneyBillAlt className='text-lg'/></span> </button>
           <UserAccount />
         </div>
 

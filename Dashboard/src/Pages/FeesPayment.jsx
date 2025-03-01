@@ -26,7 +26,7 @@ const FeesPayment = () => {
   const fetchPayments = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/fees-payments");
+      const res = await axios.get("https://eps-dashboard.onrender.com/api/fees-payments");
       setPayments(res.data.payments);
       setTotalFeesPaid(res.data.totalFeesPaid);
     } catch (error) {
@@ -52,7 +52,7 @@ const FeesPayment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/fees-payments", formData);
+      await axios.post("https://eps-dashboard.onrender.com/api/fees-payments", formData);
       fetchPayments(); // Refresh data
       setIsModalOpen(false); // Close modal
       setFormData({
@@ -72,7 +72,7 @@ const FeesPayment = () => {
   return (
     <div className="flex bg-gray-100 min-h-screen">
       {/* Sidebar */}
-      <div className={`transition-all duration-700 ease-in-out ${sideBar ? "w-72" : "w-16"} bg-gray-800 min-h-screen`}>
+      <div className={`transition-all duration-700 ease-in-out ${sideBar ? "w-0 md:w-72" : "w-0"} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
 
