@@ -15,6 +15,7 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
+import MobileNav from '../components/MobileNav';
 
 // Register Chart.js components
 ChartJS.register(
@@ -102,7 +103,7 @@ const Analytics = () => {
     <div className='flex bg-gray-50 min-h-screen'>
       {/* Sidebar */}
       <div
-        className={`transition-width duration-300 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+        className={`transition-width duration-300 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}
       >
         <SideBar />
       </div>
@@ -110,49 +111,45 @@ const Analytics = () => {
       {/* Main Content */}
       <div className='flex w-full bg-gray-50 flex-col flex-grow p-5'>
         {/* Header */}
-        <div className='flex justify-between items-center mb-8'>
-          <div className='flex items-center gap-3'>
+        <div className='flex  border-b shadow-sm items-center mb-8'>
+          <MobileNav/>
+          <div className='flex hidden md:flex items-center gap-3'>
             <SidebarToggleButton
               toggleSidebar={toggleSideBar}
               isSidebarCollapsed={!sideBar}
             />
-            <h1 className='text-3xl font-bold text-gray-800'>Analytics Dashboard</h1>
+            <h1 className='text-3xl font-bold text-gray-800 '>Analytics Dashboard</h1>
           </div>
           <UserAccount />
         </div>
 
         {/* Graphs in a 2-column grid */}
-        <div className='grid grid-cols-1  md:grid-cols-2 gap-8 overflow-y-auto max-h-[80vh]'>
+        <div className='grid   md:grid-cols-2 gap-8 overflow-y-auto max-h-[80vh]'>
           {/* Student Performance Analytics */}
           <div className='bg-white p-6 rounded-lg shadow-md'>
             <h2 className='text-xl font-bold text-gray-800 mb-4'>Student Performance Trends</h2>
             <Bar data={studentPerformanceData} />
           </div>
-
           {/* Attendance Analytics */}
           <div className='bg-white p-6 rounded-lg shadow-md'>
             <h2 className='text-xl font-bold text-gray-800 mb-4'>Attendance Trends</h2>
             <Line data={attendanceData} />
           </div>
-
           {/* Fee Collection Analytics */}
           <div className='bg-white p-6 rounded-lg shadow-md'>
             <h2 className='text-xl font-bold text-gray-800 mb-4'>Fee Distribution</h2>
             <Pie data={feeCollectionData} />
           </div>
-
           {/* Teacher Performance Analytics */}
           <div className='bg-white p-6 rounded-lg shadow-md'>
             <h2 className='text-xl font-bold text-gray-800 mb-4'>Teacher Performance</h2>
             <Bar data={teacherPerformanceData} />
           </div>
-
           {/* Admission Trends */}
           <div className='bg-white p-6 rounded-lg shadow-md'>
             <h2 className='text-xl font-bold text-gray-800 mb-4'>Admission Trends</h2>
             <Line data={admissionTrendsData} />
           </div>
-
           {/* Customizable Reports */}
           <div className='bg-white p-6 rounded-lg shadow-md col-span-2'>
             <h2 className='text-xl font-bold text-gray-800 mb-4'>Generate Custom Reports</h2>

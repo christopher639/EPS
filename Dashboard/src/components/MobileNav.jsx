@@ -181,6 +181,13 @@ const MobileNav = () => {
                       <FaFileInvoiceDollar />
                       <span>Expenses</span>
                     </NavLink>
+                    <NavLink
+                      to="/finance"
+                      className="flex items-center gap-3 py-2 text-white hover:bg-blue-600 rounded-lg transition-colors duration-200"
+                    >
+                      <FaFileInvoiceDollar />
+                      <span>Analytics</span>
+                    </NavLink>
                   </div>
                 </div>
               );

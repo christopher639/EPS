@@ -3,6 +3,7 @@ import UserAccount from "../components/UserAccount";
 import axios from "axios";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import SideBar from "../components/SideBar";
+import MobileNav from "../components/MobileNav";
 // import BASE_URL from "../config";
 
 // axios.defaults.baseURL = BASE_URL;
@@ -169,8 +170,11 @@ const Assessments = () => {
        <SideBar /> {/* Conditionally render Sidebar */}
       </div>
     <div className="container mx-auto max-w-full  bg-white">
+      <MobileNav/>
       <div className="flex justify-between bg-white border-b p-3 gap-4  mb-4">
-       <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+     <div className="hidden md:flex">
+     <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+     </div>
         <div >
           <button
             onClick={handlePrint}

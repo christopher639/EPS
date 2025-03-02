@@ -20,6 +20,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from 'react-router-dom';
 import BASE_URL from '../config';
+import MobileNav from '../components/MobileNav';
 axios.defaults.baseURL = BASE_URL;
 
 // Register Chart.js components
@@ -141,12 +142,17 @@ const Finance = () => {
       {/* Main Content */}
       <div className='flex bg-gray-50 flex-col w-full p-4'>
         {/* Header */}
-        <div className='flex justify-between  mb-4'>
-          <div className='flex items-center gap-2'>
-            <SidebarToggleButton
+        <div className='flex justify-between  border-b  shadow-sm md:border-none  md:shadow-none mb-4'>
+      <div>
+            <MobileNav />
+      </div>
+          <div className='flex items-center  gap-2'>
+           <div className='hidden md:flex'>
+           <SidebarToggleButton
               toggleSidebar={toggleSideBar}
               isSidebarCollapsed={!sideBar}
             />
+           </div>
             <h1 className='text-sm hidden md:flex sm:text-lg md:text-xl lg:text-3xl font-bold text-gray-800'>
               Finance Management
             </h1>

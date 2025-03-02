@@ -7,6 +7,7 @@ import SideBar from "../components/SideBar";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import UserAccount from "../components/UserAccount";
+import MobileNav from "../components/MobileNav";
 // import BASE_URL from "../config";
 // axios.defaults.baseURL = BASE_URL;
 
@@ -139,9 +140,14 @@ const LearnerManagement = () => {
         <ToastContainer />
         {/* Search Bar */}
         <div className="mb-4">
+        
         <div className="flex flex-col md:flex-row   gap-2 justify-between">
-         <div className="flex gap-2 justify-between">
-         <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+       
+         <div className="flex gap-2 border-b shadow-md justify-between">
+         <MobileNav/>
+        <div className="hidden md:flex">
+        <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+        </div>
          <h1 className="text-lg  text-2xl  font-semibold  sm:mb-0">Learner Management</h1>
          </div>
          <div className="flex justify-between gap-3">
