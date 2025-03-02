@@ -8,10 +8,11 @@ import { FaUsers, FaChalkboardTeacher, FaUniversity, FaUserGraduate, FaMoneyBill
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import SideBar from '../components/SideBar';
-// import BASE_URL from '../config';
-// axios.defaults.baseURL = BASE_URL;
+import MobileNav from '../components/MobileNav'; // Import the MobileNav component
+
 // Registering Chart.js plugins
 ChartJS.register(ArcElement, Tooltip, Legend);
+
 const Dashboard = () => {
   const [students, setMarks] = useState([]);
   const [stream, setStream] = useState([]);
@@ -175,14 +176,25 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className='w-full'>
+      
+
         {/* Header */}
-        <div className='flex justify-between items-center bg-white shadow-sm p-4 border-b'>
+        <div className='flex justify-between items-center bg-white shadow-sm p-2 border-b'>
           <div className='flex items-center gap-3'>
-            <SidebarToggleButton
+              {/* Mobile Navigation */}
+              <img src={lion} className='h-20  md:hidden' alt="" />
+          <div>
+         
+          <MobileNav />
+          </div>
+          <div  className='hidden md:flex'>
+          <SidebarToggleButton
               toggleSidebar={toggleSideBar}
-              isSidebarCollapsed={!sideBar}
+              isSidebarCollapsed={!sideBar}  
             />
-            <h1 className='text-sm md:text-md lg:text-xl font-bold text-gray-800'>
+          </div>
+         
+            <h1 className='text-sm hidden md:flex md:text-md lg:text-xl font-bold text-gray-800'>
               SAMGE SCHOOL
             </h1>
             <p className=' hidden md:flex text-gray-500'> Admin Dashboard</p>
@@ -191,6 +203,7 @@ const Dashboard = () => {
             <UserAccount />
           </div>
         </div>
+
         {/* Main Content */}
         <div className='bg-gradient-to-br from-gray-50 to-gray-100 overflow-x-auto overflow-y-auto max-h-[90vh] p-6 '>
           {/* Stats Grid */}
