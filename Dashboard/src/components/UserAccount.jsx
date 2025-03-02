@@ -74,10 +74,10 @@ const UserAccount = () => {
 
         {/* Notification Modal */}
         {notificationsOpen && (
-          <div className="absolute w-80 right-0 mt-2 bg-white shadow-lg rounded-md border border-gray-200">
+          <div className="absolute w-80  mt-2 bg-white shadow-lg rounded-md border border-gray-200">
             <div className="p-4">
               {/* Modal Header */}
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex  justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">Notifications</h3>
                 <button
                  
@@ -88,7 +88,7 @@ const UserAccount = () => {
               </div>
 
               {/* Notifications List */}
-              <div className="max-h-64 overflow-y-auto">
+              <div className="max-h-64  overflow-y-auto">
                 {notifications.map((notification) => (
                   <div
                     key={notification.id}

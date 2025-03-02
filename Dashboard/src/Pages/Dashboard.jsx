@@ -181,8 +181,6 @@ const Dashboard = () => {
         {/* Header */}
         <div className='flex justify-between items-center bg-white shadow-sm p-2 border-b'>
           <div className='flex items-center gap-3'>
-              {/* Mobile Navigation */}
-              <img src={lion} className='h-20  md:hidden' alt="" />
           <div>
          
           <MobileNav />
@@ -194,7 +192,7 @@ const Dashboard = () => {
             />
           </div>
          
-            <h1 className='text-sm hidden md:flex md:text-md lg:text-xl font-bold text-gray-800'>
+            <h1 className='text-sm text-red-900 font-bold md:flex md:text-md lg:text-xl font-bold text-gray-800'>
               SAMGE SCHOOL
             </h1>
             <p className=' hidden md:flex text-gray-500'> Admin Dashboard</p>
