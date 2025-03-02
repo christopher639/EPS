@@ -50,7 +50,7 @@ const Dashboard = () => {
   useEffect(() => {
     const getFetchData = () => {
       axios
-        .get('/api/teachers')
+        .get('https://eps-dashboard.onrender.com/api/teachers')
         .then((response) => setTeachers(response.data))
         .catch((err) => console.log(err));
     };

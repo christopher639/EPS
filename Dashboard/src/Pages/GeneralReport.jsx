@@ -7,6 +7,7 @@ import SideBar from "../components/SideBar";
 import { FaFile, FaPrint } from "react-icons/fa";
 import BASE_URL from "../config";
 import axios from "axios";
+import MobileNav from "../components/MobileNav";
 axios.defaults.baseURL = BASE_URL;
 const GeneralReport = () => {
   const [classValue, setClassValue] = useState("10");
@@ -196,25 +197,12 @@ const GeneralReport = () => {
       </div>
       <div className="container max-w-full  bg-gray-100">
         {/* Top Controls */}
-        <div className="flex p-4 justify-between items-center bg-white ">
-          <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-          <button
-            onClick={handlePrint}
-            className="bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
-          >
-            <FaPrint className="md:hidden" /> <p className="hidden md:flex"> Print </p>
-          </button>
-          <button
-            onClick={() =>
-              navigate("/report-card", {
-                state: { data: updatedData, classValue, yearValue, termValue },
-              })
-            }
-            className="bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
-          >
-            <p className="hidden md:flex"> Reports</p>
-            <FaFile className="md:hidden" />
-          </button>
+        <div className="flex p-2 justify-between items-center bg-white ">
+          <MobileNav/>
+        <div className="hidden md:flex">
+        <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+        </div>
+       
           <UserAccount />
         </div>
 
@@ -253,7 +241,26 @@ const GeneralReport = () => {
             <option value="Term-3">Term-3</option>
           </select>
         </div>
-
+  <div  className="flex justify-between  md:mx-10 mx-5">
+  <button
+            onClick={() =>
+              navigate("/report-card", {
+                state: { data: updatedData, classValue, yearValue, termValue },
+              })
+            }
+            className="bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
+          >
+            <p className=""> Reports</p>
+          
+          </button>
+          <button
+            onClick={handlePrint}
+            className="bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
+          >
+           <p > Print </p>
+          </button>
+        
+  </div>
         {/* Table Section */}
         <div className="px-4 grid grid-cols-1 pb-4 max-h-[80vh] pb-8 overflow-y-auto w-full overflow-x-auto">
           {updatedData.length === 0 ? (

@@ -32,6 +32,10 @@ import FeeStructure from "./Pages/FeeStructure";
 import FeesPayment from "./Pages/FeesPayment";
 import LearnerManagement from "./Pages/LearnerManagement";
 import LearnerDetail from "./Pages/LearnerDetail";
+import SettingsPage from "./Pages/SettingsPage";
+import ProfilePage from "./Pages/ProfilePage";
+import HelpAndSupport from "./Pages/HelpAndSupport";
+
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -89,6 +93,10 @@ const App = () => {
           path="/parents"
           element={isAuthenticated ? <Parents /> : <Navigate to="/login" />}
         />
+         <Route
+          path="/help"
+          element={isAuthenticated ? <HelpAndSupport /> : <Navigate to="/login" />}
+        />
         <Route
           path="/teachers"
           element={isAuthenticated ? <Teachers /> : <Navigate to="/login" />}
@@ -96,6 +104,15 @@ const App = () => {
         <Route
           path="/learningarea"
           element={isAuthenticated ? <LearningArea /> : <Navigate to="/login" />}
+        />
+        
+           <Route
+          path="/settings"
+          element={isAuthenticated ? <SettingsPage /> : <Navigate to="/login" />}
+        />
+           <Route
+          path="/profile"
+          element={isAuthenticated ? <ProfilePage /> : <Navigate to="/login" />}
         />
         <Route
           path="/student/:id"

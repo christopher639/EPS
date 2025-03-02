@@ -66,7 +66,7 @@ const MobileNav = () => {
 
       {/* Mobile Navigation */}
       <div
-        className={`fixed top-[74px] left-0 h-full w-64 bg-blue-800 transform ${
+        className={`fixed top-[72px] left-0 h-full w-3/4 bg-blue-800 transform ${
           isNavOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out z-50 overflow-y-auto shadow-lg`}
       >

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SideBar from '../components/SideBar';
-import SidebarToggleButton from '../components/SidebarToggleButton'; 
-import UserAccount from '../components/UserAccount'; 
+import SidebarToggleButton from '../components/SidebarToggleButton';
+import UserAccount from '../components/UserAccount';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -31,7 +31,7 @@ ChartJS.register(
 );
 
 const Analytics = () => {
-  const [sideBar, setSideBar] = useState(true); 
+  const [sideBar, setSideBar] = useState(true);
 
   // Dummy data for demonstration
   const studentPerformanceData = {
@@ -103,56 +103,80 @@ const Analytics = () => {
     <div className='flex bg-gray-50 min-h-screen'>
       {/* Sidebar */}
       <div
-        className={`transition-width duration-300 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}
+        className={`transition-width duration-300 ease-in-out ${
+          sideBar ? 'w-0 md:w-72' : 'w-0'
+        } bg-gray-800 min-h-screen`}
       >
         <SideBar />
       </div>
 
       {/* Main Content */}
-      <div className='flex w-full bg-gray-50 flex-col flex-grow p-5'>
+      <div className='flex w-full bg-gray-50 flex-col flex-grow'>
         {/* Header */}
-        <div className='flex  border-b shadow-sm items-center mb-8'>
-          <MobileNav/>
-          <div className='flex hidden md:flex items-center gap-3'>
-            <SidebarToggleButton
+        <div className='flex flex-col  md:flex-row items-center justify-between py-2 border-b shadow-sm'>
+          <div className='flex items-center justify-between gap-3 w-full md:w-auto'>
+            <MobileNav />
+           <div className='hidden md:flex'>
+           <SidebarToggleButton
               toggleSidebar={toggleSideBar}
               isSidebarCollapsed={!sideBar}
             />
-            <h1 className='text-3xl font-bold text-gray-800 '>Analytics Dashboard</h1>
+           </div>
+            <h1 className='text-xl md:text-3xl font-bold text-gray-800'>
+              Analytics
+            </h1>
+            <UserAccount />
           </div>
-          <UserAccount />
+       
         </div>
 
-        {/* Graphs in a 2-column grid */}
-        <div className='grid   md:grid-cols-2 gap-8 overflow-y-auto max-h-[80vh]'>
+        {/* Graphs in a responsive grid */}
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6 p-4 overflow-y-auto  max-h-[80vh]'>
           {/* Student Performance Analytics */}
-          <div className='bg-white p-6 rounded-lg shadow-md'>
-            <h2 className='text-xl font-bold text-gray-800 mb-4'>Student Performance Trends</h2>
+          <div className='bg-white p-4 rounded-lg shadow-md'>
+            <h2 className='text-lg md:text-xl font-bold text-gray-800 mb-4'>
+              Student Performance Trends
+            </h2>
             <Bar data={studentPerformanceData} />
           </div>
+
           {/* Attendance Analytics */}
-          <div className='bg-white p-6 rounded-lg shadow-md'>
-            <h2 className='text-xl font-bold text-gray-800 mb-4'>Attendance Trends</h2>
+          <div className='bg-white p-4 rounded-lg shadow-md'>
+            <h2 className='text-lg md:text-xl font-bold text-gray-800 mb-4'>
+              Attendance Trends
+            </h2>
             <Line data={attendanceData} />
           </div>
+
           {/* Fee Collection Analytics */}
-          <div className='bg-white p-6 rounded-lg shadow-md'>
-            <h2 className='text-xl font-bold text-gray-800 mb-4'>Fee Distribution</h2>
+          <div className='bg-white p-4 rounded-lg shadow-md'>
+            <h2 className='text-lg md:text-xl font-bold text-gray-800 mb-4'>
+              Fee Distribution
+            </h2>
             <Pie data={feeCollectionData} />
           </div>
+
           {/* Teacher Performance Analytics */}
-          <div className='bg-white p-6 rounded-lg shadow-md'>
-            <h2 className='text-xl font-bold text-gray-800 mb-4'>Teacher Performance</h2>
+          <div className='bg-white p-4 rounded-lg shadow-md'>
+            <h2 className='text-lg md:text-xl font-bold text-gray-800 mb-4'>
+              Teacher Performance
+            </h2>
             <Bar data={teacherPerformanceData} />
           </div>
+
           {/* Admission Trends */}
-          <div className='bg-white p-6 rounded-lg shadow-md'>
-            <h2 className='text-xl font-bold text-gray-800 mb-4'>Admission Trends</h2>
+          <div className='bg-white p-4 rounded-lg shadow-md'>
+            <h2 className='text-lg md:text-xl font-bold text-gray-800 mb-4'>
+              Admission Trends
+            </h2>
             <Line data={admissionTrendsData} />
           </div>
+
           {/* Customizable Reports */}
-          <div className='bg-white p-6 rounded-lg shadow-md col-span-2'>
-            <h2 className='text-xl font-bold text-gray-800 mb-4'>Generate Custom Reports</h2>
+          <div className='bg-white p-4 rounded-lg shadow-md col-span-1 md:col-span-2'>
+            <h2 className='text-lg md:text-xl font-bold text-gray-800 mb-4'>
+              Generate Custom Reports
+            </h2>
             <button className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600'>
               Download Report
             </button>

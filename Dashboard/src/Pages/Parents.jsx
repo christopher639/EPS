@@ -34,7 +34,7 @@ const Parents = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("/api/students")
+    axios.get("https://eps-dashboard.onrender.com/api/students")
       .then(response => {
         setStudents(response.data.reverse());
         setLoading(false);
@@ -46,7 +46,7 @@ const Parents = () => {
   };
 
   const fetchStreams = () => {
-    axios.get("/api/stream")
+    axios.get("https://eps-dashboard.onrender.com/api/stream")
       .then(response => {
         setStreams(response.data);
       })
@@ -71,7 +71,7 @@ const Parents = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`/api/delete/${id}`);
+      const response = await axios.delete(`https://eps-dashboard.onrender.com/api/delete/${id}`);
       if (response.data.success === "true") {
         toast.success("Parent and student  deleted successfully");
         setStudents((prevStudents) => prevStudents.filter(student => student._id !== id));
@@ -86,7 +86,7 @@ const Parents = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Submit student data here
-    axios.post("/api/students", formData)
+    axios.post("https://eps-dashboard.onrender.com/api/students", formData)
       .then(response => {
         toast.success("Student added successfully");
         setShowModal(false); // Close modal after successful submission
@@ -107,7 +107,7 @@ const Parents = () => {
   return (
     <div className='flex'>
   <div
-        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-72' : 'w-16'} bg-gray-800 min-h-screen`}
+        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}
       >
         <SideBar/> {/* Conditionally render based on sidebar state */}
       </div>

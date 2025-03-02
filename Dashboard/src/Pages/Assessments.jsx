@@ -169,13 +169,14 @@ const Assessments = () => {
       >
        <SideBar /> {/* Conditionally render Sidebar */}
       </div>
-    <div className="container mx-auto max-w-full  bg-white">
+    <div className="container  mx-auto   bg-white">
+    
+      <div className="flex justify-between bg-white border-b p-2 gap-4  mb-3">
       <MobileNav/>
-      <div className="flex justify-between bg-white border-b p-3 gap-4  mb-4">
      <div className="hidden md:flex">
      <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
      </div>
-        <div >
+        <div  className="hidden md:flex">
           <button
             onClick={handlePrint}
             className="text-center bg-green-800 text-white text-sm w-full border border-1 border-slate-700 font-bold p-2 rounded hover:text-slate-900 whitespace-nowrap"
@@ -197,7 +198,7 @@ const Assessments = () => {
         </div>
         <UserAccount/>
       </div>
-        <div className="grid p-3 gap-3  grid-cols-2 md:grid-cols-3 lg:grid-cols-5 pb-2 px-3">
+        <div className="grid gap-1  grid-cols-3 md:grid-cols-3 lg:grid-cols-5 pb-2 px-3">
         <div >
           <input
             type="text"
@@ -255,15 +256,21 @@ const Assessments = () => {
             <option value="Final">Final</option>
           </select>
         </div>
+        <div  className=" md:hidden">
+          <button
+            onClick={handlePrint}
+            className="text-center bg-green-800 text-white text-sm w-full border border-1 border-slate-700 font-bold p-2 rounded hover:text-slate-900 whitespace-nowrap"
+          >
+            Print
+          </button>
+        </div>
         </div>
       {filteredData.length === 0 ? (
         <p className="text-center text-lg text-red-500">No data found</p>
       ) : (
-        <div id="printableTable" className=" p-3 grid grid-cols-1 max-h-[72vh] md:max-h-[80vh] overflow-y-auto  w-full overflow-x-auto ">
-          <div className="flex mx-3  gap-5 justify-between">
-            <div>
-              <img className="w-16 h-16 bg-gray-100" src="lion.jpg" alt="Logo" />
-            </div>
+        <div id="printableTable" className="  p-3 grid grid-cols-1 max-h-[72vh] md:max-h-[80vh] overflow-y-auto  w-full overflow-x-auto ">
+          <div className="flex   gap-5 justify-between">
+
             <div className="grid -full gap-5 grid-cols-4">
               <div className="flex gap-2">
                  <p>Academic Year</p>
@@ -285,7 +292,7 @@ const Assessments = () => {
               </div>
             </div>
           </div>
-          <table className="w-full">
+          <table className="w-full ">
             <thead className="sticky top-0 bg-white" >
            
               <tr className="bg-slate-800  text-gray-900 ">
