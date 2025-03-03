@@ -184,7 +184,7 @@ const LearnerManagement = () => {
         {/* Add Learner Modal */}
         {modalOpen && (
         <div className="fixed inset-0  bg-black bg-opacity-50 flex justify-center items-center p-4">
-          <div className="bg-white max-h-[75vh] pb-20 md:pb-4 w-full sm:w-3/4 p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 rounded-lg shadow-lg overflow-y-auto max-h-screen">
+          <div className="bg-white mt-4 max-h-[75vh] pb-20 md:pb-4 w-full sm:w-3/4 p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 rounded-lg shadow-lg overflow-y-auto max-h-screen">
             <input type="text" name="name" placeholder="Name" className="border p-2 w-full mb-2" onChange={handleChange} required />
             <input type="text" name="birthCertificateNo" placeholder="birthCertificateNo" className="border p-2 w-full mb-2" onChange={handleChange} required />
             
