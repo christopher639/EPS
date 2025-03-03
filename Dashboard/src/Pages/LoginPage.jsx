@@ -65,7 +65,7 @@ const LoginPage = () => {
      <div className="overflow-y-auto  max-h-screen flex   justify-center ">
     
     {/* Form Section */}
-    <div className=" w-full shadow-sm h-full  px-6 border bg-white rounded-lg  md:w-1/2 mx-5">
+    <div className=" w-full shadow-sm h-full  px-6 border bg-white rounded-lg  md:w-1/2 ">
       {/* Mobile Header - Only visible on small screens */}
      <div className="flex   justify-center">
      <div className=" items-center  ">
