@@ -100,7 +100,6 @@ const Dashboard = () => {
       },
     ],
   };
-
   // Doughnut Chart Options
   const doughnutOptions = {
     responsive: true,
@@ -118,7 +117,6 @@ const Dashboard = () => {
     },
     cutout: '50%', // Ensures space in the center for the image
   };
-
   // Custom plugin to draw the lion image at the center of the Doughnut chart
   const lionImagePlugin = {
     id: 'lionImagePlugin',
@@ -128,10 +126,8 @@ const Dashboard = () => {
       const cutoutPercentage = 60; // Matches the cutout percentage in options
       const centerX = width / 2;
       const centerY = height / 2.12;
-
       // Calculate the radius of the doughnut's inner circle
       const innerRadius = (Math.min(width, height) / 2) * (cutoutPercentage / 100);
-
       // Ensure the image is properly loaded
       if (!chart.customImage) {
         chart.customImage = new Image();
@@ -141,7 +137,6 @@ const Dashboard = () => {
         };
         return;
       }
-
       // Draw the image at the center of the chart
       ctx.save();
       const imgSize = innerRadius * 1.5; // Adjust the size to fit the available space

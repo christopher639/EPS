@@ -243,7 +243,7 @@ const GeneralReport = () => {
         </div>
   <div  className="flex justify-between  md:mx-10 mx-5">
   <button
-            onClick={() =>
+      onClick={() =>
               navigate("/report-card", {
                 state: { data: updatedData, classValue, yearValue, termValue },
               })
@@ -258,8 +258,7 @@ const GeneralReport = () => {
             className="bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
           >
            <p > Print </p>
-          </button>
-        
+          </button>    
   </div>
         {/* Table Section */}
         <div className="px-4 grid grid-cols-1 pb-4 max-h-[80vh] pb-8 overflow-y-auto w-full overflow-x-auto">

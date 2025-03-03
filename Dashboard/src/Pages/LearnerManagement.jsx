@@ -136,28 +136,31 @@ const LearnerManagement = () => {
       <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
-      <div className="p-4 w-full sm:p-6 bg-gray-100 min-h-screen">
+      <div className="py-4 w-full sm:p-6 bg-gray-100 min-h-screen">
         <ToastContainer />
         {/* Search Bar */}
         <div className="mb-4">
         
         <div className="flex flex-col md:flex-row   gap-2 justify-between">
        
-         <div className="flex gap-2 border-b shadow-md justify-between">
+         <div className="flex gap-2  justify-between">
          <MobileNav/>
         <div className="hidden md:flex">
         <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
         </div>
-         <h1 className="text-lg  text-2xl  font-semibold  sm:mb-0">Learner Management</h1>
+         <h1 className="  font-semibold  sm:mb-0">Learner</h1>
+        <div className="md:hidden">
+        <UserAccount/>
+        </div>
          </div>
-         <div className="flex justify-between gap-3">
+         <div className="flex mx-4 justify-between gap-3">
            <div className="flex  focus:outline-none focus:ring-blue-500 focus:ring-2 rounded-lg">
            <input
             type="text"
             placeholder="Search by RegNO"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className=" p-2 w-full sm:w-64  max-w-40 "
+            className=" px-2 w-full sm:w-64  max-w-40 "
           />
           <button
             onClick={handleSearch}
