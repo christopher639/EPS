@@ -87,7 +87,7 @@ const LoginPage = () => {
           <ClipLoader color="#1e40af" loading={loading} size={40} />
         </div>
       ) : (
-        <h2 className="text-xl font-semibold text-center text-gray-700 mb-6">
+        <h2 className="text-xl font-semibold text-center text-gray-700 mb-6 md:mb-0">
           {isRegister ? "Create Instructor Account" : "Sign in to your account"}
         </h2>
       )}
