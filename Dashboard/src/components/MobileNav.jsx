@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import lion from '../assets/lion.jpg';
 import { NavLink } from "react-router-dom";
 import {
   FaTachometerAlt,
@@ -16,7 +17,9 @@ import {
   FaFileInvoiceDollar,
   FaSchool,
   FaUserTie,
+  FaTimes,
 } from "react-icons/fa";
+import UserAccount from "./UserAccount";
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
@@ -48,30 +51,9 @@ const MobileNav = () => {
     <div className="md:hidden">
       {/* Hamburger Icon to toggle navigation */}
       <button onClick={toggleNav} className="p-4 focus:outline-none">
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 6h16M4 12h16m-7 6h7"
-          ></path>
-        </svg>
-      </button>
-
-      {/* Mobile Navigation */}
-      <div
-        className={`fixed top-[72px] left-0 h-full w-3/4 bg-blue-800 transform ${
-          isNavOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out z-50 overflow-y-auto shadow-lg`}
-      >
-        {/* Close Button */}
-        {/* <button onClick={toggleNav} className="self-end p-4 text-white">
+        {isNavOpen ? (
+          <FaTimes className="w-6 h-6" />
+        ) : (
           <svg
             className="w-6 h-6"
             fill="none"
@@ -83,20 +65,76 @@ const MobileNav = () => {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
+              d="M4 6h16M4 12h16m-7 6h7"
             ></path>
           </svg>
-        </button> */}
+        )}
+      </button>
 
+      {/* Blur backdrop */}
+      {isNavOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-[10px] backdrop-blur-sm z-40"
+          onClick={toggleNav}
+        ></div>
+      )}
+
+      {/* Mobile Navigation */}
+      <div
+        className={`fixed top-0 left-0 h-full w-3/4 bg-blue-800 transform ${
+          isNavOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out z-50 overflow-y-auto shadow-lg`}
+      >
         {/* Navigation Links */}
-        <div className="flex  flex-col px-4">
+         <div className="flex bg-red-950 py-2 justify-between ">
+              <NavLink to="/dashboard" className="flex justify-between">
+                <div className="flex justify-between gap-5">
+                  <div>
+                    <img
+                      className="w-16 bg-white rounded-full h-16 object-contain"
+                      src={lion}
+                      alt="Logo"
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <p className="text-white flex gap-4 font-bold text-2xl">
+                      <p>S</p>
+                      <p>A</p>
+                      <p>M</p>
+                      <p>G</p>
+                      <p>E</p>
+                    </p>
+                    <div className="flex">
+                      <p className="flex gap-1 text-[12px] text-white">
+                        <p>B</p>
+                        <p>O</p>
+                        <p>R</p>
+                        <p>D</p>
+                        <p>I</p>
+                        <p>N</p>
+                        <p>G</p>
+                      </p>
+                      <p className="pl-1 flex gap-1 text-[12px] text-white">
+                        <p>S</p>
+                        <p>C</p>
+                        <p>H</p>
+                        <p>O</p>
+                        <p>O</p>
+                        <p>L</p>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </NavLink>
+            </div>
+        <div className="flex overflow-y-auto mt-1  max-h-[81vh] flex-col px-4">
           {navItems.map((item) => {
             if (item.label === "Academics") {
               return (
                 <div key={item.label} className="w-full">
                   <div
                     onClick={toggleAcademics}
-                    className="flex  items-center justify-between py-3 px-4 text-white hover:bg-blue-700 cursor-pointer rounded-lg transition-colors duration-200"
+                    className="flex items-center justify-between py-3 px-4 text-white hover:bg-blue-700 cursor-pointer rounded-lg transition-colors duration-200"
                   >
                     <div className="flex items-center gap-3">
                       {item.icon}
