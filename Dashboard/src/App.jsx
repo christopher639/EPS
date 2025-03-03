@@ -35,7 +35,7 @@ import LearnerDetail from "./Pages/LearnerDetail";
 import SettingsPage from "./Pages/SettingsPage";
 import ProfilePage from "./Pages/ProfilePage";
 import HelpAndSupport from "./Pages/HelpAndSupport";
-
+import AuthWrapper from "./Pages/AuthWrapper";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -67,132 +67,259 @@ const App = () => {
         {/* Protect routes that require authentication */}
         <Route
           path="/dashboard"
-          element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Dashboard />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/users"
-          element={isAuthenticated ? <Users /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Users />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/reportform"
-          element={isAuthenticated ? <ReportForm /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <ReportForm />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/students"
-          element={isAuthenticated ? <Students /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Students />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/streams"
-          element={isAuthenticated ? <Streams /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Streams />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/fees"
-          element={isAuthenticated ? <Fees /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Fees />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/parents"
-          element={isAuthenticated ? <Parents /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Parents />
+            </AuthWrapper>
+          }
         />
-         <Route
+        <Route
           path="/help"
-          element={isAuthenticated ? <HelpAndSupport /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <HelpAndSupport />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/teachers"
-          element={isAuthenticated ? <Teachers /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Teachers />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/learningarea"
-          element={isAuthenticated ? <LearningArea /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <LearningArea />
+            </AuthWrapper>
+          }
         />
-        
-           <Route
+        <Route
           path="/settings"
-          element={isAuthenticated ? <SettingsPage /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <SettingsPage />
+            </AuthWrapper>
+          }
         />
-           <Route
+        <Route
           path="/profile"
-          element={isAuthenticated ? <ProfilePage /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <ProfilePage />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/student/:id"
-          element={isAuthenticated ? <StudentDetail /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <StudentDetail />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/analytics"
-          element={isAuthenticated ? <Analytics /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Analytics />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/finance"
-          element={isAuthenticated ? <Finance /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Finance />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/departments"
-          element={isAuthenticated ? <Departments /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Departments />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/avgmerged"
-          element={isAuthenticated ? <AvgMerged /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <AvgMerged />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/general-report"
-          element={isAuthenticated ? <GeneralReport /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <GeneralReport />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/report-card"
-          element={isAuthenticated ? <ReportCard /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <ReportCard />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/openercards"
-          element={isAuthenticated ? <OpenerCard /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <OpenerCard />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/merged-assessment"
-          element={isAuthenticated ? <MergedAssessment /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <MergedAssessment />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/assessments"
-          element={isAuthenticated ? <Assessments /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Assessments />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/instructordashboard"
-          element={isAuthenticated ? <InstructorDashboard /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <InstructorDashboard />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/studentdashboard"
-          element={isAuthenticated ? <StudDashBoard /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <StudDashBoard />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/addmarks"
-          element={isAuthenticated ? <AddMarks /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <AddMarks />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/expenses"
-          element={isAuthenticated ? <Expenses /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <Expenses />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/fees-distribution"
-          element={isAuthenticated ? <FeesDistribution /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <FeesDistribution />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/fees-structure"
-          element={isAuthenticated ? <FeeStructure /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <FeeStructure />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/students/:streamName/:year"
-          element={<StudentPerStream />}
+          element={
+            <AuthWrapper>
+              <StudentPerStream />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/fees-payments"
-          element={isAuthenticated ? <FeesPayment /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <FeesPayment />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/learner"
-          element={isAuthenticated ? <LearnerManagement /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <LearnerManagement />
+            </AuthWrapper>
+          }
         />
         <Route
           path="/learner/:id"
-          element={isAuthenticated ? <LearnerDetail /> : <Navigate to="/login" />}
+          element={
+            <AuthWrapper>
+              <LearnerDetail />
+            </AuthWrapper>
+          }
         />
       </Routes>
     </div>

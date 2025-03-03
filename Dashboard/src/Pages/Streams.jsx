@@ -7,6 +7,7 @@ import SideBar from '../components/SideBar';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import UserAccount from '../components/UserAccount';
 import BASE_URL from '../config';
+import MobileNav from '../components/MobileNav';
 axios.defaults.baseURL = BASE_URL;
 
 const Streams = () => {
@@ -149,11 +150,14 @@ const Streams = () => {
       {/* Main Content */}
       <div className='bg-gray-50 w-full min-h-screen'>
         {/* Header */}
-        <div className='flex px-6 py-4 border-b bg-white  justify-between items-center'>
-          <SidebarToggleButton
+        <div className='flex px-6 py-2 border-b bg-white  justify-between items-center'>
+          <MobileNav/>
+       <div className='hidden md:flex'>
+       <SidebarToggleButton
             toggleSidebar={toggleSideBar}
             isSidebarCollapsed={!sideBar}
           />
+       </div>
           <p className='text-xl font-semibold text-gray-800  hidden md:flex'>Streams</p>
           <div className='hidden md:flex flex-grow max-w-xs'>
             <input
@@ -181,25 +185,25 @@ const Streams = () => {
         </div>
         <p className='text-xl font-semibold text-gray-800 md:hidden  mx-5'>Streams</p>
         <div className=' flex mt-2 justify-between  mx-3  md:hidden'>
-        <div className=' flex-grow max-w-xs'>
+        <div className=' flex-grow '>
             <input
               type='text'
               placeholder='Search stream'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className='max-w-64 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500'
+              className='max-w-40 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500'
             />
           </div>
         <button
             onClick={() => setShowPromoteModal(true)}
             className='bg-purple-700 px-4 py-2 text-white rounded-full hover:bg-purple-600 transition duration-300'
           >
-            Promote Learners
+            Promotion
           </button>
         </div>
 
         {/* Body */}
-        <div className='grid overflow-y-auto max-h-[90vh] gap-6 px-6 py-8 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+        <div className='grid overflow-y-auto max-h-[70vh] gap-6 px-6 py-8 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {isLoading ? (
             <div className='flex justify-center items-center col-span-full'>
               <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500'></div>
