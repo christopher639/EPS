@@ -65,7 +65,7 @@ const LoginPage = () => {
      <div className="overflow-y-auto  max-h-screen flex   justify-center ">
     
     {/* Form Section */}
-    <div className=" w-full shadow-sm h-full  px-6 border bg-white rounded-lg  md:w-1/2 ">
+    <div className=" w-full shadow-sm h-full  px-6 border bg-white rounded-lg  md:w-1/3 ">
       {/* Mobile Header - Only visible on small screens */}
      <div className="flex   justify-center">
      <div className=" items-center  ">
@@ -75,7 +75,7 @@ const LoginPage = () => {
        <div>
        <h1 className=" font-bold text-blue-800">Samge Boarding School</h1>
      <div className="flex justify-center">
-     <p className="text-sm text-yellow-700  ">We build  for the future</p>
+ 
      </div>
        </div>
       </div>
@@ -88,7 +88,7 @@ const LoginPage = () => {
         </div>
       ) : (
         <h2 className="text-xl font-semibold text-center text-gray-700 mb-6 md:mb-0">
-          {isRegister ? "Create Instructor Account" : "Sign in to your account"}
+          {isRegister ? "" : ""}
         </h2>
       )}
 
@@ -242,7 +242,8 @@ const LoginPage = () => {
 
       {/* Footer */}
       <div className="mt-4 pt-4 border-t text-center pb-8">
-        <p className="text-sm text-yellow-700 font-medium">© 2025 Samge Boarding School</p>
+        <p className="text-sm text-red-700 font-bold">© 2025 Samge Boarding School</p>
+        <p className="text-sm text-red-700  ">We build  for the future</p>
       </div>
     </div>
   </div>
