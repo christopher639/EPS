@@ -48,7 +48,7 @@ const MobileNav = () => {
   const toggleNav = () => setIsNavOpen(!isNavOpen);
 
   return (
-    <div className="md:hidden">
+    <div className="md:hidden ">
       {/* Hamburger Icon to toggle navigation */}
       <button onClick={toggleNav} className="p-4 focus:outline-none">
         {isNavOpen ? (
@@ -81,7 +81,7 @@ const MobileNav = () => {
 
       {/* Mobile Navigation */}
       <div
-        className={`fixed top-0 left-0 h-full w-3/4 bg-blue-800 transform ${
+        className={`fixed top-0 left-0 h-full rounded-r-2xl w-3/4 bg-blue-800 transform ${
           isNavOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out z-50 overflow-y-auto shadow-lg`}
       >
