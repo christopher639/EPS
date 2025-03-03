@@ -7,6 +7,7 @@ import SideBar from '../components/SideBar';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import 'react-toastify/dist/ReactToastify.css';
 import PendingUsersModal from './PendingUsersModal';
+import MobileNav from '../components/MobileNav';
 // import BASE_URL from '../config';
 // axios.defaults.baseURL = BASE_URL;
 
@@ -202,7 +203,10 @@ const Users = () => {
       <div className="flex w-full flex-col min-h-screen bg-gray-100">
         <ToastContainer />
         <div className="flex justify-between items-center p-4 bg-white shadow-sm">
-          <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+          <MobileNav/>
+         <div className='hidden md:flex'>
+         <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+         </div>
           <div className="hidden sm:flex">
             <input
               className="outline-none px-4 py-2 border border-gray-300 rounded-md w-64"

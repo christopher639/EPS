@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import lion from '../assets/lion.jpg';
 import { NavLink } from "react-router-dom";
 import {
@@ -19,7 +19,6 @@ import {
   FaUserTie,
   FaTimes,
 } from "react-icons/fa";
-import UserAccount from "./UserAccount";
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
@@ -41,14 +40,41 @@ const MobileNav = () => {
   const [isFinanceOpen, setIsFinanceOpen] = useState(false);
   const [isHROpen, setIsHROpen] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50; // Minimum distance to consider it a swipe
 
   const toggleAcademics = () => setIsAcademicsOpen(!isAcademicsOpen);
   const toggleFinance = () => setIsFinanceOpen(!isFinanceOpen);
   const toggleHR = () => setIsHROpen(!isHROpen);
   const toggleNav = () => setIsNavOpen(!isNavOpen);
 
+  const onTouchStart = (e) => {
+    setTouchEnd(null); // Reset touchEnd
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && !isNavOpen) {
+      setIsNavOpen(true); // Open nav on left swipe
+    } else if (isRightSwipe && isNavOpen) {
+      setIsNavOpen(false); // Close nav on right swipe
+    }
+  };
+
   return (
-    <div className="md:hidden ">
+    <div className="md:hidden">
       {/* Hamburger Icon to toggle navigation */}
       <button onClick={toggleNav} className="p-4 focus:outline-none">
         {isNavOpen ? (
@@ -84,50 +110,53 @@ const MobileNav = () => {
         className={`fixed top-0 left-0 h-full rounded-r-2xl w-3/4 bg-blue-800 transform ${
           isNavOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out z-50 overflow-y-auto shadow-lg`}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
       >
         {/* Navigation Links */}
-         <div className="flex bg-red-950 py-2 justify-between ">
-              <NavLink to="/dashboard" className="flex justify-between">
-                <div className="flex justify-between gap-5">
-                  <div>
-                    <img
-                      className="w-16 bg-white rounded-full h-16 object-contain"
-                      src={lion}
-                      alt="Logo"
-                    />
-                  </div>
-                  <div className="mt-2">
-                    <p className="text-white flex gap-4 font-bold text-2xl">
-                      <p>S</p>
-                      <p>A</p>
-                      <p>M</p>
-                      <p>G</p>
-                      <p>E</p>
-                    </p>
-                    <div className="flex">
-                      <p className="flex gap-1 text-[12px] text-white">
-                        <p>B</p>
-                        <p>O</p>
-                        <p>R</p>
-                        <p>D</p>
-                        <p>I</p>
-                        <p>N</p>
-                        <p>G</p>
-                      </p>
-                      <p className="pl-1 flex gap-1 text-[12px] text-white">
-                        <p>S</p>
-                        <p>C</p>
-                        <p>H</p>
-                        <p>O</p>
-                        <p>O</p>
-                        <p>L</p>
-                      </p>
-                    </div>
-                  </div>
+        <div className="flex bg-red-950 py-2 justify-between">
+          <NavLink to="/dashboard" className="flex justify-between">
+            <div className="flex justify-between gap-5">
+              <div>
+                <img
+                  className="w-16 bg-white rounded-full h-16 object-contain"
+                  src={lion}
+                  alt="Logo"
+                />
+              </div>
+              <div className="mt-2">
+                <p className="text-white flex gap-4 font-bold text-2xl">
+                  <p>S</p>
+                  <p>A</p>
+                  <p>M</p>
+                  <p>G</p>
+                  <p>E</p>
+                </p>
+                <div className="flex">
+                  <p className="flex gap-1 text-[12px] text-white">
+                    <p>B</p>
+                    <p>O</p>
+                    <p>R</p>
+                    <p>D</p>
+                    <p>I</p>
+                    <p>N</p>
+                    <p>G</p>
+                  </p>
+                  <p className="pl-1 flex gap-1 text-[12px] text-white">
+                    <p>S</p>
+                    <p>C</p>
+                    <p>H</p>
+                    <p>O</p>
+                    <p>O</p>
+                    <p>L</p>
+                  </p>
                 </div>
-              </NavLink>
+              </div>
             </div>
-        <div className="flex overflow-y-auto mt-1  max-h-[81vh] flex-col px-4">
+          </NavLink>
+        </div>
+        <div className="flex overflow-y-auto mt-1 max-h-[81vh] flex-col px-4">
           {navItems.map((item) => {
             if (item.label === "Academics") {
               return (
