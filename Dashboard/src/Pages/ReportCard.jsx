@@ -5,7 +5,7 @@ import SideBar from '../components/SideBar';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 
 const ReportCard = () => {
-   const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
+  const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
   const { state } = useLocation(); // Retrieve the state passed from GeneralReport
   const { data, classValue, yearValue, termValue } = state || {}; // Destructure the data
 
@@ -132,277 +132,239 @@ const ReportCard = () => {
   const toggleSideBar = () => {
     setSideBar((prev) => !prev); // Toggle sidebar visibility
   };
+
   return (
-   <div className='flex '>
-       <div
+    <div className='flex'>
+      <div
         className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}
       >
         <SideBar/> {/* Conditionally render based on sidebar state */}
       </div>
-     <div className=" bg-gray-50  w-full ">
-     <div className='flex px-4 justify-between items-center bg-white shadow-sm  border-b'>
-        <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-     <div className='flex items-center gap-2'>
-          <h1 className="text-xl py-3 font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg">SAMGE SCHOOL</h1>
-          <p className="text-gray-500">Student Report Cards</p>
+      <div className="bg-gray-50   w-full">
+        <div className='flex px-4 justify-between items-center bg-white shadow-sm border-b'>
+          <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+          <div className='flex items-center gap-2'>
+            <div className="hidden sm:flex sm:w-auto mb-4 sm:mb-0">
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="p-2 border border-gray-300 rounded-lg max-w-32"
+              />
+            </div>
+            <h1 className="text-xl py-3 font-bold text-gray-800 sm:text-sm md:text-md lg:text-lg hidden md:flex">SAMGE SCHOOL</h1>
+            <p className="text-gray-500 hidden md:flex">Student Report Cards</p>
+          </div>
+          <button
+            onClick={handlePrint}
+            className="bg-green-800 max-w-32 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition mt-4 sm:mt-0"
+          >
+            Print
+          </button>
+          <div>
+            <UserAccount/>
+          </div>
         </div>
-      <div>
-         <UserAccount/>
-      </div>
-     </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 mt-2  items-center mb-6 mx-4">
-        {/* Search Input */}
-        <div className="hidden sm:flex  sm:w-auto mb-4 sm:mb-0">
-          <input
-            type="text"
-            placeholder="Search "
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="p-2 border  border-gray-300 rounded-lg max-w-32 "
-          />
-        </div>
-        <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
-          <p>
-            <strong>Class:</strong> {classValue}
-          </p>
-          <p>
-            <strong>Academic Year:</strong> {yearValue}
-          </p>
-          <p>
-            <strong>Term:</strong> {termValue}
-          </p>
-        </div>
-        <button
-          onClick={handlePrint}
-          className="bg-green-800 max-w-32 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-green-700 transition mt-4 sm:mt-0"
-        >
-          Print Sheet
-        </button>
-      </div>
-
-      {/* Search Input for Mobile */}
-      <div className="sm:hidden mb-4 mx-4">
-        <input
-          type="text"
-          placeholder="Search "
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2 border border-gray-300 rounded-lg  "
-        />
-      </div>
-
-      <div id="printableTable" className="container min-w-full p-4 bg-white shadow-lg rounded-lg overflow-y-scroll max-h-[78vh] pb-2">
-        {/* Loop through the filtered student data and display the report */}
-        {filteredData.map((student, index) =>{
+        <div id="printableTable" className="container min-w-full p-4 bg-white shadow-lg rounded-lg overflow-y-scroll max-h-[90vh] pb-2 overflow-x-auto">
+          {/* Loop through the filtered student data and display the report */}
+          {filteredData.map((student, index) => {
             const studentTotal = student.subjects.reduce((sum, subject) => sum + subject.avgScore, 0);
             const studentAverage = studentTotal / student.subjects.length;
-          return ( 
-          <div key={index} className="page-break relative mb-4">
-            <div className="mb-3 p-2 bg-white">
-             <div className='flex justify-between w-3/4'>
-              <div>
-                
-              <img
-          className='w-20 h-20 rounded-full'
-          src={student.studentImage ? `https://eps-dashboard.onrender.com${student.studentImage}` : '/avater.jpeg'}
-          alt="Student"
-        />
-              </div>
-              <p className='text-lg font-semibold'>SAMGE</p>
-             <div className="text-center">
-                <img
-                  src="lion.jpg"
-                  alt="School Logo"
-                  className="w-[110px] h-[108px] mx-auto"
-                />
-              </div>
-              <p className='text-lg font-semibold'>SCHOOL</p>
-             </div>
-            <div className='flex  justify-center'>
-            <div>
-            <p className='font-semibold text-lg'>Lerner Performance Report Card</p>
-            </div>
-            </div>
-              <div className="text-center flex justify-center mb-4">
-                <div className="flex gap-5">
-                  <p>
-                    <strong>Class:</strong> {classValue}
-                  </p>
-                  <p>
-                  Stream: <span className="font-bold text-yellow-800">{student.stream}</span>
-                </p>
-                  <p>
-                    <strong>Academic Year:</strong> {yearValue}
-                  </p>
-                  <p>
-                    <strong>Term:</strong> <span className="text-yellow-700">{termValue}</span>
-                  </p>
-                </div>
-              </div>
-              {/* Display the total score and average */}
-              <div className="mt-4 text-center flex flex-col sm:flex-row justify-between">
-                <p>Name: <span className='font-bold text-yellow-800' >{student.studentName}</span></p>
-                <p>
-                  RegNo: <span className="font-bold text-yellow-800">{student.regno}</span>
-                </p>
-               
-                <p>
-                  <strong>Total:</strong> {studentTotal.toFixed(0)}/
-                 <span>{ student.subjects.length * 100}</span> </p>
-                <p>
-                  <strong>Mean:</strong> {studentAverage.toFixed(2)} <span>%</span>
-                </p>
-                <p>
-                  <strong>Grade:</strong> <span className="font-bold text-yellow-800">{getRemark(studentAverage)}</span>
-                </p>
-              </div>
+            return (
+              <div key={index} className="page-break relative mb-4">
+                <div className="mb-3 p-2 bg-white">
+                  <div className='flex justify-between w-3/4'>
+                    <div>
+                      <img
+                        className='w-20 h-20 rounded-full'
+                        src={student.studentImage ? `https://eps-dashboard.onrender.com${student.studentImage}` : '/avater.jpeg'}
+                        alt="Student"
+                      />
+                    </div>
+                    <p className='text-lg font-semibold'>SAMGE</p>
+                    <div className="text-center">
+                      <img
+                        src="lion.jpg"
+                        alt="School Logo"
+                        className="w-[110px] h-[108px] mx-auto"
+                      />
+                    </div>
+                    <p className='text-lg font-semibold'>SCHOOL</p>
+                  </div>
+                  <div className='flex justify-center'>
+                    <div>
+                      <p className='font-semibold text-lg'>Learner Performance Report Card</p>
+                    </div>
+                  </div>
+                  <div className="text-center flex justify-center mb-4">
+                    <div className="flex gap-5">
+                      <p>
+                        <strong>Class:</strong> {classValue}
+                      </p>
+                      <p>
+                        Stream: <span className="font-bold text-yellow-800">{student.stream}</span>
+                      </p>
+                      <p>
+                        <strong>Academic Year:</strong> {yearValue}
+                      </p>
+                      <p>
+                        <strong>Term:</strong> <span className="text-yellow-700">{termValue}</span>
+                      </p>
+                    </div>
+                  </div>
+                  {/* Display the total score and average */}
+                  <div className="mt-4 text-center flex flex-col sm:flex-row justify-between">
+                    <p>Name: <span className='font-bold text-yellow-800'>{student.studentName}</span></p>
+                    <p>
+                      RegNo: <span className="font-bold text-yellow-800">{student.regno}</span>
+                    </p>
+                    <p>
+                      <strong>Total:</strong> {studentTotal.toFixed(0)}/
+                      <span>{student.subjects.length * 100}</span>
+                    </p>
+                    <p>
+                      <strong>Mean:</strong> {studentAverage.toFixed(2)} <span>%</span>
+                    </p>
+                    <p>
+                      <strong>Grade:</strong> <span className="font-bold text-yellow-800">{getRemark(studentAverage)}</span>
+                    </p>
+                  </div>
 
-              <table className="min-w-full table-auto text-center mt-4 border-collapse">
-                <thead>
-                  <tr id="bo" className="bg-gray-200">
-                    {/* <th id="bo" className="border text-left pl-1 py-2">
-                      Code
-                    </th> */}
-                    <th id="bo" className="border px-1 py-2">
-                      Title
-                    </th>
-                    <th id="bo" className="border px-1 py-2">
-                      Tought_By
-                    </th>
-                    <th id="bo" className="border px-1 py-2">
-                      Opener
-                    </th>
-                    <th id="bo" className="border px-1 py-2">
-                      Mid_Term
-                    </th>
-                    <th id="bo" className="border px-1 py-2">
-                      End_Term
-                    </th>
-                    <th id="bo" className="border px-1 py-2">
-                      Average
-                    </th>
-                    <th id="bo" className="border px-1 py-2">
-                      Remark
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {student.subjects.map((subject, subIndex) => {
-                    const score =
-                      (subject.openerScore +
-                        subject.midTermScore +
-                        subject.finalScore) /
-                      3;
-
-                    return (
-                      <tr id="bo" key={subIndex} className="border-b">
-                        {/* <td id="bo" className="border text-left px-1 py-2">
-                          {subject.code}
-                        </td> */}
-                        <td id="bo" className="border px-1 py-2">
-                          {subject.name}
-                        </td>
-                        <td id="bo" className="border px-1 py-2">
-                          {subject.teacherName}
-                        </td>
-                        <td id="bo" className="border px-1 py-2">
-                          {subject.openerScore ?? "-"}
-                        </td>
-                        <td id="bo" className="border px-1 py-2">
-                          {subject.midTermScore ?? "-"}
-                        </td>
-                        <td id="bo" className="border px-1 py-2">
-                          {subject.finalScore ?? "-"}
-                        </td>
-                        <td
-                          id="bo"
-                          className="border px-1 text-yellow-700 py-2"
-                        >
-                          {score.toFixed(2)}
-                        </td>
-                        <td
-                          id="bo"
-                          className="border font-semibold px-3 text-yellow-800 py-2"
-                        >
-                          {getRemark(score)}
-                        </td>
+                  <table className="min-w-full table-auto  text-center mt-4 border-collapse">
+                    <thead>
+                      <tr id="bo" className="bg-gray-200">
+                        <th id="bo" className="border px-1 py-2">
+                          Title
+                        </th>
+                        <th id="bo" className="border px-1 py-2">
+                          Tought_By
+                        </th>
+                        <th id="bo" className="border px-1 py-2">
+                          Opener
+                        </th>
+                        <th id="bo" className="border px-1 py-2">
+                          Mid_Term
+                        </th>
+                        <th id="bo" className="border px-1 py-2">
+                          End_Term
+                        </th>
+                        <th id="bo" className="border px-1 py-2">
+                          Average
+                        </th>
+                        <th id="bo" className="border px-1 py-2">
+                          Remark
+                        </th>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-              <div className="flex flex-col md:flex-row gap-1 mt-2">
-                <div className="w-full">
-                  <table className="w-full">
-                    <tr>
-                      <td className="font-bold text-black">KEY</td>
-                      <td className="font-bold text-black">RANGE</td>
-                      <td className="font-bold text-black">MEANING</td>
-                    </tr>
+                    </thead>
                     <tbody>
-                      <tr>
-                        <td>E.E</td>
-                        <td>75 - 100</td>
-                        <td>Exceeding Expectation</td>
-                      </tr>
-                      <tr>
-                        <td>M.E</td>
-                        <td>50 - 74</td>
-                        <td>Meeting Expectation</td>
-                      </tr>
-                      <tr>
-                        <td>B.E</td>
-                        <td>0 - 49</td>
-                        <td>Below Expectation</td>
-                      </tr>
-                      <tr>
-                        <td>F</td>
-                        <td>Cheated</td>
-                        <td>Null and Void</td>
-                      </tr>
-                      <tr>
-                        <td>-</td>
-                        <td>NULL</td>
-                        <td>Missing/Never did exam</td>
-                      </tr>
-                      <tr>
-                        <td>AVG</td>
-                        <td></td>
-                        <td>Average</td>
-                      </tr>
+                      {student.subjects.map((subject, subIndex) => {
+                        const score =
+                          (subject.openerScore +
+                            subject.midTermScore +
+                            subject.finalScore) /
+                          3;
+
+                        return (
+                          <tr id="bo" key={subIndex} className="border-b">
+                            <td id="bo" className="border px-1 py-2">
+                              {subject.name}
+                            </td>
+                            <td id="bo" className="border px-1 py-2">
+                              {subject.teacherName}
+                            </td>
+                            <td id="bo" className="border px-1 py-2">
+                              {subject.openerScore ?? "-"}
+                            </td>
+                            <td id="bo" className="border px-1 py-2">
+                              {subject.midTermScore ?? "-"}
+                            </td>
+                            <td id="bo" className="border px-1 py-2">
+                              {subject.finalScore ?? "-"}
+                            </td>
+                            <td id="bo" className="border px-1 text-yellow-700 py-2">
+                              {score.toFixed(2)}
+                            </td>
+                            <td id="bo" className="border font-semibold px-3 text-yellow-800 py-2">
+                              {getRemark(score)}
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
+                  <div className="flex flex-col md:flex-row gap-1 mt-2">
+                    <div className="w-full">
+                      <table className="w-full">
+                        <tr>
+                          <td className="font-bold text-black">KEY</td>
+                          <td className="font-bold text-black">RANGE</td>
+                          <td className="font-bold text-black">MEANING</td>
+                        </tr>
+                        <tbody>
+                          <tr>
+                            <td>E.E</td>
+                            <td>75 - 100</td>
+                            <td>Exceeding Expectation</td>
+                          </tr>
+                          <tr>
+                            <td>M.E</td>
+                            <td>50 - 74</td>
+                            <td>Meeting Expectation</td>
+                          </tr>
+                          <tr>
+                            <td>B.E</td>
+                            <td>0 - 49</td>
+                            <td>Below Expectation</td>
+                          </tr>
+                          <tr>
+                            <td>F</td>
+                            <td>Cheated</td>
+                            <td>Null and Void</td>
+                          </tr>
+                          <tr>
+                            <td>-</td>
+                            <td>NULL</td>
+                            <td>Missing/Never did exam</td>
+                          </tr>
+                          <tr>
+                            <td>AVG</td>
+                            <td></td>
+                            <td>Average</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className='w-3/4'>
+                      <p>Parents or guardians to {student.studentName} make sure the student does some revision while at home. Always provide him with learning material to improve on academics coming next term.</p>
+                    </div>
+                  </div>
                 </div>
-                <div className='w-3/4'>
-                  <p>Parents or gurdians to {student.studentName} make sure the student does some revision while at home.Alway provide him with learning material to impove on academics coming next term </p>
+                {/* Floating Stamp */}
+                <div id="floating-stamp"
+                  className="absolute bottom-10 right-40 transform rotate-12 bg-white bg-opacity-80 border-2 border-blue-900 p-2 max-w-md max-h-auto text-center font-sans"
+                  style={{ pointerEvents: "none" }} // Ensures it doesn't block interaction with underlying content
+                >
+                  <h2 className="text-blue-900 text-sm font-bold">
+                    Dated - {getFormattedDate()} {/* Dynamically display the current date */}
+                  </h2>
+                  <p className="font-semibold">Samge Boarding School</p>
+                  <p className="text-sm">
+                    Period: <strong>{yearValue} - {termValue}</strong>
+                  </p>
+                  <p className="text-sm">Class Master____________</p>
+                  <p className="text-blue-900 text-sm">Cell: 0721790694</p>
+                  <p className="text-sm">
+                    P.O. BOX 109-30102, Burnt Forest
+                  </p>
                 </div>
               </div>
-            </div>
-            {/* Floating Stamp */}
-            <div id="floating-stamp"
-              className="absolute bottom-10 right-40 transform rotate-12 bg-white bg-opacity-80 border-2 border-blue-900 p-2 max-w-md max-h-auto text-center font-sans"
-              style={{ pointerEvents: "none" }} // Ensures it doesn't block interaction with underlying content
-            >
-              <h2 className="text-blue-900 text-sm font-bold">
-                Dated - {getFormattedDate()} {/* Dynamically display the current date */}
-              </h2>
-              
-              <p className="font-semibold">Samge Bording School</p>
-              <p className="text-sm">
-                Period: <strong>{yearValue} - {termValue}</strong>
-              </p>
-              <p className="text-sm">Class Master____________</p>
-              <p className="text-blue-900 text-sm">Cell: 0721790694</p>
-              <p className="text-sm">
-                P.O. BOX 109-30102, Burnt Forest
-              </p>
-            </div>
-          </div>
-        )})}
+            );
+          })}
+        </div>
       </div>
     </div>
-   </div>
   );
 };
 
