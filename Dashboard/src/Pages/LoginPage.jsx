@@ -62,7 +62,8 @@ const LoginPage = () => {
 
   return (
  
-     <div className="overflow-y-auto  max-h-screen flex   justify-center ">
+    <div className="  h-screen ">
+       <div className="overflow-y-auto py-2  max-h-screen flex   justify-center ">
     
     {/* Form Section */}
     <div className=" w-full shadow-sm h-full  px-6 border bg-white rounded-lg  md:w-1/3 ">
@@ -70,10 +71,10 @@ const LoginPage = () => {
      <div className="flex   justify-center">
      <div className=" items-center  ">
         <div className=" flex items-center justify-center rounded-full ">
-          <img src={lion} alt="School Logo" className="w-20   h-20 object-contain" />
+          <img src={lion} alt="School Logo" className="w-32   h-32 object-contain" />
         </div>
        <div>
-       <h1 className=" font-bold text-blue-800">Samge Boarding School</h1>
+       <h1 className=" font-bold text-blue-800  md:text-2xl">Hello, Welcome back</h1>
      <div className="flex justify-center">
  
      </div>
@@ -93,7 +94,7 @@ const LoginPage = () => {
       )}
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit} className="space-y-1">
         {isRegister && (
           <>
             <div>
@@ -242,11 +243,11 @@ const LoginPage = () => {
 
       {/* Footer */}
       <div className="mt-4 pt-4 border-t text-center pb-8">
-        <p className="text-sm text-red-700 font-bold">© 2025 Samge Boarding School</p>
-        <p className="text-sm text-red-700  ">We build  for the future</p>
+        <p className=" font-bold text-blue-800">Copyright © 2025 Topaz Digital Labs</p>
       </div>
     </div>
-  </div>
+     </div>
+    </div>
   
  
   );
