@@ -63,10 +63,10 @@ const LoginPage = () => {
   return (
  
     <div className="  h-screen ">
-       <div className="overflow-y-auto py-2  max-h-screen flex   justify-center ">
+       <div className="overflow-y-auto md:py-2  max-h-screen flex   justify-center ">
     
     {/* Form Section */}
-    <div className=" w-full shadow-sm h-full  px-6 border bg-white rounded-lg  md:w-1/3 ">
+    <div className=" w-full md:shadow-sm h-full  px-6 border bg-white pb-16 md:pb-0 min-h-full  rounded-lg  md:w-1/3 ">
       {/* Mobile Header - Only visible on small screens */}
      <div className="flex   justify-center">
      <div className=" items-center  ">
@@ -227,7 +227,6 @@ const LoginPage = () => {
           <span className="font-medium">Continue with Google</span>
         </button>
       </div>
-
       {/* Toggle between Login and Register */}
       <div className="mt-4 text-center">
         <p className="text-gray-600">
@@ -240,7 +239,6 @@ const LoginPage = () => {
           </button>
         </p>
       </div>
-
       {/* Footer */}
       <div className="mt-4 pt-4 border-t text-center pb-8">
         <p className=" font-bold text-blue-800">Copyright © 2025 Topaz Digital Labs</p>
@@ -248,8 +246,6 @@ const LoginPage = () => {
     </div>
      </div>
     </div>
-  
- 
   );
 };
 
