@@ -6,7 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import SideBar from '../components/SideBar';
 import BASE_URL from '../config';
+import { ClipLoader } from 'react-spinners'; // Import a spinner component
+import MobileNav from '../components/MobileNav';
+
 axios.defaults.baseURL = BASE_URL;
+
 const LearningArea = () => {
   const [learningAreas, setLearningAreas] = useState([]);
   const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
@@ -25,6 +29,7 @@ const LearningArea = () => {
     content: '', // New attribute for content
   });
   const [editingId, setEditingId] = useState(null); // For identifying which learning area is being edited
+  const [isCreating, setIsCreating] = useState(false); // State to manage the create button spinner
 
   // Fetch learning areas from the API
   const fetchLearningAreas = async () => {
@@ -57,16 +62,17 @@ const LearningArea = () => {
   const handleCreate = async (e) => {
     e.preventDefault();
     console.log("Submitting form data:", formData); // Debugging line
-  
+
     if (!formData.subjectname || !formData.code || !formData.description || !formData.content) {
       toast.error('Subject Name, Code, Description, and Content are required!');
       return;
     }
-  
+
+    setIsCreating(true); // Start the spinner
+
     try {
       const response = await axios.post('https://eps-dashboard.onrender.com/api/learning-areas', formData);
       console.log("Server response:", response.data); // Debugging line
-  
       toast.success('Learning area created successfully!');
       fetchLearningAreas(); // Refresh the list
       setShowModal(false); // Close the modal
@@ -84,9 +90,10 @@ const LearningArea = () => {
     } catch (error) {
       console.error('Error creating learning area:', error.response?.data || error.message);
       toast.error(error.response?.data?.message || 'Error creating learning area.');
+    } finally {
+      setIsCreating(false); // Stop the spinner
     }
   };
-  
 
   // Handle updating an existing learning area
   const handleUpdate = async (e) => {
@@ -97,7 +104,7 @@ const LearningArea = () => {
     }
 
     try {
-      await axios.put(`https://eps-dashboard.onrender.com/api/learning-areas/${editingId}`, formData);
+      await axios.put(`https://eps-dashboard.onrender.com/learning-areas/${editingId}`, formData);
       toast.success('Learning area updated successfully!');
       fetchLearningAreas(); // Refresh the list
       setShowModal(false); // Close the modal
@@ -142,10 +149,6 @@ const LearningArea = () => {
     setEditingId(null); // Reset editing ID when closing
   };
 
-  // if (loading) {
-  //   return <div>Loading...</div>; // Loading state
-  // }
-
   const toggleSideBar = () => {
     setSideBar((prev) => !prev); // Toggle sidebar visibility
   };
@@ -166,7 +169,10 @@ const LearningArea = () => {
       </div>
       <div className="flex flex-col w-full bg-gray-50">
         <div className="flex justify-between items-center bg-white shadow-sm p-2 border-b">
-          <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+          <MobileNav />
+        <div className='hidden md:flex'>
+        <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+        </div>
           <div>
             <p className="text-sm hidden md:text-lg md:text-xl lg:text-2xl font-bold mb-6 md:flex">Learning Areas</p>
           </div>
@@ -189,45 +195,49 @@ const LearningArea = () => {
           > 
            <p>+</p>
            <p className='hidden md:flex'> Add</p>
-
           </button>
           <UserAccount />
-       
         </div>
- 
+
         {/* Grid layout for Learning Areas */}
         <div className="overflow-x-auto overflow-y-auto max-h-[86vh] bg-white rounded-lg p-4">
           {/* Grid container for learning areas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6">
-            {filteredLearningAreas.map((learningArea) => (
-              <div key={learningArea._id} className="bg-gray-100 p-4 rounded-lg shadow-lg flex flex-col">
-                {/* Learning Area Info */}
-                <h3 className="font-semibold text-lg mb-2">{learningArea.subjectname}</h3>
-                <p className="text-sm text-gray-700">Code: {learningArea.code}</p>
-                <p className="text-sm text-gray-700">Level: {learningArea.level}</p>
-                <p className="text-sm text-gray-700">Instructor: {learningArea.instructor}</p>
-                <p className="text-sm text-gray-700 mt-2">{learningArea.description}</p>
-                <p className="text-sm text-gray-700 mt-2 font-semibold">Content:</p>
-                <p className="text-sm text-gray-700">{learningArea.content}</p> {/* Display the content */}
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <ClipLoader color="#4A90E2" size={50} />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredLearningAreas.map((learningArea) => (
+                <div key={learningArea._id} className="bg-gray-100 p-4 rounded-lg shadow-lg flex flex-col">
+                  {/* Learning Area Info */}
+                  <h3 className="font-semibold text-lg mb-2">{learningArea.subjectname}</h3>
+                  <p className="text-sm text-gray-700">Code: {learningArea.code}</p>
+                  <p className="text-sm text-gray-700">Level: {learningArea.level}</p>
+                  <p className="text-sm text-gray-700">Instructor: {learningArea.instructor}</p>
+                  <p className="text-sm text-gray-700 mt-2">{learningArea.description}</p>
+                  <p className="text-sm text-gray-700 mt-2 font-semibold">Content:</p>
+                  <p className="text-sm text-gray-700">{learningArea.content}</p> {/* Display the content */}
 
-                {/* Actions */}
-                <div className="flex gap-2 mt-auto">
-                  <button
-                    onClick={() => handleEdit(learningArea)}
-                    className="bg-blue-600 text-white py-1 px-3 rounded-md"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(learningArea._id)}
-                    className="bg-red-600 text-white py-1 px-3 rounded-md"
-                  >
-                    Delete
-                  </button>
+                  {/* Actions */}
+                  <div className="flex gap-2 mt-auto">
+                    <button
+                      onClick={() => handleEdit(learningArea)}
+                      className="bg-blue-600 text-white py-1 px-3 rounded-md"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(learningArea._id)}
+                      className="bg-red-600 text-white py-1 px-3 rounded-md"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Modal for creating or editing a learning area */}
@@ -236,7 +246,7 @@ const LearningArea = () => {
             <div className="bg-white p-6 rounded-lg w-full md:w-2/3">
               <h2 className="text-lg font-semibold">{editingId ? 'Edit Learning Area' : 'Add New Learning Area'}</h2>
               <form onSubmit={editingId ? handleUpdate : handleCreate}>
-                <div className="space-y-4 grid grid-cols-3 gap-2">
+                <div className="space-y-4 grid  grid-cols-1 md:grid-cols-3 gap-1 overflow-y-auto max-h-[80vh]">
                   <div>
                     <label className="block text-sm text-gray-700">Subject Name</label>
                     <input
@@ -331,11 +341,9 @@ const LearningArea = () => {
                       className="w-full p-2 border rounded-md"
                     />
                   </div>
-                </div>
-
-                <div className="flex justify-end gap-4 mt-4">
-                  <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded-md">
-                    {editingId ? 'Update' : 'Create'}
+                  <div className="flex justify-end gap-4 mt-4">
+                  <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded-md" disabled={isCreating}>
+                    {isCreating ? <ClipLoader color="#ffffff" size={20} /> : editingId ? 'Update' : 'Create'}
                   </button>
                   <button
                     type="button"
@@ -345,6 +353,9 @@ const LearningArea = () => {
                     Cancel
                   </button>
                 </div>
+                </div>
+
+               
               </form>
             </div>
           </div>

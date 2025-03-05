@@ -477,7 +477,7 @@ const Users = () => {
           </div>
         )}
 
-        <div className='p-3 grid grid-cols-1 pb-4 max-h-[92vh] overflow-y-auto w-full overflow-x-auto'>
+        <div className='p-3 grid grid-cols-1 pb-4 max-h-[80vh] overflow-y-auto w-full overflow-x-auto'>
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
