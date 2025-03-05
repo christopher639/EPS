@@ -13,6 +13,13 @@ import MobileNav from '../components/MobileNav'; // Import the MobileNav compone
 // Registering Chart.js plugins
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+// Spinner Component
+const Spinner = () => (
+  <div className="flex justify-center items-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+  </div>
+);
+
 const Dashboard = () => {
   const [students, setMarks] = useState([]);
   const [stream, setStream] = useState([]);
@@ -24,6 +31,9 @@ const Dashboard = () => {
   const [learnersPerPage, setLearnersPerPage] = useState(10); // Learners per page
   const [alumniCount, setAlumniCount] = useState(0);
   const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
+  const [loadingLearners, setLoadingLearners] = useState(true);
+  const [loadingTeachers, setLoadingTeachers] = useState(true);
+  const [loadingStreams, setLoadingStreams] = useState(true);
 
   useEffect(() => {
     const fetchData = () => {
@@ -39,20 +49,34 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = () => {
+      setLoadingLearners(true);
       axios
         .get('https://eps-dashboard.onrender.com/api/learners')
-        .then((leaners) => setLearners(leaners.data))
-        .catch((err) => console.log(err));
+        .then((leaners) => {
+          setLearners(leaners.data);
+          setLoadingLearners(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoadingLearners(false);
+        });
     };
     fetchData();
   }, []);
 
   useEffect(() => {
     const getFetchData = () => {
+      setLoadingTeachers(true);
       axios
         .get('https://eps-dashboard.onrender.com/api/teachers')
-        .then((response) => setTeachers(response.data))
-        .catch((err) => console.log(err));
+        .then((response) => {
+          setTeachers(response.data);
+          setLoadingTeachers(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoadingTeachers(false);
+        });
     };
     getFetchData();
   }, []);
@@ -60,12 +84,15 @@ const Dashboard = () => {
   // Fetch all learners with pagination
   const fetchLearners = async () => {
     try {
+      setLoadingLearners(true);
       const response = await axios.get(`https://eps-dashboard.onrender.com/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
       setLearners(response.data.learners); // Set learners data
       setTotalPages(response.data.totalPages); // Set total pages
       setTotalLeaners(response.data.totalLearners); // Set total learners
+      setLoadingLearners(false);
     } catch (error) {
       console.error("Failed to fetch learners:", error);
+      setLoadingLearners(false);
     }
   };
 
@@ -75,14 +102,19 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = () => {
+      setLoadingStreams(true);
       axios
         .get('https://eps-dashboard.onrender.com/api/streams')
-        .then((stream) => setStream(stream.data))
-        .catch((err) => console.log(err));
+        .then((stream) => {
+          setStream(stream.data);
+          setLoadingStreams(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoadingStreams(false);
+        });
     };
     fetchData();
-    const interval = setInterval(fetchData, 1000);
-    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -171,22 +203,18 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className='w-full'>
-      
-
         {/* Header */}
         <div className='flex justify-between items-center bg-white shadow-sm p-2 border-b'>
           <div className='flex items-center gap-3'>
-          <div>
-         
-          <MobileNav />
-          </div>
-          <div  className='hidden md:flex'>
-          <SidebarToggleButton
-              toggleSidebar={toggleSideBar}
-              isSidebarCollapsed={!sideBar}  
-            />
-          </div>
-         
+            <div>
+              <MobileNav />
+            </div>
+            <div className='hidden md:flex'>
+              <SidebarToggleButton
+                toggleSidebar={toggleSideBar}
+                isSidebarCollapsed={!sideBar}  
+              />
+            </div>
             <h1 className='text-sm text-red-900 font-bold md:flex md:text-md lg:text-xl font-bold text-gray-800'>
               SAMGE SCHOOL
             </h1>
@@ -207,7 +235,7 @@ const Dashboard = () => {
                 <div className='flex justify-between items-center'>
                   <div>
                     <p className='text-gray-600 font-medium'>Learners</p>
-                    <p className='text-3xl font-bold text-gray-800'>{totalLeaners}</p>
+                    {loadingLearners ? <Spinner /> : <p className='text-3xl font-bold text-gray-800'>{totalLeaners}</p>}
                   </div>
                   <FaUsers className='text-4xl text-blue-500' />
                 </div>
@@ -220,7 +248,7 @@ const Dashboard = () => {
                 <div className='flex justify-between items-center'>
                   <div>
                     <p className='text-gray-600 font-medium'>Teachers</p>
-                    <p className='text-3xl font-bold text-gray-800'>{teachers.length}</p>
+                    {loadingTeachers ? <Spinner /> : <p className='text-3xl font-bold text-gray-800'>{teachers.length}</p>}
                   </div>
                   <FaChalkboardTeacher className='text-4xl text-green-500' />
                 </div>
@@ -233,7 +261,7 @@ const Dashboard = () => {
                 <div className='flex justify-between items-center'>
                   <div>
                     <p className='text-gray-600 font-medium'>Streams</p>
-                    <p className='text-3xl font-bold text-gray-800'>{stream.length}</p>
+                    {loadingStreams ? <Spinner /> : <p className='text-3xl font-bold text-gray-800'>{stream.length}</p>}
                   </div>
                   <FaUniversity className='text-4xl text-yellow-500' />
                 </div>
