@@ -30,6 +30,8 @@ const LearningArea = () => {
   });
   const [editingId, setEditingId] = useState(null); // For identifying which learning area is being edited
   const [isCreating, setIsCreating] = useState(false); // State to manage the create button spinner
+  const [isUpdating, setIsUpdating] = useState(false); // State to manage the update button spinner
+  const [isDeleting, setIsDeleting] = useState(null); // State to manage the delete button spinner
 
   // Fetch learning areas from the API
   const fetchLearningAreas = async () => {
@@ -103,25 +105,33 @@ const LearningArea = () => {
       return;
     }
 
+    setIsUpdating(true); // Start the spinner
+
     try {
-      await axios.put(`https://eps-dashboard.onrender.com/learning-areas/${editingId}`, formData);
+      await axios.put(`https://eps-dashboard.onrender.com/api/learning-areas/${editingId}`, formData);
       toast.success('Learning area updated successfully!');
       fetchLearningAreas(); // Refresh the list
       setShowModal(false); // Close the modal
       setEditingId(null); // Reset editingId
     } catch (error) {
       toast.error('Error updating learning area.');
+    } finally {
+      setIsUpdating(false); // Stop the spinner
     }
   };
 
   // Handle delete action
   const handleDelete = async (id) => {
+    setIsDeleting(id); // Start the spinner for the specific delete button
+
     try {
       await axios.delete(`https://eps-dashboard.onrender.com/api/learning-areas/${id}`);
       toast.success('Learning area deleted successfully!');
       fetchLearningAreas(); // Refresh the list
     } catch (error) {
       toast.error('Error deleting learning area.');
+    } finally {
+      setIsDeleting(null); // Stop the spinner
     }
   };
 
@@ -170,9 +180,9 @@ const LearningArea = () => {
       <div className="flex flex-col w-full bg-gray-50">
         <div className="flex justify-between items-center bg-white shadow-sm p-2 border-b">
           <MobileNav />
-        <div className='hidden md:flex'>
-        <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-        </div>
+          <div className='hidden md:flex'>
+            <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+          </div>
           <div>
             <p className="text-sm hidden md:text-lg md:text-xl lg:text-2xl font-bold mb-6 md:flex">Learning Areas</p>
           </div>
@@ -193,8 +203,8 @@ const LearningArea = () => {
             onClick={() => setShowModal(true)}
             className="mb-2 flex gap-1 px-2 bg-green-600 text-white rounded-full"
           > 
-           <p>+</p>
-           <p className='hidden md:flex'> Add</p>
+            <p>+</p>
+            <p className='hidden md:flex'> Add</p>
           </button>
           <UserAccount />
         </div>
@@ -230,8 +240,13 @@ const LearningArea = () => {
                     <button
                       onClick={() => handleDelete(learningArea._id)}
                       className="bg-red-600 text-white py-1 px-3 rounded-md"
+                      disabled={isDeleting === learningArea._id}
                     >
-                      Delete
+                      {isDeleting === learningArea._id ? (
+                        <ClipLoader color="#ffffff" size={20} />
+                      ) : (
+                        'Delete'
+                      )}
                     </button>
                   </div>
                 </div>
@@ -246,7 +261,8 @@ const LearningArea = () => {
             <div className="bg-white p-6 rounded-lg w-full md:w-2/3">
               <h2 className="text-lg font-semibold">{editingId ? 'Edit Learning Area' : 'Add New Learning Area'}</h2>
               <form onSubmit={editingId ? handleUpdate : handleCreate}>
-                <div className="space-y-4 grid  grid-cols-1 md:grid-cols-3 gap-1 overflow-y-auto max-h-[80vh]">
+                <div className="space-y-4 grid grid-cols-1 md:grid-cols-3 gap-1 overflow-y-auto max-h-[80vh]">
+                  {/* Form fields */}
                   <div>
                     <label className="block text-sm text-gray-700">Subject Name</label>
                     <input
@@ -342,20 +358,28 @@ const LearningArea = () => {
                     />
                   </div>
                   <div className="flex justify-end gap-4 mt-4">
-                  <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded-md" disabled={isCreating}>
-                    {isCreating ? <ClipLoader color="#ffffff" size={20} /> : editingId ? 'Update' : 'Create'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={toggleModal}
-                    className="bg-gray-400 text-white px-4 py-2 rounded-md"
-                  >
-                    Cancel
-                  </button>
+                    <button
+                      type="submit"
+                      className="bg-green-600 text-white px-4 py-2 rounded-md"
+                      disabled={isCreating || isUpdating}
+                    >
+                      {isCreating || isUpdating ? (
+                        <ClipLoader color="#ffffff" size={20} />
+                      ) : editingId ? (
+                        'Update'
+                      ) : (
+                        'Create'
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={toggleModal}
+                      className="bg-gray-400 text-white px-4 py-2 rounded-md"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
-                </div>
-
-               
               </form>
             </div>
           </div>
