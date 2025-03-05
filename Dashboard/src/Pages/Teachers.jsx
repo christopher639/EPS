@@ -9,6 +9,7 @@ import UserAccount from '../components/UserAccount';
 import { FaBars, FaPlus } from "react-icons/fa"; // Import the hamburger icon for sidebar toggle
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import BASE_URL from '../config';
+import MobileNav from '../components/MobileNav';
 axios.defaults.baseURL = BASE_URL;
 
 const Teachers = () => {
@@ -38,7 +39,7 @@ const Teachers = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("https://eps-dashboard.onrender.com/api/teachers")
+    axios.get("http://localhost:3000/api/teachers")
       .then(response => {
         setTeachers(response.data.reverse());
         setLoading(false);
@@ -51,7 +52,7 @@ const Teachers = () => {
 
   const getLeaningareaData = () => {
     setLoading(true);
-    axios.get("https://eps-dashboard.onrender.com/api/learningAreas")
+    axios.get("http://localhost:3000/api/learning-reas")
       .then(response => {
         setLoading(false);
         setLearningAreas(response.data);
@@ -63,7 +64,7 @@ const Teachers = () => {
   };
 
   const fetchStreams = () => {
-    axios.get("https://eps-dashboard.onrender.com/api/streams")
+    axios.get("http://localhost:3000/api/streams")
       .then(response => {
         setStreams(response.data);
       })
@@ -73,7 +74,7 @@ const Teachers = () => {
   };
 
   const fetchDepartments = () => {
-    axios.get("https://eps-dashboard.onrender.com/api/departments")
+    axios.get("http://localhost:3000/api/departments")
       .then((response) => {
         setDepartments(response.data);
         setLoading(false);
@@ -102,7 +103,7 @@ const Teachers = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`https://eps-dashboard.onrender.com/api/delete/${id}`);
+      const response = await axios.delete(`http://localhost:3000/api/delete/${id}`);
       if (response.data.success === "true") {
         toast.success("Teacher has been deleted successfully");
         setTeachers((prevTeachers) => prevTeachers.filter(teacher => teacher._id !== id));
@@ -119,7 +120,7 @@ const Teachers = () => {
     e.preventDefault();
     if (isUpdating) {
       // Update teacher
-      axios.put(`https://eps-dashboard.onrender.com/api/teachers/${formData._id}`, formData)
+      axios.put(`http://localhost:3000/api/teachers/${formData._id}`, formData)
         .then(response => {
           toast.success("Teacher updated successfully");
           setShowModal(false);
@@ -130,7 +131,7 @@ const Teachers = () => {
         });
     } else {
       // Add new teacher
-      axios.post("https://eps-dashboard.onrender.com/api/teachers", formData)
+      axios.post("http://localhost:3000/api/teachers", formData)
         .then(response => {
           toast.success("Teacher added successfully");
           setShowModal(false);
@@ -179,7 +180,10 @@ const Teachers = () => {
     <div className='flex bg-white flex-col w-full bg-gray-100'>
       <div className='px-2 py-2 flex gap-5 justify-between items-center bg-white '>
       <div className='flex items-center gap-2'>
-      <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+        <MobileNav/>
+   <div className='hidden md:flex'>
+   <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+   </div>
           <h1 className="text-sm py-3 hidden md:flex font-bold text-gray-800 md:text-md lg:text-lg ">SAMGE SCHOOL</h1>
           <p className="text-gray-500 hidden  md:flex">Teachers</p>
         </div>

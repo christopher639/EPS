@@ -7,7 +7,7 @@
     "dev": "vite",
     "predeploy":"npm run build",
     "deploy":"",
-    "build": "vite build",
+    "build": "cd dashboard && npm install && npm run build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
