@@ -34,7 +34,7 @@ const Departments = () => {
   const fetchDepartments = () => {
     setLoading(true);
     axios
-      .get("http://localhost:3000/api/departments")
+      .get("http://localhost:3000lo/api/departments")
       .then((response) => {
         setDepartments(response.data);
         setLoading(false);
