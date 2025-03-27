@@ -22,6 +22,7 @@ const Spinner = () => (
 
 const Dashboard = () => {
   const [students, setMarks] = useState([]);
+  const [totalFeesPaid, setTotalFeesPaid] = useState(0);
   const [stream, setStream] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [leaners, setLearners] = useState([]); 
@@ -38,7 +39,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get('https://eps-dashboard.onrender.com/api/students')
+        .get('http://localhost:3000/api/students')
         .then((students) => setMarks(students.data))
         .catch((err) => console.log(err));
     };
@@ -51,7 +52,7 @@ const Dashboard = () => {
     const fetchData = () => {
       setLoadingLearners(true);
       axios
-        .get('https://eps-dashboard.onrender.com/api/learners')
+        .get('http://localhost:3000/api/learners')
         .then((leaners) => {
           setLearners(leaners.data);
           setLoadingLearners(false);
@@ -68,7 +69,7 @@ const Dashboard = () => {
     const getFetchData = () => {
       setLoadingTeachers(true);
       axios
-        .get('https://eps-dashboard.onrender.com/api/teachers')
+        .get('http://localhost:3000/api/teachers')
         .then((response) => {
           setTeachers(response.data);
           setLoadingTeachers(false);
@@ -85,7 +86,7 @@ const Dashboard = () => {
   const fetchLearners = async () => {
     try {
       setLoadingLearners(true);
-      const response = await axios.get(`https://eps-dashboard.onrender.com/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
+      const response = await axios.get(`http://localhost:3000/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
       setLearners(response.data.learners); // Set learners data
       setTotalPages(response.data.totalPages); // Set total pages
       setTotalLeaners(response.data.totalLearners); // Set total learners
@@ -104,7 +105,7 @@ const Dashboard = () => {
     const fetchData = () => {
       setLoadingStreams(true);
       axios
-        .get('https://eps-dashboard.onrender.com/api/streams')
+        .get('http://localhost:3000/api/streams')
         .then((stream) => {
           setStream(stream.data);
           setLoadingStreams(false);
@@ -120,7 +121,21 @@ const Dashboard = () => {
   useEffect(() => {
     setAlumniCount(students.length);
   }, [students]);
+// Fetch payments from API
+const fetchPayments = async () => {
+  try {
+    const res = await axios.get("http://localhost:3000/api/fees-payments");
+    setTotalFeesPaid(res.data.totalFeesPaid);
+  } catch (error) {
+    console.error("Failed to fetch payments", error);
+  }
 
+};
+
+
+useEffect(() => {
+  fetchPayments();
+}, []);
   // Doughnut Chart Data
   const doughnutData = {
     labels: ['Leaners', 'Teachers', 'Streams', 'Departments'],
@@ -235,7 +250,7 @@ const Dashboard = () => {
                 <div className='flex justify-between items-center'>
                   <div>
                     <p className='text-gray-600 font-medium'>Learners</p>
-                    {loadingLearners ? <Spinner /> : <p className='text-3xl font-bold text-gray-800'>{totalLeaners}</p>}
+                    {loadingLearners ? <Spinner /> : <p className='text-3xl font-bold text-gray-800'>{totalLeaners.toLocaleString()}</p>}
                   </div>
                   <FaUsers className='text-4xl text-blue-500' />
                 </div>
@@ -273,7 +288,7 @@ const Dashboard = () => {
               <div className='flex justify-between items-center'>
                 <div>
                   <p className='text-gray-600 font-medium'>Alumni</p>
-                  <p className='text-3xl font-bold text-gray-800'>{alumniCount}</p>
+                  <p className='text-3xl font-bold text-gray-800'>0</p>
                 </div>
                 <FaUserGraduate className='text-4xl text-indigo-500' />
               </div>
@@ -302,10 +317,13 @@ const Dashboard = () => {
                   <p className='text-gray-600'>Attendance Rate</p>
                   <p className='text-2xl font-bold text-gray-800'>0%</p>
                 </div>
+                <NavLink to="/fees-payments">
                 <div className='bg-gray-50 p-4 rounded-lg'>
                   <p className='text-gray-600'>Financials</p>
-                  <p className='text-2xl font-bold text-gray-800'>Ksh. 0.00</p>
+                  <p className='text-2xl font-bold text-gray-800'> Ksh   {new Intl.NumberFormat("en-US").format(totalFeesPaid)}</p>
                 </div>
+                </NavLink>
+             
               </div>
             </div>
           </div>

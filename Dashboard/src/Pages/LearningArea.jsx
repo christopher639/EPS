@@ -37,7 +37,7 @@ const LearningArea = () => {
   const fetchLearningAreas = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('https://eps-dashboard.onrender.com/api/learning-areas');
+      const response = await axios.get('http://localhost:3000/api/learning-areas');
       setLearningAreas(response.data);
       setLoading(false);
     } catch (error) {
@@ -73,7 +73,7 @@ const LearningArea = () => {
     setIsCreating(true); // Start the spinner
 
     try {
-      const response = await axios.post('https://eps-dashboard.onrender.com/api/learning-areas', formData);
+      const response = await axios.post('http://localhost:3000/api/learning-areas', formData);
       console.log("Server response:", response.data); // Debugging line
       toast.success('Learning area created successfully!');
       fetchLearningAreas(); // Refresh the list
@@ -108,7 +108,7 @@ const LearningArea = () => {
     setIsUpdating(true); // Start the spinner
 
     try {
-      await axios.put(`https://eps-dashboard.onrender.com/api/learning-areas/${editingId}`, formData);
+      await axios.put(`http://localhost:3000/api/learning-areas/${editingId}`, formData);
       toast.success('Learning area updated successfully!');
       fetchLearningAreas(); // Refresh the list
       setShowModal(false); // Close the modal
@@ -125,7 +125,7 @@ const LearningArea = () => {
     setIsDeleting(id); // Start the spinner for the specific delete button
 
     try {
-      await axios.delete(`https://eps-dashboard.onrender.com/api/learning-areas/${id}`);
+      await axios.delete(`http://localhost:3000/api/learning-areas/${id}`);
       toast.success('Learning area deleted successfully!');
       fetchLearningAreas(); // Refresh the list
     } catch (error) {

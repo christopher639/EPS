@@ -31,7 +31,7 @@ const FeesDistribution = () => {
   // Fetch all fee distributions
   const fetchFeeDistributions = async () => {
     try {
-      const response = await axios.get("https://eps-dashboard.onrender.com/api/fee-distributions");
+      const response = await axios.get("http://localhost:3000/api/fee-distributions");
       setFeeDistributions(response.data);
       setFilteredFees(response.data); // Initialize filteredFees with all data
     } catch (error) {
@@ -47,7 +47,7 @@ const FeesDistribution = () => {
     }
     try {
       const response = await axios.get(
-        `https://eps-dashboard.onrender.com/api/fees-distribution/${year}/${term}/${grade}`
+        `http://localhost:3000/api/fees-distribution/${year}/${term}/${grade}`
       );
       setTotalsByCategory(response.data);
     } catch (error) {
@@ -96,13 +96,13 @@ const FeesDistribution = () => {
     try {
       if (isEditMode) {
         await axios.put(
-          `https://eps-dashboard.onrender.com/api/fee-distributions/${currentFeeDistribution._id}`,
+          `http://localhost:3000/api/fee-distributions/${currentFeeDistribution._id}`,
           currentFeeDistribution
         );
         toast.success("Fee distribution updated successfully!");
       } else {
         await axios.post(
-          "https://eps-dashboard.onrender.com/api/fee-distributions",
+          "http://localhost:3000/api/fee-distributions",
           currentFeeDistribution
         );
         toast.success("Fee distribution added successfully!");
@@ -126,7 +126,7 @@ const FeesDistribution = () => {
   // Handle delete fee distribution
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://eps-dashboard.onrender.com/api/fee-distributions/${id}`);
+      await axios.delete(`http://localhost:3000/api/fee-distributions/${id}`);
       toast.success("Fee distribution deleted successfully!");
       fetchFeeDistributions();
     } catch (error) {

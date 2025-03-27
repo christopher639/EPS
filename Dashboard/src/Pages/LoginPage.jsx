@@ -35,11 +35,11 @@ const LoginPage = () => {
           setLoading(false);
           return;
         }
-        await axios.post("https://eps-dashboard.onrender.com/api/users/register", formData);
+        await axios.post("http://localhost:3000/api/users/register", formData);
         setIsRegister(false);
         setErrorMessage("Registration successful! Awaiting admin approval.");
       } else {
-        const response = await axios.post("https://eps-dashboard.onrender.com/api/users/login", {
+        const response = await axios.post("http://localhost:3000/api/users/login", {
           email: formData.email,
           password: formData.password,
         });
@@ -57,7 +57,7 @@ const LoginPage = () => {
 
   // Handle Google Sign-In
   const handleGoogleSignIn = () => {
-    window.location.href = "https://eps-dashboard.onrender.com/api/auth/google";
+    window.location.href = "http://localhost:3000/api/auth/google";
   };
 
   return (

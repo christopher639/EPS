@@ -36,7 +36,7 @@ const Finance = () => {
    // Fetch all expenses from the backend
    const fetchExpenses = async () => {
     try {
-      const res = await axios.get('https://eps-dashboard.onrender.com/api/expenses');
+      const res = await axios.get('http://localhost:3000/api/expenses');
       setExpenses(res.data);
     } catch (error) {
       toast.error("Failed to fetch expenses");
@@ -48,7 +48,7 @@ const Finance = () => {
    const fetchPayments = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("https://eps-dashboard.onrender.com/api/fees-payments");
+      const res = await axios.get("http://localhost:3000/api/fees-payments");
       setPayments(res.data.payments);
       setTotalFeesPaid(res.data.totalFeesPaid);
     } catch (error) {

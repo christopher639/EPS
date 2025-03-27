@@ -37,7 +37,7 @@ const Streams = () => {
     const fetchStreams = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get('https://eps-dashboard.onrender.com/api/streams');
+        const response = await axios.get('http://localhost:3000/api/streams');
         setStreams(response.data);
         setFilteredStreams(response.data);
       } catch (error) {
@@ -66,7 +66,7 @@ const Streams = () => {
   // Handle Delete Stream
   const handleDelete = async () => {
     try {
-      await axios.delete(`https://eps-dashboard.onrender.com/api/streams/${selectedStream.id}`);
+      await axios.delete(`http://localhost:3000/api/streams/${selectedStream.id}`);
       setStreams(streams.filter((stream) => stream.id !== selectedStream.id));
       setShowDeleteModal(false);
       toast.success('Stream deleted successfully!');
@@ -91,7 +91,7 @@ const Streams = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `https://eps-dashboard.onrender.com/api/streams/${selectedStream.id}`,
+        `http://localhost:3000/api/streams/${selectedStream.id}`,
         updatedStream
       );
       setStreams(
@@ -110,7 +110,7 @@ const Streams = () => {
   const handleAddStreamSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://eps-dashboard.onrender.com/api/streams', newStream);
+      const response = await axios.post('http://localhost:3000/api/streams', newStream);
       setStreams([...streams, response.data]);
       setShowAddStreamModal(false);
       toast.success('Stream added successfully!');
@@ -123,7 +123,7 @@ const Streams = () => {
   // Handle Promote Learners
   const handlePromoteLearners = async () => {
     try {
-      await axios.post('https://eps-dashboard.onrender.com/api/learners/promote', promoteData);
+      await axios.post('http://localhost:3000/api/learners/promote', promoteData);
       toast.success('Learners promoted successfully!');
       setShowPromoteModal(false);
     } catch (error) {

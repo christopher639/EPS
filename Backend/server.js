@@ -26,6 +26,7 @@ const teacherRoutes = require("./Routes/teacherRoutes");
 const expenseRoutes = require("./Routes/expenseRoutes");
 const feesPaymentRoutes = require("./Routes/feesPaymentRoutes");
 const learnerRoutes = require("./Routes/LearnerRoutes");
+const claseRoutes = require("./Routes/claseRoutes")
 
 // Use routes
 app.use("/api/fees-payments", feesPaymentRoutes);
@@ -39,6 +40,7 @@ app.use("/api/learners", learnerRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/marks", subjectMarksRoutes);
+app.use("/api/clase", claseRoutes)
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "dashboard/build")));
@@ -49,20 +51,20 @@ app.get("*", (req, res) => {
 });
 //atlas 1 connection   mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system
 //database online connections
-mongoose.connect("mongodb+srv://christopherbundi639:xDFLqAKg7G78hcuu@cluster0.uosxzen.mongodb.net/samge")
-.then((error)=>{
-console.log("Database connected")
-})
+// mongoose.connect("mongodb+srv://christopherbundi639:xDFLqAKg7G78hcuu@cluster0.uosxzen.mongodb.net/samge")
+// .then((error)=>{
+// console.log("Database connected")
+// })
 
 //database local connections
-// mongoose
-//   .connect("mongodb://localhost:27017/dreamhomehouse")
-//   .then(() => {
-//     console.log("Database connected");
-//   })
-//   .catch((err) => {
-//     console.error("Database connection error:", err);
-//   });
+mongoose
+  .connect("mongodb://localhost:27017/dreamhomehouse")
+  .then(() => {
+    console.log("Database connected");
+  })
+  .catch((err) => {
+    console.error("Database connection error:", err);
+  });
 
 // Start the server
 const port = process.env.PORT || 3000;
@@ -75,3 +77,7 @@ app.get("/", (req, res) => {
   res.send("API is working - Christopher Bundi");
 });
 
+// html css javascript , 
+//Frmaworks React vues , react native
+// node js ,
+//databses - mysql n or mongo or postgressql , Oraclke

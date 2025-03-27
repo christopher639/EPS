@@ -17,12 +17,13 @@ import {
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
-  { to: "/learner", label: "Leaners", icon: <FaUsers /> },
+  
   { label: "Academics", icon: <FaBook /> },
   { label: "Finance", icon: <FaMoneyBillAlt /> },
   { to: "/departments", label: "Departments", icon: <FaUniversity /> },
-  { to: "/streams", label: "Streams", icon: <FaBook /> },
-  { to: "/teachers", label: "Teachers", icon: <FaChalkboardTeacher /> },
+  { to: "/clases", label: "Clases", icon: <FaBook /> },
+  
+  
   { label: "Human Resource", icon: <FaChalkboardTeacher /> },
   { to: "/learningarea", label: "Learning Areas", icon: <FaClipboardList /> },
   { to: "/parents", label: "Parents", icon: <FaUsers /> },

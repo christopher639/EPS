@@ -21,7 +21,7 @@ const Academic = () => {
   const fetchData = async () => {
     try {
       // Dynamically construct the URL using the selected filter values
-      const url = `https://eps-dashboard.onrender.com/api/marks/${classInput}/${yearInput}/${streamInput}/${termInput}/${categoryInput}`;
+      const url = `http://localhost:3000/api/marks/${classInput}/${yearInput}/${streamInput}/${termInput}/${categoryInput}`;
       const response = await axios.get(url);
       const data = response.data;
       // Extract unique subject codes from the fetched data

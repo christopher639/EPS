@@ -39,7 +39,7 @@ const Assessments = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `https://eps-dashboard.onrender.com/api/marks/${classValue}/${yearValue}/${termValue}/${categoryValue}`
+          `http://localhost:3000/api/marks/${classValue}/${yearValue}/${termValue}/${categoryValue}`
         );
         setData(response.data); // Axios automatically parses JSON
       } catch (error) {

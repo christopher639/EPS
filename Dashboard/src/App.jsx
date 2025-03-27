@@ -36,6 +36,7 @@ import SettingsPage from "./Pages/SettingsPage";
 import ProfilePage from "./Pages/ProfilePage";
 import HelpAndSupport from "./Pages/HelpAndSupport";
 import AuthWrapper from "./Pages/AuthWrapper";
+import Clases from "./Pages/Clases";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -78,6 +79,14 @@ const App = () => {
           element={
             <AuthWrapper>
               <Users />
+            </AuthWrapper>
+          }
+        />
+          <Route
+          path="/clases"
+          element={
+            <AuthWrapper>
+              <Clases/>
             </AuthWrapper>
           }
         />

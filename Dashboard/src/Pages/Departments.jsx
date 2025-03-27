@@ -34,7 +34,7 @@ const Departments = () => {
   const fetchDepartments = () => {
     setLoading(true);
     axios
-      .get("https://eps-dashboard.onrender.com/api/departments")
+      .get("http://localhost:3000/api/departments")
       .then((response) => {
         setDepartments(response.data);
         setLoading(false);
@@ -48,7 +48,7 @@ const Departments = () => {
   const getFetchData = () => {
     setLoading(true);
     axios
-      .get("https://eps-dashboard.onrender.com/api/teachers")
+      .get("http://localhost:3000/api/teachers")
       .then((response) => {
         setTeachers(response.data.reverse());
         setLoading(false);
@@ -61,7 +61,7 @@ const Departments = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`https://eps-dashboard.onrender.com/api/departments/${id}`);
+      const response = await axios.delete(`http://localhost:3000/api/departments/${id}`);
       if (response.data.success) {
         toast.success("Department deleted successfully");
         setDepartments((prevDepartments) =>
@@ -84,7 +84,7 @@ const Departments = () => {
     }
 
     axios
-      .post("https://eps-dashboard.onrender.com/api/departments", formData)
+      .post("http://localhost:3000/api/departments", formData)
       .then(() => {
         toast.success("New department added successfully");
         setShowModal(false);
