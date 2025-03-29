@@ -448,6 +448,7 @@ const LearnerManagement = () => {
               <table className="w-full border-collapse border border-gray-300">
                 <thead>
                   <tr className="bg-gray-200">
+                  <th className="border border-gray-300 p-2">#</th>
                     <th className="border border-gray-300 p-2">Image</th>
                     <th className="border border-gray-300 p-2">Full Name</th>
                     <th className="border border-gray-300 p-2">Reg No</th>
@@ -465,6 +466,9 @@ const LearnerManagement = () => {
                       key={learner._id}
                       className="text-center hover:bg-gray-100"
                     >
+                       <td className="border border-gray-300 p-2">
+                        {learner.index}
+                      </td>
                       <td className="border border-gray-300 p-2">
                         <img
                           src={`http://localhost:3000${learner.learnerImage}`}

@@ -65,6 +65,12 @@ exports.getAllLearners = async (req, res) => {
       .skip(skip) // Skip documents for previous pages
       .limit(limit); // Limit the number of documents per page
 
+    // Add index to each learner starting from 1 + skip (to maintain continuous numbering across pages)
+    const learnersWithIndex = learners.map((learner, i) => ({
+      ...learner.toObject(),
+      index: skip + i + 1, // +1 to make it start from 1 instead of 0
+    }));
+
     // Get the total number of learners
     const totalLearners = await Learner.countDocuments();
 
@@ -73,7 +79,7 @@ exports.getAllLearners = async (req, res) => {
 
     res.status(200).json({
       message: "Learners retrieved successfully",
-      learners,
+      learners: learnersWithIndex, // Now with index property
       currentPage: page,
       totalPages,
       totalLearners,

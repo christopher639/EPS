@@ -7,10 +7,14 @@ import { FaFile, FaPrint } from "react-icons/fa";
 import BASE_URL from "../config";
 import axios from "axios";
 import MobileNav from "../components/MobileNav";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 axios.defaults.baseURL = BASE_URL;
 
 const GeneralReport = () => {
   const [selectedClass, setSelectedClass] = useState("");
+  const [clases, setClases] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedTerm, setSelectedTerm] = useState("");
   const [sideBar, setSideBar] = useState(true);
@@ -37,7 +41,7 @@ const GeneralReport = () => {
       setLoading(true);
       setError(null);
       const response = await axios.get(
-        `/api/marks/${appliedFilters.class}/${appliedFilters.year}/${appliedFilters.term}`
+        `http://localhost:3000/api/marks/${appliedFilters.class}/${appliedFilters.year}/${appliedFilters.term}`
       );
       setData(response.data || []);
     } catch (error) {
@@ -65,6 +69,22 @@ const GeneralReport = () => {
       fetchData();
     }
   }, [appliedFilters]);
+
+  // Fetch all classes
+
+  // Fetch all clases
+  const fetchClases = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:3000/api/clase");
+      setClases(data);
+    } catch (err) {
+      toast.error("Failed to fetch classes");
+    }
+  };
+
+  useEffect(() => {
+    fetchClases();
+  }, []);
 
   const handlePrint = () => {
     if (data.length === 0) return;
@@ -232,18 +252,21 @@ const GeneralReport = () => {
             className="text-center max-w-48 text-sm border border-gray-300 py-2 px-3 rounded-md"
             placeholder="Search by name or regno"
           />
+          
+          {/* Class Select Dropdown */}
           <select
             value={selectedClass}
             onChange={(e) => setSelectedClass(e.target.value)}
             className="border max-w-48 border-gray-300 p-2 rounded-md"
           >
             <option value="">Select Class</option>
-            <option value="Form3">Form 3</option>
-            <option value="Form4">Form 4</option>
-            <option value="Form5">Form 5</option>
-            <option value="Form6">Form 6</option>
-            <option value="10">10</option>
+            {clases.map((clase) => (
+              <option key={clase._id} value={clase.clasename}>
+                {clase.clasename}
+              </option>
+            ))}
           </select>
+
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}

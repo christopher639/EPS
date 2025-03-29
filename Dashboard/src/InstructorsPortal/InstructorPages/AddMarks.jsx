@@ -1,11 +1,15 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InstructorSideBar from "../../components/InstuctorSideBar";
 import UserAccount from "../../components/UserAccount";
+import axios from "axios";
 
 const AddMarks = () => {
   const [loading, setLoading] = useState(false);
+  const [clases, setClases] = useState([]);
+  const [streams, setStreams] = useState([]);
+  const [learningAreas, setLearningAreas] = useState([]);
   const [commonData, setCommonData] = useState({
     year: "",
     term: "",
@@ -17,6 +21,29 @@ const AddMarks = () => {
 
   const [marks, setMarks] = useState([{ regno: "", score: "" }]);
   const lastStudentRef = useRef(null);
+
+  // Year options
+  const yearOptions = [
+    { value: "", label: "Select Year" },
+    { value: "2024-2025", label: "2024-2025" },
+    { value: "2025-2026", label: "2025-2026" },
+  ];
+
+  // Term options
+  const termOptions = [
+    { value: "", label: "Select Term" },
+    { value: "Term-1", label: "Term 1" },
+    { value: "Term-2", label: "Term 2" },
+    { value: "Term-3", label: "Term 3" },
+  ];
+
+  // Category options
+  const categoryOptions = [
+    { value: "", label: "Select Category" },
+    { value: "Opener", label: "Opener" },
+    { value: "Mid-Term", label: "Mid-Term" },
+    { value: "Final", label: "Final" },
+  ];
 
   const handleCommonChange = (e) => {
     setCommonData({ ...commonData, [e.target.name]: e.target.value });
@@ -44,6 +71,40 @@ const AddMarks = () => {
     });
   };
 
+  // Fetch all clases
+  const fetchClases = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:3000/api/clase");
+      setClases(data);
+    } catch (err) {
+      toast.error("Failed to fetch classes");
+    }
+  };
+
+  // Fetch streams
+  const fetchStreams = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/streams");
+      setStreams(response.data);
+    } catch (error) {
+      toast.error("Failed to fetch streams");
+    }
+  };
+
+  // Fetch learning areas
+  const fetchLearningAreas = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get("http://localhost:3000/api/learning-areas");
+      setLearningAreas(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching learning areas:", error);
+      toast.error("Failed to fetch learning areas");
+      setLoading(false);
+    }
+  };
+
   const removeStudent = (index) => {
     setMarks(marks.filter((_, i) => i !== index));
   };
@@ -67,7 +128,7 @@ const AddMarks = () => {
     }));
 
     try {
-      const response = await fetch("https://eps-dashboard.onrender.com/api/marks", {
+      const response = await fetch("http://localhost:3000/api/marks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,11 +159,19 @@ const AddMarks = () => {
     }
   };
 
+  // Fetch data when the component mounts
+  useEffect(() => {
+    fetchLearningAreas();
+    fetchClases();
+    fetchStreams();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-100 flex">
+     
       <div className="flex-1 px-6 ">
         <div className="flex justify-between items-center mb-6">
-          <h1 className=" font-bold text-gray-800">Post Marks</h1>
+          <h1 className="font-bold text-gray-800">Post Marks</h1>
           <UserAccount />
         </div>
 
@@ -111,21 +180,116 @@ const AddMarks = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Common Data Fields */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {["year", "term", "stream", "class", "category", "code"].map((name) => (
-                <div key={name} className="flex flex-col">
-                  <label className="text-sm font-medium text-gray-600 mb-1">
-                    {name.toUpperCase()}
-                  </label>
-                  <input
-                    type="text"
-                    name={name}
-                    value={commonData[name]}
-                    onChange={handleCommonChange}
-                    required
-                    className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              ))}
+              {/* Year Select */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-600 mb-1">YEAR</label>
+                <select
+                  name="year"
+                  value={commonData.year}
+                  onChange={handleCommonChange}
+                  required
+                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {yearOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Term Select */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-600 mb-1">TERM</label>
+                <select
+                  name="term"
+                  value={commonData.term}
+                  onChange={handleCommonChange}
+                  required
+                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {termOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Stream Select */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-600 mb-1">STREAM</label>
+                <select
+                  name="stream"
+                  value={commonData.stream}
+                  onChange={handleCommonChange}
+                  required
+                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select Stream</option>
+                  {streams.map((stream) => (
+                    <option key={stream._id} value={stream.name}>
+                      {stream.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Class Select */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-600 mb-1">CLASS</label>
+                <select
+                  name="class"
+                  value={commonData.class}
+                  onChange={handleCommonChange}
+                  required
+                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select Class</option>
+                  {clases.map((clase) => (
+                    <option key={clase._id} value={clase.clasename}>
+                      {clase.clasename}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Category Select */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-600 mb-1">CATEGORY</label>
+                <select
+                  name="category"
+                  value={commonData.category}
+                  onChange={handleCommonChange}
+                  required
+                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {categoryOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Learning Area Code Select */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-600 mb-1">CODE</label>
+                <select
+                  name="code"
+                  value={commonData.code}
+                  onChange={handleCommonChange}
+                  required
+                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select Subject Code</option>
+                  {learningAreas.map((area) => (
+                    <option key={area._id} value={area.code}>
+                      {area.code}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {/* Student Marks Section */}
