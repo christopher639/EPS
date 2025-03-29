@@ -9,6 +9,8 @@ const {
   updateLearner,
   deleteLearner,
   getLearnerByRegNo,
+  getLearnersByClassAndStream 
+
 } = require("../Controllers/LearnerController");
 
 // Multer setup
@@ -30,5 +32,5 @@ router.get("/", getAllLearners);
 router.get("/:id", getLearnerById); // Add this route
 router.put("/:id", upload.single("learnerImage"), updateLearner);
 router.delete("/:id", deleteLearner);
-
+router.get("/:grade/:stream", getLearnersByClassAndStream); 
 module.exports = router;

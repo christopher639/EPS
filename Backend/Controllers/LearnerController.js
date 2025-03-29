@@ -159,3 +159,51 @@ exports.getLearnerById = async (req, res) => {
       res.status(500).json({ message: "Error searching learners", error: error.message });
     }
   };
+  // Get Learners by Class (Grade) and Stream
+exports.getLearnersByClassAndStream = async (req, res) => {
+  try {
+    const { grade, stream } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 50;
+    const skip = (page - 1) * limit;
+
+    // Validate grade and stream
+    if (!grade || !stream) {
+      return res.status(400).json({ 
+        message: "Both grade and stream parameters are required" 
+      });
+    }
+
+    // Fetch learners with pagination
+    const learners = await Learner.find({ 
+      grade: { $regex: new RegExp(grade, 'i') }, 
+      stream: { $regex: new RegExp(stream, 'i') }
+    })
+    .sort({ name: 1 }) // Sort alphabetically by name
+    .skip(skip)
+    .limit(limit);
+
+    // Count total learners matching the criteria
+    const totalLearners = await Learner.countDocuments({ 
+      grade: { $regex: new RegExp(grade, 'i') }, 
+      stream: { $regex: new RegExp(stream, 'i') }
+    });
+
+    const totalPages = Math.ceil(totalLearners / limit);
+
+    res.status(200).json({
+      message: `Learners in ${grade} ${stream} retrieved successfully`,
+      learners,
+      currentPage: page,
+      totalPages,
+      totalLearners,
+      grade,
+      stream
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      message: "Error retrieving learners by class and stream", 
+      error: error.message 
+    });
+  }
+};

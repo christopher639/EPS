@@ -46,6 +46,8 @@ const LoginPage = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userName", response.data.username);
         localStorage.setItem("role", response.data.role);
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("userId", response.data.userId); // Make sure this is included
         navigate(response.data.role === "admin" ? "/dashboard" : "/addmarks");
       }
     } catch (error) {

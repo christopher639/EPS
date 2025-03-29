@@ -31,7 +31,6 @@ const subjectsMarksSchema = new mongoose.Schema({
     },
     score: {
         type: Number,
-        required: true,
         min: [0, 'Score must be at least 0'],
         max: [100, 'Score must not exceed 100'],
     },

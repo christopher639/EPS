@@ -1,33 +1,49 @@
-const subjectsMarksModel = require('../models/subjectsMarksModel'); // Import the model
+const subjectsMarksModel = require('../models/subjectsMarksModel');
+const logActivity = require('../utils/activityLogger');
 
-// CREATE - Add multiple subject marks
 exports.createSubjectMarks = async (req, res) => {
-  let marks = req.body.marks; // Expecting an array
-
-  // If a single object is sent instead of an array, wrap it in an array
-  if (!Array.isArray(marks)) {
-    marks = [req.body]; // Convert a single object to an array
-  }
+  let marks = req.body.marks || [req.body];
+  const ipAddress = req.ip;
 
   if (!marks || marks.length === 0) {
-    return res.status(400).json({
-      message: "No marks provided. Please provide at least one mark.",
-    });
+    return res.status(400).json({ message: "No marks provided" });
   }
 
   try {
-    const subjectMarks = marks.map(mark => new subjectsMarksModel(mark));
+    // Verify user exists in request
+    // if (!req.user || !req.user._id) {
+    //   throw new Error('User information missing in request');
+    // }
 
-    await subjectsMarksModel.insertMany(subjectMarks); // More efficient than Promise.all()
+    const subjectMarks = marks.map(mark => new subjectsMarksModel(mark));
+    const savedMarks = await subjectsMarksModel.insertMany(subjectMarks);
+
+    // Log activity with proper error handling
+    try {
+      await logActivity({
+        userId: req.user._id,
+        action: 'CREATE',
+        collectionName: 'marks',
+        description: `Added ${savedMarks.length} marks`,
+        details: {
+          count: savedMarks.length,
+          marks: savedMarks.map(m => m._id)
+        },
+        ipAddress
+      });
+    } catch (logError) {
+      console.error('Activity logging failed:', logError);
+      // Don't fail the main operation, just log the error
+    }
 
     res.status(201).json({
-      message: `${marks.length} subject marks added successfully.`,
-      marks,
+      message: `${savedMarks.length} marks added successfully`,
+      marks: savedMarks
     });
   } catch (error) {
+    console.error('Error in createSubjectMarks:', error);
     res.status(500).json({
-      message: "Error creating subject marks",
-      error: error.message,
+      message: error.message
     });
   }
 };
@@ -36,11 +52,22 @@ exports.createSubjectMarks = async (req, res) => {
 exports.getAllSubjectMarks = async (req, res) => {
   try {
     const subjectMarks = await subjectsMarksModel.find();
+
+    // Log activity - corrected collectionName to 'marks'
+    await logActivity({
+      userId: req.user._id,
+      action: 'READ',
+      collectionName: 'marks',
+      description: 'Fetched all marks',
+      details: { count: subjectMarks.length },
+      ipAddress: req.ip
+    });
+
     res.status(200).json(subjectMarks);
   } catch (error) {
     res.status(500).json({
-      message: "Error fetching subject marks",
-      error: error.message,
+      message: "Error fetching marks",
+      error: error.message
     });
   }
 };
@@ -50,15 +77,24 @@ exports.getSubjectMarkById = async (req, res) => {
   try {
     const subjectMark = await subjectsMarksModel.findById(req.params.id);
     if (!subjectMark) {
-      return res.status(404).json({
-        message: "Subject mark not found",
-      });
+      return res.status(404).json({ message: "Mark not found" });
     }
+
+    // Log activity - corrected collectionName to 'marks'
+    await logActivity({
+      userId: req.user._id,
+      action: 'READ',
+      collectionName: 'marks',
+      documentId: req.params.id,
+      description: `Fetched mark ${req.params.id}`,
+      ipAddress: req.ip
+    });
+
     res.status(200).json(subjectMark);
   } catch (error) {
     res.status(500).json({
-      message: "Error fetching subject mark",
-      error: error.message,
+      message: "Error fetching mark",
+      error: error.message
     });
   }
 };
@@ -66,24 +102,39 @@ exports.getSubjectMarkById = async (req, res) => {
 // UPDATE - Update subject mark information
 exports.updateSubjectMark = async (req, res) => {
   try {
-    const subjectMark = await subjectsMarksModel.findByIdAndUpdate(
+    const oldMark = await subjectsMarksModel.findById(req.params.id);
+    if (!oldMark) {
+      return res.status(404).json({ message: "Mark not found" });
+    }
+
+    const updatedMark = await subjectsMarksModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
-    if (!subjectMark) {
-      return res.status(404).json({
-        message: "Subject mark not found",
-      });
-    }
+
+    // Log activity - corrected collectionName to 'marks'
+    await logActivity({
+      userId: req.user._id,
+      action: 'UPDATE',
+      collectionName: 'marks',
+      documentId: req.params.id,
+      description: `Updated mark ${req.params.id}`,
+      details: {
+        old: oldMark.toObject(),
+        new: updatedMark.toObject()
+      },
+      ipAddress: req.ip
+    });
+
     res.status(200).json({
-      message: "Subject mark updated successfully",
-      subjectMark,
+      message: "Mark updated successfully",
+      subjectMark: updatedMark
     });
   } catch (error) {
     res.status(500).json({
-      message: "Error updating subject mark",
-      error: error.message,
+      message: "Error updating mark",
+      error: error.message
     });
   }
 };
@@ -93,17 +144,50 @@ exports.deleteSubjectMark = async (req, res) => {
   try {
     const subjectMark = await subjectsMarksModel.findByIdAndDelete(req.params.id);
     if (!subjectMark) {
-      return res.status(404).json({
-        message: "Subject mark not found",
-      });
+      return res.status(404).json({ message: "Mark not found" });
     }
+
+    // Log activity - corrected collectionName to 'marks'
+    await logActivity({
+      userId: req.user._id,
+      action: 'DELETE',
+      collectionName: 'marks',
+      documentId: req.params.id,
+      description: `Deleted mark ${req.params.id}`,
+      details: subjectMark.toObject(),
+      ipAddress: req.ip
+    });
+
     res.status(200).json({
-      message: "Subject mark deleted successfully",
+      message: "Mark deleted successfully"
     });
   } catch (error) {
     res.status(500).json({
-      message: "Error deleting subject mark",
-      error: error.message,
+      message: "Error deleting mark",
+      error: error.message
+    });
+  }
+};
+// Additional routes with logging
+exports.getSubjectMarksByClassYearTerm = async (req, res) => {
+  try {
+    const { class: className, year, term } = req.params;
+    const marks = await subjectsMarksModel.find({ class: className, year, term });
+
+    await logActivity({
+      userId: req.user._id,
+      action: 'READ',
+      collectionName: 'SubjectMarks',
+      description: `Fetched marks for ${className}, ${year}, ${term}`,
+      details: { count: marks.length },
+      ipAddress: req.ip
+    });
+
+    res.status(200).json(marks);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching marks",
+      error: error.message
     });
   }
 };
