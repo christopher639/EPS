@@ -856,21 +856,6 @@ const exportAllReportCards = async () => {
  
   
   <div className="flex  justify-between gap-1">
-  <button
-    onClick={() => {
-      navigate("/report-card", {
-        state: { 
-          data: filteredData, 
-          classValue: appliedFilters.class, 
-          yearValue: appliedFilters.year, 
-          termValue: appliedFilters.term 
-        },
-      });
-    }}
-    className="bg-blue-700 text-white px-3 py-1.5 whitespace-nowrap rounded text-xs font-semibold hover:bg-blue-600 transition"
-  >
-    View Reports
-  </button>
     <ActionButton
       onClick={exportAllReportCards}
       disabled={generatingReportCards}
@@ -908,30 +893,32 @@ const exportAllReportCards = async () => {
     />
   </div>
 </div>
-            <div className="flex flex-col md:flex-row w-full mx-3 gap-5 justify-between">
-               
-                <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="text-center hidden md:flex max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
-            placeholder="Search by name or regno"
-          />
-                <div className="flex gap-2 justify-between">
-                <div className="flex gap-2">
-                  <p>class </p>
-                  <p className="font-semibold">{appliedFilters.class}</p>
-                </div>
-                  <div className="flex gap-2">
-                    <p> Year</p>
-                    <p className="font-semibold">{appliedFilters.year}</p>
-                  </div>
-                  <div className="flex gap-5">
-                    <p>Term</p>
-                    <p className="font-semibold">{appliedFilters.term}</p>
-                  </div>
-                </div>
-              </div>
+<div className="flex flex-col md:flex-row w-full mx-1 md:mx-3 gap-2 md:gap-5 justify-between items-center text-sm">
+  {/* Search input - hidden on mobile, shown on md+ */}
+  <input
+    type="text"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="hidden md:block max-w-48 text-xs md:text-sm border border-gray-300 py-1 px-2 rounded"
+    placeholder="Search by name or regno"
+  />
+
+  {/* Filter display - optimized for mobile */}
+  <div className="flex gap-1 md:gap-2 justify-between w-full md:w-auto">
+    <div className="flex gap-1 items-center">
+      <p className="text-xs md:text-sm">Class:</p>
+      <p className="font-semibold text-xs md:text-sm">{appliedFilters.class}</p>
+    </div>
+    <div className="flex gap-1 items-center">
+      <p className="text-xs md:text-sm">Year:</p>
+      <p className="font-semibold text-xs md:text-sm">{appliedFilters.year}</p>
+    </div>
+    <div className="flex gap-1 items-center">
+      <p className="text-xs md:text-sm">Term:</p>
+      <p className="font-semibold text-xs md:text-sm">{appliedFilters.term}</p>
+    </div>
+  </div>
+</div>
            
           </div>
         )}
