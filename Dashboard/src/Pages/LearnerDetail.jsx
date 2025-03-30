@@ -13,57 +13,53 @@ axios.defaults.baseURL = "https://eps-dashboard.onrender.com";
 // Spinner Component
 const Spinner = () => (
   <div className="flex justify-center items-center">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900"></div>
   </div>
 );
 
 const LearnerDetail = () => {
-  const { id } = useParams(); // Get the learner ID from the URL
+  const { id } = useParams();
   const [academicData, setAcademicData] = useState(null);
   const [sideBar, setSideBar] = useState(true);
-  const [feesPayments, setFeesPayments] = useState([]); // Store payment records
+  const [feesPayments, setFeesPayments] = useState([]);
   const [year, setYear] = useState("2024-2025");
   const [term, setTerm] = useState("Term-1");
   const [category, setCategory] = useState("Opener");
-  const [regno, setRegno] = useState(""); // Student regno
+  const [regno, setRegno] = useState("");
   const [learner, setLearner] = useState(null);
-  const [isEditing, setIsEditing] = useState(false); // State to toggle edit mode
-  const [updatedLearner, setUpdatedLearner] = useState({}); // State to hold updated learner data
-  const [newImage, setNewImage] = useState(null); // State to hold new image file
-  const [isUpdating, setIsUpdating] = useState(false); // State to track update progress
+  const [isEditing, setIsEditing] = useState(false);
+  const [updatedLearner, setUpdatedLearner] = useState({});
+  const [newImage, setNewImage] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchLearner();
   }, [id]);
 
-  // Fetch learner details
   const fetchLearner = async () => {
     try {
       const response = await axios.get(`https://eps-dashboard.onrender.com/api/learners/${id}`);
       setLearner(response.data);
-      setRegno(response.data.regno); // Set the regno
-      setUpdatedLearner(response.data.learner); // Initialize updatedLearner with fetched data
+      setRegno(response.data.regno);
+      setUpdatedLearner(response.data.learner);
     } catch (error) {
       console.error("Error fetching learner details:", error);
       toast.error("Failed to fetch learner details");
     }
   };
 
-  // Handle input change for editable fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUpdatedLearner({ ...updatedLearner, [name]: value });
   };
 
-  // Handle file input change for new image
   const handleFileChange = (e) => {
     setNewImage(e.target.files[0]);
   };
 
-  // Save updated learner information
   const saveChanges = async () => {
-    setIsUpdating(true); // Show spinner on the Save button
+    setIsUpdating(true);
     const formData = new FormData();
     Object.keys(updatedLearner).forEach((key) => {
       formData.append(key, updatedLearner[key]);
@@ -74,18 +70,17 @@ const LearnerDetail = () => {
 
     try {
       await axios.put(`https://eps-dashboard.onrender.com/api/learners/${id}`, formData);
-      setIsEditing(false); // Exit edit mode
-      fetchLearner(); // Refresh learner data
+      setIsEditing(false);
+      fetchLearner();
       toast.success("Learner updated successfully!");
     } catch (error) {
       console.error("Error updating learner:", error);
       toast.error("Failed to update learner");
     } finally {
-      setIsUpdating(false); // Hide spinner on the Save button
+      setIsUpdating(false);
     }
   };
 
-  // Fetch academic data
   useEffect(() => {
     if (regno) {
       const fetchAcademicData = async () => {
@@ -100,7 +95,6 @@ const LearnerDetail = () => {
     }
   }, [year, term, category, regno]);
 
-  // Fetch fees payment records
   useEffect(() => {
     if (regno) {
       const fetchFeesPayments = async () => {
@@ -116,14 +110,14 @@ const LearnerDetail = () => {
   }, [regno]);
 
   const getRemark = (score) => {
-    if (score >= 75) return "E.E"; // Exceeding Expectation
-    if (score >= 50) return "M.E"; // Meeting Expectation
-    if (score >= 0) return "B.E";  // Below Expectation
-    return "F"; // Failed
+    if (score >= 75) return "E.E";
+    if (score >= 50) return "M.E";
+    if (score >= 0) return "B.E";
+    return "F";
   };
 
   const toggleSideBar = () => {
-    setSideBar((prev) => !prev); // Toggle sidebar visibility
+    setSideBar((prev) => !prev);
   };
 
   if (!learner) {
@@ -139,22 +133,30 @@ const LearnerDetail = () => {
       <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
-      <div className="p-6 w-full bg-gray-100 max-h-[100vh] overflow-y-auto min-h-screen">
+      <div className="p-3 sm:p-6 w-full bg-gray-100 max-h-[100vh] overflow-y-auto min-h-screen">
         <ToastContainer />
        
- <div className="flex justify-between">
- <MobileNav/>
- <div className="hidden md:flex   ">
- 
-   <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-  
- </div>
- <UserAccount/>
- </div>
-        <div className="bg-white rounded-lg p-6">
-          <h1 className="text-2xl font-semibold mb-4">Learner Details</h1>
+        {/* Responsive Header */}
+        <div className="flex items-center justify-between gap-2 py-2">
+          <MobileNav className="text-xs"/>
+          <div className="hidden md:flex">
+            <SidebarToggleButton 
+              toggleSidebar={toggleSideBar} 
+              isSidebarCollapsed={!sideBar} 
+            />
+          </div>
+          <p className="text-xs sm:text-sm font-medium whitespace-nowrap mx-1">
+            Learner Details
+          </p>
+          <div className="">
+            <UserAccount className="text-xs"/>
+          </div>
+        </div>
 
-          <div className="flex flex-col md:flex-row gap-6">
+        <div className="bg-white rounded-lg p-3 sm:p-6">
+          <h1 className="text-lg sm:text-xl font-semibold mb-3">Learner Details</h1>
+
+          <div className="flex flex-col md:flex-row gap-4">
             {/* Left Column: Image */}
             <div className="flex flex-col items-center md:items-start">
               <img
@@ -164,32 +166,34 @@ const LearnerDetail = () => {
                     : `https://eps-dashboard.onrender.com${learner.learner.learnerImage}`
                 }
                 alt={learner.learner.name}
-                className="w-48 h-48 object-cover rounded-md mb-4"
+                className="w-32 h-32 sm:w-48 sm:h-48 object-cover rounded-md mb-3"
               />
               {isEditing && (
                 <input
                   type="file"
                   onChange={handleFileChange}
-                  className="border p-2 w-48 mb-4"
+                  className="border p-1 sm:p-2 text-xs sm:text-sm w-full max-w-[200px] mb-3"
                 />
               )}
             </div>
 
             {/* Right Column: Learner Details */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-grow">
               {Object.entries(learner.learner).map(([key, value]) => (
-                <div className="flex gap-2" key={key}>
-                  <label className="block text-gray-700 font-medium capitalize">{key}</label>
+                <div className="flex  flex-row justify-between gap-1 sm:gap-2" key={key}>
+                  <label className="block text-xs sm:text-sm text-gray-700 font-medium capitalize">
+                    {key}:
+                  </label>
                   {isEditing ? (
                     <input
                       type="text"
                       name={key}
                       value={updatedLearner[key] || ""}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border rounded-lg focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p>{value}</p>
+                    <p className="text-xs sm:text-sm font-bold">{value}</p>
                   )}
                 </div>
               ))}
@@ -197,19 +201,19 @@ const LearnerDetail = () => {
           </div>
 
           {/* Buttons */}
-          <div className="flex justify-end mt-6 space-x-3">
+          <div className="flex flex-wrap justify-end mt-4 gap-2">
             {isEditing ? (
               <>
                 <button
                   onClick={saveChanges}
-                  className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition flex items-center justify-center"
+                  className="text-xs sm:text-sm bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg hover:bg-green-700 transition flex items-center justify-center"
                   disabled={isUpdating}
                 >
                   {isUpdating ? <Spinner /> : "Save"}
                 </button>
                 <button
                   onClick={() => setIsEditing(false)}
-                  className="bg-gray-400 text-white px-5 py-2 rounded-lg hover:bg-gray-500 transition"
+                  className="text-xs sm:text-sm bg-gray-400 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg hover:bg-gray-500 transition"
                 >
                   Cancel
                 </button>
@@ -217,74 +221,76 @@ const LearnerDetail = () => {
             ) : (
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
+                className="text-xs sm:text-sm bg-blue-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg hover:bg-blue-700 transition"
               >
                 Edit Profile
               </button>
             )}
             <button
-              onClick={() => navigate(-1)} // Go back to the previous page
-              className="bg-gray-400 text-white px-5 py-2 rounded-lg hover:bg-gray-500 transition"
+              onClick={() => navigate(-1)}
+              className="text-xs sm:text-sm bg-gray-400 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg hover:bg-gray-500 transition"
             >
-              Back to List
+              Back
             </button>
           </div>
         </div>
 
-        <div className="py-6 px-2 mt-10 flex flex-col gap-5 bg-white rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">Fees Payment Statement</h2>
+        <div className="py-4 px-2 mt-6 flex flex-col gap-3 bg-white rounded-lg">
+          <h2 className="text-lg sm:text-xl font-semibold mb-3">Fees Payment Statement</h2>
           {feesPayments.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="min-w-full table-auto border-collapse border border-gray-300">
+              <table className="min-w-full text-xs sm:text-sm table-auto border-collapse border border-gray-300">
                 <thead className="bg-gray-200">
                   <tr>
-                    <th className="px-4 py-2 text-left border">Payment ID</th>
-                    <th className="px-4 py-2 text-left border">Amount Paid</th>
-                    <th className="px-4 py-2 text-left border">Payment Method</th>
-                    <th className="px-4 py-2 text-left border">Date Paid</th>
+                    <th className="px-2 py-1 sm:px-4 sm:py-2 text-left border">Payment ID</th>
+                    <th className="px-2 py-1 sm:px-4 sm:py-2 text-left border">Amount</th>
+                    <th className="px-2 py-1 sm:px-4 sm:py-2 text-left border">Method</th>
+                    <th className="px-2 py-1 sm:px-4 sm:py-2 text-left border">Date</th>
                   </tr>
                 </thead>
                 <tbody>
                   {feesPayments.map((payment) => (
                     <tr key={payment._id} className="hover:bg-gray-100 transition-colors">
-                      <td className="px-4 py-2 border">{payment._id}</td>
-                      <td className="px-4 py-2 border">Ksh {payment.amountPaid.toLocaleString()}</td>
-                      <td className="px-4 py-2 border">{payment.paymentMethod}</td>
-                      <td className="px-4 py-2 border">{new Date(payment.paymentDate).toLocaleDateString()}</td>
+                      <td className="px-2 py-1 sm:px-4 sm:py-2 border truncate max-w-[80px]">{payment._id}</td>
+                      <td className="px-2 py-1 sm:px-4 sm:py-2 border">Ksh {payment.amountPaid.toLocaleString()}</td>
+                      <td className="px-2 py-1 sm:px-4 sm:py-2 border">{payment.paymentMethod}</td>
+                      <td className="px-2 py-1 sm:px-4 sm:py-2 border">{new Date(payment.paymentDate).toLocaleDateString()}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           ) : (
-            <p className="text-gray-600">No payment records found.</p>
+            <p className="text-xs sm:text-sm text-gray-600">No payment records found.</p>
           )}
         </div>
 
         {/* Academic Section */}
-        <div className="py-6 px-2 mt-10 flex flex-col gap-5 bg-white rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">Academic Information</h2>
+        <div className="py-4 px-2 mt-6 flex flex-col gap-3 bg-white rounded-lg">
+          <h2 className="text-lg sm:text-xl font-semibold mb-3">Academic Information</h2>
           {academicData ? (
-            <table className="min-w-full table-auto border-collapse border border-gray-300">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="px-4 py-2 text-left border">Subject</th>
-                  <th className="px-4 py-2 text-left border">Score</th>
-                  <th className="px-4 py-2 text-left border">Grade</th>
-                </tr>
-              </thead>
-              <tbody>
-                {academicData[0]?.subjects.map((subject) => (
-                  <tr key={subject.code}>
-                    <td className="px-4 py-2 border">{subject.name}</td>
-                    <td className="px-4 py-2 border">{subject.filteredScore}</td>
-                    <td className="px-4 py-2 border">{getRemark(subject.filteredScore)}</td>
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-xs sm:text-sm table-auto border-collapse border border-gray-300">
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="px-2 py-1 sm:px-4 sm:py-2 text-left border">Subject</th>
+                    <th className="px-2 py-1 sm:px-4 sm:py-2 text-left border">Score</th>
+                    <th className="px-2 py-1 sm:px-4 sm:py-2 text-left border">Grade</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {academicData[0]?.subjects.map((subject) => (
+                    <tr key={subject.code}>
+                      <td className="px-2 py-1 sm:px-4 sm:py-2 border">{subject.name}</td>
+                      <td className="px-2 py-1 sm:px-4 sm:py-2 border">{subject.filteredScore}</td>
+                      <td className="px-2 py-1 sm:px-4 sm:py-2 border">{getRemark(subject.filteredScore)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
-            <p>No academic data available.</p>
+            <p className="text-xs sm:text-sm">No academic data available.</p>
           )}
         </div>
       </div>
