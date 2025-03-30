@@ -745,22 +745,16 @@ const exportAllReportCards = async () => {
       <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
-      <div className="container max-w-full bg-gray-100">
+      <div className="container   bg-gray-100">
         {/* Top Controls */}
-        <div className="flex p-2 justify-between items-center bg-white">
+        <div className="flex py-1 pl-2 justify-between items-center bg-white">
           <MobileNav/>
           <div className="hidden md:flex">
             <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
           </div>
              {/* Filter Section */}
         <div className="hidden md:grid p-4 gap-4 grid-cols-4 md:grid-cols-4 lg:grid-cols-5 pb-2 px-1 bg-white shadow-sm">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="text-center max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
-            placeholder="Search by name or regno"
-          />
+          
           
           {/* Class Select Dropdown */}
           <select
@@ -809,58 +803,54 @@ const exportAllReportCards = async () => {
           <UserAccount />
         </div>
 
-        {/* Filter Section */}
-        <div className="grid md:hidden px-4 gap-4 grid-cols-4 md:grid-cols-3 lg:grid-cols-5 pb-2 px-1 bg-white shadow-sm">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="text-center max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
-            placeholder="Search by name or regno"
-          />
+     <div className="flex gap-1">
+       {/* Filter Section */}
+       <div className="grid md:hidden px-4 gap-1 grid-cols-3 md:grid-cols-3 lg:grid-cols-5 pb-2 px-1 bg-white shadow-sm">
+        
           
-          {/* Class Select Dropdown */}
-          <select
-            value={selectedClass}
-            onChange={(e) => setSelectedClass(e.target.value)}
-            className="border max-w-48 border-gray-300 p-2 rounded-md"
-          >
-            <option value="">Select Class</option>
-            {clases.map((clase) => (
-              <option key={clase._id} value={clase.clasename}>
-                {clase.clasename}
-              </option>
-            ))}
-          </select>
+        {/* Class Select Dropdown */}
+        <select
+          value={selectedClass}
+          onChange={(e) => setSelectedClass(e.target.value)}
+          className="border max-w-48 border-gray-300 p-2 rounded-md"
+        >
+          <option value="">Select Class</option>
+          {clases.map((clase) => (
+            <option key={clase._id} value={clase.clasename}>
+              {clase.clasename}
+            </option>
+          ))}
+        </select>
 
-          <select
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            className="border max-w-48 border-gray-300 p-2 rounded-md"
-          >
-            <option value="">Select Year</option>
-            <option value="2024-2025">2024-2025</option>
-            <option value="2025-2026">2025-2026</option>
-          </select>
-          <select
-            value={selectedTerm}
-            onChange={(e) => setSelectedTerm(e.target.value)}
-            className="border max-w-48 border-gray-300 p-2 rounded-md"
-          >
-            <option value="">Select Term</option>
-            <option value="Term-1">Term-1</option>
-            <option value="Term-2">Term-2</option>
-            <option value="Term-3">Term-3</option>
-          </select>
-          <button
-            onClick={handleApplyFilters}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-            disabled={loading || !selectedClass || !selectedYear || !selectedTerm}
-          >
-            {loading ? "Loading..." : "Populate"}
-          </button>
-        </div>
-
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+          className="border max-w-48 border-gray-300 p-2 rounded-md"
+        >
+          <option value="">Select Year</option>
+          <option value="2024-2025">2024-2025</option>
+          <option value="2025-2026">2025-2026</option>
+        </select>
+        <select
+          value={selectedTerm}
+          onChange={(e) => setSelectedTerm(e.target.value)}
+          className="border max-w-48 border-gray-300 p-2 rounded-md"
+        >
+          <option value="">Select Term</option>
+          <option value="Term-1">Term-1</option>
+          <option value="Term-2">Term-2</option>
+          <option value="Term-3">Term-3</option>
+        </select>
+       
+      </div>
+      <button
+          onClick={handleApplyFilters}
+          className="bg-blue-600 mr-2 md:hidden text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+          disabled={loading || !selectedClass || !selectedYear || !selectedTerm}
+        >
+          {loading ? "" : <FaSearch/>}
+        </button>
+     </div>
         {/* Action Buttons Section */}
         {data.length > 0 && (
           <div className="flex mb-2 flex-col md:flex-row justify-between items-start md:items-center md:mx-10 mx-5 mt-4 gap-4">
@@ -890,24 +880,7 @@ const exportAllReportCards = async () => {
                 bgColor="bg-purple-600"
                 hoverColor="hover:bg-purple-700"
               />
-            </div>
-            <div className="flex flex-col md:flex-row w-full mx-3 gap-5 justify-between">
-                <div className="flex gap-2">
-                  <p>SAMGE class </p>
-                  <p className="font-semibold">{appliedFilters.class}</p>
-                </div>
-                <div className="flex gap-2 justify-between">
-                  <div className="flex gap-2">
-                    <p>Academic Year</p>
-                    <p className="font-semibold">{appliedFilters.year}</p>
-                  </div>
-                  <div className="flex gap-5">
-                    <p>Term</p>
-                    <p className="font-semibold">{appliedFilters.term}</p>
-                  </div>
-                </div>
-              </div>
-            <div className="flex gap-2">
+               <div className="flex gap-2">
             <ActionButton
                 onClick={exportToPDF}
                 disabled={generatingPDF}
@@ -928,12 +901,45 @@ const exportAllReportCards = async () => {
                 bgColor="bg-green-600"
                 hoverColor="hover:bg-green-700"
               />
+          
             </div>
+            </div>
+            <div className="flex flex-col md:flex-row w-full mx-3 gap-5 justify-between">
+               
+                <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="text-center hidden md:flex max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
+            placeholder="Search by name or regno"
+          />
+                <div className="flex gap-2 justify-between">
+                <div className="flex gap-2">
+                  <p>class </p>
+                  <p className="font-semibold">{appliedFilters.class}</p>
+                </div>
+                  <div className="flex gap-2">
+                    <p> Year</p>
+                    <p className="font-semibold">{appliedFilters.year}</p>
+                  </div>
+                  <div className="flex gap-5">
+                    <p>Term</p>
+                    <p className="font-semibold">{appliedFilters.term}</p>
+                  </div>
+                </div>
+              </div>
+           
           </div>
         )}
-
+           <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="text-center mb-2  mx-3  md:hidden max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
+            placeholder="Search by name or regno"
+          />
         {/* Table Section */}
-        <div className="px-4 grid grid-cols-1 pb-4 max-h-[80vh] pb-8 overflow-y-auto w-full overflow-x-auto">
+        <div className="px-4 grid grid-cols-1  pb-4 max-h-[80vh] pb-8 overflow-y-auto w-full overflow-x-auto">
           {loading ? (
             <Spinner />
           ) : error ? (
@@ -950,7 +956,7 @@ const exportAllReportCards = async () => {
             <div>
              
        
-              <table className="w-full overflow-x-auto table-auto px-2 border">
+              <table className="w-full  overflow-x-auto table-auto px-2 border">
                 <thead className="sticky top-0 bg-white">
                   <tr className="bg-gray-200">
                     <th className="border px-1 sticky top-0 bg-white py-2">Name</th>

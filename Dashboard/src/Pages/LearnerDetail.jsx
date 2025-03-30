@@ -146,7 +146,7 @@ const LearnerDetail = () => {
             />
           </div>
           <p className="text-xs sm:text-sm font-medium whitespace-nowrap mx-1">
-            Learner Details
+            
           </p>
           <div className="">
             <UserAccount className="text-xs"/>
@@ -180,7 +180,7 @@ const LearnerDetail = () => {
             {/* Right Column: Learner Details */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-grow">
               {Object.entries(learner.learner).map(([key, value]) => (
-                <div className="flex  flex-row justify-between gap-1 sm:gap-2" key={key}>
+                <div className="flex  flex-row justify-start gap-5 sm:gap-2" key={key}>
                   <label className="block text-xs sm:text-sm text-gray-700 font-medium capitalize">
                     {key}:
                   </label>
@@ -193,7 +193,7 @@ const LearnerDetail = () => {
                       className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border rounded-lg focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="text-xs sm:text-sm font-bold">{value}</p>
+                    <p className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border rounded-lg focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500">{value}</p>
                   )}
                 </div>
               ))}

@@ -29,7 +29,6 @@ const learningAreaSchema = new mongoose.Schema(
     },
     duration: {
       type: Number,
-      required: true,
       min: 1, // In weeks or months based on the application's convention
     },
     content:{
