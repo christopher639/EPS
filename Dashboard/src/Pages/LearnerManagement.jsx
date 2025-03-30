@@ -270,42 +270,114 @@ const LearnerManagement = () => {
           </div>
         </div>
 
-        {/* Add Learner Modal */}
-        {modalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-            <div className="bg-white mt-4 max-h-[75vh] pb-20 md:pb-4 w-full sm:w-3/4 p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 rounded-lg shadow-lg overflow-y-auto">
-              <p className="col-span-1 sm:col-span-2 md:col-span-3">
-                Fill the form to add Learners
-              </p>
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                className="border p-2 w-full mb-2"
-                onChange={handleChange}
-                value={newLearner.name}
-                required
-              />
-              <input
-                type="text"
-                name="birthCertificateNo"
-                placeholder="Birth Certificate No"
-                className="border p-2 w-full mb-2"
-                onChange={handleChange}
-                value={newLearner.birthCertificateNo}
-                required
-              />
+      {/* Add Learner Modal */}
+      {modalOpen && (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-md sm:max-w-2xl max-h-[95vh] overflow-hidden">
+        {/* Modal Header */}
+        <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-3 sm:p-4 flex justify-between items-center">
+          <h2 className="text-lg sm:text-xl font-semibold text-white">Add New Learner</h2>
+          <button 
+            onClick={() => setModalOpen(false)}
+            className="text-white hover:bg-white/20 rounded-full p-1 transition-colors"
+            disabled={isSavingLearner}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
-              {/* Class Selection */}
-              <div className="mb-2">
+        {/* Modal Body */}
+        <div className="p-3 sm:p-4 overflow-y-auto max-h-[75vh]">
+          <div className="grid grid-cols-1 gap-4">
+            {/* Personal Information */}
+            <div className="space-y-3">
+              <h3 className="text-base sm:text-lg font-medium text-gray-700 border-b pb-1">Personal Information</h3>
+              
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="John Doe"
+                  className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
+                  onChange={handleChange}
+                  value={newLearner.name}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Birth Cert No</label>
+                <input
+                  type="text"
+                  name="birthCertificateNo"
+                  placeholder="12345678"
+                  className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
+                  onChange={handleChange}
+                  value={newLearner.birthCertificateNo}
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Gender</label>
+                  <select
+                    name="gender"
+                    className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
+                    onChange={handleChange}
+                    value={newLearner.gender}
+                    required
+                  >
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                  <input
+                    type="date"
+                    name="dateOfBirth"
+                    className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
+                    onChange={handleChange}
+                    value={newLearner.dateOfBirth}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Nationality</label>
+                <input
+                  type="text"
+                  name="nationality"
+                  placeholder="Kenyan"
+                  className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
+                  onChange={handleChange}
+                  value={newLearner.nationality}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Academic Information */}
+            <div className="space-y-3">
+              <h3 className="text-base sm:text-lg font-medium text-gray-700 border-b pb-1">Academic Information</h3>
+              
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Class</label>
                 <select
                   name="selectedClass"
-                  className="border p-2 w-full"
+                  className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
                   onChange={handleChange}
                   value={clases.find((c) => c.name === newLearner.grade)?._id || ""}
                   required
                 >
-                  <option value="">Select a Class</option>
+                  <option value="">Select Class</option>
                   {clases.map((clase) => (
                     <option key={clase._id} value={clase._id}>
                       {clase.clasename}
@@ -314,16 +386,16 @@ const LearnerManagement = () => {
                 </select>
               </div>
 
-              {/* Stream Selection */}
-              <div className="mb-2">
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Stream</label>
                 <select
                   name="selectedStream"
-                  className="border p-2 w-full"
+                  className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
                   onChange={handleChange}
                   value={streams.find((s) => s.name === newLearner.stream)?._id || ""}
                   required
                 >
-                  <option value="">Select a Stream</option>
+                  <option value="">Select Stream</option>
                   {streams.map((stream) => (
                     <option key={stream._id} value={stream._id}>
                       {stream.name}
@@ -331,103 +403,128 @@ const LearnerManagement = () => {
                   ))}
                 </select>
               </div>
+            </div>
 
-              <select
-                name="gender"
-                className="border p-2 w-full mb-2"
-                onChange={handleChange}
-                value={newLearner.gender}
-                required
-              >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-              <input
-                type="date"
-                name="dateOfBirth"
-                className="border p-2 w-full mb-2"
-                onChange={handleChange}
-                value={newLearner.dateOfBirth}
-                required
-              />
-              <input
-                type="text"
-                name="nationality"
-                placeholder="Nationality"
-                className="border p-2 w-full mb-2"
-                onChange={handleChange}
-                value={newLearner.nationality}
-                required
-              />
-              <input
-                type="text"
-                name="guardianName"
-                placeholder="Guardian Name"
-                className="border p-2 w-full mb-2"
-                onChange={handleChange}
-                value={newLearner.guardianName}
-                required
-              />
-              <input
-                type="text"
-                name="guardianPhone"
-                placeholder="Guardian Phone"
-                className="border p-2 w-full mb-2"
-                onChange={handleChange}
-                value={newLearner.guardianPhone}
-                required
-              />
-              <input
-                type="text"
-                name="address"
-                placeholder="Address"
-                className="border p-2 w-full mb-2"
-                onChange={handleChange}
-                value={newLearner.address}
-                required
-              />
-              <input
-                type="file"
-                name="learnerImage"
-                className="border p-2 w-full mb-2"
-                onChange={handleFileChange}
-                required
-              />
-              {newLearner.learnerImage && (
-                <img
-                  src={
-                    typeof newLearner.learnerImage === "string"
-                      ? `https://eps-dashboard.onrender.com${newLearner.learnerImage}`
-                      : URL.createObjectURL(newLearner.learnerImage)
-                  }
-                  alt="Preview"
-                  className="w-full h-32 object-cover mb-2"
+            {/* Guardian Information */}
+            <div className="space-y-3">
+              <h3 className="text-base sm:text-lg font-medium text-gray-700 border-b pb-1">Guardian Information</h3>
+              
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Guardian Name</label>
+                <input
+                  type="text"
+                  name="guardianName"
+                  placeholder="Jane Doe"
+                  className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
+                  onChange={handleChange}
+                  value={newLearner.guardianName}
+                  required
                 />
-              )}
-              <div className="flex justify-end col-span-1 sm:col-span-2 md:col-span-3">
-                <button
-                  onClick={addLearner}
-                  disabled={isSavingLearner}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-green-700 transition flex items-center justify-center min-w-[80px]"
-                >
-                  {isSavingLearner && (
-                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
-                  )}
-                  Save
-                </button>
-                <button
-                  onClick={() => setModalOpen(false)}
-                  className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
-                  disabled={isSavingLearner}
-                >
-                  Close
-                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Phone</label>
+                  <input
+                    type="text"
+                    name="guardianPhone"
+                    placeholder="0712345678"
+                    className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
+                    onChange={handleChange}
+                    value={newLearner.guardianPhone}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Address</label>
+                  <input
+                    type="text"
+                    name="address"
+                    placeholder="Nairobi"
+                    className="w-full px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500"
+                    onChange={handleChange}
+                    value={newLearner.address}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Photo Upload */}
+            <div className="space-y-3">
+              <h3 className="text-base sm:text-lg font-medium text-gray-700 border-b pb-1">Learner Photo</h3>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="w-full">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Upload Photo</label>
+                  <label className="flex flex-col items-center justify-center w-full p-2 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div className="flex flex-col items-center justify-center">
+                      <svg className="w-6 h-6 sm:w-8 sm:h-8 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                      </svg>
+                      <p className="text-xs sm:text-sm text-gray-500 mt-1 text-center">
+                        Click to upload or drag and drop
+                      </p>
+                    </div>
+                    <input 
+                      type="file" 
+                      name="learnerImage" 
+                      className="hidden" 
+                      onChange={handleFileChange} 
+                      accept="image/*"
+                      required
+                    />
+                  </label>
+                </div>
+                
+                {newLearner.learnerImage && (
+                  <div className="flex justify-center">
+                    <img
+                      src={
+                        typeof newLearner.learnerImage === "string"
+                          ? `https://eps-dashboard.onrender.com${newLearner.learnerImage}`
+                          : URL.createObjectURL(newLearner.learnerImage)
+                      }
+                      alt="Preview"
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-white shadow"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
-        )}
+        </div>
 
+        {/* Modal Footer */}
+        <div className="bg-gray-50 px-3  sm:px-4  py-3 flex justify-end space-x-2">
+          <button
+            onClick={() => setModalOpen(false)}
+            className="px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500 transition"
+            disabled={isSavingLearner}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={addLearner}
+            disabled={isSavingLearner}
+            className="px-3  py-1 sm:px-4 sm:py-2 text-xs sm:text-sm border border-transparent rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-blue-500 transition flex items-center justify-center min-w-[80px] sm:min-w-[100px]"
+          >
+            {isSavingLearner ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Saving...
+              </>
+            ) : (
+              'Save'
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
         {/* Loading Spinner */}
         {isLoading && (
           <div className="flex justify-center items-center mt-6">
@@ -537,7 +634,6 @@ const LearnerManagement = () => {
           </div>
         )}
       </div>
-      f
     </div>
   );
 };
