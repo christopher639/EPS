@@ -236,7 +236,7 @@ const LearnerManagement = () => {
   </div>
 
   {/* Center Title */}
-  <p className="text-sm sm:text-base font-medium whitespace-nowrap mx-2">
+  <p className="text-sm sm:text-base hidden font-medium whitespace-nowrap mx-2">
     Learners
   </p>
 
