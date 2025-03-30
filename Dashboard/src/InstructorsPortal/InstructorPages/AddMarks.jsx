@@ -182,7 +182,7 @@ const exportToPDF = () => {
         setFetchingStudents(true);
         try {
           const response = await axios.get(
-            `http://localhost:3000/api/learners/${commonData.class}/${commonData.stream}`
+            `https://eps-dashboard.onrender.com/api/learners/${commonData.class}/${commonData.stream}`
           );
           
           setMarks(response.data.learners.map(student => ({
@@ -248,7 +248,7 @@ const exportToPDF = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/api/marks", {
+      const response = await fetch("https://eps-dashboard.onrender.com/api/marks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -284,9 +284,9 @@ const exportToPDF = () => {
       try {
         setLoading(true);
         const [classesRes, streamsRes, areasRes] = await Promise.all([
-          axios.get("http://localhost:3000/api/clase"),
-          axios.get("http://localhost:3000/api/streams"),
-          axios.get("http://localhost:3000/api/learning-areas")
+          axios.get("https://eps-dashboard.onrender.com/api/clase"),
+          axios.get("https://eps-dashboard.onrender.com/api/streams"),
+          axios.get("https://eps-dashboard.onrender.com/api/learning-areas")
         ]);
         setClases(classesRes.data);
         setStreams(streamsRes.data);
@@ -304,16 +304,13 @@ const exportToPDF = () => {
 
   return (
     <div className="mx-auto overflow-y-auto max-h-screen bg-gray-50">
-      <div className="flex justify-between items-center p-4 bg-white shadow-sm">
-        <h1 className="font-bold text-xl text-gray-800">Sagme - Marks Management</h1>
-        <UserAccount />
-      </div>
-      
       <div className="flex justify-center p-4">
         <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Set Assessment Parameters</h2>
-            
+          <div className="flex justify-between">
+       <h1 className="font-bold text-xl text-gray-800">Set Assessment Parameters</h1>
+       <UserAccount />
+       </div>
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Parameter Selection Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

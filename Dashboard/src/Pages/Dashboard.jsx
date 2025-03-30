@@ -39,7 +39,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get('http://localhost:3000/api/students')
+        .get('https://eps-dashboard.onrender.com/api/students')
         .then((students) => setMarks(students.data))
         .catch((err) => console.log(err));
     };
@@ -52,7 +52,7 @@ const Dashboard = () => {
     const fetchData = () => {
       setLoadingLearners(true);
       axios
-        .get('http://localhost:3000/api/learners')
+        .get('https://eps-dashboard.onrender.com/api/learners')
         .then((leaners) => {
           setLearners(leaners.data);
           setLoadingLearners(false);
@@ -69,7 +69,7 @@ const Dashboard = () => {
     const getFetchData = () => {
       setLoadingTeachers(true);
       axios
-        .get('http://localhost:3000/api/teachers')
+        .get('https://eps-dashboard.onrender.com/api/teachers')
         .then((response) => {
           setTeachers(response.data);
           setLoadingTeachers(false);
@@ -86,7 +86,7 @@ const Dashboard = () => {
   const fetchLearners = async () => {
     try {
       setLoadingLearners(true);
-      const response = await axios.get(`http://localhost:3000/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
+      const response = await axios.get(`https://eps-dashboard.onrender.com/api/learners?page=${currentPage}&limit=${learnersPerPage}`);
       setLearners(response.data.learners); // Set learners data
       setTotalPages(response.data.totalPages); // Set total pages
       setTotalLeaners(response.data.totalLearners); // Set total learners
@@ -105,7 +105,7 @@ const Dashboard = () => {
     const fetchData = () => {
       setLoadingStreams(true);
       axios
-        .get('http://localhost:3000/api/streams')
+        .get('https://eps-dashboard.onrender.com/api/streams')
         .then((stream) => {
           setStream(stream.data);
           setLoadingStreams(false);
@@ -124,7 +124,7 @@ const Dashboard = () => {
 // Fetch payments from API
 const fetchPayments = async () => {
   try {
-    const res = await axios.get("http://localhost:3000/api/fees-payments");
+    const res = await axios.get("https://eps-dashboard.onrender.com/api/fees-payments");
     setTotalFeesPaid(res.data.totalFeesPaid);
   } catch (error) {
     console.error("Failed to fetch payments", error);

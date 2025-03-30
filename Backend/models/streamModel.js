@@ -10,7 +10,7 @@ const streamSchema = new mongoose.Schema({
   },
   teacher: {
     type: String,
-    required: true, // Name of the teacher managing the stream
+     // Name of the teacher managing the stream
   },
 },{
     timestamps:true

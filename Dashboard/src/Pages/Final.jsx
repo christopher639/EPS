@@ -15,7 +15,7 @@ const Final = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:3000/api/marks/${classValue}/${yearValue}/${termValue}`);
+        const response = await fetch(`https://eps-dashboard.onrender.com/api/marks/${classValue}/${yearValue}/${termValue}`);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }

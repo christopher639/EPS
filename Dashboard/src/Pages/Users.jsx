@@ -62,14 +62,14 @@ const Users = () => {
 
     try {
       if (selectedUserId) {
-        await axios.post(`http://localhost:3000/api/users/admin/send-email-to-single/${selectedUserId}`, payload, {
+        await axios.post(`https://eps-dashboard.onrender.com/api/users/admin/send-email-to-single/${selectedUserId}`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         toast.success("Email sent to the user!");
       } else {
-        await axios.post(`http://localhost:3000/api/users/admin/send-email-to-all`, payload, {
+        await axios.post(`https://eps-dashboard.onrender.com/api/users/admin/send-email-to-all`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -90,7 +90,7 @@ const Users = () => {
         return;
       }
 
-      await axios.delete(`http://localhost:3000/api/users/${userToDelete}`, {
+      await axios.delete(`https://eps-dashboard.onrender.com/api/users/${userToDelete}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -110,7 +110,7 @@ const Users = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const endpoint = formData._id ? `http://localhost:3000/api/users/${formData._id}` : "/api/users";
+    const endpoint = formData._id ? `https://eps-dashboard.onrender.com/api/users/${formData._id}` : "/api/users";
     const method = formData._id ? "put" : "post";
 
     const token = localStorage.getItem("token");
@@ -163,7 +163,7 @@ const Users = () => {
       return;
     }
 
-    axios.get("http://localhost:3000/api/users/admin/approved-users", {
+    axios.get("https://eps-dashboard.onrender.com/api/users/admin/approved-users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

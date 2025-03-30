@@ -13,7 +13,7 @@ const PendingUsersModal = ({ isOpen, onClose }) => {
   // Fetch pending users when the modal opens
   useEffect(() => {
     if (isOpen) {
-      axios.get("http://localhost:3000/api/users/admin/pending-users")
+      axios.get("https://eps-dashboard.onrender.com/api/users/admin/pending-users")
         .then((res) => {
           setPendingUsers(res.data.filter((user) => user.status === "pending"));
         })
@@ -27,7 +27,7 @@ const PendingUsersModal = ({ isOpen, onClose }) => {
   // Handle user approval
   const handleApprove = async (userId) => {
     try {
-      await axios.put(`http://localhost:3000/api/users/admin/approve/${userId}`, { status: "approved" });
+      await axios.put(`https://eps-dashboard.onrender.com/api/users/admin/approve/${userId}`, { status: "approved" });
       toast.success("User approved successfully!");
       setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
     } catch (error) {
@@ -39,7 +39,7 @@ const PendingUsersModal = ({ isOpen, onClose }) => {
   // Handle user rejection
   const handleReject = async (userId) => {
     try {
-      await axios.put(`http://localhost:3000/api/users/admin/approve/${userId}`, { status: "rejected" });
+      await axios.put(`https://eps-dashboard.onrender.com/api/users/admin/approve/${userId}`, { status: "rejected" });
       toast.success("User rejected successfully!");
       setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
     } catch (error) {

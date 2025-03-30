@@ -46,7 +46,7 @@ const LearnerManagement = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/learners?page=${currentPage}&limit=${learnersPerPage}`
+        `https://eps-dashboard.onrender.com/api/learners?page=${currentPage}&limit=${learnersPerPage}`
       );
       setFilteredLearners(response.data.learners);
       setTotalPages(response.data.totalPages);
@@ -61,7 +61,7 @@ const LearnerManagement = () => {
   // Fetch all clases
   const fetchClases = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/api/clase");
+      const { data } = await axios.get("https://eps-dashboard.onrender.com/api/clase");
       setClases(data);
     } catch (err) {
       toast.error("Failed to fetch classes");
@@ -71,7 +71,7 @@ const LearnerManagement = () => {
   // Fetch streams
   const fetchStreams = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/streams");
+      const response = await axios.get("https://eps-dashboard.onrender.com/api/streams");
       setStreams(response.data);
     } catch (error) {
       toast.error("Failed to fetch streams");
@@ -126,7 +126,7 @@ const LearnerManagement = () => {
     });
 
     try {
-      await axios.post("http://localhost:3000/api/learners/add", formData);
+      await axios.post("https://eps-dashboard.onrender.com/api/learners/add", formData);
       setModalOpen(false);
       fetchLearners();
       toast.success("Learner added successfully!");
@@ -161,7 +161,7 @@ const LearnerManagement = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/learners/search?regno=${searchTerm}`
+        `https://eps-dashboard.onrender.com/api/learners/search?regno=${searchTerm}`
       );
       setFilteredLearners(response.data.learners);
       setTotalPages(1);
@@ -398,7 +398,7 @@ const LearnerManagement = () => {
                 <img
                   src={
                     typeof newLearner.learnerImage === "string"
-                      ? `http://localhost:3000${newLearner.learnerImage}`
+                      ? `https://eps-dashboard.onrender.com${newLearner.learnerImage}`
                       : URL.createObjectURL(newLearner.learnerImage)
                   }
                   alt="Preview"
@@ -471,7 +471,7 @@ const LearnerManagement = () => {
                       </td>
                       <td className="border border-gray-300 p-2">
                         <img
-                          src={`http://localhost:3000${learner.learnerImage}`}
+                          src={`https://eps-dashboard.onrender.com${learner.learnerImage}`}
                           alt={learner.name}
                           className="w-16 h-16 object-cover rounded-md"
                         />

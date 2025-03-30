@@ -7,7 +7,7 @@ import UserAccount from "../components/UserAccount";
 import { FaPaperPlane } from "react-icons/fa";
 import avater from '../assets/lion.jpg';
 import BASE_URL from "../config";
-axios.defaults.baseURL = BASE_URL;
+axios.defaults.baseURL = "https://eps-dashboard.onrender.com";
 
 const StudentDetail = () => {
   const { id } = useParams(); // Get student ID from URL

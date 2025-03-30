@@ -18,11 +18,11 @@ import { saveAs } from "file-saver";
 axios.defaults.baseURL = BASE_URL;
 
 const GeneralReport = () => {
-  const [selectedClass, setSelectedClass] = useState("");
+  const [selectedClass, setSelectedClass] = useState("Grade1");
   const [clases, setClases] = useState([]);
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedTerm, setSelectedTerm] = useState("");
-  const [sideBar, setSideBar] = useState(true);
+  const [selectedYear, setSelectedYear] = useState("2025-2026");
+  const [selectedTerm, setSelectedTerm] = useState("Term-1");
+  const [sideBar, setSideBar] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -49,7 +49,7 @@ const GeneralReport = () => {
       setLoading(true);
       setError(null);
       const response = await axios.get(
-        `http://localhost:3000/api/marks/${appliedFilters.class}/${appliedFilters.year}/${appliedFilters.term}`
+        `https://eps-dashboard.onrender.com/api/marks/${appliedFilters.class}/${appliedFilters.year}/${appliedFilters.term}`
       );
       setData(response.data || []);
     } catch (error) {
@@ -81,7 +81,7 @@ const GeneralReport = () => {
   // Fetch all classes
   const fetchClases = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/api/clase");
+      const { data } = await axios.get("https://eps-dashboard.onrender.com/api/clase");
       setClases(data);
     } catch (err) {
       toast.error("Failed to fetch classes");
@@ -350,7 +350,7 @@ const exportReportCard = (student) => {
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(16);
     doc.setTextColor(40, 40, 40);
-
+    
     // School header
     doc.text('SAMGE SCHOOL', 105, 15, { align: 'center' });
     
@@ -414,7 +414,21 @@ const exportReportCard = (student) => {
       }
     });
 
-    // Grading key table
+    // Calculate remaining space and position elements at the bottom
+    const pageHeight = doc.internal.pageSize.height;
+    const currentY = doc.lastAutoTable.finalY + 10;
+    const bottomSectionHeight = 40; // Height for both tables combined
+
+    // If there's not enough space, add a new page
+    if (currentY + bottomSectionHeight > pageHeight - 20) {
+      doc.addPage();
+    }
+
+    // Create two tables side by side (like flex row)
+    const tableWidth = 80; // Width of each table
+    const margin = 10; // Margin between tables
+
+    // Grading key table (left side)
     const gradingHeaders = ['Grade', 'Range', 'Meaning'];
     const gradingData = [
       ['E.E', '75 - 100', 'Exceeding Expectation'],
@@ -427,11 +441,12 @@ const exportReportCard = (student) => {
     autoTable(doc, {
       head: [gradingHeaders],
       body: gradingData,
-      startY: doc.lastAutoTable.finalY + 10,
+      startY: Math.max(currentY, pageHeight - bottomSectionHeight - 20),
       margin: { left: 20 },
+      tableWidth: tableWidth,
       styles: {
-        cellPadding: 3,
-        fontSize: 9,
+        cellPadding: 2, // Smaller padding
+        fontSize: 8, // Smaller font
         valign: 'middle',
         lineColor: [0, 0, 0],
         lineWidth: 0.2,
@@ -445,20 +460,41 @@ const exportReportCard = (student) => {
       }
     });
 
-    // Comments section
-    doc.setFontSize(10);
-    doc.text('COMMENTS:', 20, doc.lastAutoTable.finalY + 15);
-    doc.text('Class Teacher: .....................................................................', 20, doc.lastAutoTable.finalY + 25);
-    doc.text('Head Teacher: .....................................................................', 20, doc.lastAutoTable.finalY + 31);
-    doc.text(`Parents/Guardians: Ensure ${student.studentName || "the student"} does revision while at home.`, 20, doc.lastAutoTable.finalY + 40);
-    doc.text('Provide learning materials to improve academic performance next term.', 20, doc.lastAutoTable.finalY + 46);
+    // Comments section (right side)
+    const commentsData = [
+      ['COMMENTS:'],
+      ['Class Teacher: ........................................................'],
+      ['Head Teacher: .........................................................'],
+      [`Parents/Guardians: Ensure ${student.studentName || "the student"}`],
+      ['does revision while at home. Provide learning'],
+      ['materials to improve performance next term.']
+    ];
 
-    // Stamp and date
+    autoTable(doc, {
+      body: commentsData,
+      startY: Math.max(currentY, pageHeight - bottomSectionHeight - 20),
+      margin: { left: 20 + tableWidth + margin },
+      tableWidth: tableWidth,
+      styles: {
+        cellPadding: 2, // Smaller padding
+        fontSize: 8, // Smaller font
+        valign: 'middle',
+        lineColor: [0, 0, 0],
+        lineWidth: 0.2,
+        textColor: [0, 0, 0]
+      },
+      columnStyles: {
+        0: { cellWidth: 'auto' }
+      }
+    });
+
+    // Stamp and date (below the tables)
+    const finalY = doc.lastAutoTable.finalY + 5;
     doc.setFontSize(10);
     doc.setTextColor(41, 128, 185);
-    doc.text(`Dated: ${getFormattedDate()}`, 150, doc.lastAutoTable.finalY + 40);
-    doc.text('SAMGE SCHOOL', 150, doc.lastAutoTable.finalY + 46);
-    doc.text('Stamp & Signature', 150, doc.lastAutoTable.finalY + 52);
+    doc.text(`Dated: ${getFormattedDate()}`, 150, finalY);
+    doc.text('SAMGE SCHOOL', 150, finalY + 6);
+    doc.text('Stamp & Signature', 150, finalY + 12);
 
     // Save the PDF
     doc.save(`Report_Card_${student.regno || student.studentName}_${appliedFilters.class}_${appliedFilters.term}_${appliedFilters.year}.pdf`);
@@ -470,6 +506,7 @@ const exportReportCard = (student) => {
   }
 };
 
+// Function to export all report cards as PDF
 // Function to export all report cards as PDF
 const exportAllReportCards = async () => {
   try {
@@ -558,24 +595,28 @@ const exportAllReportCards = async () => {
         }
       });
 
-      // Grading key table
+      // Get the Y position after the subjects table
+      const tablesStartY = doc.lastAutoTable.finalY + 10;
+
+      // Grading key table (left side)
       const gradingHeaders = ['Grade', 'Range', 'Meaning'];
       const gradingData = [
-        ['E.E', '75 - 100', 'Exceeding Expectation'],
-        ['M.E', '50 - 74', 'Meeting Expectation'],
-        ['B.E', '0 - 49', 'Below Expectation'],
-        ['F', 'Cheated', 'Null and Void'],
-        ['-', 'NULL', 'Missing/Never did exam']
+        ['E.E', '75-100', 'Exceeding'],
+        ['M.E', '50-74', 'Meeting'],
+        ['B.E', '0-49', 'Below'],
+        ['F', 'Cheated', 'Void'],
+        ['-', 'NULL', 'Missing']
       ];
 
       autoTable(doc, {
         head: [gradingHeaders],
         body: gradingData,
-        startY: doc.lastAutoTable.finalY + 10,
+        startY: tablesStartY,
         margin: { left: 20 },
+        tableWidth: 80,
         styles: {
-          cellPadding: 3,
-          fontSize: 9,
+          cellPadding: 2,
+          fontSize: 8,
           valign: 'middle',
           lineColor: [0, 0, 0],
           lineWidth: 0.2,
@@ -589,20 +630,22 @@ const exportAllReportCards = async () => {
         }
       });
 
-      // Comments section
-      doc.setFontSize(10);
-      doc.text('COMMENTS:', 20, doc.lastAutoTable.finalY + 15);
-      doc.text('Class Teacher: .....................................................................', 20, doc.lastAutoTable.finalY + 25);
-      doc.text('Head Teacher: .....................................................................', 20, doc.lastAutoTable.finalY + 31);
-      doc.text(`Parents/Guardians: Ensure ${student.studentName || "the student"} does revision while at home.`, 20, doc.lastAutoTable.finalY + 40);
-      doc.text('Provide learning materials to improve academic performance next term.', 20, doc.lastAutoTable.finalY + 46);
+      // Comments section (right side)
+      const commentsX = 110;
+      doc.setFontSize(9);
+      doc.text('COMMENTS:', commentsX, tablesStartY + 5);
+      doc.text('Class Teacher: ........................', commentsX, tablesStartY + 12);
+      doc.text('Principal: ............................', commentsX, tablesStartY + 19);
+      doc.text(`Parents: Guide ${student.studentName?.split(' ')[0] || "student"}`, commentsX, tablesStartY + 26);
+      doc.text('in revision at home.', commentsX, tablesStartY + 32);
 
-      // Stamp and date
-      doc.setFontSize(10);
+      // Stamp and date (below both tables)
+      const stampY = Math.max(doc.lastAutoTable.finalY, tablesStartY + 40);
+      doc.setFontSize(9);
       doc.setTextColor(41, 128, 185);
-      doc.text(`Dated: ${getFormattedDate()}`, 150, doc.lastAutoTable.finalY + 40);
-      doc.text('SAMGE SCHOOL', 150, doc.lastAutoTable.finalY + 46);
-      doc.text('Stamp & Signature', 150, doc.lastAutoTable.finalY + 52);
+      doc.text(`Dated: ${getFormattedDate()}`, 150, stampY);
+      doc.text('SAMGE SCHOOL', 150, stampY + 6);
+      doc.text('Stamp & Signature', 150, stampY + 12);
     });
 
     // Save the PDF
@@ -614,7 +657,6 @@ const exportAllReportCards = async () => {
     setGeneratingReportCards(false);
   }
 };
-
   const calculateStudentTotalsAndAverages = (students) => {
     if (!students || !Array.isArray(students)) return [];
     
@@ -711,12 +753,12 @@ const exportAllReportCards = async () => {
             <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
           </div>
              {/* Filter Section */}
-        <div className="hidden md:grid p-4 gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-5 pb-2 px-3 bg-white shadow-sm">
+        <div className="hidden md:grid p-4 gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-5 pb-2 px-1 bg-white shadow-sm">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="text-center max-w-48 text-sm border border-gray-300 py-2 px-3 rounded-md"
+            className="text-center max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
             placeholder="Search by name or regno"
           />
           
@@ -757,7 +799,7 @@ const exportAllReportCards = async () => {
             onClick={handleApplyFilters}
             disabled={loading || !selectedClass || !selectedYear || !selectedTerm}
             icon={FaSearch}
-            label=""
+            label="Search"
             loadingLabel=""
             tooltip="Search "
             bgColor="bg-blue-600"
@@ -768,12 +810,12 @@ const exportAllReportCards = async () => {
         </div>
 
         {/* Filter Section */}
-        <div className="grid md:hidden p-4 gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-5 pb-2 px-3 bg-white shadow-sm">
+        <div className="grid md:hidden p-4 gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-5 pb-2 px-1 bg-white shadow-sm">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="text-center max-w-48 text-sm border border-gray-300 py-2 px-3 rounded-md"
+            className="text-center max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
             placeholder="Search by name or regno"
           />
           
@@ -821,7 +863,7 @@ const exportAllReportCards = async () => {
 
         {/* Action Buttons Section */}
         {data.length > 0 && (
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center md:mx-10 mx-5 mt-4 gap-4">
+          <div className="flex mb-2 flex-col md:flex-row justify-between items-start md:items-center md:mx-10 mx-5 mt-4 gap-4">
             <div className="flex gap-2">
               <button
                 onClick={() => {
@@ -834,7 +876,7 @@ const exportAllReportCards = async () => {
                     },
                   });
                 }}
-                className="bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
+                className="bg-blue-700 text-white px-4  whitespace-nowrap py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
               >
                 View Reports
               </button>
@@ -849,6 +891,22 @@ const exportAllReportCards = async () => {
                 hoverColor="hover:bg-purple-700"
               />
             </div>
+            <div className="flex flex-col md:flex-row w-full mx-3 gap-5 justify-between">
+                <div className="flex gap-2">
+                  <p>SAMGE class </p>
+                  <p className="font-semibold">{appliedFilters.class}</p>
+                </div>
+                <div className="flex gap-2 justify-between">
+                  <div className="flex gap-2">
+                    <p>Academic Year</p>
+                    <p className="font-semibold">{appliedFilters.year}</p>
+                  </div>
+                  <div className="flex gap-5">
+                    <p>Term</p>
+                    <p className="font-semibold">{appliedFilters.term}</p>
+                  </div>
+                </div>
+              </div>
             <div className="flex gap-2">
             <ActionButton
                 onClick={exportToPDF}
@@ -890,33 +948,18 @@ const exportAllReportCards = async () => {
             </p>
           ) : (
             <div>
-              <div className="flex w-full mx-3 gap-5 justify-between">
-                <div className="flex gap-2">
-                  <p>SAMGE class </p>
-                  <p className="font-semibold">{appliedFilters.class}</p>
-                </div>
-                <div className="flex gap-2 justify-between">
-                  <div className="flex gap-2">
-                    <p>Academic Year</p>
-                    <p className="font-semibold">{appliedFilters.year}</p>
-                  </div>
-                  <div className="flex gap-5">
-                    <p>Term</p>
-                    <p className="font-semibold">{appliedFilters.term}</p>
-                  </div>
-                </div>
-              </div>
+             
        
               <table className="w-full overflow-x-auto table-auto px-2 border">
                 <thead className="sticky top-0 bg-white">
                   <tr className="bg-gray-200">
-                    <th className="border px-3 sticky top-0 bg-white py-2">Name</th>
-                    <th className="border px-3 sticky top-0 bg-white py-2">Reg No</th>
-                    <th className="border px-3 sticky top-0 bg-white py-2">Stream</th>
+                    <th className="border px-1 sticky top-0 bg-white py-2">Name</th>
+                    <th className="border px-1 sticky top-0 bg-white py-2">Reg No</th>
+                    <th className="border px-1 sticky top-0 bg-white py-2">Stream</th>
                     {subjectTotalsAndAverages.map((subjectStat, index) => (
                       <th key={index} className="border sticky top-0 bg-white py-2">
                         <p className="text-yellow-600">{index + 1}</p>
-                        <p className="px-3 text-sm">{subjectStat.code}</p>
+                        <p className="px-1 text-sm">{subjectStat.code}</p>
                       </th>
                     ))}
                     <th className="border sticky top-0 bg-white py-2">Total</th>
@@ -931,20 +974,20 @@ const exportAllReportCards = async () => {
 
                     return (
                       <tr key={studentIndex} className="hover:bg-gray-100 p-2">
-                        <td className="border px-3 whitespace-nowrap text-left py-2">{student.studentName || "-"}</td>
-                        <td className="border px-3 py-2">{student.regno || "-"}</td>
+                        <td className="border px-1 whitespace-nowrap text-left py-2">{student.studentName || "-"}</td>
+                        <td className="border px-1 py-2">{student.regno || "-"}</td>
                         <td className="border text-center p-2">{student.stream || "-"}</td>
                         {subjectTotalsAndAverages.map((subjectStat, subjectIndex) => {
                           const subject = student.subjects?.find((sub) => sub?.code === subjectStat.code);
                           return (
-                            <td key={subjectIndex} className="border px-3 py-2">
+                            <td key={subjectIndex} className="border px-1 py-2">
                               {subject ? subject.avgScore?.toFixed(2) || "-" : "-"}
                             </td>
                           );
                         })}
-                        <td className="border px-3 py-2">{studentTotal.toFixed(2)}</td>
-                        <td className="border px-3 py-2">{studentAverage.toFixed(2)}</td>
-                        <td className="border px-3 py-2">
+                        <td className="border px-1 py-2">{studentTotal.toFixed(2)}</td>
+                        <td className="border px-1 py-2">{studentAverage.toFixed(2)}</td>
+                        <td className="border px-1 py-2">
                         <ActionButton
               onClick={() => exportReportCard(student)}
               icon={FaFilePdf}
@@ -959,24 +1002,24 @@ const exportAllReportCards = async () => {
                     );
                   })}
                   <tr className="font-bold bg-gray-200">
-                    <td colSpan={3} className="border px-3 py-2">Total</td>
+                    <td colSpan={3} className="border px-1 py-2">Total</td>
                     {subjectTotalsAndAverages.map((subjectStat, index) => (
-                      <td key={index} className="border px-3 py-2">
+                      <td key={index} className="border px-1 py-2">
                         {subjectStat.total.toFixed(2)}
                       </td>
                     ))}
-                    <td className="border px-3 py-2">{classStats.total.toFixed(2)}</td>
-                    <td className="border px-3 py-2"></td>
+                    <td className="border px-1 py-2">{classStats.total.toFixed(2)}</td>
+                    <td className="border px-1 py-2"></td>
                   </tr>
                   <tr className="font-bold bg-gray-200">
-                    <td colSpan={3} className="border px-3 py-2">Average</td>
+                    <td colSpan={3} className="border px-1 py-2">Average</td>
                     {subjectTotalsAndAverages.map((subjectStat, index) => (
-                      <td key={index} className="border px-3 py-2">
+                      <td key={index} className="border px-1 py-2">
                         {subjectStat.average.toFixed(2)}
                       </td>
                     ))}
-                    <td className="border px-3 py-2">{classStats.average.toFixed(2)}</td>
-                    <td className="border px-3 py-2"></td>
+                    <td className="border px-1 py-2">{classStats.average.toFixed(2)}</td>
+                    <td className="border px-1 py-2"></td>
                   </tr>
                 </tbody>
               </table>

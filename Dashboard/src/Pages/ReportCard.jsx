@@ -245,7 +245,7 @@ const ReportCard = () => {
                   <div className='flex items-center gap-4'>
                     <img
                       className='w-20 h-20 rounded-full border'
-                      src={student.studentImage ? `https://eps-dashboard.onrender.com${student.studentImage}` : '/avater.jpeg'}
+                      src={student.studentImage ? `https://localhost:3000${student.studentImage}` : '/avater.jpeg'}
                       alt="Student"
                     />
                     <div>

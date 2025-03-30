@@ -8,7 +8,7 @@ import SidebarToggleButton from '../components/SidebarToggleButton';
 import SideBar from '../components/SideBar';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import BASE_URL from '../config';
-axios.defaults.baseURL = BASE_URL;
+axios.defaults.baseURL = "https://eps-dashboard.onrender.com";
 
 
 const Students = () => {

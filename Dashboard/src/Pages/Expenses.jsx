@@ -42,7 +42,7 @@ const Expenses = () => {
   const fetchExpenses = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:3000/api/expenses');
+      const res = await axios.get('https://eps-dashboard.onrender.com/api/expenses');
       setExpenses(res.data);
     } catch (error) {
       toast.error("Failed to fetch expenses");
@@ -66,7 +66,7 @@ const Expenses = () => {
         ...formData,
         amount: Number(formData.amount)
       };
-      await axios.post('http://localhost:3000/api/expenses', expenseData);
+      await axios.post('https://eps-dashboard.onrender.com/api/expenses', expenseData);
       toast.success("Expense added successfully");
       setShowAddModal(false);
       setFormData({
@@ -95,7 +95,7 @@ const Expenses = () => {
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/api/expenses/${updateFormData._id}`, {
+      await axios.put(`https://eps-dashboard.onrender.com/api/expenses/${updateFormData._id}`, {
         ...updateFormData,
         amount: Number(updateFormData.amount)
       });
@@ -118,7 +118,7 @@ const Expenses = () => {
   // Confirm deletion
   const confirmDeleteExpense = async () => {
     try {
-      await axios.delete(`http://localhost:3000/api/expenses/${expenseToDelete}`);
+      await axios.delete(`https://eps-dashboard.onrender.com/api/expenses/${expenseToDelete}`);
       toast.success("Expense deleted successfully");
       setShowDeleteModal(false);
       setExpenseToDelete(null);

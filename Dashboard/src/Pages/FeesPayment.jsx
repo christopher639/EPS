@@ -26,7 +26,7 @@ const FeesPayment = () => {
   const fetchPayments = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:3000/api/fees-payments");
+      const res = await axios.get("https://eps-dashboard.onrender.com/api/fees-payments");
       setPayments(res.data.payments);
       setTotalFeesPaid(res.data.totalFeesPaid);
     } catch (error) {
@@ -52,7 +52,7 @@ const FeesPayment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/fees-payments", formData);
+      await axios.post("https://eps-dashboard.onrender.com/api/fees-payments", formData);
       fetchPayments(); // Refresh data
       setIsModalOpen(false); // Close modal
       setFormData({

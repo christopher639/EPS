@@ -62,8 +62,7 @@ exports.updateStream = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "Error updating stream",
-      error: error.message,
+      message: error.message,
     });
   }
 };

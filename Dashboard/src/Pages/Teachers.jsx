@@ -39,7 +39,7 @@ const Teachers = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("http://localhost:3000/api/teachers")
+    axios.get("https://eps-dashboard.onrender.com/api/teachers")
       .then(response => {
         setTeachers(response.data.reverse());
         setLoading(false);
@@ -52,7 +52,7 @@ const Teachers = () => {
 
   const getLeaningareaData = () => {
     setLoading(true);
-    axios.get("http://localhost:3000/api/learning-reas")
+    axios.get("https://eps-dashboard.onrender.com/api/learning-reas")
       .then(response => {
         setLoading(false);
         setLearningAreas(response.data);
@@ -64,7 +64,7 @@ const Teachers = () => {
   };
 
   const fetchStreams = () => {
-    axios.get("http://localhost:3000/api/streams")
+    axios.get("https://eps-dashboard.onrender.com/api/streams")
       .then(response => {
         setStreams(response.data);
       })
@@ -74,7 +74,7 @@ const Teachers = () => {
   };
 
   const fetchDepartments = () => {
-    axios.get("http://localhost:3000/api/departments")
+    axios.get("https://eps-dashboard.onrender.com/api/departments")
       .then((response) => {
         setDepartments(response.data);
         setLoading(false);
@@ -103,7 +103,7 @@ const Teachers = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/api/delete/${id}`);
+      const response = await axios.delete(`https://eps-dashboard.onrender.com/api/delete/${id}`);
       if (response.data.success === "true") {
         toast.success("Teacher has been deleted successfully");
         setTeachers((prevTeachers) => prevTeachers.filter(teacher => teacher._id !== id));
@@ -120,7 +120,7 @@ const Teachers = () => {
     e.preventDefault();
     if (isUpdating) {
       // Update teacher
-      axios.put(`http://localhost:3000/api/teachers/${formData._id}`, formData)
+      axios.put(`https://eps-dashboard.onrender.com/api/teachers/${formData._id}`, formData)
         .then(response => {
           toast.success("Teacher updated successfully");
           setShowModal(false);
@@ -131,7 +131,7 @@ const Teachers = () => {
         });
     } else {
       // Add new teacher
-      axios.post("http://localhost:3000/api/teachers", formData)
+      axios.post("https://eps-dashboard.onrender.com/api/teachers", formData)
         .then(response => {
           toast.success("Teacher added successfully");
           setShowModal(false);

@@ -34,7 +34,7 @@ const Parents = () => {
 
   const getFetchData = () => {
     setLoading(true);
-    axios.get("http://localhost:3000/api/students")
+    axios.get("https://eps-dashboard.onrender.com/api/students")
       .then(response => {
         setStudents(response.data.reverse());
         setLoading(false);
@@ -46,7 +46,7 @@ const Parents = () => {
   };
 
   const fetchStreams = () => {
-    axios.get("http://localhost:3000/api/stream")
+    axios.get("https://eps-dashboard.onrender.com/api/stream")
       .then(response => {
         setStreams(response.data);
       })
@@ -71,7 +71,7 @@ const Parents = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/api/delete/${id}`);
+      const response = await axios.delete(`https://eps-dashboard.onrender.com/api/delete/${id}`);
       if (response.data.success === "true") {
         toast.success("Parent and student  deleted successfully");
         setStudents((prevStudents) => prevStudents.filter(student => student._id !== id));
@@ -86,7 +86,7 @@ const Parents = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Submit student data here
-    axios.post("http://localhost:3000/api/students", formData)
+    axios.post("https://eps-dashboard.onrender.com/api/students", formData)
       .then(response => {
         toast.success("Student added successfully");
         setShowModal(false); // Close modal after successful submission
