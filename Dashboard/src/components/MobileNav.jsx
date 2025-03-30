@@ -26,6 +26,7 @@ const navItems = [
   { label: "Academics", icon: <FaBook /> },
   { label: "Finance", icon: <FaMoneyBillAlt /> },
   { to: "/departments", label: "Departments", icon: <FaUniversity /> },
+   { to: "/clases", label: "Clases", icon: <FaBook /> },
   { to: "/streams", label: "Streams", icon: <FaSchool /> },
   { to: "/teachers", label: "Teachers", icon: <FaChalkboardTeacher /> },
   { label: "Human Resource", icon: <FaUserTie /> },

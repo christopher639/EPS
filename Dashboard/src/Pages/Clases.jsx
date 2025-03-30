@@ -124,34 +124,39 @@ const Clases = () => {
       </div>
 
       {/* Main Content */}
-      <div className='flex flex-col w-full min-h-screen '>
+      <div className='flex flex-col bg-white w-full  min-h-screen '>
         {/* Header */}
         <div className='flex justify-between items-center border-b shadow-sm md:border-none md:shadow-none p-4 bg-white sticky top-0 z-10'>
           <MobileNav />
-          <div className='flex  gap-2'>
+          <div className='flex gap-2'>
             <div className='hidden md:flex'>
               <SidebarToggleButton
                 toggleSidebar={toggleSideBar}
                 isSidebarCollapsed={!sideBar}
               />
             </div>
-           
+            <div className='flex items-center'>
+              <h2 className='text-md font-bold text-gray-800  hidden md:flex'>Classes</h2>
+            </div>
           </div>
-          <div className='flex justify-between items-center mb-4'>
-            <h2 className='text-2xl font-bold text-gray-800'>Classes</h2>
+          <div className='flex items-between gap-4'>
             <button 
               onClick={() => setIsCreateOpen(true)}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
+              className="bg-blue-500 hover:bg-blue-600 px-3 text-white px-4 py-2 rounded-lg transition"
             >
-              Add New Class
+              Add 
             </button>
+            <UserAccount />
           </div>
-          <UserAccount />
         </div>
 
         {/* Main Content Area */}
-        <div className='flex-1 overflow-auto p-4'>
-        
+        <div className='mx-5'>
+          {error && (
+            <div className="bg-red-100  border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+          )}
 
           {success && (
             <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
@@ -159,47 +164,41 @@ const Clases = () => {
             </div>
           )}
 
-          <div className="bg-white rounded-lg shadow overflow-y-auto max-h-[75vh]">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class Name</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teacher</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {clases.map((clase, index) => (
-                    <tr key={clase._id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{index + 1}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{clase.clasename}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{clase.claseteacher}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(clase.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                        <button
-                          onClick={() => openEditModal(clase)}
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => openDeleteModal(clase)}
-                          className="text-red-500 hover:text-red-700"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {clases.map((clase) => (
+                <div key={clase._id} className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">{clase.clasename}</h3>
+                    <p className="text-sm text-gray-600 mb-2">
+                      <span className="font-medium">Teacher:</span> {clase.claseteacher || 'Not assigned'}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Created: {new Date(clase.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="bg-gray-50 px-4 py-3 flex justify-end space-x-2">
+                    <button
+                      onClick={() => openEditModal(clase)}
+                      className="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md hover:bg-blue-50 transition"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => openDeleteModal(clase)}
+                      className="text-red-500 hover:text-red-700 px-3 py-1 rounded-md hover:bg-red-50 transition"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Create Class Modal */}

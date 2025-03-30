@@ -304,13 +304,17 @@ const exportToPDF = () => {
 
   return (
     <div className="mx-auto overflow-y-auto max-h-screen bg-gray-50">
-      <div className="flex justify-center p-4">
-        <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="p-6">
-          <div className="flex justify-between">
-       <h1 className="font-bold text-xl text-gray-800">Set Assessment Parameters</h1>
-       <UserAccount />
+         <div className="flex justify-center  p-4">
+      <div className="flex justify-between w-3/4">
+      <h1 className="font-bold text-md  whitespace-nowrap mt-3 text-gray-800">Marks Portal</h1>
+      <UserAccount />
+      </div>
        </div>
+      <div className="flex justify-center px-4">
+        
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="p-3">
+       
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Parameter Selection Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
