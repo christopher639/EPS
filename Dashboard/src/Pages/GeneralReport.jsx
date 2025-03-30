@@ -810,7 +810,7 @@ const exportAllReportCards = async () => {
         </div>
 
         {/* Filter Section */}
-        <div className="grid md:hidden p-4 gap-2 grid-cols-4 md:grid-cols-3 lg:grid-cols-5 pb-2 px-1 bg-white shadow-sm">
+        <div className="grid md:hidden px-4 gap-4 grid-cols-4 md:grid-cols-3 lg:grid-cols-5 pb-2 px-1 bg-white shadow-sm">
           <input
             type="text"
             value={searchQuery}
@@ -859,28 +859,6 @@ const exportAllReportCards = async () => {
           >
             {loading ? "Loading..." : "Populate"}
           </button>
-          <div className="flex gap-2">
-            <ActionButton
-                onClick={exportToPDF}
-                disabled={generatingPDF}
-                icon={FaFilePdf}
-                label="PDF"
-                loadingLabel="Generating..."
-                tooltip="Export class summary as PDF"
-                bgColor="bg-red-600"
-                hoverColor="hover:bg-red-700"
-              />
-             <ActionButton
-                onClick={exportToExcel}
-                disabled={generatingExcel}
-                icon={FaFileExcel}
-                label="Excel"
-                loadingLabel="..."
-                tooltip="Export data to Excel spreadsheet"
-                bgColor="bg-green-600"
-                hoverColor="hover:bg-green-700"
-              />
-            </div>
         </div>
 
         {/* Action Buttons Section */}
@@ -929,7 +907,7 @@ const exportAllReportCards = async () => {
                   </div>
                 </div>
               </div>
-            <div className="flex gap-2 hidden md:flex">
+            <div className="flex gap-2">
             <ActionButton
                 onClick={exportToPDF}
                 disabled={generatingPDF}
@@ -937,7 +915,7 @@ const exportAllReportCards = async () => {
                 label="PDF"
                 loadingLabel="Generating..."
                 tooltip="Export class summary as PDF"
-                bgColor="bg-red-600" 
+                bgColor="bg-red-600"
                 hoverColor="hover:bg-red-700"
               />
              <ActionButton
