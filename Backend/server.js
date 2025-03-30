@@ -51,20 +51,20 @@ app.get("*", (req, res) => {
 });
 //atlas 1 connection   mongodb+srv://bundi:JnioqaoPY3DHT6g6@cluster0.aaxy4.mongodb.net/examination-processing-system
 //database online connections
-// mongoose.connect("mongodb+srv://christopherbundi639:xDFLqAKg7G78hcuu@cluster0.uosxzen.mongodb.net/samge")
-// .then((error)=>{
-// console.log("Database connected")
-// })
+mongoose.connect("mongodb+srv://christopherbundi639:xDFLqAKg7G78hcuu@cluster0.uosxzen.mongodb.net/samge")
+.then((error)=>{
+console.log("Database connected")
+})
 
 //database local connections
-mongoose
-  .connect("mongodb://localhost:27017/dreamhomehouse")
-  .then(() => {
-    console.log("Database connected");
-  })
-  .catch((err) => {
-    console.error("Database connection error:", err);
-  });
+// mongoose
+//   .connect("mongodb://localhost:27017/dreamhomehouse")
+//   .then(() => {
+//     console.log("Database connected");
+//   })
+//   .catch((err) => {
+//     console.error("Database connection error:", err);
+//   });
 
 // Start the server
 const port = process.env.PORT || 3000;
