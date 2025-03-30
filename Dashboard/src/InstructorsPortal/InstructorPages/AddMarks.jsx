@@ -249,7 +249,7 @@ const AddMarks = () => {
         setFetchingStudents(true);
         try {
           const response = await axios.get(
-            ` https://eps-dashboard.onrender.com/api/learners/${commonData.class}/${commonData.stream}`
+            `https://eps-dashboard.onrender.com/api/learners/${commonData.class}/${commonData.stream}`
           );
           
           setMarks(response.data.learners.map(student => ({
@@ -350,9 +350,9 @@ const AddMarks = () => {
       try {
         setLoading(true);
         const [classesRes, streamsRes, areasRes] = await Promise.all([
-          axios.get(" https://eps-dashboard.onrender.com/api/clase"),
-          axios.get(" https://eps-dashboard.onrender.com/api/streams"),
-          axios.get(" https://eps-dashboard.onrender.com/api/learning-areas")
+          axios.get("https://eps-dashboard.onrender.com/api/clase"),
+          axios.get("https://eps-dashboard.onrender.com/api/streams"),
+          axios.get("https://eps-dashboard.onrender.com/api/learning-areas")
         ]);
         setClases(classesRes.data);
         setStreams(streamsRes.data);
