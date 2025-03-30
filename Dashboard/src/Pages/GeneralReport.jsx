@@ -803,47 +803,45 @@ const exportAllReportCards = async () => {
           <UserAccount />
         </div>
 
-     <div className="flex gap-1">
+     <div className="flex justify-between mx-3 gap-1">
        {/* Filter Section */}
-       <div className="grid md:hidden px-4 gap-1 grid-cols-3 md:grid-cols-3 lg:grid-cols-5 pb-2 px-1 bg-white shadow-sm">
-        
-          
-        {/* Class Select Dropdown */}
-        <select
-          value={selectedClass}
-          onChange={(e) => setSelectedClass(e.target.value)}
-          className="border max-w-48 border-gray-300 p-2 rounded-md"
-        >
-          <option value="">Select Class</option>
-          {clases.map((clase) => (
-            <option key={clase._id} value={clase.clasename}>
-              {clase.clasename}
-            </option>
-          ))}
-        </select>
+       <div className="grid md:hidden gap-1 grid-cols-3 px-1 py-1 bg-white shadow-sm">
+  {/* Class Select Dropdown */}
+  <select
+    value={selectedClass}
+    onChange={(e) => setSelectedClass(e.target.value)}
+    className="border border-gray-300 p-1 text-xs rounded"
+  >
+    <option value="">Class</option>
+    {clases.map((clase) => (
+      <option key={clase._id} value={clase.clasename}>
+        {clase.clasename}
+      </option>
+    ))}
+  </select>
 
-        <select
-          value={selectedYear}
-          onChange={(e) => setSelectedYear(e.target.value)}
-          className="border max-w-48 border-gray-300 p-2 rounded-md"
-        >
-          <option value="">Select Year</option>
-          <option value="2024-2025">2024-2025</option>
-          <option value="2025-2026">2025-2026</option>
-        </select>
-        <select
-          value={selectedTerm}
-          onChange={(e) => setSelectedTerm(e.target.value)}
-          className="border max-w-48 border-gray-300 p-2 rounded-md"
-        >
-          <option value="">Select Term</option>
-          <option value="Term-1">Term-1</option>
-          <option value="Term-2">Term-2</option>
-          <option value="Term-3">Term-3</option>
-        </select>
-       
+  <select
+    value={selectedYear}
+    onChange={(e) => setSelectedYear(e.target.value)}
+    className="border border-gray-300 p-1 text-xs rounded"
+  >
+    <option value="">Year</option>
+    <option value="2024-2025">2024-2025</option>
+    <option value="2025-2026">2025-2026</option>
+  </select>
+
+  <select
+    value={selectedTerm}
+    onChange={(e) => setSelectedTerm(e.target.value)}
+    className="border border-gray-300 p-1 text-xs rounded"
+  >
+    <option value="">Term</option>
+    <option value="Term-1">Term-1</option>
+    <option value="Term-2">Term-2</option>
+    <option value="Term-3">Term-3</option>
+  </select>
       </div>
-      <button
+        <button
           onClick={handleApplyFilters}
           className="bg-blue-600 mr-2 md:hidden text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
           disabled={loading || !selectedClass || !selectedYear || !selectedTerm}
@@ -854,56 +852,62 @@ const exportAllReportCards = async () => {
         {/* Action Buttons Section */}
         {data.length > 0 && (
           <div className="flex mb-2 flex-col md:flex-row justify-between items-start md:items-center md:mx-10 mx-5 mt-4 gap-4">
-            <div className="flex gap-2">
-              <button
-                onClick={() => {
-                  navigate("/report-card", {
-                    state: { 
-                      data: filteredData, 
-                      classValue: appliedFilters.class, 
-                      yearValue: appliedFilters.year, 
-                      termValue: appliedFilters.term 
-                    },
-                  });
-                }}
-                className="bg-blue-700 text-white px-4  whitespace-nowrap py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition"
-              >
-                View Reports
-              </button>
-              <ActionButton
-                onClick={exportAllReportCards}
-                disabled={generatingReportCards}
-                icon={FaFileDownload}
-                label=""
-                loadingLabel="Downloading..."
-                tooltip="Download PDF report cards for all students"
-                bgColor="bg-purple-600"
-                hoverColor="hover:bg-purple-700"
-              />
-               <div className="flex gap-2">
-            <ActionButton
-                onClick={exportToPDF}
-                disabled={generatingPDF}
-                icon={FaFilePdf}
-                label="PDF"
-                loadingLabel="Generating..."
-                tooltip="Export class summary as PDF"
-                bgColor="bg-red-600"
-                hoverColor="hover:bg-red-700"
-              />
-             <ActionButton
-                onClick={exportToExcel}
-                disabled={generatingExcel}
-                icon={FaFileExcel}
-                label="Excel"
-                loadingLabel="..."
-                tooltip="Export data to Excel spreadsheet"
-                bgColor="bg-green-600"
-                hoverColor="hover:bg-green-700"
-              />
-          
-            </div>
-            </div>
+           <div className="flex flex-wrap gap-1">
+ 
+  
+  <div className="flex  justify-between gap-1">
+  <button
+    onClick={() => {
+      navigate("/report-card", {
+        state: { 
+          data: filteredData, 
+          classValue: appliedFilters.class, 
+          yearValue: appliedFilters.year, 
+          termValue: appliedFilters.term 
+        },
+      });
+    }}
+    className="bg-blue-700 text-white px-3 py-1.5 whitespace-nowrap rounded text-xs font-semibold hover:bg-blue-600 transition"
+  >
+    View Reports
+  </button>
+    <ActionButton
+      onClick={exportAllReportCards}
+      disabled={generatingReportCards}
+      icon={FaFileDownload}
+      label=""
+      loadingLabel="Downloading..."
+      tooltip="Download PDF report cards for all students"
+      bgColor="bg-purple-600"
+      hoverColor="hover:bg-purple-700"
+      size="small"
+    />
+    
+    <ActionButton
+      onClick={exportToPDF}
+      disabled={generatingPDF}
+      icon={FaFilePdf}
+      label="PDF"
+      loadingLabel="Generating..."
+      tooltip="Export class summary as PDF"
+      bgColor="bg-red-600"
+      hoverColor="hover:bg-red-700"
+      size="small"
+    />
+    
+    <ActionButton
+      onClick={exportToExcel}
+      disabled={generatingExcel}
+      icon={FaFileExcel}
+      label="Excel"
+      loadingLabel="..."
+      tooltip="Export data to Excel spreadsheet"
+      bgColor="bg-green-600"
+      hoverColor="hover:bg-green-700"
+      size="small"
+    />
+  </div>
+</div>
             <div className="flex flex-col md:flex-row w-full mx-3 gap-5 justify-between">
                
                 <input
