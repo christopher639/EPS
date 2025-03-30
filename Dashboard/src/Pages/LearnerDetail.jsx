@@ -154,7 +154,7 @@ const LearnerDetail = () => {
         </div>
 
         <div className="bg-white rounded-lg p-3 sm:p-6">
-          <h1 className="text-lg sm:text-xl font-semibold mb-3">Learner Details</h1>
+          <h1 className="text-lg sm:text-xl font-semibold mb-3"></h1>
 
           <div className="flex flex-col md:flex-row gap-4">
             {/* Left Column: Image */}

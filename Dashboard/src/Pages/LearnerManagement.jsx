@@ -223,7 +223,7 @@ const LearnerManagement = () => {
         {/* Search Bar */}
         <div className="mb-2 sm:mb-4">
           <div className="flex flex-col md:flex-row gap-2 justify-between">
-          <div className="flex items-center justify-between gap-4  px-4 w-full">
+          <div className="flex items-center justify-between gap-4   w-full">
   {/* Mobile Navigation (Left Side) */}
   <div className="flex items-center gap-2">
     <MobileNav />
@@ -236,7 +236,7 @@ const LearnerManagement = () => {
   </div>
 
   {/* Center Title */}
-  <p className="text-sm sm:text-base hidden font-medium whitespace-nowrap mx-2">
+  <p className="text-sm sm:text-base hidden font-medium whitespace-nowrap px-2">
     Learners
   </p>
 
