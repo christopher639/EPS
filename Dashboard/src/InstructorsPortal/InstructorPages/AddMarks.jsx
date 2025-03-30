@@ -373,7 +373,7 @@ const AddMarks = () => {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  flex justify-between items-center">
-          <h1 className="text-xl font-bold text-gray-800">Marks  Portal</h1>
+          <h1 className="text-md font-bold text-gray-800">Marks  Portal</h1>
           <UserAccount />
         </div>
       </header>
@@ -608,7 +608,7 @@ const AddMarks = () => {
                                 className="w-full px-2 py-1 border border-gray-200 rounded bg-gray-50 text-sm"
                               />
                             </td>
-                            <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
+                            <td className="px-4 py-3  whitespace-wrap md:whitespace-nowrap text-sm text-gray-900">
                               {mark.studentName || "N/A"}
                             </td>
                             <td className="px-4 py-3 whitespace-nowrap">
