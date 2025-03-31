@@ -928,7 +928,7 @@ const exportAllReportCards = async () => {
             placeholder="Search by name or regno"
           />
         {/* Table Section */}
-        <div className="px-4 grid grid-cols-1  pb-4 max-h-[80vh] pb-8 overflow-y-auto w-full overflow-x-auto">
+        <div className="px-4 grid grid-cols-1 max-h-[70vh]  pb-4  md:max-h-[80vh] pb-8 overflow-y-auto w-full overflow-x-auto">
           {loading ? (
             <Spinner />
           ) : error ? (
