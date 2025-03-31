@@ -803,7 +803,7 @@ const exportAllReportCards = async () => {
           <UserAccount />
         </div>
 
-     <div className="flex justify-between mx-1 gap-1">
+     <div className="flex justify-between  mx-1 p-2 gap-1">
        {/* Filter Section */}
        <div className="grid md:hidden gap-1 grid-cols-3 px-1 py-1 ">
   {/* Class Select Dropdown */}
@@ -841,7 +841,7 @@ const exportAllReportCards = async () => {
     <option value="Term-3">Term-3</option>
   </select>
       </div>
-        <button
+        <button  
           onClick={handleApplyFilters}
           className="bg-blue-600 mr-2 md:hidden text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
           disabled={loading || !selectedClass || !selectedYear || !selectedTerm}
@@ -849,86 +849,10 @@ const exportAllReportCards = async () => {
           {loading ? "" : <FaSearch/>}
         </button>
      </div>
-        {/* Action Buttons Section */}
-        {data.length > 0 && (
-          <div className="flex mb-1 flex-col md:flex-row justify-between  md:mx-10 mx-3 mt-2 gap-4">
-           <div className="flex  justify-between gap-1">
-         
-            <ActionButton
-              onClick={exportAllReportCards}
-              disabled={generatingReportCards}
-              icon={FaFileDownload}
-              label=""
-              loadingLabel="Downloading..."
-              tooltip="Download PDF report cards for all students"
-              bgColor="bg-purple-600"
-              hoverColor="hover:bg-purple-700"
-              size="small"
-            />
-            
-            <ActionButton
-              onClick={exportToPDF}
-              disabled={generatingPDF}
-              icon={FaFilePdf}
-              label="PDF"
-              loadingLabel="Generating..."
-              tooltip="Export class summary as PDF"
-              bgColor="bg-red-600"
-              hoverColor="hover:bg-red-700"
-              size="small"
-            />
-            
-            <ActionButton
-              onClick={exportToExcel}
-              disabled={generatingExcel}
-              icon={FaFileExcel}
-              label="Excel"
-              loadingLabel="..."
-              tooltip="Export data to Excel spreadsheet"
-              bgColor="bg-green-600"
-              hoverColor="hover:bg-green-700"
-              size="small"
-            />
-         
-          </div>
-        <div className="flex flex-col md:flex-row w-full mx-1 md:mx-3 gap-2 md:gap-5 justify-between items-center text-sm">
-          {/* Search input - hidden on mobile, shown on md+ */}
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="hidden md:block max-w-48 text-xs md:text-sm border border-gray-300 py-1 px-2 rounded"
-            placeholder="Search by name or regno"
-          />
-
-          {/* Filter display - optimized for mobile */}
-          <div className="flex gap-1 md:gap-2 justify-between w-full md:w-auto">
-            <div className="flex gap-1 items-center">
-              <p className="text-xs md:text-sm">Class:</p>
-              <p className="font-semibold text-xs md:text-sm">{appliedFilters.class}</p>
-            </div>
-            <div className="flex gap-1 items-center">
-              <p className="text-xs md:text-sm">Year:</p>
-              <p className="font-semibold text-xs md:text-sm">{appliedFilters.year}</p>
-            </div>
-            <div className="flex gap-1 items-center">
-              <p className="text-xs md:text-sm">Term:</p>
-              <p className="font-semibold text-xs md:text-sm">{appliedFilters.term}</p>
-            </div>
-          </div>
-        </div>
-           
-          </div>
-        )}
-           <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="text-center mb-2  mx-3  md:hidden max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
-            placeholder="Search by name or regno"
-          />
+     
+        
         {/* Table Section */}
-        <div className="px-4 grid grid-cols-1 max-h-[60vh]  pb-4  md:max-h-[80vh] pb-8 overflow-y-auto w-full overflow-x-auto">
+        <div className="px-4 mt-2 grid grid-cols-1 max-h-[60vh]  pb-4  md:max-h-[80vh] pb-8 o w-full ">
           {loading ? (
             <Spinner />
           ) : error ? (
@@ -948,10 +872,83 @@ const exportAllReportCards = async () => {
               </p>
             </div>
           )  : (
-            <div>
-             
-       
-              <table className="w-full  overflow-x-auto table-auto px-2 border">
+           <div className="bg-white rounded mx-1">
+         <div className="p-2 gap-3 flex flex-col md:flex-row justify-between ">
+           {/* Search input - hidden on mobile, shown on md+ */}
+           <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="hidden md:block max-w-48 text-xs md:text-sm border border-gray-300 py-1 px-2 rounded"
+            placeholder="Search by name or regno"
+          />
+
+                {/* Filter display - optimized for mobile */}
+          <div className="flex gap-1 md:gap-2 justify-between w-full md:w-auto">
+            <div className="flex gap-1 items-center">
+              <p className="text-xs md:text-sm">Class:</p>
+              <p className="font-semibold text-xs md:text-sm">{appliedFilters.class}</p>
+            </div>
+            <div className="flex gap-1 items-center">
+              <p className="text-xs md:text-sm">Year:</p>
+              <p className="font-semibold text-xs md:text-sm">{appliedFilters.year}</p>
+            </div>
+            <div className="flex gap-1 items-center">
+              <p className="text-xs md:text-sm">Term:</p>
+              <p className="font-semibold text-xs md:text-sm">{appliedFilters.term}</p>
+            </div>
+          </div>
+            <div className="flex justify-between">
+            <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="text-center max-w-20 mb-2  mx-3  md:hidden max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
+            placeholder="Search"
+          />
+             <div className="flex  justify-between gap-1">
+         
+         <ActionButton
+           onClick={exportAllReportCards}
+           disabled={generatingReportCards}
+           icon={FaFileDownload}
+           label=""
+           loadingLabel="Downloading..."
+           tooltip="Download PDF report cards for all students"
+           bgColor="bg-purple-600"
+           hoverColor="hover:bg-purple-700"
+           size="small"
+         />
+         
+         <ActionButton
+           onClick={exportToPDF}
+           disabled={generatingPDF}
+           icon={FaFilePdf}
+           label="PDF"
+           loadingLabel="Generating..."
+           tooltip="Export class summary as PDF"
+           bgColor="bg-red-600"
+           hoverColor="hover:bg-red-700"
+           size="small"
+         />
+         
+         <ActionButton
+           onClick={exportToExcel}
+           disabled={generatingExcel}
+           icon={FaFileExcel}
+           label="Excel"
+           loadingLabel="..."
+           tooltip="Export data to Excel spreadsheet"
+           bgColor="bg-green-600"
+           hoverColor="hover:bg-green-700"
+           size="small"
+         />
+      
+            </div>
+            </div>
+         </div>
+            <div className="bg-white mx-3 md:mx-4  mx-0 grid gri-cols-1 pb-48 md:pb-6 max-h-screen md:max-h-[75vh] overflow-y-auto overflow-x-auto rounded-lg ">  
+              <table className="w-full  overflow-x-auto table-auto  border">
                 <thead className="sticky top-0 bg-white">
                   <tr className="bg-gray-200">
                     <th className="border px-1 sticky top-0 bg-white py-2">Name</th>
@@ -1025,6 +1022,7 @@ const exportAllReportCards = async () => {
                 </tbody>
               </table>
             </div>
+           </div>
           )}
         </div>
       </div>

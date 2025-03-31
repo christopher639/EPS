@@ -154,7 +154,7 @@ const LearnerManagement = () => {
   // Handle search by registration number
   const handleSearch = async () => {
     if (!searchTerm) {
-      fetchLearners();
+      fetchLearners(); 
       return;
     }
     setIsLoading(true);
@@ -235,7 +235,7 @@ const LearnerManagement = () => {
           />
         </div>
       </div>
-
+    <img src="lion.jpg" alt="" className="h-[54px] md:hidden" />
     
 
       {/* User Account (Right Side) */}
@@ -244,36 +244,8 @@ const LearnerManagement = () => {
       </div>
     </div>
 
-    <div className="hidden md:flex  mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
-      <div className="flex focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
-        <input
-          type="text"
-          placeholder="Search by RegNo..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="px-3 py-2 text-xs sm:text-sm w-full sm:w-64 max-w-40 focus:outline-none"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-blue-600 text-white px-3 hover:bg-blue-700 transition-colors flex items-center justify-center"
-          data-tooltip-id="search-tooltip"
-          data-tooltip-content="Search learners"
-        >
-          <FaSearch className="text-xs sm:text-sm" />
-        </button>
-      </div>
-      
-      <button
-        onClick={() => setModalOpen(true)}
-        className="bg-blue-600 mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg text-xs sm:text-sm"
-        data-tooltip-id="add-tooltip"
-        data-tooltip-content="Add new learner"
-      >
-        <FaPlus className="text-xs sm:text-sm" />
+   
   
-      </button>
-    </div>
-    
     <div className="hidden md:flex">
       <UserAccount className="text-blue-600 hover:text-blue-800 transition-colors" />
     </div>
@@ -281,35 +253,7 @@ const LearnerManagement = () => {
 
   
 </div>
-<div className="flex md:hidden mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
-      <div className="flex focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
-        <input
-          type="text"
-          placeholder="Search by RegNo..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="px-3 py-2 text-xs sm:text-sm w-full sm:w-64 max-w-40 focus:outline-none"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-blue-600 text-white px-3 hover:bg-blue-700 transition-colors flex items-center justify-center"
-          data-tooltip-id="search-tooltip"
-          data-tooltip-content="Search learners"
-        >
-          <FaSearch className="text-xs sm:text-sm" />
-        </button>
-      </div>
-      
-      <button
-        onClick={() => setModalOpen(true)}
-        className="bg-blue-600 mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg text-xs sm:text-sm"
-        data-tooltip-id="add-tooltip"
-        data-tooltip-content="Add new learner"
-      >
-        <FaPlus className="text-xs sm:text-sm" />
-  
-      </button>
-    </div>
+
 
         {/* Add Learner Modal - Unchanged as requested */}
         {modalOpen && (
@@ -523,7 +467,7 @@ const LearnerManagement = () => {
                           <img
                             src={
                               typeof newLearner.learnerImage === "string"
-                                ? `https://eps-dashboard.onrender.com${newLearner.learnerImage}`
+                                ? ` https://eps-dashboard.onrender.com${newLearner.learnerImage}`
                                 : URL.createObjectURL(newLearner.learnerImage)
                             }
                             alt="Preview"
@@ -576,12 +520,37 @@ const LearnerManagement = () => {
 
         {/* Learners List */}
         {!isLoading && (
-          <div className="bg-white shadow-lg mx-0 grid gri-cols-1 pb-48 md:pb-6 max-h-screen md:max-h-[85vh] overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
-            <div className="flex mb-2 sm:mb-4 gap-2">
-              <h2 className="text-sm sm:text-base md:text-lg font-semibold">Total Learners</h2>
-              <p className="text-slate-800 bg-gray-50 border px-2 rounded-lg text-slate-700 font-semibold text-sm sm:text-base">
-                {totalLearners}
-              </p>
+          <div className="bg-white mx-8 md:mx-4  mx-0 grid gri-cols-1 pb-48 md:pb-6 max-h-screen md:max-h-[85vh] overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
+            <div className="flex mb-2 sm:mb-4 gap-2">       
+    <div className="flex  mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
+      <div className="flex focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
+        <input
+          type="text"
+          placeholder="Search by RegNo..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="px-3 py-2 text-xs sm:text-sm w-full sm:w-64 max-w-40 focus:outline-none"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-blue-600 text-white px-3 hover:bg-blue-700 transition-colors flex items-center justify-center"
+          data-tooltip-id="search-tooltip"
+          data-tooltip-content="Search learners"
+        >
+          <FaSearch className="text-xs sm:text-sm" />
+        </button>
+      </div>
+      
+      <button
+        onClick={() => setModalOpen(true)}
+        className="bg-blue-600 mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg text-xs sm:text-sm"
+        data-tooltip-id="add-tooltip"
+        data-tooltip-content="Add new learner"
+      >
+        <FaPlus className="text-xs sm:text-sm" />
+  
+      </button>
+    </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse border border-gray-300 text-xs sm:text-sm">
@@ -610,7 +579,7 @@ const LearnerManagement = () => {
                       </td>
                       <td className="border border-gray-300 p-1 sm:p-2">
                         <img
-                          src={`https://eps-dashboard.onrender.com${learner.learnerImage}`}
+                          src={` https://eps-dashboard.onrender.com${learner.learnerImage}`}
                           alt={learner.name}
                           className="w-10 h-10 sm:w-16 sm:h-16 object-cover rounded-md"
                         />
