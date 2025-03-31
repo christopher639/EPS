@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 // Define the schema for streams
 const streamSchema = new mongoose.Schema({
+  clase:{
+    type:String,
+    required:true
+  },
   name: {
     type: String,
     required: true,
