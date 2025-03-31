@@ -218,64 +218,72 @@ const LearnerManagement = () => {
       >
         <SideBar />
       </div>
-      <div className="py-2 sm:py-4 w-full sm:px-6 bg-gray-100 min-h-screen">
+      <div className="py-1  w-full  bg-gray-100 min-h-screen">
         <ToastContainer />
         {/* Search Bar */}
-        <div className="mb-2 sm:mb-4">
-          <div className="flex flex-col md:flex-row gap-2 justify-between">
-          <div className="flex items-center justify-between gap-4   w-full">
-  {/* Mobile Navigation (Left Side) */}
-  <div className="flex items-center gap-2">
-    <MobileNav />
-    <div className="hidden md:block">
-      <SidebarToggleButton
-        toggleSidebar={toggleSideBar}
-        isSidebarCollapsed={!sideBar}
-      />
+        <div className="mb-2 bg-white  border-b  sm:mb-4">
+  <div className="flex flex-col md:flex-row gap-2 justify-between">
+    <div className="flex items-center justify-between gap-4 w-full p-2 rounded-lg">
+      {/* Mobile Navigation (Left Side) */}
+      <div className="flex items-center gap-2">
+        <MobileNav className="text-blue-600 hover:text-blue-800 transition-colors" />
+        <div className="hidden md:block">
+          <SidebarToggleButton
+            toggleSidebar={toggleSideBar}
+            isSidebarCollapsed={!sideBar}
+            className="text-blue-600 hover:text-blue-800 transition-colors"
+          />
+        </div>
+      </div>
+
+      {/* Center Title */}
+      <p className="text-sm sm:text-base font-medium whitespace-nowrap px-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
+        Samge
+      </p>
+
+      {/* User Account (Right Side) */}
+      <div className="md:hidden">
+        <UserAccount className="text-blue-600" />
+      </div>
+    </div>
+
+    <div className="flex mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
+      <div className="flex focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
+        <input
+          type="text"
+          placeholder="Search by RegNo..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="px-3 py-2 text-xs sm:text-sm w-full sm:w-64 max-w-40 focus:outline-none"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-blue-600 text-white px-3 hover:bg-blue-700 transition-colors flex items-center justify-center"
+          data-tooltip-id="search-tooltip"
+          data-tooltip-content="Search learners"
+        >
+          <FaSearch className="text-xs sm:text-sm" />
+        </button>
+      </div>
+      
+      <button
+        onClick={() => setModalOpen(true)}
+        className="bg-blue-600 mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg text-xs sm:text-sm"
+        data-tooltip-id="add-tooltip"
+        data-tooltip-content="Add new learner"
+      >
+        <FaPlus className="text-xs sm:text-sm" />
+  
+      </button>
+    </div>
+    
+    <div className="hidden md:flex">
+      <UserAccount className="text-blue-600 hover:text-blue-800 transition-colors" />
     </div>
   </div>
 
-  {/* Center Title */}
-  <p className="text-sm sm:text-base hidden font-medium whitespace-nowrap px-2">
-    Learners
-  </p>
-
-  {/* User Account (Right Side) */}
-  <div className="md:hidden">
-    <UserAccount />
-  </div>
+  
 </div>
-            <div className="flex mx-2 sm:mx-4 justify-between gap-2 sm:gap-3">
-              <div className="flex focus:outline-none focus:ring-blue-500 focus:ring-2 rounded-lg">
-                <input
-                  type="text"
-                  placeholder="Search by RegNO"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="px-2 py-1 text-xs sm:text-sm w-full sm:w-64 max-w-40"
-                />
-                <button
-                  onClick={handleSearch}
-                  className="bg-blue-600 text-white px-2 hover:bg-blue-700 transition"
-                >
-                  <FaSearch className="text-xs sm:text-sm" />
-                </button>
-              </div>
-              <button
-                onClick={() => setModalOpen(true)}
-                className="bg-blue-600 flex gap-1 max-w-64 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-lg hover:bg-blue-700 transition text-xs sm:text-sm"
-              >
-                <p className="pt-1">
-                  <FaPlus className="text-xs sm:text-sm" />
-                </p>
-                <p className="hidden sm:flex"> Add Learner</p>
-              </button>
-            </div>
-            <div className="hidden md:flex">
-              <UserAccount />
-            </div>
-          </div>
-        </div>
 
         {/* Add Learner Modal - Unchanged as requested */}
         {modalOpen && (
