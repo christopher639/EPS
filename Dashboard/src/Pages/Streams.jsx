@@ -329,7 +329,7 @@ const Streams = () => {
               {filteredStreams.map((stream) => (
                 <div
                   key={stream._id}
-                  className="border rounded-lg bg-white hover:bg-gray-50 transition duration-200 cursor-pointer shadow-sm overflow-hidden"
+                  className="border rounded-lg bg-white hover:bg-gray-50 transition duration-200 cursor-pointer  overflow-hidden"
                   onClick={() => handleStreamClick(stream.name)}
                 >
                   <div className="p-4">
