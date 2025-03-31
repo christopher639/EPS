@@ -10,43 +10,131 @@ const UserAccount = () => {
   const [notifications, setNotifications] = useState([
     { 
       id: 1, 
-      message: "New message from John Doe regarding your inquiry.", 
+      message: "New message from John Doe", 
       date: "2023-10-01", 
       read: false,
       type: "message",
-      icon: <FaEnvelope className="text-blue-500" />
+      icon: <FaEnvelope className="text-blue-500 text-xs" />
     },
     { 
       id: 2, 
-      message: "Your tuition fee payment of $500 was received.", 
+      message: "Payment received $500", 
       date: "2023-10-02", 
       read: false,
       type: "payment",
-      icon: <FaMoneyBillWave className="text-green-500" />
+      icon: <FaMoneyBillWave className="text-green-500 text-xs" />
     },
     { 
       id: 3, 
-      message: "New expense approved: Classroom supplies - $120", 
+      message: "Expense approved $120", 
       date: "2023-10-03", 
       read: false,
       type: "expense",
-      icon: <FaReceipt className="text-yellow-500" />
+      icon: <FaReceipt className="text-yellow-500 text-xs" />
     },
     { 
       id: 4, 
-      message: "System maintenance scheduled for tomorrow at 2 AM.", 
+      message: "System maintenance", 
       date: "2023-10-04", 
       read: false,
       type: "system",
-      icon: <FaCog className="text-purple-500" />
+      icon: <FaCog className="text-purple-500 text-xs" />
     },
     { 
-      id: 5, 
-      message: "Reminder: Parent-teacher meeting at 10 AM tomorrow.", 
-      date: "2023-10-05", 
+      id: 1, 
+      message: "New message from John Doe", 
+      date: "2023-10-01", 
       read: false,
       type: "message",
-      icon: <FaEnvelope className="text-blue-500" />
+      icon: <FaEnvelope className="text-blue-500 text-xs" />
+    },
+    { 
+      id: 2, 
+      message: "Payment received $500", 
+      date: "2023-10-02", 
+      read: false,
+      type: "payment",
+      icon: <FaMoneyBillWave className="text-green-500 text-xs" />
+    },
+    { 
+      id: 3, 
+      message: "Expense approved $120", 
+      date: "2023-10-03", 
+      read: false,
+      type: "expense",
+      icon: <FaReceipt className="text-yellow-500 text-xs" />
+    },
+    { 
+      id: 4, 
+      message: "System maintenance", 
+      date: "2023-10-04", 
+      read: false,
+      type: "system",
+      icon: <FaCog className="text-purple-500 text-xs" />
+    },
+    { 
+      id: 1, 
+      message: "New message from John Doe", 
+      date: "2023-10-01", 
+      read: false,
+      type: "message",
+      icon: <FaEnvelope className="text-blue-500 text-xs" />
+    },
+    { 
+      id: 2, 
+      message: "Payment received $500", 
+      date: "2023-10-02", 
+      read: false,
+      type: "payment",
+      icon: <FaMoneyBillWave className="text-green-500 text-xs" />
+    },
+    { 
+      id: 3, 
+      message: "Expense approved $120", 
+      date: "2023-10-03", 
+      read: false,
+      type: "expense",
+      icon: <FaReceipt className="text-yellow-500 text-xs" />
+    },
+    { 
+      id: 4, 
+      message: "System maintenance", 
+      date: "2023-10-04", 
+      read: false,
+      type: "system",
+      icon: <FaCog className="text-purple-500 text-xs" />
+    },
+    { 
+      id: 1, 
+      message: "New message from John Doe", 
+      date: "2023-10-01", 
+      read: false,
+      type: "message",
+      icon: <FaEnvelope className="text-blue-500 text-xs" />
+    },
+    { 
+      id: 2, 
+      message: "Payment received $500", 
+      date: "2023-10-02", 
+      read: false,
+      type: "payment",
+      icon: <FaMoneyBillWave className="text-green-500 text-xs" />
+    },
+    { 
+      id: 3, 
+      message: "Expense approved $120", 
+      date: "2023-10-03", 
+      read: false,
+      type: "expense",
+      icon: <FaReceipt className="text-yellow-500 text-xs" />
+    },
+    { 
+      id: 4, 
+      message: "System maintenance", 
+      date: "2023-10-04", 
+      read: false,
+      type: "system",
+      icon: <FaCog className="text-purple-500 text-xs" />
     },
   ]);
 
@@ -69,18 +157,10 @@ const UserAccount = () => {
     setNotifications(prevNotifications =>
       prevNotifications.map(notification =>
         notification.id === id
-          ? { ...notification, read: !notification.read, readAt: notification.read ? null : new Date() }
+          ? { ...notification, read: !notification.read }
           : notification
       )
     );
-
-    if (!notifications.find(notification => notification.id === id)?.read) {
-      setTimeout(() => {
-        setNotifications(prevNotifications =>
-          prevNotifications.filter(notification => notification.id !== id)
-        );
-      }, 3600000);
-    }
   };
 
   const unreadNotificationsCount = notifications.filter(notification => !notification.read).length;
@@ -89,212 +169,148 @@ const UserAccount = () => {
     ? notifications 
     : notifications.filter(notification => notification.type === activeTab);
 
-  const unreadCountByType = {
-    all: notifications.filter(n => !n.read).length,
-    message: notifications.filter(n => !n.read && n.type === "message").length,
-    payment: notifications.filter(n => !n.read && n.type === "payment").length,
-    expense: notifications.filter(n => !n.read && n.type === "expense").length,
-    system: notifications.filter(n => !n.read && n.type === "system").length,
-  };
-
   return (
-    <div className="flex justify-between items-center gap-4 px-2">
+    <div className="flex justify-between items-center gap-2 p-2">
       {/* Notification Icon */}
-      <div className="relative p-2 cursor-pointer" onClick={() => setNotificationsOpen(true)}>
+      <div className="relative p-1 cursor-pointer" onClick={() => setNotificationsOpen(true)}>
         <div className="relative">
-          <FaBell className="text-slate-800 md:text-2xl" />
+          <FaBell className="text-slate-800 text-lg" />
           {unreadNotificationsCount > 0 && (
-            <div className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full h-4 w-4 md:w-5 md:h-5 flex items-center justify-center">
+            <div className="absolute -top-1 -right-1 bg-red-600 text-white text-[8px] rounded-full h-3 w-3 flex items-center justify-center">
               {unreadNotificationsCount}
             </div>
           )}
         </div>
       </div>
 
-      {/* Enhanced Notification Modal */}
-      {notificationsOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
-          <div 
-            className="absolute inset-0 w-full h-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="w-full h-full bg-white flex flex-col">
-              {/* Modal Header */}
-              <div className="flex justify-between items-center p-4 border-b">
-                <h3 className="text-lg font-semibold text-gray-800">Notifications</h3>
-                <button
-                  onClick={() => setNotificationsOpen(false)}
-                  className="p-1 rounded-full hover:bg-gray-100 transition duration-200"
-                >
-                  <FaTimes className="text-gray-600" />
-                </button>
-              </div>
+      {/* Notification Drawer */}
+      <div className={`fixed inset-0 z-50 ${notificationsOpen ? 'block' : 'hidden'}`}>
+        {/* Backdrop */}
+        <div 
+          className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-700 ${notificationsOpen ? 'opacity-100' : 'opacity-0'}`}
+          onClick={() => setNotificationsOpen(false)}
+        />
+        
+        {/* Drawer Content */}
+        <div 
+          className={`absolute right-0 top-0 h-full w-full max-w-xs bg-white shadow-xl transition-transform duration-700 ease-in-out transform ${notificationsOpen ? 'translate-x-0' : 'translate-x-full'} rounded-l-lg overflow-hidden`}
+        >
+          <div className="flex flex-col h-full">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-3 border-b">
+              <h3 className="text-sm font-semibold">Notifications</h3>
+              <button
+                onClick={() => setNotificationsOpen(false)}
+                className="p-1 rounded-full hover:bg-gray-100"
+              >
+                <FaTimes className="text-gray-600 text-sm" />
+              </button>
+            </div>
 
-              {/* Notification Categories */}
-              <div className="flex border-b">
-                <button
-                  className={`flex-1 py-2 text-center text-sm font-medium relative ${activeTab === "all" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
-                  onClick={() => setActiveTab("all")}
-                >
-                  All
-                  {unreadCountByType.all > 0 && (
-                    <span className="absolute top-0 right-4 bg-red-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                      {unreadCountByType.all}
-                    </span>
-                  )}
-                </button>
-                <button
-                  className={`flex-1 py-2 text-center text-sm font-medium relative ${activeTab === "message" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
-                  onClick={() => setActiveTab("message")}
-                >
-                  Messages
-                  {unreadCountByType.message > 0 && (
-                    <span className="absolute top-0 right-4 bg-red-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                      {unreadCountByType.message}
-                    </span>
-                  )}
-                </button>
-                <button
-                  className={`flex-1 py-2 text-center text-sm font-medium relative ${activeTab === "payment" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
-                  onClick={() => setActiveTab("payment")}
-                >
-                  Payments
-                  {unreadCountByType.payment > 0 && (
-                    <span className="absolute top-0 right-4 bg-red-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                      {unreadCountByType.payment}
-                    </span>
-                  )}
-                </button>
-                <button
-                  className={`flex-1 py-2 text-center text-sm font-medium relative ${activeTab === "expense" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
-                  onClick={() => setActiveTab("expense")}
-                >
-                  Expenses
-                  {unreadCountByType.expense > 0 && (
-                    <span className="absolute top-0 right-4 bg-red-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                      {unreadCountByType.expense}
-                    </span>
-                  )}
-                </button>
-                <button
-                  className={`flex-1 py-2 text-center text-sm font-medium relative ${activeTab === "system" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
-                  onClick={() => setActiveTab("system")}
-                >
-                  System
-                  {unreadCountByType.system > 0 && (
-                    <span className="absolute top-0 right-4 bg-red-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                      {unreadCountByType.system}
-                    </span>
-                  )}
-                </button>
-              </div>
+            {/* Notification Categories */}
+            <div className="flex border-b text-xs">
+              <button
+                className={`flex-1 py-2 text-center ${activeTab === "all" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
+                onClick={() => setActiveTab("all")}
+              >
+                All
+              </button>
+              <button
+                className={`flex-1 py-2 text-center ${activeTab === "message" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
+                onClick={() => setActiveTab("message")}
+              >
+                Messages
+              </button>
+              <button
+                className={`flex-1 py-2 text-center ${activeTab === "payment" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
+                onClick={() => setActiveTab("payment")}
+              >
+                Payments
+              </button>
+            </div>
 
-              {/* Scrollable Notifications List */}
-              <div className="flex-1 overflow-y-auto">
-                {filteredNotifications.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
-                    No {activeTab === "all" ? "" : activeTab} notifications
-                  </div>
-                ) : (
-                  filteredNotifications.map((notification) => (
-                    <div
-                      key={notification.id}
-                      className={`p-3 border-b border-gray-100 hover:bg-gray-50 transition duration-200 flex items-start ${
-                        notification.read ? "bg-gray-50" : "bg-white"
-                      }`}
-                    >
-                      <div className="mr-3 mt-1">
-                        {notification.icon}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm text-gray-700">{notification.message}</p>
-                        <p className="text-xs text-gray-500 mt-1">{notification.date}</p>
-                        {notification.read && (
-                          <p className="text-xs text-gray-500 mt-2">
-                            This notification will be deleted in 1 hour.
-                          </p>
-                        )}
-                      </div>
-                      <input
-                        type="checkbox"
-                        checked={notification.read}
-                        onChange={() => toggleNotificationReadStatus(notification.id)}
-                        className="form-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500 ml-2 mt-1"
-                      />
+            {/* Scrollable Notifications List */}
+            <div className="flex-1 overflow-y-auto">
+              {filteredNotifications.length === 0 ? (
+                <div className="text-center py-4 text-gray-500 text-xs">
+                  No notifications
+                </div>
+              ) : (
+                filteredNotifications.map((notification) => (
+                  <div
+                    key={notification.id}
+                    className={`p-3 flex items-start ${notification.read ? "bg-gray-50" : "bg-white"} border-b border-gray-100`}
+                  >
+                    <div className="mr-2">
+                      {notification.icon}
                     </div>
-                  ))
-                )}
-              </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs truncate">{notification.message}</p>
+                      <p className="text-[10px] text-gray-500 mt-1">{notification.date}</p>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={notification.read}
+                      onChange={() => toggleNotificationReadStatus(notification.id)}
+                      className="h-3 w-3 text-blue-600 rounded flex-shrink-0"
+                    />
+                  </div>
+                ))
+              )}
+            </div>
 
-              {/* Footer Actions */}
-              <div className="border-t p-3 bg-gray-50 flex justify-between">
-                <button
-                  className="text-sm text-blue-600 hover:text-blue-800"
-                  onClick={() => {
-                    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
-                  }}
-                >
-                  Mark all as read
-                </button>
-                <button
-                  className="text-sm text-red-600 hover:text-red-800"
-                  onClick={() => {
-                    setNotifications([]);
-                  }}
-                >
-                  Clear all
-                </button>
-              </div>
+            {/* Footer Actions */}
+            <div className="border-t p-2 bg-gray-50 flex justify-between text-xs">
+              <button
+                className="text-blue-600 hover:text-blue-800"
+                onClick={() => setNotifications(prev => prev.map(n => ({ ...n, read: true })))}
+              >
+                Mark all read
+              </button>
+              <button
+                className="text-red-600 hover:text-red-800"
+                onClick={() => setNotifications([])}
+              >
+                Clear all
+              </button>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
-      {/* User Greeting */}
-      <div>
+      {/* User Info */}
+      <div className="text-xs">
         {userName ? (
-          <div className="flex gap-1">
-            <p>Hi</p>
-            <p className="font-bold">{userName}</p>
+          <div>
+            <span className="font-semibold">{userName.split(' ')[0]}</span>
           </div>
         ) : (
-          <p>Guest</p>
+          <span>Guest</span>
         )}
       </div>
 
-      {/* User Icon and Dropdown */}
-      <div
-        className="relative p-2"
-        onMouseEnter={() => setUserLinks(true)}
-        onMouseLeave={() => setUserLinks(false)}
-      >
-        <FaUserCircle className="text-3xl cursor-pointer" />
-
+      {/* User Icon */}
+      <div className="relative">
+        <FaUserCircle 
+          className="text-xl cursor-pointer" 
+          onClick={() => setUserLinks(!userLinks)}
+        />
+        
         {userLinks && (
-          <div className="absolute w-48 right-0 mt-2 bg-white shadow-lg rounded-md border border-gray-200 z-50">
-            <div className="absolute -top-2 right-3 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-200"></div>
-            <div className="py-2">
+          <div className="absolute right-0 mt-1 bg-white shadow-md rounded-sm border border-gray-200 z-50 w-32">
+            <div className="py-1 text-xs">
               <NavLink to="/profile">
-                <p className="cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-200">
-                  Profile
-                </p>
+                <div className="px-2 py-1 hover:bg-gray-100">Profile</div>
               </NavLink>
               <NavLink to="/settings">
-                <p className="cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-200">
-                  Settings
-                </p>
+                <div className="px-2 py-1 hover:bg-gray-100">Settings</div>
               </NavLink>
-              <NavLink to="/help">
-                <p className="cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-200">
-                  Help & Support
-                </p>
-              </NavLink>
-              <p
-                className="cursor-pointer px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition duration-200"
+              <div 
+                className="px-2 py-1 text-red-500 hover:bg-red-50"
                 onClick={handleLogout}
               >
                 Log Out
-              </p>
+              </div>
             </div>
           </div>
         )}

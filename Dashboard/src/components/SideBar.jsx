@@ -13,116 +13,138 @@ import {
   FaFileAlt,
   FaChevronRight,
   FaChevronDown,
-} from "react-icons/fa"; // Importing icons from react-icons
+  FaUserCircle,
+  FaCog,
+  FaSignOutAlt,
+  FaFileUpload,
+  FaFileInvoice,
+  FaFileExport,
+  FaMoneyCheckAlt,
+  FaReceipt,
+  FaCalculator,
+  FaPiggyBank,
+  FaChartBar,
+  FaCalendarAlt,
+  FaMoneyBillWave,
+  FaUserTie,
+  FaMoneyCheck
+} from "react-icons/fa";
 
 const navItems = [
-  { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
-  
-  { label: "Academics", icon: <FaBook /> },
-  { label: "Finance", icon: <FaMoneyBillAlt /> },
-  { to: "/departments", label: "Departments", icon: <FaUniversity /> },
-  { to: "/clases", label: "Clases", icon: <FaBook /> },
-  
-  
-  { label: "Human Resource", icon: <FaChalkboardTeacher /> },
-  { to: "/learningarea", label: "Learning Areas", icon: <FaClipboardList /> },
-  { to: "/parents", label: "Parents", icon: <FaUsers /> },
-  { to: "/users", label: "Users", icon: <FaUsers /> },
-  { to: "/analytics", label: "Analytics", icon: <FaChartLine /> },
+  { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt className="text-purple-500" /> },
+  { label: "Academics", icon: <FaBook className="text-blue-500" /> },
+  { label: "Finance", icon: <FaMoneyBillAlt className="text-green-500" /> },
+  { to: "/departments", label: "Departments", icon: <FaUniversity className="text-red-500" /> },
+  { to: "/clases", label: "Classes", icon: <FaBook className="text-blue-500" /> },
+  { label: "Human Resource", icon: <FaChalkboardTeacher className="text-yellow-500" /> },
+  { to: "/learningarea", label: "Learning Areas", icon: <FaClipboardList className="text-indigo-500" /> },
+  { to: "/parents", label: "Parents", icon: <FaUsers className="text-pink-500" /> },
+  { to: "/users", label: "Users", icon: <FaUsers className="text-teal-500" /> },
+  { to: "/analytics", label: "Analytics", icon: <FaChartLine className="text-orange-500" /> },
 ];
 
 const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
-  const [isAcademicsOpen, setIsAcademicsOpen] = useState(false); // State to manage Academics section
-  const [isFinanceOpen, setIsFinanceOpen] = useState(false); // State to manage Finance section
-  const [isHROpen, setIsHROpen] = useState(false); // State to manage HR section
+  const [isAcademicsOpen, setIsAcademicsOpen] = useState(false);
+  const [isFinanceOpen, setIsFinanceOpen] = useState(false);
+  const [isHROpen, setIsHROpen] = useState(false);
+  
+  const userName = localStorage.getItem("userName") || "Admin";
 
-  const toggleAcademics = () => {
-    setIsAcademicsOpen(!isAcademicsOpen); // Toggle Academics section
-  };
-
-  const toggleFinance = () => {
-    setIsFinanceOpen(!isFinanceOpen); // Toggle Finance section
-  };
-
-  const toggleHR = () => {
-    setIsHROpen(!isHROpen); // Toggle HR section
-  };
+  const toggleAcademics = () => setIsAcademicsOpen(!isAcademicsOpen);
+  const toggleFinance = () => setIsFinanceOpen(!isFinanceOpen);
+  const toggleHR = () => setIsHROpen(!isHROpen);
 
   return (
     <div
-      className={`transition-all  hidden md:flex  duration-700 bg-blue-800 min-h-screen md:flex flex-col ${isSidebarCollapsed ? "w-20" : "w-64"}`}
+      className={`hidden md:flex border-r border-3 flex-col bg-white h-screen transition-all duration-300 shadow-lg ${
+        isSidebarCollapsed ? "w-20" : "w-64"
+      }`}
     >
       {/* Logo Section */}
-      <div className="flex bg-red-950 py-2 justify-between ">
-        <NavLink to="/dashboard" className="flex justify-between">
-          <div className="flex justify-between gap-5">
-            <div>
-              <img
-                className="w-16 bg-white rounded-full h-16 object-contain"
-                src={lion}
-                alt="Logo"
-              />
+      <div className="p-4 bg-white border-b flex items-center justify-center">
+        <NavLink to="/dashboard" className="flex items-center">
+          <img
+            className="w-12 h-12 bg-white rounded-full object-contain border-2 border-gray-200"
+            src={lion}
+            alt="Logo"
+          />
+          {!isSidebarCollapsed && (
+            <div className="ml-3">
+              <h1 className="text-xl font-bold text-gray-800 tracking-wider">SAMGE</h1>
+              <p className="text-xs text-gray-500">BOARDING SCHOOL</p>
             </div>
-            <div className="mt-2">
-              <p className="text-white flex gap-4 font-bold text-2xl">
-                <p>S</p>
-                <p>A</p>
-                <p>M</p>
-                <p>G</p>
-                <p>E</p>
-              </p>
-              <div className="flex">
-                <p className="flex gap-1 text-[12px] text-white">
-                  <p>B</p>
-                  <p>O</p>
-                  <p>R</p>
-                  <p>D</p>
-                  <p>I</p>
-                  <p>N</p>
-                  <p>G</p>
-                </p>
-                <p className="pl-1 flex gap-1 text-[12px] text-white">
-                  <p>S</p>
-                  <p>C</p>
-                  <p>H</p>
-                  <p>O</p>
-                  <p>O</p>
-                  <p>L</p>
-                </p>
-              </div>
-            </div>
-          </div>
+          )}
         </NavLink>
       </div>
 
-      {/* Navigation Links */}
-      <div className="flex-1 overflow-y-auto max-h-[88vh] flex flex-col">
+      {/* Navigation Links with ultra-thin scrollbar */}
+      <div className="flex-1 overflow-y-auto py-2 scrollbar-custom">
         {navItems.map((item) => {
           if (item.label === "Academics") {
             return (
-              <div className="" key={item.label}>
+              <div key={item.label}>
                 <div
                   onClick={toggleAcademics}
-                  className="flex items-center justify-start gap-7 py-2 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
+                  className="flex items-center py-3 px-4 hover:bg-gray-100 cursor-pointer transition-colors"
                 >
-                  {item.icon}
-                  {!isSidebarCollapsed && <span>Academics</span>}
-                  {isAcademicsOpen ? <FaChevronDown className="text-xl" /> : <FaChevronRight className="text-xl" />}
+                  <span>{item.icon}</span>
+                  {!isSidebarCollapsed && (
+                    <>
+                      <span className="ml-3 text-sm font-medium text-gray-700">Academics</span>
+                      <span className="ml-auto text-gray-400">
+                        {isAcademicsOpen ? (
+                          <FaChevronDown className="text-xs" />
+                        ) : (
+                          <FaChevronRight className="text-xs" />
+                        )}
+                      </span>
+                    </>
+                  )}
                 </div>
                 <div
-                  className={`bg-yellow-700 transition-all duration-500 ease-in-out overflow-hidden ${isAcademicsOpen ? "max-h-96" : "max-h-0"}`}
+                  className={`bg-gray-50 transition-all duration-300 overflow-hidden ${
+                    isAcademicsOpen ? "max-h-96" : "max-h-0"
+                  }`}
                 >
-                    <NavLink to="/addmarks" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Upload Marks</span>}
+                  <NavLink 
+                    to="/addmarks" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-blue-50"
+                  >
+                    <FaFileUpload className="text-blue-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Upload Marks</span>}
                   </NavLink>
-                  <NavLink to="/assessments" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Assessments</span>}
+                  <NavLink 
+                    to="/assessments" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-blue-50"
+                  >
+                    <FaFileInvoice className="text-blue-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Assessments</span>}
                   </NavLink>
-                  <NavLink to="/general-report" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">General Report</span>}
+                  <NavLink 
+                    to="/general-report" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-blue-50"
+                  >
+                    <FaFileExport className="text-blue-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">General Report</span>}
+                  </NavLink>
+                  <NavLink 
+                    to="/exam-results" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-blue-50"
+                  >
+                    <FaClipboardList className="text-blue-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Exam Results</span>}
+                  </NavLink>
+                  <NavLink 
+                    to="/timetable" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-blue-50"
+                  >
+                    <FaCalendarAlt className="text-blue-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Timetable</span>}
                   </NavLink>
                 </div>
               </div>
@@ -134,38 +156,74 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
               <div key={item.label}>
                 <div
                   onClick={toggleFinance}
-                  className="flex items-center justify-start gap-7 py-2 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
+                  className="flex items-center py-3 px-4 hover:bg-gray-100 cursor-pointer transition-colors"
                 >
-                  {item.icon}
-                  {!isSidebarCollapsed && <span>Financials</span>}
-                  {isFinanceOpen ? <FaChevronDown className="text-xl" /> : <FaChevronRight className="text-xl" />}
+                  <span>{item.icon}</span>
+                  {!isSidebarCollapsed && (
+                    <>
+                      <span className="ml-3 text-sm font-medium text-gray-700">Finance</span>
+                      <span className="ml-auto text-gray-400">
+                        {isFinanceOpen ? (
+                          <FaChevronDown className="text-xs" />
+                        ) : (
+                          <FaChevronRight className="text-xs" />
+                        )}
+                      </span>
+                    </>
+                  )}
                 </div>
                 <div
-                  className={`bg-yellow-700 transition-all duration-500 ease-in-out overflow-hidden ${isFinanceOpen ? "max-h-96" : "max-h-0"}`}
+                  className={`bg-gray-50 transition-all duration-300 overflow-hidden ${
+                    isFinanceOpen ? "max-h-96" : "max-h-0"
+                  }`}
                 >
-                  <NavLink to="/fees-distribution" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Fees Allocation</span>}
+                  <NavLink 
+                    to="/fees-distribution" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-green-50"
+                  >
+                    <FaMoneyCheckAlt className="text-green-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Allocation</span>}
                   </NavLink>
-                  <NavLink to="/fees-structure" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Fees Structure</span>}
+                  <NavLink 
+                    to="/fees-structure" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-green-50"
+                  >
+                    <FaReceipt className="text-green-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Structure</span>}
                   </NavLink>
-                  <NavLink to="/fees-payments" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Fees Payments</span>}
+                  <NavLink 
+                    to="/fees-payments" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-green-50"
+                  >
+                    <FaCalculator className="text-green-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Payments</span>}
                   </NavLink>
-                  <NavLink to="/learner" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Fees Balances</span>}
+                  <NavLink 
+                    to="/fees-balances" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-green-50"
+                  >
+                    <FaPiggyBank className="text-green-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Balances</span>}
                   </NavLink>
-                  <NavLink to="/expenses" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Expenses</span>}
+                  <NavLink 
+                    to="/expenses" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-green-50"
+                  >
+                    <FaMoneyBillWave className="text-green-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Expenses</span>}
                   </NavLink>
-                  <NavLink to="/finance" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Analytics</span>}
+                  <NavLink 
+                    to="/financial-reports" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-green-50"
+                  >
+                    <FaChartBar className="text-green-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Financial Reports</span>}
                   </NavLink>
                 </div>
               </div>
@@ -177,20 +235,51 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
               <div key={item.label}>
                 <div
                   onClick={toggleHR}
-                  className="flex items-center justify-start gap-7 py-1 px-5 text-white hover:bg-gray-700 cursor-pointer rounded-md"
+                  className="flex items-center py-3 px-4 hover:bg-gray-100 cursor-pointer transition-colors"
                 >
-                  {item.icon}
-                  {!isSidebarCollapsed && <span>H R</span>}
-                  {isHROpen ? <FaChevronDown className="text-xl" /> : <FaChevronRight className="text-xl" />}
+                  <span>{item.icon}</span>
+                  {!isSidebarCollapsed && (
+                    <>
+                      <span className="ml-3 text-sm font-medium text-gray-700">HR</span>
+                      <span className="ml-auto text-gray-400">
+                        {isHROpen ? (
+                          <FaChevronDown className="text-xs" />
+                        ) : (
+                          <FaChevronRight className="text-xs" />
+                        )}
+                      </span>
+                    </>
+                  )}
                 </div>
                 <div
-                  className={`bg-yellow-700 transition-all duration-500 ease-in-out overflow-hidden ${isHROpen ? "max-h-96" : "max-h-0"}`}
+                  className={`bg-gray-50 transition-all duration-300 overflow-hidden ${
+                    isHROpen ? "max-h-96" : "max-h-0"
+                  }`}
                 >
-                  <NavLink to="/teachers" className="flex items-center gap-2 py-1 px-4 text-white hover:bg-gray-900 rounded-md">
-                    <FaFileAlt className="text-white text-2xl" />
-                    {!isSidebarCollapsed && <span className="pl-4">Teachers</span>}
+                  <NavLink 
+                    to="/teachers" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-yellow-50"
+                  >
+                    <FaChalkboardTeacher className="text-yellow-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Teachers</span>}
                   </NavLink>
-              
+                  <NavLink 
+                    to="/staff" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-yellow-50"
+                  >
+                    <FaUserTie className="text-yellow-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Staff</span>}
+                  </NavLink>
+                  <NavLink 
+                    to="/payroll" 
+                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
+                    activeClassName="bg-yellow-50"
+                  >
+                    <FaMoneyCheck className="text-yellow-400" />
+                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Payroll</span>}
+                  </NavLink>
                 </div>
               </div>
             );
@@ -200,18 +289,30 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
             <NavLink
               to={item.to}
               key={item.to}
-              className="flex px-2 items-center pr-8 py-1 hover:bg-yellow-700 text-white mb-2"
-              activeClassName="bg-gray-600"
+              className="flex items-center py-3 px-4 hover:bg-gray-100 transition-colors"
+              activeClassName="bg-blue-50"
             >
-              <div className="text-white px-2 text-2xl">{item.icon}</div>
-              {!isSidebarCollapsed && <span className="ml-4">{item.label}</span>}
+              <span>{item.icon}</span>
+              {!isSidebarCollapsed && <span className="ml-3 text-sm font-medium text-gray-700">{item.label}</span>}
             </NavLink>
           );
         })}
+      </div>
 
-        {/* Footer */}
-        <div className="text-center text-gray-400 text-xs bottom-0">
-          <p>© 2025 Bundi</p>
+      {/* Simple User Profile Footer */}
+      <div className="mt-auto border-t border-gray-200 bg-white p-3">
+        <div className="flex items-center justify-center">
+          <FaUserCircle className="text-xl text-gray-500" />
+          {!isSidebarCollapsed && (
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-700">{userName}</p>
+            </div>
+          )}
+        </div>
+        
+        {/* Copyright */}
+        <div className="text-center pt-2 text-xs text-gray-400">
+          © 2025 Topaz Computer Systems
         </div>
       </div>
     </div>
