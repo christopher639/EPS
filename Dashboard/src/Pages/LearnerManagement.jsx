@@ -236,10 +236,7 @@ const LearnerManagement = () => {
         </div>
       </div>
 
-      {/* Center Title */}
-      <p className="text-sm sm:text-base font-medium whitespace-nowrap px-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
-        Samge
-      </p>
+    
 
       {/* User Account (Right Side) */}
       <div className="md:hidden">
@@ -247,7 +244,7 @@ const LearnerManagement = () => {
       </div>
     </div>
 
-    <div className="flex mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
+    <div className="hidden md:flex  mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
       <div className="flex focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
         <input
           type="text"
@@ -284,6 +281,35 @@ const LearnerManagement = () => {
 
   
 </div>
+<div className="flex md:hidden mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
+      <div className="flex focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
+        <input
+          type="text"
+          placeholder="Search by RegNo..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="px-3 py-2 text-xs sm:text-sm w-full sm:w-64 max-w-40 focus:outline-none"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-blue-600 text-white px-3 hover:bg-blue-700 transition-colors flex items-center justify-center"
+          data-tooltip-id="search-tooltip"
+          data-tooltip-content="Search learners"
+        >
+          <FaSearch className="text-xs sm:text-sm" />
+        </button>
+      </div>
+      
+      <button
+        onClick={() => setModalOpen(true)}
+        className="bg-blue-600 mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg text-xs sm:text-sm"
+        data-tooltip-id="add-tooltip"
+        data-tooltip-content="Add new learner"
+      >
+        <FaPlus className="text-xs sm:text-sm" />
+  
+      </button>
+    </div>
 
         {/* Add Learner Modal - Unchanged as requested */}
         {modalOpen && (
