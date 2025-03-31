@@ -873,81 +873,82 @@ const exportAllReportCards = async () => {
             </div>
           )  : (
            <div className="bg-white rounded mx-1">
-         <div className="p-2 gap-3 flex flex-col md:flex-row justify-between ">
-           {/* Search input - hidden on mobile, shown on md+ */}
-           <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="hidden md:block max-w-48 text-xs md:text-sm border border-gray-300 py-1 px-2 rounded"
-            placeholder="Search by name or regno"
-          />
+       <div className="p-1 gap-2 flex flex-col justify-between">
+ <div className="flex  flex-col md:flex-row">
+ {/* Top row - filters and mobile search */}
+ <div className="flex justify-between items-center gap-1 w-full">
+    {/* Filter display - always visible */}
+    <div className="flex gap-1 overflow-x-auto whitespace-nowrap scrollbar-hide">
+      <div className="flex gap-1 items-center">
+        <p className="text-xs">Class:</p>
+        <p className="font-semibold text-xs">{appliedFilters.class}</p>
+      </div>
+      <div className="flex gap-1 items-center">
+        <p className="text-xs">Year:</p>
+        <p className="font-semibold text-xs">{appliedFilters.year}</p>
+      </div>
+      <div className="flex gap-1 items-center">
+        <p className="text-xs">Term:</p>
+        <p className="font-semibold text-xs">{appliedFilters.term}</p>
+      </div>
+    </div>
+    
+    {/* Mobile search - shown on mobile only */}
+ 
+  </div>
 
-                {/* Filter display - optimized for mobile */}
-          <div className="flex gap-1 md:gap-2 justify-between w-full md:w-auto">
-            <div className="flex gap-1 items-center">
-              <p className="text-xs md:text-sm">Class:</p>
-              <p className="font-semibold text-xs md:text-sm">{appliedFilters.class}</p>
-            </div>
-            <div className="flex gap-1 items-center">
-              <p className="text-xs md:text-sm">Year:</p>
-              <p className="font-semibold text-xs md:text-sm">{appliedFilters.year}</p>
-            </div>
-            <div className="flex gap-1 items-center">
-              <p className="text-xs md:text-sm">Term:</p>
-              <p className="font-semibold text-xs md:text-sm">{appliedFilters.term}</p>
-            </div>
-          </div>
-            <div className="flex justify-between">
-            <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="text-center max-w-20 mb-2  mx-3  md:hidden max-w-48 text-sm border border-gray-300 py-2 px-1 rounded-md"
-            placeholder="Search"
-          />
-             <div className="flex  justify-between gap-1">
-         
-         <ActionButton
-           onClick={exportAllReportCards}
-           disabled={generatingReportCards}
-           icon={FaFileDownload}
-           label=""
-           loadingLabel="Downloading..."
-           tooltip="Download PDF report cards for all students"
-           bgColor="bg-purple-600"
-           hoverColor="hover:bg-purple-700"
-           size="small"
-         />
-         
-         <ActionButton
-           onClick={exportToPDF}
-           disabled={generatingPDF}
-           icon={FaFilePdf}
-           label="PDF"
-           loadingLabel="Generating..."
-           tooltip="Export class summary as PDF"
-           bgColor="bg-red-600"
-           hoverColor="hover:bg-red-700"
-           size="small"
-         />
-         
-         <ActionButton
-           onClick={exportToExcel}
-           disabled={generatingExcel}
-           icon={FaFileExcel}
-           label="Excel"
-           loadingLabel="..."
-           tooltip="Export data to Excel spreadsheet"
-           bgColor="bg-green-600"
-           hoverColor="hover:bg-green-700"
-           size="small"
-         />
-      
-            </div>
-            </div>
-         </div>
-            <div className="bg-white mx-3 md:mx-4  mx-0 grid gri-cols-1 pb-48 md:pb-6 max-h-screen md:max-h-[77vh] overflow-y-auto overflow-x-auto rounded-lg ">  
+  {/* Bottom row - desktop search and action buttons */}
+  <div className="flex justify-between items-center gap-2 w-full">
+  
+
+    {/* Action buttons - compact on mobile */}
+    <div className="flex justify-between gap-1">
+        {/* Desktop search - hidden on mobile */}
+    <input
+      type="text"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className=" md:block text-xs border border-gray-300 py-1 px-2 rounded w-32"
+      placeholder="Search name/regno"
+    />
+      <ActionButton
+        onClick={exportAllReportCards}
+        disabled={generatingReportCards}
+        icon={FaFileDownload}
+        label=""
+        loadingLabel="..."
+        tooltip="Download all PDFs"
+        bgColor="bg-purple-600"
+        hoverColor="hover:bg-purple-700"
+        size="small"
+      />
+      <ActionButton
+        onClick={exportToPDF}
+        disabled={generatingPDF}
+        icon={FaFilePdf}
+        label=""
+        loadingLabel="..."
+        tooltip="Export PDF"
+        bgColor="bg-red-600"
+        hoverColor="hover:bg-red-700"
+        size="small"
+      />
+      <ActionButton
+        onClick={exportToExcel}
+        disabled={generatingExcel}
+        icon={FaFileExcel}
+        label=""
+        loadingLabel="..."
+        tooltip="Export Excel"
+        bgColor="bg-green-600"
+        hoverColor="hover:bg-green-700"
+        size="small"
+      />
+    </div>
+  </div>
+ </div>
+</div>
+            <div className="bg-white mx-1 md:mx-4  mx-0 grid gri-cols-1  md:pb-6 max-h-screen md:max-h-[77vh] overflow-y-auto overflow-x-auto rounded-lg ">  
               <table className="w-full  overflow-x-auto table-auto  border">
                 <thead className="sticky top-0 bg-white">
                   <tr className="bg-gray-200">

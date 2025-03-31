@@ -520,7 +520,7 @@ const LearnerManagement = () => {
 
         {/* Learners List */}
         {!isLoading && (
-          <div className="bg-white mx-8 md:mx-4  mx-0 grid gri-cols-1 pb-48 md:pb-6 max-h-screen md:max-h-[85vh] overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
+          <div className="bg-white mx-2 md:mx-4  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[75vh] overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
             <div className="flex mb-2 sm:mb-4 gap-2">       
     <div className="flex  mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
       <div className="flex focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
