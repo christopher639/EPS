@@ -53,7 +53,7 @@ app.get("*", (req, res) => {
 //database online connections
 mongoose.connect("mongodb+srv://christopherbundi639:xDFLqAKg7G78hcuu@cluster0.uosxzen.mongodb.net/samge")
 .then((error)=>{
-console.log("Database connected")
+console.log("online Database  connected")
 })
 
 //database local connections
