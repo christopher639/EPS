@@ -53,11 +53,11 @@ app.get("*", (req, res) => {
 //database online connections
 mongoose.connect("mongodb+srv://christopherbundi639:xDFLqAKg7G78hcuu@cluster0.uosxzen.mongodb.net/samge")
 .then((error)=>{
-console.log("online Database  connected")
+console.log("Database connected")
 })
 
 //database local connections
-// mongoose
+// mongoose  
 //   .connect("mongodb://localhost:27017/dreamhomehouse")
 //   .then(() => {
 //     console.log("Database connected");

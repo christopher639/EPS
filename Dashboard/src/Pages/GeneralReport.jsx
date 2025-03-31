@@ -803,7 +803,7 @@ const exportAllReportCards = async () => {
           <UserAccount />
         </div>
 
-     <div className="flex justify-between  mx-1 p-2 gap-1">
+     <div className="flex justify-between  mx-1 p-1 gap-1">
        {/* Filter Section */}
        <div className="grid md:hidden gap-1 grid-cols-3 px-1 py-1 ">
   {/* Class Select Dropdown */}
@@ -852,7 +852,7 @@ const exportAllReportCards = async () => {
      
         
         {/* Table Section */}
-        <div className="px-4 mt-2 grid grid-cols-1 max-h-[60vh]  pb-4  md:max-h-[80vh] pb-8 o w-full ">
+        <div className="px-4  grid grid-cols-1 max-h-[60vh]  pb-4  md:max-h-[80vh]  w-full ">
           {loading ? (
             <Spinner />
           ) : error ? (
@@ -947,7 +947,7 @@ const exportAllReportCards = async () => {
             </div>
             </div>
          </div>
-            <div className="bg-white mx-3 md:mx-4  mx-0 grid gri-cols-1 pb-48 md:pb-6 max-h-screen md:max-h-[75vh] overflow-y-auto overflow-x-auto rounded-lg ">  
+            <div className="bg-white mx-3 md:mx-4  mx-0 grid gri-cols-1 pb-48 md:pb-6 max-h-screen md:max-h-[77vh] overflow-y-auto overflow-x-auto rounded-lg ">  
               <table className="w-full  overflow-x-auto table-auto  border">
                 <thead className="sticky top-0 bg-white">
                   <tr className="bg-gray-200">
