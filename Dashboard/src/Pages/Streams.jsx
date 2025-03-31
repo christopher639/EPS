@@ -292,7 +292,7 @@ const Streams = () => {
         </header>
 
         {/* Body */}
-        <main className="p-4 md:p-6">
+        <main className="p-4 md:p-6  overflow-y-auto max-h-[80vh]">
           <div className="md:hidden mb-4">
             <h1 className="text-lg font-semibold text-gray-800 mb-3">Streams</h1>
             <div className="flex gap-3">
