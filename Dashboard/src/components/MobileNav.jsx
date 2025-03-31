@@ -85,7 +85,7 @@ const MobileNav = () => {
   };
 
   return (
-    <div className="md:hidden ">
+    <div className="md:hidden">
       {/* Hamburger Icon */}
       <button onClick={toggleNav} className="p-2 focus:outline-none">
         {isNavOpen ? (
@@ -109,13 +109,13 @@ const MobileNav = () => {
       <div
         className={`fixed top-0 left-0 h-full w-3/4 bg-white transform ${
           isNavOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out z-50  shadow-xl rounded-r-lg`}
+        } transition-transform duration-300 ease-in-out z-50 shadow-xl rounded-r-lg`}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
         {/* Logo Section */}
-        <div className="p-4  flex rounded-r-lg items-center justify-between border-b border-gray-700">
+        <div className="p-4 flex rounded-r-lg items-center justify-between border-b border-gray-200">
           <NavLink to="/dashboard" className="flex items-center" onClick={toggleNav}>
             <img
               className="w-12 h-12 bg-white rounded-full object-contain border-2 border-gray-200"
@@ -127,231 +127,238 @@ const MobileNav = () => {
               <p className="text-xs text-black">BOARDING SCHOOL</p>
             </div>
           </NavLink>
-          <button onClick={toggleNav} className="text-white">
+          <button onClick={toggleNav} className="text-gray-500">
             <FaTimes />
           </button>
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col px-4 py-2 max-h-[85vh] overflow-y-auto scrollbar-custom">
-          {navItems.map((item) => {
+        <div className="flex flex-col px-4 py-2 max-h-[75vh] overflow-y-auto scrollbar-custom divide-y divide-gray-100">
+          {navItems.map((item, index) => {
             if (item.label === "Academics") {
               return (
-                <div key={item.label} className="w-full">
-                  <div
-                    onClick={toggleAcademics}
-                    className="flex items-center justify-between py-3 px-4 text-gray-800 hover:bg-gray-100 cursor-pointer rounded-lg transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-blue-500">{item.icon}</span>
-                      <span className="font-medium">Academics</span>
+                <React.Fragment key={item.label}>
+                  <div className="w-full border-t border-gray-100 first:border-t-0">
+                    <div
+                      onClick={toggleAcademics}
+                      className="flex items-center justify-between py-3 px-4 text-gray-800 hover:bg-gray-50 cursor-pointer rounded-lg transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-blue-500">{item.icon}</span>
+                        <span className="font-medium">Academics</span>
+                      </div>
+                      {isAcademicsOpen ? (
+                        <FaChevronDown className="text-gray-500" />
+                      ) : (
+                        <FaChevronRight className="text-gray-500" />
+                      )}
                     </div>
-                    {isAcademicsOpen ? (
-                      <FaChevronDown className="text-gray-500" />
-                    ) : (
-                      <FaChevronRight className="text-gray-500" />
-                    )}
+                    <div
+                      className={`pl-12 transition-all duration-300 overflow-hidden ${
+                        isAcademicsOpen ? "max-h-96" : "max-h-0"
+                      }`}
+                    >
+                      <NavLink
+                        to="/addmarks"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaFileUpload className="text-blue-400" />
+                        <span>Upload Marks</span>
+                      </NavLink>
+                      <NavLink
+                        to="/assessments"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaFileAlt className="text-blue-400" />
+                        <span>Assessments</span>
+                      </NavLink>
+                      <NavLink
+                        to="/general-report"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaFileExport className="text-blue-400" />
+                        <span>General Report</span>
+                      </NavLink>
+                      <NavLink
+                        to="/exam-results"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaClipboardList className="text-blue-400" />
+                        <span>Exam Results</span>
+                      </NavLink>
+                      <NavLink
+                        to="/timetable"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg"
+                        onClick={toggleNav}
+                      >
+                        <FaCalendarAlt className="text-blue-400" />
+                        <span>Timetable</span>
+                      </NavLink>
+                    </div>
                   </div>
-                  <div
-                    className={`pl-12 transition-all duration-300 overflow-hidden ${
-                      isAcademicsOpen ? "max-h-96" : "max-h-0"
-                    }`}
-                  >
-                    <NavLink
-                      to="/addmarks"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaFileUpload className="text-blue-400" />
-                      <span>Upload Marks</span>
-                    </NavLink>
-                    <NavLink
-                      to="/assessments"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaFileAlt className="text-blue-400" />
-                      <span>Assessments</span>
-                    </NavLink>
-                    <NavLink
-                      to="/general-report"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaFileExport className="text-blue-400" />
-                      <span>General Report</span>
-                    </NavLink>
-                    <NavLink
-                      to="/exam-results"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaClipboardList className="text-blue-400" />
-                      <span>Exam Results</span>
-                    </NavLink>
-                    <NavLink
-                      to="/timetable"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaCalendarAlt className="text-blue-400" />
-                      <span>Timetable</span>
-                    </NavLink>
-                  </div>
-                </div>
+                </React.Fragment>
               );
             }
 
             if (item.label === "Finance") {
               return (
-                <div key={item.label} className="w-full">
-                  <div
-                    onClick={toggleFinance}
-                    className="flex items-center justify-between py-3 px-4 text-gray-800 hover:bg-gray-100 cursor-pointer rounded-lg transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-green-500">{item.icon}</span>
-                      <span className="font-medium">Finance</span>
+                <React.Fragment key={item.label}>
+                  <div className="w-full border-t border-gray-100">
+                    <div
+                      onClick={toggleFinance}
+                      className="flex items-center justify-between py-3 px-4 text-gray-800 hover:bg-gray-50 cursor-pointer rounded-lg transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-green-500">{item.icon}</span>
+                        <span className="font-medium">Finance</span>
+                      </div>
+                      {isFinanceOpen ? (
+                        <FaChevronDown className="text-gray-500" />
+                      ) : (
+                        <FaChevronRight className="text-gray-500" />
+                      )}
                     </div>
-                    {isFinanceOpen ? (
-                      <FaChevronDown className="text-gray-500" />
-                    ) : (
-                      <FaChevronRight className="text-gray-500" />
-                    )}
+                    <div
+                      className={`pl-12 transition-all duration-300 overflow-hidden ${
+                        isFinanceOpen ? "max-h-96" : "max-h-0"
+                      }`}
+                    >
+                      <NavLink
+                        to="/fees-distribution"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaMoneyCheckAlt className="text-green-400" />
+                        <span>Fees Allocation</span>
+                      </NavLink>
+                      <NavLink
+                        to="/fees-structure"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaReceipt className="text-green-400" />
+                        <span>Fees Structure</span>
+                      </NavLink>
+                      <NavLink
+                        to="/fees-payments"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaCalculator className="text-green-400" />
+                        <span>Fees Payments</span>
+                      </NavLink>
+                      <NavLink
+                        to="/fees-balances"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaPiggyBank className="text-green-400" />
+                        <span>Fees Balances</span>
+                      </NavLink>
+                      <NavLink
+                        to="/expenses"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaFileInvoiceDollar className="text-green-400" />
+                        <span>Expenses</span>
+                      </NavLink>
+                      <NavLink
+                        to="/financial-reports"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg"
+                        onClick={toggleNav}
+                      >
+                        <FaChartBar className="text-green-400" />
+                        <span>Financial Reports</span>
+                      </NavLink>
+                    </div>
                   </div>
-                  <div
-                    className={`pl-12 transition-all duration-300 overflow-hidden ${
-                      isFinanceOpen ? "max-h-96" : "max-h-0"
-                    }`}
-                  >
-                    <NavLink
-                      to="/fees-distribution"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaMoneyCheckAlt className="text-green-400" />
-                      <span>Fees Allocation</span>
-                    </NavLink>
-                    <NavLink
-                      to="/fees-structure"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaReceipt className="text-green-400" />
-                      <span>Fees Structure</span>
-                    </NavLink>
-                    <NavLink
-                      to="/fees-payments"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaCalculator className="text-green-400" />
-                      <span>Fees Payments</span>
-                    </NavLink>
-                    <NavLink
-                      to="/fees-balances"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaPiggyBank className="text-green-400" />
-                      <span>Fees Balances</span>
-                    </NavLink>
-                    <NavLink
-                      to="/expenses"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaFileInvoiceDollar className="text-green-400" />
-                      <span>Expenses</span>
-                    </NavLink>
-                    <NavLink
-                      to="/financial-reports"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaChartBar className="text-green-400" />
-                      <span>Financial Reports</span>
-                    </NavLink>
-                  </div>
-                </div>
+                </React.Fragment>
               );
             }
 
             if (item.label === "Human Resource") {
               return (
-                <div key={item.label} className="w-full">
-                  <div
-                    onClick={toggleHR}
-                    className="flex items-center justify-between py-3 px-4 text-gray-800 hover:bg-gray-100 cursor-pointer rounded-lg transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-yellow-500">{item.icon}</span>
-                      <span className="font-medium">Human Resource</span>
+                <React.Fragment key={item.label}>
+                  <div className="w-full border-t border-gray-100">
+                    <div
+                      onClick={toggleHR}
+                      className="flex items-center justify-between py-3 px-4 text-gray-800 hover:bg-gray-50 cursor-pointer rounded-lg transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-yellow-500">{item.icon}</span>
+                        <span className="font-medium">Human Resource</span>
+                      </div>
+                      {isHROpen ? (
+                        <FaChevronDown className="text-gray-500" />
+                      ) : (
+                        <FaChevronRight className="text-gray-500" />
+                      )}
                     </div>
-                    {isHROpen ? (
-                      <FaChevronDown className="text-gray-500" />
-                    ) : (
-                      <FaChevronRight className="text-gray-500" />
-                    )}
+                    <div
+                      className={`pl-12 transition-all duration-300 overflow-hidden ${
+                        isHROpen ? "max-h-96" : "max-h-0"
+                      }`}
+                    >
+                      <NavLink
+                        to="/teachers"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaUserTie className="text-yellow-400" />
+                        <span>Teachers</span>
+                      </NavLink>
+                      <NavLink
+                        to="/staff"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
+                        onClick={toggleNav}
+                      >
+                        <FaUserCircle className="text-yellow-400" />
+                        <span>Staff</span>
+                      </NavLink>
+                      <NavLink
+                        to="/payroll"
+                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg"
+                        onClick={toggleNav}
+                      >
+                        <FaMoneyBillAlt className="text-yellow-400" />
+                        <span>Payroll</span>
+                      </NavLink>
+                    </div>
                   </div>
-                  <div
-                    className={`pl-12 transition-all duration-300 overflow-hidden ${
-                      isHROpen ? "max-h-96" : "max-h-0"
-                    }`}
-                  >
-                    <NavLink
-                      to="/teachers"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaUserTie className="text-yellow-400" />
-                      <span>Teachers</span>
-                    </NavLink>
-                    <NavLink
-                      to="/staff"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaUserCircle className="text-yellow-400" />
-                      <span>Staff</span>
-                    </NavLink>
-                    <NavLink
-                      to="/payroll"
-                      className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      onClick={toggleNav}
-                    >
-                      <FaMoneyBillAlt className="text-yellow-400" />
-                      <span>Payroll</span>
-                    </NavLink>
-                  </div>
-                </div>
+                </React.Fragment>
               );
             }
 
             return (
-              <NavLink
-                to={item.to}
-                key={item.to}
-                className="flex items-center gap-3 py-3 px-4 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
-                activeClassName="bg-gray-200"
-                onClick={toggleNav}
-              >
-                <span className={
-                  item.label === "Dashboard" ? "text-purple-500" :
-                  item.label === "Learners" ? "text-blue-500" :
-                  item.label === "Departments" ? "text-red-500" :
-                  item.label === "Classes" ? "text-blue-500" :
-                  item.label === "Streams" ? "text-indigo-500" :
-                  item.label === "Teachers" ? "text-yellow-500" :
-                  item.label === "Learning Areas" ? "text-indigo-500" :
-                  item.label === "Parents" ? "text-pink-500" :
-                  item.label === "Users" ? "text-teal-500" :
-                  item.label === "Analytics" ? "text-orange-500" : "text-gray-500"
-                }>
-                  {item.icon}
-                </span>
-                <span>{item.label}</span>
-              </NavLink>
+              <div key={item.to} className="border-t border-gray-100 first:border-t-0">
+                <NavLink
+                  to={item.to}
+                  className="flex items-center gap-3 py-3 px-4 text-gray-800 hover:bg-gray-50 rounded-lg transition-colors"
+                  activeClassName="bg-gray-100"
+                  onClick={toggleNav}
+                >
+                  <span className={
+                    item.label === "Dashboard" ? "text-purple-500" :
+                    item.label === "Learners" ? "text-blue-500" :
+                    item.label === "Departments" ? "text-red-500" :
+                    item.label === "Classes" ? "text-blue-500" :
+                    item.label === "Streams" ? "text-indigo-500" :
+                    item.label === "Teachers" ? "text-yellow-500" :
+                    item.label === "Learning Areas" ? "text-indigo-500" :
+                    item.label === "Parents" ? "text-pink-500" :
+                    item.label === "Users" ? "text-teal-500" :
+                    item.label === "Analytics" ? "text-orange-500" : "text-gray-500"
+                  }>
+                    {item.icon}
+                  </span>
+                  <span>{item.label}</span>
+                </NavLink>
+              </div>
             );
           })}
         </div>
@@ -363,6 +370,7 @@ const MobileNav = () => {
             <div>
               <p className="text-sm font-medium text-gray-700">Admin User</p>
               <p className="text-xs text-gray-500">Administrator</p>
+              
             </div>
           </div>
         </div>

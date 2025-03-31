@@ -235,9 +235,35 @@ const LearnerManagement = () => {
           />
         </div>
       </div>
+      <div className=" hidden md:flex   focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
+        <input
+          type="text"
+          placeholder="Search by RegNo..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="px-3 py-1 text-xs sm:text-sm w-full sm:w-64 max-w-40 focus:outline-none"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-blue-600 text-white px-3 hover:bg-blue-700 transition-colors flex items-center justify-center"
+          data-tooltip-id="search-tooltip"
+          data-tooltip-content="Search learners"
+        >
+          <FaSearch className="text-xs sm:text-sm" />
+        </button>
+      </div>
+      <button
+        onClick={() => setModalOpen(true)}
+        className="bg-blue-600 mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors  shadow-md hover:shadow-lg text-xs sm:text-sm"
+        data-tooltip-id="add-tooltip"
+        data-tooltip-content="Add new learner"
+      >
+        <FaPlus className="text-xs sm:text-sm" />
+  
+      </button>
     <img src="lion.jpg" alt="" className="h-[54px] md:hidden" />
     
-
+       
       {/* User Account (Right Side) */}
       <div className="md:hidden">
         <UserAccount className="text-blue-600" />
@@ -523,7 +549,7 @@ const LearnerManagement = () => {
           <div className="bg-white mx-2 md:mx-2  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[90vh] overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
             <div className="flex mb-2  md:mb-0 sm:mb-4 gap-2">       
     <div className="flex  mb-2 mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
-      <div className="flex   focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
+    <div className="flex md:hidden  focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
         <input
           type="text"
           placeholder="Search by RegNo..."
@@ -543,7 +569,7 @@ const LearnerManagement = () => {
       
       <button
         onClick={() => setModalOpen(true)}
-        className="bg-blue-600 mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors  shadow-md hover:shadow-lg text-xs sm:text-sm"
+        className="bg-blue-600 md:hidden mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors  shadow-md hover:shadow-lg text-xs sm:text-sm"
         data-tooltip-id="add-tooltip"
         data-tooltip-content="Add new learner"
       >
