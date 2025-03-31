@@ -209,7 +209,7 @@ const Clases = () => {
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>
           ) : (
-            <div className="grid overflow-y-auto max-h-[80vh] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid overflow-y-auto max-h-[70vh] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {clases.length > 0 ? (
                 clases.map((clase) => (
                   <div key={clase._id} className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition duration-200">
