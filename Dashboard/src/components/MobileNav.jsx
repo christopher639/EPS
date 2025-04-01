@@ -221,7 +221,7 @@ const MobileNav = () => {
                       }`}
                     >
                       <NavLink
-                        to="/fees-distribution"
+                        to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
@@ -229,7 +229,7 @@ const MobileNav = () => {
                         <span>Fees Allocation</span>
                       </NavLink>
                       <NavLink
-                        to="/fees-structure"
+                        to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
@@ -237,7 +237,7 @@ const MobileNav = () => {
                         <span>Fees Structure</span>
                       </NavLink>
                       <NavLink
-                        to="/fees-payments"
+                        to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
@@ -245,7 +245,7 @@ const MobileNav = () => {
                         <span>Fees Payments</span>
                       </NavLink>
                       <NavLink
-                        to="/fees-balances"
+                        to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
@@ -253,7 +253,7 @@ const MobileNav = () => {
                         <span>Fees Balances</span>
                       </NavLink>
                       <NavLink
-                        to="/expenses"
+                        to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >

@@ -3,7 +3,14 @@ import axios from "axios";
 import SideBar from "../components/SideBar";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import UserAccount from "../components/UserAccount";
+import { FaFilePdf, FaFileExcel, FaPrint, FaPlus, FaReceipt } from "react-icons/fa";
+import { Tooltip } from "react-tooltip";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import BASE_URL from "../config";
+
 axios.defaults.baseURL = BASE_URL;
 
 const FeesPayment = () => {
@@ -11,10 +18,10 @@ const FeesPayment = () => {
   const [payments, setPayments] = useState([]);
   const [totalFeesPaid, setTotalFeesPaid] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     regno: "",
-    paymentDate: "",
+    paymentDate: new Date().toISOString().split('T')[0],
     amountPaid: "",
     paymentMethod: "",
     receiptNumber: "",
@@ -22,11 +29,10 @@ const FeesPayment = () => {
     remarks: "",
   });
 
-  // Fetch payments from API
   const fetchPayments = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("https://eps-dashboard.onrender.com/api/fees-payments");
+      const res = await axios.get("/api/fees-payments");
       setPayments(res.data.payments);
       setTotalFeesPaid(res.data.totalFeesPaid);
     } catch (error) {
@@ -43,21 +49,19 @@ const FeesPayment = () => {
     setSideBar((prev) => !prev);
   };
 
-  // Handle modal form input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Submit new payment
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://eps-dashboard.onrender.com/api/fees-payments", formData);
-      fetchPayments(); // Refresh data
-      setIsModalOpen(false); // Close modal
+      await axios.post("/api/fees-payments", formData);
+      fetchPayments();
+      setIsModalOpen(false);
       setFormData({
         regno: "",
-        paymentDate: "",
+        paymentDate: new Date().toISOString().split('T')[0],
         amountPaid: "",
         paymentMethod: "",
         receiptNumber: "",
@@ -69,207 +73,444 @@ const FeesPayment = () => {
     }
   };
 
+  // Generate PDF Report
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    
+    // School Header
+    doc.setFontSize(18);
+    doc.setTextColor(40, 53, 147);
+    doc.text("SAMGE BOARDING SCHOOL", 105, 20, { align: "center" });
+    doc.setFontSize(14);
+    doc.text("Fees Payment Report", 105, 30, { align: "center" });
+    
+    // Summary Info
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 40);
+    doc.text(`Total Payments: ${payments.length}`, 14, 45);
+    doc.text(`Total Amount: Ksh ${totalFeesPaid.toLocaleString()}`, 14, 50);
+    
+    // Table Data
+    const tableData = payments.map(payment => [
+      payment.receiptNumber || "N/A",
+      payment.regno,
+      payment.studentDetails?.name || "N/A",
+      payment.amountPaid.toLocaleString(),
+      payment.paymentMethod,
+      new Date(payment.paymentDate).toLocaleDateString()
+    ]);
+    
+    // AutoTable
+    autoTable(doc, {
+      head: [['Receipt No', 'Reg No', 'Student', 'Amount', 'Method', 'Date']],
+      body: tableData,
+      startY: 60,
+      styles: {
+        cellPadding: 3,
+        fontSize: 8,
+        valign: 'middle'
+      },
+      headStyles: {
+        fillColor: [40, 53, 147],
+        textColor: 255,
+        fontStyle: 'bold'
+      },
+      alternateRowStyles: {
+        fillColor: [240, 240, 240]
+      },
+      columnStyles: {
+        3: { cellWidth: 'auto', halign: 'right' }
+      }
+    });
+    
+    // Footer
+    const pageCount = doc.internal.getNumberOfPages();
+    for(let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.text(`Page ${i} of ${pageCount}`, 105, 287, { align: "center" });
+    }
+    
+    doc.save(`fees_payments_${new Date().toISOString().slice(0,10)}.pdf`);
+  };
+
+  // Generate Excel Report
+  const generateExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(
+      payments.map(payment => ({
+        "Receipt No": payment.receiptNumber || "N/A",
+        "Reg No": payment.regno,
+        "Student": payment.studentDetails?.name || "N/A",
+        "Amount": payment.amountPaid,
+        "Method": payment.paymentMethod,
+        "Date": new Date(payment.paymentDate).toLocaleDateString(),
+        "Paid By": payment.paidBy,
+        "Remarks": payment.remarks || "N/A"
+      }))
+    );
+    
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Payments");
+    
+    // Add summary info
+    const summaryData = [
+      ["Report Generated", new Date().toLocaleString()],
+      ["Total Records", payments.length],
+      ["Total Amount", totalFeesPaid]
+    ];
+    const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
+    XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
+    
+    XLSX.writeFile(workbook, `fees_payments_${new Date().toISOString().slice(0,10)}.xlsx`);
+  };
+
+  // Generate Receipt PDF
+  const generateReceipt = (payment) => {
+    const doc = new jsPDF();
+    
+    // School Header
+    doc.setFontSize(16);
+    doc.setTextColor(40, 53, 147);
+    doc.text("SAMGE BOARDING SCHOOL", 105, 20, { align: "center" });
+    doc.setFontSize(12);
+    doc.text("OFFICIAL PAYMENT RECEIPT", 105, 28, { align: "center" });
+    
+    // Receipt Details
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    
+    // Receipt Number and Date
+    doc.text(`Receipt No: ${payment.receiptNumber || "N/A"}`, 14, 40);
+    doc.text(`Date: ${new Date(payment.paymentDate).toLocaleDateString()}`, 160, 40, { align: "right" });
+    
+    // Line separator
+    doc.setDrawColor(200);
+    doc.line(14, 45, 196, 45);
+    
+    // Student Details
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("STUDENT DETAILS", 14, 55);
+    doc.setFont("helvetica", "normal");
+    
+    doc.text(`Registration No: ${payment.regno}`, 14, 65);
+    doc.text(`Name: ${payment.studentDetails?.name || "N/A"}`, 14, 72);
+    
+    // Payment Details
+    doc.setFont("helvetica", "bold");
+    doc.text("PAYMENT DETAILS", 14, 85);
+    doc.setFont("helvetica", "normal");
+    
+    doc.text(`Amount: Ksh ${payment.amountPaid.toLocaleString()}`, 14, 95);
+    doc.text(`Payment Method: ${payment.paymentMethod}`, 14, 102);
+    doc.text(`Received By: ${payment.paidBy || "School Accounts"}`, 14, 109);
+    doc.text(`Remarks: ${payment.remarks || "School Fees Payment"}`, 14, 116);
+    
+    // Footer
+    doc.setFontSize(8);
+    doc.setTextColor(100);
+    doc.text("This is an official receipt. Please keep it safe.", 105, 150, { align: "center" });
+    
+    // Signature line
+    doc.setFontSize(10);
+    doc.text("Authorized Signature: _________________________", 105, 170, { align: "center" });
+    doc.text("Stamp & Date", 105, 180, { align: "center" });
+    
+    return doc;
+  };
+
+  // Download Receipt
+  const downloadReceipt = (payment) => {
+    const doc = generateReceipt(payment);
+    doc.save(`receipt_${payment.receiptNumber || payment._id}.pdf`);
+  };
+
+  // Print Receipt using jsPDF
+  const printReceipt = (payment) => {
+    const doc = generateReceipt(payment);
+    doc.autoPrint();
+    doc.output('dataurlnewwindow');
+  };
+
   return (
-    <div className="flex bg-gray-100  min-h-screen">
+    <div className="flex  bg-gray-50 min-h-screen">
       {/* Sidebar */}
-      <div className={`transition-all duration-700 ease-in-out ${sideBar ? "w-0 md:w-72" : "w-0"} bg-gray-800 min-h-screen`}>
+      <div className={`transition-all duration-300 ease-in-out ${sideBar ? "w-0 md:w-64" : "w-0"} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
 
       {/* Main Content */}
-      <div className="flex bg-white flex-col w-full">
+      <div className=" w-full">
         {/* Header */}
-        <div className="flex justify-between items-center bg-white  p-4 border-b">
-          <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-          <h1 className="text-2xl font-semibold text-gray-800 hidden md:flex">Fees Payment Transactions</h1>
+        <div className="flex justify-between items-center bg-white p-4 border-b shadow-sm">
+          <div className="flex items-center ">
+            <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+            <h1 className="text-xl font-semibold text-gray-800">Fees Payment Transactions</h1>
+          </div>
           <UserAccount />
         </div>
 
-        {/* Total Fees Paid & Add Payment Button */}
-        <div className="p-6 flex justify-between">
-          <div className="bg-white flex gap-3  border rounded-lg p-2 text-center">
-            <h2 className="text-xl font-semibold text-gray-700">Total Fees Paid</h2>
-            <p className="text-2xl font-bold text-black">
-              Ksh {new Intl.NumberFormat("en-US").format(totalFeesPaid)}
-            </p>
-          </div>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-          >
-            Add Payment
-          </button>
-        </div>
-
-        {/* Transactions Table */}
-        <div className="px-6 ">
-          {loading ? (
-            <div className="flex justify-center items-center h-64">
-              <p className="text-lg font-semibold text-gray-600">Loading transactions...</p>
+          {/* Dashboard */}
+          <div className="p-4 md:p-6">
+          {/* Summary Card and Action Buttons */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+            <div className="bg-white p-4 rounded-lg shadow border w-full md:w-auto">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-blue-100 rounded-full">
+                  <FaReceipt className="text-blue-600 text-xl" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Total Fees Paid</p>
+                  <p className="text-2xl font-bold text-gray-800">
+                    Ksh {new Intl.NumberFormat("en-US").format(totalFeesPaid)}
+                  </p>
+                </div>
+              </div>
             </div>
-          ) : (
-            <div className="overflow-x-auto max-h-[69vh] pb-8 bg-white shadow-lg border rounded-lg">
-              <table className="min-w-full border-collapse text-sm text-left">
-                <thead className="bg-gray-900 text-black uppercase text-xs">
-                  <tr>
-                    <th className="py-2 px-1 border">Transaction ID</th>
-                    <th className="py-2 px-1 border">Reg No.</th>
-                    <th className="py-2 px-1 border">Student Name</th>
-                    <th className="py-2 px-1 border">Amount Paid (Ksh)</th>
-                    <th className="py-2 px-1 border">Payment Method</th>
-                    <th className="py-2 px-1 border">Receipt No.</th>
-                    <th className="py-2 px-1 border">Date Paid</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white">
-                  {payments.length > 0 ? (
-                    payments.map((payment) => (
-                      <tr key={payment._id} className="border hover:bg-gray-50 text-sm">
-                        <td className="py-2 px-1 border">{payment._id}</td>
-                        <td className="py-2 px-1 border">{payment.regno}</td>
-                        <td className="py-2 px-1 border">
-                          {payment.studentDetails ? payment.studentDetails.name : "N/A"}
-                        </td>
-                        <td className="py-2 px-1 border text-right font-semibold">
-                          {new Intl.NumberFormat("en-US").format(payment.amountPaid)}
-                        </td>
-                        <td className="py-2 px-1 border">{payment.paymentMethod}</td>
-                        <td className="py-2 px-1 border">{payment.receiptNumber || "N/A"}</td>
-                        <td className="py-2 px-1 border">
-                          {new Date(payment.paymentDate).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "2-digit",
-                          })}
+
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              <button
+                onClick={generatePDF}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md flex items-center gap-2 justify-center"
+                data-tooltip-id="pdf-tooltip"
+              >
+                <FaFilePdf /> PDF
+                <Tooltip id="pdf-tooltip" place="top">
+                  Download as PDF
+                </Tooltip>
+              </button>
+
+              <button
+                onClick={generateExcel}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md flex items-center gap-2 justify-center"
+                data-tooltip-id="excel-tooltip"
+              >
+                <FaFileExcel /> Excel
+                <Tooltip id="excel-tooltip" place="top">
+                  Download as Excel
+                </Tooltip>
+              </button>
+
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center gap-2 justify-center"
+                data-tooltip-id="add-payment-tooltip"
+              >
+                <FaPlus /> Add Payment
+                <Tooltip id="add-payment-tooltip" place="top">
+                  Record a new fee payment
+                </Tooltip>
+              </button>
+            </div>
+          </div>
+
+          {/* Transactions Table */}
+          <div className="bg-white rounded-lg shadow border overflow-hidden">
+            {loading ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+              </div>
+            ) : (
+              <div className="overflow-x-auto max-h-[calc(100vh-220px)]">
+                <table className="min-w-full divide-y divide-gray-200 text-sm">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Receipt No</th>
+                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Reg No</th>
+                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                      <th className="px-4 py-3 text-right font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Method</th>
+                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                      <th className="px-4 py-3 text-right font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {payments.length > 0 ? (
+                      payments.map((payment) => (
+                        <tr key={payment._id} className="hover:bg-gray-50">
+                          <td className="px-4 py-3 whitespace-nowrap">{payment.receiptNumber || "N/A"}</td>
+                          <td className="px-4 py-3 whitespace-nowrap">{payment.regno}</td>
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            {payment.studentDetails?.name || "N/A"}
+                          </td>
+                          <td className="px-4 py-3 whitespace-nowrap text-right font-medium">
+                            {new Intl.NumberFormat("en-US").format(payment.amountPaid)}
+                          </td>
+                          <td className="px-4 py-3 whitespace-nowrap">{payment.paymentMethod}</td>
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            {new Date(payment.paymentDate).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </td>
+                          <td className="px-4 py-3 whitespace-nowrap text-right space-x-1">
+                            <button
+                              onClick={() => downloadReceipt(payment)}
+                              className="text-red-600 hover:text-red-800 p-1 rounded-full hover:bg-red-50"
+                              data-tooltip-id="pdf-receipt-tooltip"
+                            >
+                              <FaFilePdf className="text-lg" />
+                              <Tooltip id="pdf-receipt-tooltip" place="top">
+                                Download PDF Receipt
+                              </Tooltip>
+                            </button>
+                            <button
+                              onClick={() => printReceipt(payment)}
+                              className="text-blue-600 hover:text-blue-800 p-1 rounded-full hover:bg-blue-50"
+                              data-tooltip-id="print-receipt-tooltip"
+                            >
+                              <FaPrint className="text-lg" />
+                              <Tooltip id="print-receipt-tooltip" place="top">
+                                Print Receipt
+                              </Tooltip>
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
+                          No payment records found
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="8" className="py-4 text-center text-gray-600">
-                        No payment records found
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Payment Modal */}
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center p-4 z-50">
+            <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-semibold">Record Payment</h2>
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Registration Number</label>
+                      <input
+                        type="text"
+                        name="regno"
+                        value={formData.regno}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Payment Date</label>
+                      <input
+                        type="date"
+                        name="paymentDate"
+                        value={formData.paymentDate}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Amount (Ksh)</label>
+                      <input
+                        type="number"
+                        name="amountPaid"
+                        value={formData.amountPaid}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+                      <select
+                        name="paymentMethod"
+                        value={formData.paymentMethod}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="">Select Method</option>
+                        <option value="Cash">Cash</option>
+                        <option value="M-Pesa">M-Pesa</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Cheque">Cheque</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Receipt Number</label>
+                      <input
+                        type="text"
+                        name="receiptNumber"
+                        value={formData.receiptNumber}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Paid By</label>
+                      <input
+                        type="text"
+                        name="paidBy"
+                        value={formData.paidBy}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
+                      <textarea
+                        name="remarks"
+                        value={formData.remarks}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        rows="2"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end space-x-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setIsModalOpen(false)}
+                      className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      Save Payment
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-          )}
-        </div>
-
-       {/* Payment Modal */}
-{isModalOpen && (
-  <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
-    <div className="bg-white p-6 rounded-lg shadow-lg w-3/4">
-      <h2 className="text-xl font-semibold mb-4">Add Payment</h2>
-      <form onSubmit={handleSubmit} className="space-y-4  grid grid-cols-11 md:grid-cols-3 gap-5">
-        
-        {/* Registration Number */}
-        <div>
-          <label className="block text-sm font-medium">Registration Number</label>
-          <input
-            type="text"
-            name="regno"
-            value={formData.regno}
-            onChange={handleChange}
-            required
-            className="w-full border rounded px-3 py-2 mt-1"
-          />
-        </div>
-
-        {/* Payment Date */}
-        <div>
-          <label className="block text-sm font-medium">Payment Date</label>
-          <input
-            type="date"
-            name="paymentDate"
-            value={formData.paymentDate}
-            onChange={handleChange}
-            required
-            className="w-full border rounded px-3 py-2 mt-1"
-          />
-        </div>
-
-        {/* Amount Paid */}
-        <div>
-          <label className="block text-sm font-medium">Amount Paid (Ksh)</label>
-          <input
-            type="number"
-            name="amountPaid"
-            value={formData.amountPaid}
-            onChange={handleChange}
-            required
-            className="w-full border rounded px-3 py-2 mt-1"
-          />
-        </div>
-
-        {/* Payment Method */}
-        <div >
-          <label className="block text-sm font-medium">Payment Method</label>
-          <select
-            name="paymentMethod"
-            value={formData.paymentMethod}
-            onChange={handleChange}
-            required
-            className="w-full border rounded px-3 py-2 mt-1"
-          >
-            <option value="">Select Payment Method</option>
-            <option value="Cash">Cash</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-            <option value="Credit Card">Credit Card</option>
-            <option value="Mobile Money">Mobile Money</option>
-          </select>
-        </div>
-
-        {/* Receipt Number */}
-        <div>
-          <label className="block text-sm font-medium">Receipt Number</label>
-          <input
-            type="text"
-            name="receiptNumber"
-            value={formData.receiptNumber}
-            onChange={handleChange}
-            required
-            className="w-full border rounded px-3 py-2 mt-1"
-          />
-        </div>
-
-        {/* Paid By */}
-        <div>
-          <label className="block text-sm font-medium">Paid By</label>
-          <input
-            type="text"
-            name="paidBy"
-            value={formData.paidBy}
-            onChange={handleChange}
-            required
-            className="w-full border rounded px-3 py-2 mt-1"
-          />
-        </div>
-
-        {/* Buttons */}
-        <div className="flex justify-between mt-4">
-          <button
-            type="button"
-            onClick={() => setIsModalOpen(false)}
-            className="bg-gray-400 text-white px-4 py-2 rounded-md"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
-
-
+          </div>
+        )}
       </div>
+    
     </div>
   );
 };

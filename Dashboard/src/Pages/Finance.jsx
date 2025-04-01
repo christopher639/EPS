@@ -1,40 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SideBar from '../components/SideBar';
-import { FaMoneyBillAlt } from "react-icons/fa";
-import SidebarToggleButton from '../components/SidebarToggleButton'; // Import the Sidebar Toggle Button
-import UserAccount from '../components/UserAccount'; // Import the User Account component
+import { 
+  FaMoneyBillAlt, 
+  FaFileInvoiceDollar, 
+  FaMoneyCheckAlt, 
+  FaBell, 
+  FaDownload,
+  FaChartLine,
+  FaChartBar,
+  FaChartPie
+} from 'react-icons/fa';
+import { 
+  MdOutlineAttachMoney,
+  MdPendingActions,
+  MdOutlineMoneyOff
+} from 'react-icons/md';
+import SidebarToggleButton from '../components/SidebarToggleButton';
+import UserAccount from '../components/UserAccount';
 import { Doughnut, Bar, Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   ArcElement,
-  Tooltip,
+  Tooltip as ChartTooltip,
   Legend,
   CategoryScale,
   LinearScale,
   BarElement,
   Title,
 } from 'chart.js';
-import { FaFileInvoiceDollar, FaMoneyCheckAlt, FaBell, FaDownload } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from 'react-router-dom';
 import BASE_URL from '../config';
 import MobileNav from '../components/MobileNav';
-axios.defaults.baseURL = BASE_URL;
+import { Tooltip } from 'react-tooltip';
 
 // Register Chart.js components
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
+ChartJS.register(ArcElement, ChartTooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
 
 const Finance = () => {
-  const [sideBar, setSideBar] = useState(true); // State to manage sidebar visibility
+  const [sideBar, setSideBar] = useState(true);
   const [expenses, setExpenses] = useState([]);
   const [totalFeesPaid, setTotalFeesPaid] = useState(0);
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
 
-   // Fetch all expenses from the backend
-   const fetchExpenses = async () => {
+  const fetchExpenses = async () => {
     try {
       const res = await axios.get('https://eps-dashboard.onrender.com/api/expenses');
       setExpenses(res.data);
@@ -44,8 +56,8 @@ const Finance = () => {
     }
     setLoading(false);
   };
-   // Fetch payments from API
-   const fetchPayments = async () => {
+
+  const fetchPayments = async () => {
     setLoading(true);
     try {
       const res = await axios.get("https://eps-dashboard.onrender.com/api/fees-payments");
@@ -57,46 +69,29 @@ const Finance = () => {
     setLoading(false);
   };
 
-
   useEffect(() => {
     fetchExpenses();
     fetchPayments();
   }, []);
-  // Calculate total expense amount
+
   const totalExpense = expenses.reduce((total, expense) => total + expense.amount, 0);
 
-  // Dummy data for demonstration
-  const feeDistribution = {
-    expectedFees: 0,
-    paidFees: 500000,
-    pendingFees: 0,
-    overdueFees: 0,
-    feeCategories: [
-      { name: 'Tuition', amount: 300000 },
-      { name: 'Transport', amount: 100000 },
-      { name: 'Meals', amount: 80000 },
-      { name: 'Extracurricular', amount: 20000 },
-    ],
-    paymentRecords: [
-      { id: 1, student: 'John Doe', amount: 5000, date: '2023-10-01', status: 'Paid' },
-      { id: 2, student: 'Jane Smith', amount: 7000, date: '2023-10-05', status: 'Pending' },
-      { id: 3, student: 'Alice Johnson', amount: 6000, date: '2023-10-10', status: 'Overdue' },
-    ],
+  const toggleSideBar = () => {
+    setSideBar((prev) => !prev);
   };
 
-  // Doughnut Chart Data
+  // Chart data configurations
   const doughnutData = {
-    labels: feeDistribution.feeCategories.map((category) => category.name),
+    labels: ['Tuition', 'Transport', 'Meals', 'Extracurricular'],
     datasets: [
       {
-        data: feeDistribution.feeCategories.map((category) => category.amount),
+        data: [300000, 100000, 80000, 20000],
         backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#FF5722'],
         hoverOffset: 4,
       },
     ],
   };
 
-  // Bar Chart Data
   const barData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
     datasets: [
@@ -108,7 +103,6 @@ const Finance = () => {
     ],
   };
 
-  // Line Chart Data for Expense Trends
   const lineData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
     datasets: [
@@ -123,13 +117,6 @@ const Finance = () => {
     ],
   };
 
- 
-
-  // Toggle sidebar visibility
-  const toggleSideBar = () => {
-    setSideBar((prev) => !prev);
-  };
-
   return (
     <div className='flex bg-gray-50 min-h-screen'>
       {/* Sidebar */}
@@ -142,195 +129,200 @@ const Finance = () => {
       {/* Main Content */}
       <div className='flex bg-gray-50 flex-col w-full p-4'>
         {/* Header */}
-        <div className='flex justify-between  border-b  shadow-sm md:border-none  md:shadow-none mb-4'>
-      <div>
+        <div className='flex justify-between border-b shadow-sm md:border-none md:shadow-none mb-4'>
+          <div>
             <MobileNav />
-      </div>
-          <div className='flex items-center  gap-2'>
-           <div className='hidden md:flex'>
-           <SidebarToggleButton
-              toggleSidebar={toggleSideBar}
-              isSidebarCollapsed={!sideBar}
-            />
-           </div>
+          </div>
+          <div className='flex items-center gap-2'>
+            <div className='hidden md:flex'>
+              <SidebarToggleButton
+                toggleSidebar={toggleSideBar}
+                isSidebarCollapsed={!sideBar}
+              />
+            </div>
             <h1 className='text-sm hidden md:flex sm:text-lg md:text-xl lg:text-3xl font-bold text-gray-800'>
               Finance Management
             </h1>
           </div>
-          <button className='bg-blue-700 p-2 hidden md:flex rounded text-white'><span className='hidden md:flex'>Fees Structures</span> <span  className='flex md:hidden'> <FaMoneyBillAlt className='text-lg'/></span> </button>
+          <NavLink 
+            to="/fees-structures" 
+            className='bg-blue-700 p-2 hidden md:flex rounded text-white items-center'
+            data-tooltip-id="fees-structure-tooltip"
+            data-tooltip-content="View fee structures"
+          >
+            <span className='hidden md:flex'>Fees Structures</span>
+            <span className='flex md:hidden'>
+              <FaMoneyBillAlt className='text-lg'/>
+            </span>
+          </NavLink>
           <UserAccount />
         </div>
-       <div className='  flex justify-between  md:hidden'>
-       <h1 className='text-sm   '>
-              Finance Management
-            </h1>
-
-            <button className=' bg-blue-700 px-2 rounded text-white text-sm py-1'>Fees Structures </button>
-       </div>
+        
+        {/* Mobile Header */}
+        <div className='flex justify-between md:hidden mb-4'>
+          <h1 className='text-sm'>
+            Finance Management
+          </h1>
+          <NavLink 
+            to="/fees-structures" 
+            className='bg-blue-700 px-2 rounded text-white text-sm py-1 flex items-center'
+            data-tooltip-id="mobile-fees-tooltip"
+            data-tooltip-content="View fee structures"
+          >
+            Fees Structures
+          </NavLink>
+        </div>
 
         <div className='overflow-y-auto max-h-[85vh] pb-8'>
-          <div className='grid grid-cols-1'>
-            {/* Fee Overview Cards */}
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8'>
-            <div className='bg-white p-6 rounded-lg '>
-                <div className='flex items-center justify-between'>
-                  <div>
-                    <p className='text-gray-600'>Total Revenue</p>
-                    <p className='text-xl font-bold text-gray-800'>
-                      Ksh {feeDistribution.expectedFees.toLocaleString()}
-                    </p>
-                  </div>
-                  <FaFileInvoiceDollar className='text-2xl text-blue-500' />
-                </div>
-              </div>
-              <div className='bg-white p-6 rounded-lg '>
-                <div className='flex items-center justify-between'>
-                  <div>
-                    <p className='text-gray-600'>Expected Fees</p>
-                    <p className='text-xl font-bold text-gray-800'>
-                      Ksh {feeDistribution.expectedFees.toLocaleString()}
-                    </p>
-                  </div>
-                  <FaFileInvoiceDollar className='text-2xl text-blue-500' />
-                </div>
-              </div>
-              <div className='bg-white p-6 rounded-lg '>
-              <NavLink to="/fees-payments">
+          {/* Stats Cards */}
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8'>
+            {/* Revenue Card */}
+            <div 
+              className='bg-white p-4 rounded-lg'
+              data-tooltip-id="revenue-tooltip"
+              data-tooltip-content="Total revenue after expenses"
+            >
               <div className='flex items-center justify-between'>
-                  <div>
-                    <p className='text-gray-600'>Total Fees Collected</p>
-                    <p className='text-xl font-bold text-gray-800'>
-                  Ksh   {new Intl.NumberFormat("en-US").format(totalFeesPaid)}
-                    </p>
-                  </div>
-                  <FaFileInvoiceDollar className='text-2xl text-blue-500' />
+                <div>
+                  <p className='text-xs md:text-sm text-gray-600'>Total Revenue</p>
+                  <p className='text-lg md:text-xl font-bold text-gray-800'>
+                    Ksh {(totalFeesPaid - totalExpense).toLocaleString()}
+                  </p>
                 </div>
-              </NavLink>
-              </div>
-              <div className='bg-white p-6 rounded-lg '>
-                <div className='flex items-center justify-between'>
-                  <div>
-                    <p className='text-gray-600'>Pending Fees</p>
-                    <p className='text-xl font-bold text-gray-800'>
-                      Ksh 0.00
-                    </p>
-                  </div>
-                  <FaMoneyCheckAlt className='text-2xl text-yellow-500' />
-                </div>
-              </div>
-              {/* Total Expenses Card with Loading Spinner */}
-              <div className='bg-white p-6 rounded-lg  relative'>
-                {loading && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70">
-                    <div className="w-5 h-5 border-2 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
-                  </div>
-                )}
-               <NavLink to="/expenses">
-               <div  className='flex items-center justify-between'>
-                  <div>
-                    <p className='text-gray-600'>Total Expenses</p>
-                    <p className='text-xl font-bold text-gray-800'>
-                      {loading ? "" : `Ksh ${totalExpense.toLocaleString()}`}
-                    </p>
-                  </div>
-                  <FaFileInvoiceDollar className='text-2xl text-blue-500' />
-                </div>
-               </NavLink>
-              </div>
-              <div className='bg-white p-6 rounded-lg '>
-                <div className='flex items-center justify-between'>
-                  <div>
-                    <p className='text-gray-600'>Overdue Fees</p>
-                    <p className='text-xl font-bold text-gray-800'>
-                      Ksh {feeDistribution.overdueFees.toLocaleString()}
-                    </p>
-                  </div>
-                  <FaBell className='text-2xl text-red-500' />
-                </div>
-              </div>
-              <div className='bg-white p-6 rounded-lg '>
-                <div className='flex items-center justify-between'>
-                  <div>
-                    <p className='text-gray-600'>Total Income</p>
-                    <p className='text-xl font-bold text-gray-800'>
-                      Ksh {(totalFeesPaid - totalExpense).toLocaleString()}
-                    </p>
-                  </div>
-                  <FaBell className='text-2xl text-red-500' />
-                </div>
+                <MdOutlineAttachMoney className='text-xl md:text-2xl text-green-500' />
               </div>
             </div>
-           
+
+            {/* Fees Collected Card */}
+            <NavLink 
+              to="/fees-payments"
+              className='bg-white p-4 rounded-lg'
+              data-tooltip-id="fees-tooltip"
+              data-tooltip-content="View collected fees"
+            >
+              <div className='flex items-center justify-between'>
+                <div>
+                  <p className='text-xs md:text-sm text-gray-600'>Fees Collected</p>
+                  <p className='text-lg md:text-xl font-bold text-gray-800'>
+                    Ksh {new Intl.NumberFormat("en-US").format(totalFeesPaid)}
+                  </p>
+                </div>
+                <FaFileInvoiceDollar className='text-xl md:text-2xl text-blue-500' />
+              </div>
+            </NavLink>
+
+            {/* Expenses Card */}
+            <NavLink 
+              to="/expenses"
+              className='bg-white p-4 rounded-lg relative'
+              data-tooltip-id="expenses-tooltip"
+              data-tooltip-content="View expense records"
+            >
+              {loading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70">
+                  <div className="w-5 h-5 border-2 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+                </div>
+              )}
+              <div className='flex items-center justify-between'>
+                <div>
+                  <p className='text-xs md:text-sm text-gray-600'>Total Expenses</p>
+                  <p className='text-lg md:text-xl font-bold text-gray-800'>
+                    {loading ? "" : `Ksh ${totalExpense.toLocaleString()}`}
+                  </p>
+                </div>
+                <MdOutlineMoneyOff className='text-xl md:text-2xl text-red-500' />
+              </div>
+            </NavLink>
+
+            {/* Pending Fees Card */}
+            <div 
+              className='bg-white p-4 rounded-lg'
+              data-tooltip-id="pending-tooltip"
+              data-tooltip-content="Pending fee payments"
+            >
+              <div className='flex items-center justify-between'>
+                <div>
+                  <p className='text-xs md:text-sm text-gray-600'>Pending Fees</p>
+                  <p className='text-lg md:text-xl font-bold text-gray-800'>
+                    Ksh 0.00
+                  </p>
+                </div>
+                <MdPendingActions className='text-xl md:text-2xl text-yellow-500' />
+              </div>
+            </div>
           </div>
 
           {/* Charts */}
-          <div className='grid grid-cols-1  lg:grid-cols-2 gap-3 mb-8'>
-             <div className='bg-white p-6 rounded-lg shadow-md'>
-              <h2 className='text-xl font-bold text-gray-800 mb-4'>Monthly expenses</h2>
-              <Line data={lineData} />
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-3 mb-8'>
+            <div className='bg-white p-4 rounded-lg shadow'>
+              <div className="flex justify-between items-center mb-3">
+                <h2 className='text-sm md:text-lg font-bold text-gray-800'>Monthly Expenses</h2>
+                <button 
+                  className="text-xs text-blue-600"
+                  data-tooltip-id="expense-chart-tooltip"
+                  data-tooltip-content="Monthly expense trends"
+                >
+                  <FaChartLine className="inline mr-1" /> View
+                </button>
+              </div>
+              <div className="h-64">
+                <Line data={lineData} options={{ maintainAspectRatio: false }} />
+              </div>
             </div>
-          <div className='bg-white p-6 rounded-lg  shadow-md'>
-              <h2 className='text-xl font-bold text-gray-800 mb-4'>Monthly Fee Collection</h2>
-              <Bar data={barData} />
+            
+            <div className='bg-white p-4 rounded-lg shadow'>
+              <div className="flex justify-between items-center mb-3">
+                <h2 className='text-sm md:text-lg font-bold text-gray-800'>Monthly Fee Collection</h2>
+                <button 
+                  className="text-xs text-blue-600"
+                  data-tooltip-id="fee-chart-tooltip"
+                  data-tooltip-content="Monthly fee collection"
+                >
+                  <FaChartBar className="inline mr-1" /> View
+                </button>
+              </div>
+              <div className="h-64">
+                <Bar data={barData} options={{ maintainAspectRatio: false }} />
+              </div>
             </div>
-            <div className='bg-white p-6 rounded-lg shadow-md'>
-              <h2 className='text-xl font-bold text-gray-800 mb-4'>Fee Distribution</h2>
-              <Doughnut data={doughnutData} />
-            </div>
-           
-          </div>
-
-          {/* Payment Records Table */}
-          <div className='bg-white p-6 rounded-lg shadow-md mb-8 overflow-x-auto hidden'>
-            <h2 className='text-xl font-bold text-gray-800 mb-4'>Payment Records</h2>
-            <div className='overflow-x-auto'>
-              <table className='w-full table-auto'>
-                <thead>
-                  <tr className='bg-gray-50'>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>Student</th>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>Amount (Ksh)</th>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>Date</th>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>Status</th>
-                  </tr>
-                </thead>
-                <tbody className='divide-y divide-gray-200'>
-                  {feeDistribution.paymentRecords.map((record) => (
-                    <tr key={record.id} className='hover:bg-gray-50'>
-                      <td className='px-6 py-4'>{record.student}</td>
-                      <td className='px-6 py-4'>{record.amount.toLocaleString()}</td>
-                      <td className='px-6 py-4'>{record.date}</td>
-                      <td className='px-6 py-4'>
-                        <span
-                          className={`px-2 py-1 rounded-full text-sm font-medium ${
-                            record.status === 'Paid'
-                              ? 'bg-green-100 text-green-800'
-                              : record.status === 'Pending'
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-red-100 text-red-800'
-                          }`}
-                        >
-                          {record.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            
+            <div className='bg-white p-4 rounded-lg shadow lg:col-span-2'>
+              <div className="flex justify-between items-center mb-3">
+                <h2 className='text-sm md:text-lg font-bold text-gray-800'>Fee Distribution</h2>
+                <button 
+                  className="text-xs text-blue-600"
+                  data-tooltip-id="distribution-tooltip"
+                  data-tooltip-content="Fee category distribution"
+                >
+                  <FaChartPie className="inline mr-1" /> View
+                </button>
+              </div>
+              <div className="h-64">
+                <Doughnut data={doughnutData} options={{ maintainAspectRatio: false }} />
+              </div>
             </div>
           </div>
 
-          {/* Payment Reminders and Reports */}
+          {/* Quick Actions */}
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-            <div className='bg-white p-6 rounded-lg shadow-md'>
-              <h2 className='text-xl font-bold text-gray-800 mb-4'>Send Payment Reminders</h2>
-              <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors'>
+            <div className='bg-white p-4 rounded-lg shadow'>
+              <h2 className='text-sm md:text-lg font-bold text-gray-800 mb-3'>Send Payment Reminders</h2>
+              <button 
+                className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors text-sm md:text-base'
+                data-tooltip-id="reminder-tooltip"
+                data-tooltip-content="Send payment reminders to parents"
+              >
                 <FaBell className='inline-block mr-2' />
                 Send Reminders
               </button>
             </div>
-            <div className='bg-white p-6 rounded-lg shadow-md'>
-              <h2 className='text-xl font-bold text-gray-800 mb-4'>Generate Financial Reports</h2>
-              <button className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors'>
+            <div className='bg-white p-4 rounded-lg shadow'>
+              <h2 className='text-sm md:text-lg font-bold text-gray-800 mb-3'>Generate Reports</h2>
+              <button 
+                className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors text-sm md:text-base'
+                data-tooltip-id="report-tooltip"
+                data-tooltip-content="Generate financial reports"
+              >
                 <FaDownload className='inline-block mr-2' />
                 Download Report
               </button>
@@ -338,6 +330,32 @@ const Finance = () => {
           </div>
         </div>
       </div>
+
+      {/* Tooltips */}
+      <Tooltip id="fees-structure-tooltip" place="bottom" className="text-xs z-50" />
+      <Tooltip id="mobile-fees-tooltip" place="bottom" className="text-xs z-50" />
+      <Tooltip id="revenue-tooltip" place="top" className="text-xs z-50" />
+      <Tooltip id="fees-tooltip" place="top" className="text-xs z-50" />
+      <Tooltip id="expenses-tooltip" place="top" className="text-xs z-50" />
+      <Tooltip id="pending-tooltip" place="top" className="text-xs z-50" />
+      <Tooltip id="expense-chart-tooltip" place="top" className="text-xs z-50" />
+      <Tooltip id="fee-chart-tooltip" place="top" className="text-xs z-50" />
+      <Tooltip id="distribution-tooltip" place="top" className="text-xs z-50" />
+      <Tooltip id="reminder-tooltip" place="top" className="text-xs z-50" />
+      <Tooltip id="report-tooltip" place="top" className="text-xs z-50" />
+
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        toastClassName="text-sm"
+      />
     </div>
   );
 };

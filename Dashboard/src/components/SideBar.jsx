@@ -171,7 +171,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                   }`}
                 >
                   <NavLink 
-                    to="/fees-distribution" 
+                    to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-green-50"
                   >
@@ -179,7 +179,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Allocation</span>}
                   </NavLink>
                   <NavLink 
-                    to="/fees-structure" 
+                    to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-green-50"
                   >
@@ -195,7 +195,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Payments</span>}
                   </NavLink>
                   <NavLink 
-                    to="/fees-balances" 
+                    to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-green-50"
                   >
@@ -203,7 +203,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Balances</span>}
                   </NavLink>
                   <NavLink 
-                    to="/expenses" 
+                    to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-green-50"
                   >
