@@ -882,21 +882,21 @@ const exportAllReportCards = async () => {
       type="text"
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
-      className="w-full hidden md:flex  md:w-40 text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      className="w-full hidden md:flex  md:w-40 text-md border border-gray-300 rounded px-2 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
       placeholder="Search name/regno"
     />
     {/* Filter display - always visible */}
     <div className="flex p-2 gap-1 overflow-x-auto whitespace-nowrap scrollbar-hide">
       <div className="flex gap-1 items-center">
-        <p className="text-xs">Class:</p>
+        <p className="text-md">Class:</p>
         <p className="font-semibold text-md">{appliedFilters.class}</p>
       </div>
       <div className="flex gap-1 items-center">
-        <p className="text-xs">Year:</p>
+        <p className="text-md">Year:</p>
         <p className="font-semibold text-md">{appliedFilters.year}</p>
       </div>
       <div className="flex gap-1 items-center">
-        <p className="text-xs">Term:</p>
+        <p className="text-md">Term:</p>
         <p className="font-semibold text-md">{appliedFilters.term}</p>
       </div>
     </div>
@@ -953,88 +953,89 @@ const exportAllReportCards = async () => {
       type="text"
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
-      className="w-full  md:hidden  md:w-40 text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      className="w-full  md:hidden  md:w-40 text-md border border-gray-300 rounded px-2 py-2 mb-1 md:mb-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
       placeholder="Search name/regno"
     />
   </div>
 </div>
 </div>
 </div>
-            <div className="bg-white mx-1 md:mx-4 max-h-[75vh] mx-0 grid gri-cols-1  md:pb-6 max-h-screen md:max-h-[80vh] overflow-y-auto pb-5  overflow-x-auto rounded-lg ">  
-              <table className="w-full  overflow-x-auto table-auto  border">
-                <thead className="sticky top-0 bg-white">
-                  <tr className="bg-gray-200">
-                    <th className="border px-1 sticky top-0 bg-white py-2">Name</th>
-                    <th className="border px-1 sticky top-0 bg-white py-2">Reg No</th>
-                    <th className="border px-1 sticky top-0 bg-white py-2">Stream</th>
-                    {subjectTotalsAndAverages.map((subjectStat, index) => (
-                      <th key={index} className="border sticky top-0 bg-white py-2">
-                        <p className="text-yellow-600">{index + 1}</p>
-                        <p className="px-1 text-sm">{subjectStat.code}</p>
-                      </th>
-                    ))}
-                    <th className="border sticky top-0 bg-white py-2">Total</th>
-                    <th className="border sticky top-0 bg-white py-2">Average</th>
-                    <th className="border sticky top-0 bg-white py-2">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.map((student, studentIndex) => {
-                    const studentTotal = student.subjects?.reduce((sum, subject) => sum + (subject.avgScore || 0), 0) || 0;
-                    const studentAverage = student.subjects?.length > 0 ? studentTotal / student.subjects.length : 0;
+<div className="bg-white mx-1 md:mx-4 pb-20 md:pb-0 max-h-[75vh] md:max-h-[80vh] overflow-y-auto overflow-x-auto rounded-lg shadow-sm">
+  <table className="w-full table-auto border text-xs sm:text-sm md:text-base">
+    <thead className="sticky top-0 bg-white">
+      <tr className="bg-gray-200">
+        <th className="border px-1 py-1 md:py-2 sticky top-0 bg-white">Name</th>
+        <th className="border px-1 py-1 md:py-2 sticky top-0 bg-white">Reg No</th>
+        <th className="border px-1 py-1 md:py-2 sticky top-0 bg-white">Stream</th>
+        {subjectTotalsAndAverages.map((subjectStat, index) => (
+          <th key={index} className="border sticky top-0 bg-white py-1 md:py-2">
+            <p className="text-yellow-600 text-xs">{index + 1}</p>
+            <p className="px-1 truncate">{subjectStat.code}</p>
+          </th>
+        ))}
+        <th className="border px-1 py-1 md:py-2 sticky top-0 bg-white">Total</th>
+        <th className="border px-1 py-1 md:py-2 sticky top-0 bg-white">Average</th>
+        <th className="border px-1 py-1 md:py-2 sticky top-0 bg-white">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredData.map((student, studentIndex) => {
+        const studentTotal = student.subjects?.reduce((sum, subject) => sum + (subject.avgScore || 0), 0) || 0;
+        const studentAverage = student.subjects?.length > 0 ? studentTotal / student.subjects.length : 0;
 
-                    return (
-                      <tr key={studentIndex} className="hover:bg-gray-100 p-2">
-                        <td className="border px-1 whitespace-nowrap text-left py-2">{student.studentName || "-"}</td>
-                        <td className="border px-1 py-2">{student.regno || "-"}</td>
-                        <td className="border text-center p-2">{student.stream || "-"}</td>
-                        {subjectTotalsAndAverages.map((subjectStat, subjectIndex) => {
-                          const subject = student.subjects?.find((sub) => sub?.code === subjectStat.code);
-                          return (
-                            <td key={subjectIndex} className="border px-1 py-2">
-                              {subject ? subject.avgScore?.toFixed(2) || "-" : "-"}
-                            </td>
-                          );
-                        })}
-                        <td className="border px-1 py-2">{studentTotal.toFixed(2)}</td>
-                        <td className="border px-1 py-2">{studentAverage.toFixed(2)}</td>
-                        <td className="border px-1 py-2">
-                        <ActionButton
-              onClick={() => exportReportCard(student)}
-              icon={FaFilePdf}
-              label="card"
-              tooltip="Download learner report card"
-              bgColor="bg-blue-600"
-              hoverColor="hover:bg-blue-700"
-              className="text-sm"
-            />
-                        </td>
-                      </tr>
-                    );
-                  })}
-                  <tr className="font-bold bg-gray-200">
-                    <td colSpan={3} className="border px-1 py-2">Total</td>
-                    {subjectTotalsAndAverages.map((subjectStat, index) => (
-                      <td key={index} className="border px-1 py-2">
-                        {subjectStat.total.toFixed(2)}
-                      </td>
-                    ))}
-                    <td className="border px-1 py-2">{classStats.total.toFixed(2)}</td>
-                    <td className="border px-1 py-2"></td>
-                  </tr>
-                  <tr className="font-bold bg-gray-200">
-                    <td colSpan={3} className="border px-1 py-2">Average</td>
-                    {subjectTotalsAndAverages.map((subjectStat, index) => (
-                      <td key={index} className="border px-1 py-2">
-                        {subjectStat.average.toFixed(2)}
-                      </td>
-                    ))}
-                    <td className="border px-1 py-2">{classStats.average.toFixed(2)}</td>
-                    <td className="border px-1 py-2"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        return (
+          <tr key={studentIndex} className="hover:bg-gray-100">
+            <td className="border px-1 py-1 md:py-2 whitespace-nowrap truncate max-w-[100px] sm:max-w-none">{student.studentName || "-"}</td>
+            <td className="border px-1 py-1 md:py-2 truncate">{student.regno || "-"}</td>
+            <td className="border px-1 py-1 md:py-2 text-center truncate">{student.stream || "-"}</td>
+            {subjectTotalsAndAverages.map((subjectStat, subjectIndex) => {
+              const subject = student.subjects?.find((sub) => sub?.code === subjectStat.code);
+              return (
+                <td key={subjectIndex} className="border px-1 py-1 md:py-2">
+                  {subject ? subject.avgScore?.toFixed(2) || "-" : "-"}
+                </td>
+              );
+            })}
+            <td className="border px-1 py-1 md:py-2">{studentTotal.toFixed(2)}</td>
+            <td className="border px-1 py-1 md:py-2">{studentAverage.toFixed(2)}</td>
+            <td className="border px-1 py-1 md:py-2">
+              <ActionButton
+                onClick={() => exportReportCard(student)}
+                icon={FaFilePdf}
+                label=""
+                tooltip="Download report card"
+                bgColor="bg-blue-600"
+                hoverColor="hover:bg-blue-700"
+                size="extra-small"
+                className="text-xs"
+              />
+            </td>
+          </tr>
+        );
+      })}
+      <tr className="font-bold bg-gray-200">
+        <td colSpan={3} className="border px-1 py-1 md:py-2">Total</td>
+        {subjectTotalsAndAverages.map((subjectStat, index) => (
+          <td key={index} className="border px-1 py-1 md:py-2">
+            {subjectStat.total.toFixed(2)}
+          </td>
+        ))}
+        <td className="border px-1 py-1 md:py-2">{classStats.total.toFixed(2)}</td>
+        <td className="border px-1 py-1 md:py-2"></td>
+      </tr>
+      <tr className="font-bold bg-gray-200">
+        <td colSpan={3} className="border px-1 py-1 md:py-2">Average</td>
+        {subjectTotalsAndAverages.map((subjectStat, index) => (
+          <td key={index} className="border px-1 py-1 md:py-2">
+            {subjectStat.average.toFixed(2)}
+          </td>
+        ))}
+        <td className="border px-1 py-1 md:py-2">{classStats.average.toFixed(2)}</td>
+        <td className="border px-1 py-1 md:py-2"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
            </div>
           )}
         </div>
