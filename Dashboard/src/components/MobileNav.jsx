@@ -107,7 +107,7 @@ const MobileNav = () => {
 
       {/* Mobile Navigation Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-3/4 bg-white transform ${
+        className={`fixed top-0 left-0 h-full w-4/5 bg-white transform ${
           isNavOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out z-50 shadow-xl rounded-r-lg`}
         onTouchStart={onTouchStart}
@@ -133,7 +133,7 @@ const MobileNav = () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col px-4 py-2 max-h-[70vh]  overflow-y-auto scrollbar-custom divide-y divide-gray-100">
+        <div className="flex flex-col px-4 py-2 max-h-[70vh] overflow-y-auto no-scrollbar md:scrollbar-custom divide-y divide-gray-100">
           {navItems.map((item, index) => {
             if (item.label === "Academics") {
               return (
