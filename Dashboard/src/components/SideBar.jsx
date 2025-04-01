@@ -115,23 +115,16 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Upload Marks</span>}
                   </NavLink>
                   <NavLink 
-                    to="/assessments" 
+                    to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-blue-50"
                   >
                     <FaFileInvoice className="text-blue-400" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Assessments</span>}
                   </NavLink>
+  
                   <NavLink 
                     to="/general-report" 
-                    className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-blue-50"
-                  >
-                    <FaFileExport className="text-blue-400" />
-                    {!isSidebarCollapsed && <span className="ml-3 text-gray-600">General Report</span>}
-                  </NavLink>
-                  <NavLink 
-                    to="/exam-results" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-blue-50"
                   >
@@ -139,7 +132,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Exam Results</span>}
                   </NavLink>
                   <NavLink 
-                    to="/timetable" 
+                    to="/" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-blue-50"
                   >
@@ -218,7 +211,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Expenses</span>}
                   </NavLink>
                   <NavLink 
-                    to="/financial-reports" 
+                    to="/finance" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-green-50"
                   >
@@ -265,7 +258,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Teachers</span>}
                   </NavLink>
                   <NavLink 
-                    to="/staff" 
+                    to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-yellow-50"
                   >
@@ -273,7 +266,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Staff</span>}
                   </NavLink>
                   <NavLink 
-                    to="/payroll" 
+                    to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-yellow-50"
                   >

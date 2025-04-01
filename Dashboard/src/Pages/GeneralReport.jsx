@@ -852,7 +852,7 @@ const exportAllReportCards = async () => {
      
         
         {/* Table Section */}
-        <div className="px-4  grid grid-cols-1 max-h-[60vh]  pb-4  md:max-h-[80vh]  w-full ">
+        <div className="px-1  grid grid-cols-1 max-h-[60vh]  pb-4  md:max-h-[80vh]  w-full ">
           {loading ? (
             <Spinner />
           ) : error ? (
@@ -874,81 +874,93 @@ const exportAllReportCards = async () => {
           )  : (
            <div className="bg-white rounded mx-1">
        <div className="p-1 gap-2 flex flex-col justify-between">
- <div className="flex  flex-col md:flex-row">
- {/* Top row - filters and mobile search */}
- <div className="flex justify-between items-center gap-1 w-full">
-    {/* Filter display - always visible */}
-    <div className="flex gap-1 overflow-x-auto whitespace-nowrap scrollbar-hide">
-      <div className="flex gap-1 items-center">
-        <p className="text-xs">Class:</p>
-        <p className="font-semibold text-xs">{appliedFilters.class}</p>
-      </div>
-      <div className="flex gap-1 items-center">
-        <p className="text-xs">Year:</p>
-        <p className="font-semibold text-xs">{appliedFilters.year}</p>
-      </div>
-      <div className="flex gap-1 items-center">
-        <p className="text-xs">Term:</p>
-        <p className="font-semibold text-xs">{appliedFilters.term}</p>
-      </div>
-    </div>
-    
-    {/* Mobile search - shown on mobile only */}
- 
-  </div>
-
-  {/* Bottom row - desktop search and action buttons */}
-  <div className="flex justify-between items-center gap-2 w-full">
-  
-
-    {/* Action buttons - compact on mobile */}
-    <div className="flex justify-between gap-1">
-        {/* Desktop search - hidden on mobile */}
-    <input
+       <div className="flex flex-col md:flex-row gap-2 w-full">
+  {/* Top row - filters and mobile search */}
+  <div className="flex justify-between items-center gap-1 w-full">
+      {/* Search input - optimized for mobile */}
+      <input
       type="text"
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
-      className=" md:block text-xs border border-gray-300 py-1 px-2 rounded w-32"
+      className="w-full hidden md:flex  md:w-40 text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
       placeholder="Search name/regno"
     />
+    {/* Filter display - always visible */}
+    <div className="flex p-2 gap-1 overflow-x-auto whitespace-nowrap scrollbar-hide">
+      <div className="flex gap-1 items-center">
+        <p className="text-xs">Class:</p>
+        <p className="font-semibold text-md">{appliedFilters.class}</p>
+      </div>
+      <div className="flex gap-1 items-center">
+        <p className="text-xs">Year:</p>
+        <p className="font-semibold text-md">{appliedFilters.year}</p>
+      </div>
+      <div className="flex gap-1 items-center">
+        <p className="text-xs">Term:</p>
+        <p className="font-semibold text-md">{appliedFilters.term}</p>
+      </div>
+    </div>
+  </div>
+
+  <div className="flex flex-col md:flex-row gap-1 md:gap-2 w-full">
+  {/* Bottom row - search and actions (stacked on mobile) */}
+  <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-1 md:gap-2 w-full">
+    {/* Action buttons - compact but labeled on all screens */}
+    <div className="flex gap-1 md:gap-2 w-full md:w-auto">
       <ActionButton
         onClick={exportAllReportCards}
         disabled={generatingReportCards}
         icon={FaFileDownload}
-        label=""
-        loadingLabel="..."
+        label="Download All"
+        loadingLabel="Processing..."
         tooltip="Download all PDFs"
         bgColor="bg-purple-600"
         hoverColor="hover:bg-purple-700"
-        size="small"
+        textSize="text-xs md:text-xs"
+        padding="px-2 py-1"
+        iconSize="text-sm"
       />
       <ActionButton
         onClick={exportToPDF}
         disabled={generatingPDF}
         icon={FaFilePdf}
-        label=""
-        loadingLabel="..."
+        label="PDF"
+        loadingLabel="Processing..."
         tooltip="Export PDF"
         bgColor="bg-red-600"
         hoverColor="hover:bg-red-700"
-        size="small"
+        textSize="text-xs md:text-xs"
+        padding="px-2 py-1"
+        iconSize="text-sm"
       />
       <ActionButton
         onClick={exportToExcel}
         disabled={generatingExcel}
         icon={FaFileExcel}
-        label=""
-        loadingLabel="..."
+        label="Excel"
+        loadingLabel="Processing..."
         tooltip="Export Excel"
         bgColor="bg-green-600"
         hoverColor="hover:bg-green-700"
-        size="small"
+        textSize="text-xs md:text-xs"
+        padding="px-2 py-1"
+        iconSize="text-sm"
       />
     </div>
+
+    {/* Search input - optimized for mobile */}
+    <input
+      type="text"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className="w-full  md:hidden  md:w-40 text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      placeholder="Search name/regno"
+    />
   </div>
- </div>
 </div>
-            <div className="bg-white mx-1 md:mx-4  mx-0 grid gri-cols-1  md:pb-6 max-h-screen md:max-h-[77vh] overflow-y-auto overflow-x-auto rounded-lg ">  
+</div>
+</div>
+            <div className="bg-white mx-1 md:mx-4 max-h-[75vh] mx-0 grid gri-cols-1  md:pb-6 max-h-screen md:max-h-[80vh] overflow-y-auto pb-5  overflow-x-auto rounded-lg ">  
               <table className="w-full  overflow-x-auto table-auto  border">
                 <thead className="sticky top-0 bg-white">
                   <tr className="bg-gray-200">

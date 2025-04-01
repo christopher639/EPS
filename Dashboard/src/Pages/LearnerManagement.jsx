@@ -221,7 +221,7 @@ const LearnerManagement = () => {
       <div className="py-1  w-full  bg-gray-100 min-h-screen">
         <ToastContainer />
         {/* Search Bar */}
-        <div className="mb-2 bg-white  border-b  sm:mb-1">
+        <div className="mb-0 md:mb-2 bg-white  border-b  sm:mb-1">
   <div className="flex flex-col md:flex-row gap-2 justify-between">
     <div className="flex items-center justify-between gap-4 w-full p-2 rounded-lg">
       {/* Mobile Navigation (Left Side) */}
@@ -254,7 +254,7 @@ const LearnerManagement = () => {
       </div>
       <button
         onClick={() => setModalOpen(true)}
-        className="bg-blue-600 mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors  shadow-md hover:shadow-lg text-xs sm:text-sm"
+        className="bg-blue-600 hidden md:flex mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors  shadow-md hover:shadow-lg text-xs sm:text-sm"
         data-tooltip-id="add-tooltip"
         data-tooltip-content="Add new learner"
       >
@@ -546,7 +546,7 @@ const LearnerManagement = () => {
 
         {/* Learners List */}
         {!isLoading && (
-          <div className="bg-white mx-2 md:mx-2  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[90vh] overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
+          <div className="bg-white mx-2 md:mx-2  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[90vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
             <div className="flex mb-2  md:mb-0 sm:mb-4 gap-2">       
     <div className="flex  mb-2 mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
     <div className="flex md:hidden  focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">

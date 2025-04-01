@@ -133,7 +133,7 @@ const MobileNav = () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col px-4 py-2 max-h-[75vh] overflow-y-auto scrollbar-custom divide-y divide-gray-100">
+        <div className="flex flex-col px-4 py-2 max-h-[70vh]  overflow-y-auto scrollbar-custom divide-y divide-gray-100">
           {navItems.map((item, index) => {
             if (item.label === "Academics") {
               return (
@@ -167,7 +167,7 @@ const MobileNav = () => {
                         <span>Upload Marks</span>
                       </NavLink>
                       <NavLink
-                        to="/assessments"
+                        to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
@@ -180,18 +180,11 @@ const MobileNav = () => {
                         onClick={toggleNav}
                       >
                         <FaFileExport className="text-blue-400" />
-                        <span>General Report</span>
+                        <span>Exams Results</span>
                       </NavLink>
+                     
                       <NavLink
-                        to="/exam-results"
-                        className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
-                        onClick={toggleNav}
-                      >
-                        <FaClipboardList className="text-blue-400" />
-                        <span>Exam Results</span>
-                      </NavLink>
-                      <NavLink
-                        to="/timetable"
+                        to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg"
                         onClick={toggleNav}
                       >
@@ -268,7 +261,7 @@ const MobileNav = () => {
                         <span>Expenses</span>
                       </NavLink>
                       <NavLink
-                        to="/financial-reports"
+                        to="/finance"
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg"
                         onClick={toggleNav}
                       >
@@ -313,7 +306,7 @@ const MobileNav = () => {
                         <span>Teachers</span>
                       </NavLink>
                       <NavLink
-                        to="/staff"
+                        to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
@@ -321,7 +314,7 @@ const MobileNav = () => {
                         <span>Staff</span>
                       </NavLink>
                       <NavLink
-                        to="/payroll"
+                        to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg"
                         onClick={toggleNav}
                       >
@@ -366,10 +359,9 @@ const MobileNav = () => {
         {/* User Profile Footer */}
         <div className="p-4 border-t border-gray-200">
           <div className="flex items-center gap-3">
-            <FaUserCircle className="text-xl text-gray-500" />
+         
             <div>
-              <p className="text-sm font-medium text-gray-700">Admin User</p>
-              <p className="text-xs text-gray-500">Administrator</p>
+            © 2025 Topaz Computer Systems
               
             </div>
           </div>
