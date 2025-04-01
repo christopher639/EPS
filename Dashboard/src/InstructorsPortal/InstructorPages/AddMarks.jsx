@@ -369,7 +369,7 @@ const AddMarks = () => {
   }, []);
 
   return (
-    <div className="max-h-screen  overflow-y-auto bg-gray-50">
+    <div className=" bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  flex justify-between items-center">
@@ -379,11 +379,11 @@ const AddMarks = () => {
       </header>
 
       {/* Main Content */}
-      <main className="w-full md:w-1/2  mx-auto px-4 sm:px-6 lg:px-8 ">
+      <main className="w-full max-h-screen pb-20 md:pb-16  overflow-y-auto md:w-1/2  mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
           {/* Form Header */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4">
-            <h2 className="text-xl font-semibold text-white">Enter Student Marks</h2>
+            <h2 className="text-xl font-semibold text-white">Enter Leaner Marks</h2>
           </div>
 
           {/* Form Content */}
