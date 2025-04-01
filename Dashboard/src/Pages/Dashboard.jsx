@@ -151,10 +151,10 @@ const Dashboard = () => {
   }, []);
 
   const doughnutData = {
-    labels: ['Leaners', 'Teachers', 'Streams', 'Departments'],
+    labels: ['Streams', 'Teachers', 'Leaners', 'Departments'],
     datasets: [
       {
-        data: [totalLeaners, teachers.length, stream.length, 5],
+        data: [stream.length, teachers.length, totalLeaners, 5],
         backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#FF5722'],
         hoverOffset: 4,
       },
@@ -338,37 +338,67 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Expanded Quick Links */}
-          <div className='bg-white rounded-lg mb-8 shadow-sm p-6'>
-            <h2 className='text-xl font-semibold text-gray-800 mb-4'>Quick Links</h2>
-            <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4'>
-              {[
-                { to: '/learner', icon: <FaUsers className='text-xl' />, text: 'Learners' },
-                { to: '/teachers', icon: <FaChalkboardTeacher className='text-xl' />, text: 'Teachers' },
-                { to: '/streams', icon: <FaSchool className='text-xl' />, text: 'Streams' },
-                { to: '/classes', icon: <FaUniversity className='text-xl' />, text: 'Classes' },
-                { to: '/departments', icon: <FaBuilding className='text-xl' />, text: 'Departments' },
-                { to: '/finance', icon: <FaMoneyBillAlt className='text-xl' />, text: 'Finances' },
-                { to: '/users', icon: <FaUserCircle className='text-xl' />, text: 'Users' },
-                { to: "/learningarea", icon: <FaBook className='text-xl' />, text: "Learning Areas" },
-                { to: "/", icon: <FaClipboard className='text-xl' />, text: "Assessments" },
-                { to: "/", icon: <FaClipboard className='text-xl' />, text: "Timetable" },
-                { to: "/fees-structure", icon: <FaMoneyBillAlt className='text-xl' />, text: "Fee Structure" },
-                { to: "/general-report", icon: <FaClipboard className='text-xl' />, text: "Exam Results" },
-                { to: "/parents", icon: <FaUserCircle className='text-xl' />, text: "Parents" },
-                { to: "", icon: <FaUserCircle className='text-xl' />, text: "Staff" }
-              ].map((link, index) => (
-                <NavLink
-                  key={index}
-                  to={link.to}
-                  className='flex flex-col items-center justify-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors'
-                >
-                  {link.icon}
-                  <p className='mt-2 text-sm font-medium text-center'>{link.text}</p>
-                </NavLink>
-              ))}
-            </div>
-          </div>
+        {/* Expanded Quick Links */}
+<div className='bg-white rounded-lg mb-8 shadow-sm p-6'>
+  <h2 className='text-xl font-semibold text-gray-800 mb-4'>Quick Links</h2>
+  <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4'>
+    {[
+      // Streams - Green (#4CAF50)
+      { to: '/streams', icon: <FaSchool className='text-xl' style={{ color: '#4CAF50' }} />, text: 'Streams' },
+      
+      // Teachers - Orange (#FF9800)
+      { to: '/teachers', icon: <FaChalkboardTeacher className='text-xl' style={{ color: '#FF9800' }} />, text: 'Teachers' },
+      
+      // Learners - Blue (#2196F3)
+      { to: '/learner', icon: <FaUsers className='text-xl' style={{ color: '#2196F3' }} />, text: 'Learners' },
+      
+      // Departments - Red (#FF5722)
+      { to: '/departments', icon: <FaBuilding className='text-xl' style={{ color: '#FF5722' }} />, text: 'Departments' },
+      
+      // Classes - Purple (added to match stats grid)
+      { to: '/classes', icon: <FaUniversity className='text-xl' style={{ color: '#9C27B0' }} />, text: 'Classes' },
+      
+      // Finance - Teal (new color)
+      { to: '/finance', icon: <FaMoneyBillAlt className='text-xl' style={{ color: '#009688' }} />, text: 'Finances' },
+      
+      // Users - Deep Purple
+      { to: '/users', icon: <FaUserCircle className='text-xl' style={{ color: '#673AB7' }} />, text: 'Users' },
+      
+      // Learning Areas - Light Blue
+      { to: "/learningarea", icon: <FaBook className='text-xl' style={{ color: '#03A9F4' }} />, text: "Learning Areas" },
+      
+      // Assessments - Amber
+      { to: "/assessments", icon: <FaClipboard className='text-xl' style={{ color: '#FFC107' }} />, text: "Assessments" },
+      
+      // Reports - Deep Orange
+      { to: "/general-report", icon: <FaClipboard className='text-xl' style={{ color: '#FF5722' }} />, text: "Reports" },
+      
+      // Timetable - Indigo
+      { to: "/timetable", icon: <FaClipboard className='text-xl' style={{ color: '#3F51B5' }} />, text: "Timetable" },
+      
+      // Fee Structure - Brown
+      { to: "/fees-structure", icon: <FaMoneyBillAlt className='text-xl' style={{ color: '#795548' }} />, text: "Fee Structure" },
+      
+      // Exam Results - Pink
+      { to: "/exam-results", icon: <FaClipboard className='text-xl' style={{ color: '#E91E63' }} />, text: "Exam Results" },
+      
+      // Parents - Cyan
+      { to: "/parents", icon: <FaUserCircle className='text-xl' style={{ color: '#00BCD4' }} />, text: "Parents" },
+      
+      // Staff - Lime
+      { to: "/staff", icon: <FaUserCircle className='text-xl' style={{ color: '#CDDC39' }} />, text: "Staff" }
+    ].map((link, index) => (
+      <NavLink
+        key={index}
+        to={link.to}
+        className='flex flex-col items-center justify-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors'
+      >
+        {link.icon}
+        <p className='mt-2 text-sm font-medium text-center'>{link.text}</p>
+      </NavLink>
+    ))}
+  </div>
+</div>
         </div>
       </div>
     </div>
