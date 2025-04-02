@@ -237,7 +237,7 @@ const MobileNav = () => {
                         <span>Fees Structure</span>
                       </NavLink>
                       <NavLink
-                        to=""
+                        to="/fees-payments"
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
