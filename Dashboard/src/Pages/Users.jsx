@@ -8,8 +8,7 @@ import SidebarToggleButton from '../components/SidebarToggleButton';
 import 'react-toastify/dist/ReactToastify.css';
 import PendingUsersModal from './PendingUsersModal';
 import MobileNav from '../components/MobileNav';
-// import BASE_URL from '../config';
-// axios.defaults.baseURL = BASE_URL;
+import { Tooltip } from 'react-tooltip';
 
 const Users = () => {
   const [userform, setUserForm] = useState(false);
@@ -202,14 +201,14 @@ const Users = () => {
       {/** Main content */}
       <div className="flex w-full flex-col min-h-screen bg-gray-100">
         <ToastContainer />
-        <div className="flex justify-between items-center p-4 bg-white shadow-sm">
+        <div className="flex justify-between py-[19px] items-center p-2 bg-white border-b">
           <MobileNav/>
          <div className='hidden md:flex'>
          <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
          </div>
           <div className="hidden sm:flex">
             <input
-              className="outline-none px-4 py-2 border border-gray-300 rounded-md w-64"
+              className="outline-none px-3 py-1 text-sm border border-gray-300 rounded-md w-64"
               type="text"
               placeholder="Search"
               value={searchTerm}
@@ -221,83 +220,87 @@ const Users = () => {
               setSelectedUserId(null);
               setEmailModalOpen(true);
             }}
-            className="bg-blue-500 hidden md:flex text-white px-3 py-2 rounded-md hover:bg-blue-600 transition-colors"
+            className="bg-blue-500 hidden md:flex items-center text-white px-3 py-1 rounded-md hover:bg-blue-600 transition-colors"
+            data-tooltip-id="email-tooltip"
+            data-tooltip-content="Email All Users"
           >
-            <FaPaperPlane />
+            <FaPaperPlane className="mr-1" /> <span className="text-sm">Email All</span>
           </button>
           <div>
-      <button
-        onClick={() => setModalOpen(true)}
-        className="bg-blue-500 hidden md:flex text-white px-4 py-2 rounded"
-      >
-       <span className=''> View Pending Users</span>
-      </button>
-
-      <PendingUsersModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
-    </div>
-
+            <button
+              onClick={() => setModalOpen(true)}
+              className="bg-purple-600 hidden md:flex items-center text-white px-3 py-1 rounded text-sm"
+              data-tooltip-id="pending-tooltip"
+              data-tooltip-content="View Pending Users"
+            >
+              <span>Pending Users</span>
+            </button>
+            <PendingUsersModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+          </div>
           <div>
             <button
               onClick={() => setUserForm(true)}
-              className="bg-green-700 flex items-center text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
+              className="bg-green-600 flex items-center text-white px-3 py-1 rounded-md hover:bg-green-700 transition-colors text-sm"
+              data-tooltip-id="add-tooltip"
+              data-tooltip-content="Add New User"
             >
-              <FaPlus className="mr-2" /> <span className="hidden sm:inline">Add</span>
+              <FaPlus className="mr-1" /> <span>Add</span>
             </button>
           </div>
           <UserAccount />
         </div>
-        <div className="sm:hidden flex justify-between p-4">
+        <div className="sm:hidden flex justify-between p-2">
           <input
-            className="outline-none max-w-40 px-4 py-2 border border-gray-300 rounded-md"
+            className="outline-none max-w-40 px-3 py-1 text-sm border border-gray-300 rounded-md"
             type="text"
             placeholder="Search"
             value={searchTerm}
             onChange={handleSearchChange}
           />
-            <button
+          <button
             onClick={() => {
               setSelectedUserId(null);
               setEmailModalOpen(true);
             }}
-            className="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition-colors"
+            className="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 transition-colors text-sm"
           >
             <FaPaperPlane />
           </button>
           <button
-        onClick={() => setModalOpen(true)}
-        className="bg-blue-500  text-white px-4 py-2 rounded"
-      >
-       <span className=''>Pending</span>
-      </button>
+            onClick={() => setModalOpen(true)}
+            className="bg-purple-600 text-white px-2 py-1 rounded text-sm"
+          >
+            Pending
+          </button>
         </div>
 
         {emailModalOpen && (
           <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg max-w-md w-full shadow-lg">
-              <h2 className="text-xl font-semibold mb-4">
+            <div className="bg-white p-4 rounded-lg max-w-md w-full shadow-lg">
+              <h2 className="text-lg font-semibold mb-3">
                 {selectedUserId ? 'Send Email to User' : 'Send Email to All Users'}
               </h2>
               <form onSubmit={handleEmailSubmit}>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Email Content</label>
+                <div className="mb-3">
+                  <label className="block text-xs font-medium">Email Content</label>
                   <textarea
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-2 text-sm border border-gray-300 rounded-md"
                     placeholder="Type your email content here..."
                     value={emailContent}
                     onChange={(e) => setEmailContent(e.target.value)}
                     rows="5"
                   />
                 </div>
-                <div className="flex justify-end gap-4">
+                <div className="flex justify-end gap-2">
                   <button
                     onClick={() => setEmailModalOpen(false)}
-                    className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
+                    className="px-3 py-1 text-sm bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                    className="px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                   >
                     Send Email
                   </button>
@@ -309,15 +312,15 @@ const Users = () => {
 
         {userform && (
           <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-5 md:w-2/3 shadow-lg">
-              <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-3">
-                <h2 className="text-xl font-semibold mb-4 col-span-full">{formData._id ? 'Update User' : 'Add New User'}</h2>
+            <div className="bg-white p-4 rounded-lg max-h-[72vh] md:max-h-[90vh] overflow-y-auto w-full mx-3 md:w-2/3 shadow-lg">
+              <form onSubmit={handleSubmit} className="w-full flex flex-col gap-2 md:grid md:grid-cols-2 lg:grid-cols-3">
+                <h2 className="text-lg font-semibold mb-2 col-span-full">{formData._id ? 'Update User' : 'Add New User'}</h2>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Username</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Username</label>
                   <input
                     type="text"
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     name='username'
                     onChange={handleOnChange}
                     value={formData.username}
@@ -325,11 +328,11 @@ const Users = () => {
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Full Name</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Full Name</label>
                   <input
                     type="text"
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     name='fullName'
                     onChange={handleOnChange}
                     value={formData.fullName}
@@ -337,11 +340,11 @@ const Users = () => {
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Email</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Email</label>
                   <input
                     type="email"
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     name='email'
                     onChange={handleOnChange}
                     value={formData.email}
@@ -349,11 +352,11 @@ const Users = () => {
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Password</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Password</label>
                   <input
                     type="password"
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     name='password'
                     onChange={handleOnChange}
                     value={formData.password}
@@ -361,11 +364,11 @@ const Users = () => {
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Phone Number</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Phone Number</label>
                   <input
                     type="text"
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     name='phoneNumber'
                     onChange={handleOnChange}
                     value={formData.phoneNumber}
@@ -373,11 +376,11 @@ const Users = () => {
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Profile Picture</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Profile Picture</label>
                   <input
                     type="text"
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     name='profilePicture'
                     onChange={handleOnChange}
                     value={formData.profilePicture}
@@ -385,11 +388,11 @@ const Users = () => {
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Role</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Role</label>
                   <select
                     name='role'
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     onChange={handleOnChange}
                     value={formData.role}
                   >
@@ -399,11 +402,11 @@ const Users = () => {
                   </select>
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Status</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Status</label>
                   <select
                     name='status'
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     onChange={handleOnChange}
                     value={formData.status}
                   >
@@ -413,11 +416,11 @@ const Users = () => {
                   </select>
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Address</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Address</label>
                   <input
                     type="text"
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     name='address'
                     onChange={handleOnChange}
                     value={formData.address}
@@ -425,27 +428,27 @@ const Users = () => {
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Date of Birth</label>
+                <div className="mb-2">
+                  <label className="block text-xs font-medium">Date of Birth</label>
                   <input
                     type="date"
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-1 text-sm border border-gray-300 rounded-md"
                     name='dateOfBirth'
                     onChange={handleOnChange}
                     value={formData.dateOfBirth}
                   />
                 </div>
 
-                <div className="flex justify-end gap-4 col-span-full">
+                <div className="flex justify-end gap-2 col-span-full mt-2">
                   <button
                     onClick={() => setUserForm(false)}
-                    className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
+                    className="px-3 py-1 text-sm bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type='submit'
-                    className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
+                    className="px-3 py-1 text-sm bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
                   >
                     {formData._id ? 'Update User' : 'Add User'}
                   </button>
@@ -457,18 +460,18 @@ const Users = () => {
 
         {isDeleteModalOpen && (
           <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg w-80 shadow-lg">
-              <h3 className="text-xl mb-4">Are you sure you want to delete this user?</h3>
-              <div className="flex justify-end gap-4">
+            <div className="bg-white p-4 rounded-lg w-80 shadow-lg">
+              <h3 className="text-lg mb-3">Are you sure you want to delete this user?</h3>
+              <div className="flex justify-end gap-2">
                 <button
                   onClick={() => setIsDeleteModalOpen(false)}
-                  className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
+                  className="px-3 py-1 text-sm bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                  className="px-3 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
                 >
                   Yes, Delete
                 </button>
@@ -476,56 +479,71 @@ const Users = () => {
             </div>
           </div>
         )}
+     <div  className="bg-white mx-2 md:mx-2 mt-1  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[90vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4"  >
 
-        <div className='p-3 grid grid-cols-1 pb-4 max-h-[80vh] overflow-y-auto w-full overflow-x-auto'>
+   
+        <div className='p-2 grid grid-cols-1 pb-3 max-h-[80vh] overflow-y-auto w-full overflow-x-auto'>
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
             </div>
           ) : (
-            <table className="w-full table-auto px-2 border shadow-lg">
+            <table className="w-full table-auto px-1  text-sm">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {filteredUsers.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="text-center py-4">No users found.</td>
+                    <td colSpan="5" className="text-center py-3 text-sm">No users found.</td>
                   </tr>
                 ) : (
                   filteredUsers.map((user) => (
-                    <tr key={user._id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4">{user.fullName}</td>
-                      <td className="px-6 py-4">{user.email}</td>
-                      <td className="px-6 py-4">{user.role}</td>
-                      <td className="px-6 py-4">{user.status}</td>
-                      <td className="px-6 py-4 flex gap-2">
+                    <tr key={user._id} className="hover:bg-gray-50 border-none transition-colors">
+                      <td className="px-4 py-2">{user.fullName}</td>
+                      <td className="px-4 py-2">{user.email}</td>
+                      <td className="px-4 py-2">{user.role}</td>
+                      <td className="px-4 py-2">
+                        <span className={`inline-flex px-2 py-1 text-xs rounded-full 
+                          ${user.status === 'active' ? 'bg-green-100 text-green-800' : 
+                            user.status === 'inactive' ? 'bg-yellow-100 text-yellow-800' : 
+                            'bg-red-100 text-red-800'}`}>
+                          {user.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2 flex gap-1">
                         <button
                           onClick={() => {
                             setSelectedUserId(user._id);
                             setEmailModalOpen(true);
                           }}
-                          className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition-colors"
+                          className="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 transition-colors flex items-center"
+                          data-tooltip-id="email-tooltip"
+                          data-tooltip-content="Email User"
                         >
-                          <FaPaperPlane />
+                          <FaPaperPlane className="mr-1" /> <span className="text-xs">Email</span>
                         </button>
                         <button
                           onClick={() => handleUpdate(user)}
-                          className="bg-green-700 text-white px-3 py-1 rounded-md hover:bg-green-600 transition-colors"
+                          className="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition-colors flex items-center"
+                          data-tooltip-id="edit-tooltip"
+                          data-tooltip-content="Edit User"
                         >
-                          <FaEdit />
+                          <FaEdit className="mr-1" /> <span className="text-xs">Edit</span>
                         </button>
                         <button
                           onClick={() => handleDelete(user._id)}
-                          className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition-colors"
+                          className="bg-red-600 text-white px-2 py-1 rounded-md hover:bg-red-700 transition-colors flex items-center"
+                          data-tooltip-id="delete-tooltip"
+                          data-tooltip-content="Delete User"
                         >
-                          <FaTrash />
+                          <FaTrash className="mr-1" /> <span className="text-xs">Delete</span>
                         </button>
                       </td>
                     </tr>
@@ -535,6 +553,13 @@ const Users = () => {
             </table>
           )}
         </div>
+        </div>
+        {/* Tooltips */}
+        <Tooltip id="email-tooltip" place="top" effect="solid" />
+        <Tooltip id="edit-tooltip" place="top" effect="solid" />
+        <Tooltip id="delete-tooltip" place="top" effect="solid" />
+        <Tooltip id="add-tooltip" place="top" effect="solid" />
+        <Tooltip id="pending-tooltip" place="top" effect="solid" />
       </div>
     </div>
   );
