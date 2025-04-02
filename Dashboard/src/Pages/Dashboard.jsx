@@ -224,7 +224,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className='w-full'>
         {/* Header */}
-        <div className='flex justify-between items-center bg-white shadow-sm p-2 border-b'>
+        <div className='flex justify-between items-center p-[19px] bg-white  p-2 border-b'>
           <div className='flex items-center gap-3'>
             <div>
               <MobileNav />

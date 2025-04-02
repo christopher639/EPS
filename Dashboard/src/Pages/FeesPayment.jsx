@@ -241,144 +241,146 @@ const FeesPayment = () => {
       </div>
 
       {/* Main Content */}
-      <div className=" w-full">
+      <div className=" bg-gray-50 w-full">
         {/* Header */}
-        <div className="flex justify-between items-center bg-white p-4 border-b shadow-sm">
+        <div className="flex justify-between items-center bg-white p-[19px] border-b ">
           <div className="flex items-center ">
             <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-            <h1 className="text-xl font-semibold text-gray-800">Fees Payment Transactions</h1>
+            <p className="text-md px-4 font-semibold text-gray-800">Fees Payment Transactions Records</p>
           </div>
           <UserAccount />
         </div>
 
           {/* Dashboard */}
-          <div className="p-4 md:p-6">
-          {/* Summary Card and Action Buttons */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-            <div className="bg-white p-4 rounded-lg shadow border w-full md:w-auto">
-              <div className="flex items-center gap-3">
-                <div className="p-3 bg-blue-100 rounded-full">
-                  <FaReceipt className="text-blue-600 text-xl" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Total Fees Paid</p>
-                  <p className="text-2xl font-bold text-gray-800">
-                    Ksh {new Intl.NumberFormat("en-US").format(totalFeesPaid)}
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="p-2 md:p-1">
+        {/* Summary Card and Action Buttons */}
 
-            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-              <button
-                onClick={generatePDF}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md flex items-center gap-2 justify-center"
-                data-tooltip-id="pdf-tooltip"
-              >
-                <FaFilePdf /> PDF
-                <Tooltip id="pdf-tooltip" place="top">
-                  Download as PDF
-                </Tooltip>
-              </button>
-
-              <button
-                onClick={generateExcel}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md flex items-center gap-2 justify-center"
-                data-tooltip-id="excel-tooltip"
-              >
-                <FaFileExcel /> Excel
-                <Tooltip id="excel-tooltip" place="top">
-                  Download as Excel
-                </Tooltip>
-              </button>
-
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center gap-2 justify-center"
-                data-tooltip-id="add-payment-tooltip"
-              >
-                <FaPlus /> Add Payment
-                <Tooltip id="add-payment-tooltip" place="top">
-                  Record a new fee payment
-                </Tooltip>
-              </button>
-            </div>
-          </div>
 
           {/* Transactions Table */}
-          <div className="bg-white rounded-lg shadow border overflow-hidden">
+          <div className="bg-white mx-2 md:mx-2  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[90vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
+          <div className="flex   justify-between items-start md:items-center gap-3 mb-2">
+<div className="bg-white p-1.5 rounded-md shadow-sm border flex items-center gap-1.5">
+  <div className="p-1 bg-blue-100 rounded-full">
+    <FaReceipt className="text-blue-600 text-sm" />
+  </div>
+  <div>
+    <p className="text-[10px] text-gray-500">Total Fees Paid</p>
+    <p className="text-sm font-semibold text-gray-800">
+      Ksh {new Intl.NumberFormat("en-US").format(totalFeesPaid)}
+    </p>
+  </div>
+</div>
+    <button
+      onClick={generatePDF}
+      className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-md flex items-center gap-1 text-sm"
+      data-tooltip-id="pdf-tooltip"
+    >
+      <FaFilePdf /> PDF
+      <Tooltip id="pdf-tooltip" place="top">Download as PDF</Tooltip>
+    </button>
+
+    <button
+      onClick={generateExcel}
+      className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md flex items-center gap-1 text-sm"
+      data-tooltip-id="excel-tooltip"
+    >
+      <FaFileExcel /> Excel
+      <Tooltip id="excel-tooltip" place="top">Download as Excel</Tooltip>
+    </button>
+
+    <button
+      onClick={() => setIsModalOpen(true)}
+      className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md flex items-center gap-1 text-sm"
+      data-tooltip-id="add-payment-tooltip"
+    >
+      <FaPlus /> Add
+      <Tooltip id="add-payment-tooltip" place="top">Record new payment</Tooltip>
+    </button>
+ 
+</div>
             {loading ? (
               <div className="flex justify-center items-center h-64">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
               </div>
             ) : (
-              <div className="overflow-x-auto max-h-[calc(100vh-220px)]">
-                <table className="min-w-full divide-y divide-gray-200 text-sm">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Receipt No</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Reg No</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Student</th>
-                      <th className="px-4 py-3 text-right font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Method</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                      <th className="px-4 py-3 text-right font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {payments.length > 0 ? (
-                      payments.map((payment) => (
-                        <tr key={payment._id} className="hover:bg-gray-50">
-                          <td className="px-4 py-3 whitespace-nowrap">{payment.receiptNumber || "N/A"}</td>
-                          <td className="px-4 py-3 whitespace-nowrap">{payment.regno}</td>
-                          <td className="px-4 py-3 whitespace-nowrap">
-                            {payment.studentDetails?.name || "N/A"}
-                          </td>
-                          <td className="px-4 py-3 whitespace-nowrap text-right font-medium">
-                            {new Intl.NumberFormat("en-US").format(payment.amountPaid)}
-                          </td>
-                          <td className="px-4 py-3 whitespace-nowrap">{payment.paymentMethod}</td>
-                          <td className="px-4 py-3 whitespace-nowrap">
-                            {new Date(payment.paymentDate).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </td>
-                          <td className="px-4 py-3 whitespace-nowrap text-right space-x-1">
-                            <button
-                              onClick={() => downloadReceipt(payment)}
-                              className="text-red-600 hover:text-red-800 p-1 rounded-full hover:bg-red-50"
-                              data-tooltip-id="pdf-receipt-tooltip"
-                            >
-                              <FaFilePdf className="text-lg" />
-                              <Tooltip id="pdf-receipt-tooltip" place="top">
-                                Download PDF Receipt
-                              </Tooltip>
-                            </button>
-                            <button
-                              onClick={() => printReceipt(payment)}
-                              className="text-blue-600 hover:text-blue-800 p-1 rounded-full hover:bg-blue-50"
-                              data-tooltip-id="print-receipt-tooltip"
-                            >
-                              <FaPrint className="text-lg" />
-                              <Tooltip id="print-receipt-tooltip" place="top">
-                                Print Receipt
-                              </Tooltip>
-                            </button>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
-                          No payment records found
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+              <div className="overflow-x-auto max-h-[70vh]  rounded-lg">
+              <table className="min-w-full divide-y divide-gray-100 text-sm">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-4 py-2.5 text-left font-medium text-gray-600 uppercase tracking-wider text-xs">Receipt No</th>
+                    <th className="px-4 py-2.5 text-left font-medium text-gray-600 uppercase tracking-wider text-xs">Reg No</th>
+                    <th className="px-4 py-2.5 text-left font-medium text-gray-600 uppercase tracking-wider text-xs">Student</th>
+                    <th className="px-4 py-2.5 text-right font-medium text-gray-600 uppercase tracking-wider text-xs">Amount</th>
+                    <th className="px-4 py-2.5 text-left font-medium text-gray-600 uppercase tracking-wider text-xs">Method</th>
+                    <th className="px-4 py-2.5 text-left font-medium text-gray-600 uppercase tracking-wider text-xs">Date</th>
+                    <th className="px-4 py-2.5 text-right font-medium text-gray-600 uppercase tracking-wider text-xs">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-100">
+  {payments.length > 0 ? (
+    payments.map((payment) => (
+      <tr key={payment._id} className="bg-white">
+        <td className="px-4 py-1 whitespace-nowrap text-gray-700">{payment.receiptNumber || "N/A"}</td>
+        <td className="px-4 py-1 whitespace-nowrap text-gray-700 font-medium">{payment.regno}</td>
+        <td className="px-4 py-1 whitespace-nowrap text-gray-900">
+          {payment.studentDetails?.name || "N/A"}
+        </td>
+        <td className="px-4 py-1 whitespace-nowrap text-right text-gray-900 font-medium">
+          {new Intl.NumberFormat("en-US").format(payment.amountPaid)}
+        </td>
+        <td className="px-4 py-1 whitespace-nowrap">
+          <span className={`px-2 py-1 rounded-full text-xs ${
+            payment.paymentMethod === 'MPESA' ? 'bg-green-100 text-green-800' :
+            payment.paymentMethod === 'CASH' ? 'bg-blue-100 text-blue-800' :
+            'bg-red-100 text-gray-800'
+          }`}>
+            {payment.paymentMethod}
+          </span>
+        </td>
+        <td className="px-4 py-1 whitespace-nowrap text-gray-500">
+          {new Date(payment.paymentDate).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+        </td>
+        <td className="px-4 py-1 whitespace-nowrap text-right space-x-1">
+          <button
+            onClick={() => downloadReceipt(payment)}
+            className="text-red-600 hover:text-red-800 p-1.5 rounded hover:bg-red-50 transition-colors"
+            data-tooltip-id="pdf-receipt-tooltip"
+          >
+            <FaFilePdf className="text-base" />
+            <Tooltip id="pdf-receipt-tooltip" place="top">
+              Download PDF Receipt
+            </Tooltip>
+          </button>
+          <button
+            onClick={() => printReceipt(payment)}
+            className="text-blue-600 hover:text-blue-800 p-1.5 rounded hover:bg-blue-50 transition-colors"
+            data-tooltip-id="print-receipt-tooltip"
+          >
+            <FaPrint className="text-base" />
+            <Tooltip id="print-receipt-tooltip" place="top">
+              Print Receipt
+            </Tooltip>
+          </button>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr className="bg-white">
+      <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
+        <div className="flex flex-col items-center justify-center space-y-2">
+          <FaFileInvoice className="text-2xl text-gray-300" />
+          <span>No payment records found</span>
+        </div>
+      </td>
+    </tr>
+  )}
+</tbody>
+              </table>
+            </div>
             )}
           </div>
         </div>

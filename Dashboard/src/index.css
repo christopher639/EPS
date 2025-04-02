@@ -61,11 +61,11 @@ body{
 
  */
 tr:nth-child(odd) {
-  background-color: #f9fafb; /* Light gray for odd rows */
+  background-color: white; /* Light gray for odd rows */
 }
 
 /* Style even rows */
 tr:nth-child(even) {
-  background-color: #ffffff; /* White for even rows */
+  background-color: white; /* White for even rows */
 }
 
