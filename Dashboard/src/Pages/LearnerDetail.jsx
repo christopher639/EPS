@@ -133,11 +133,11 @@ const LearnerDetail = () => {
       <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
-      <div className="p-3 sm:p-6 w-full bg-gray-100 max-h-[100vh] overflow-y-auto min-h-screen">
+      <div className=" w-full  bg-gray-100 ">
         <ToastContainer />
        
         {/* Responsive Header */}
-        <div className="flex items-center justify-between gap-2 py-2">
+        <div className="flex items-center bg-white border-b py-[19px] justify-between gap-2 py-2">
           <MobileNav className="text-xs"/>
           <div className="hidden md:flex">
             <SidebarToggleButton 
@@ -152,8 +152,9 @@ const LearnerDetail = () => {
             <UserAccount className="text-xs"/>
           </div>
         </div>
-
-        <div className="bg-white rounded-lg p-3 sm:p-6">
+<div className=" max-h-[86vh] pb-5 overflow-y-auto">
+  
+<div className="bg-white rounded-lg p-3 sm:p-6">
           <h1 className="text-lg sm:text-xl font-semibold mb-3"></h1>
 
           <div className="flex flex-col md:flex-row gap-4">
@@ -235,7 +236,7 @@ const LearnerDetail = () => {
           </div>
         </div>
 
-        <div className="py-4 px-2 mt-6 flex flex-col gap-3 bg-white rounded-lg">
+        <div className="py-4 px-2 mt-6 flex flex-col   gap-3 bg-white rounded-lg">
           <h2 className="text-lg sm:text-xl font-semibold mb-3">Fees Payment Statement</h2>
           {feesPayments.length > 0 ? (
             <div className="overflow-x-auto">
@@ -293,6 +294,7 @@ const LearnerDetail = () => {
             <p className="text-xs sm:text-sm">No academic data available.</p>
           )}
         </div>
+</div>
       </div>
     </div>
   );

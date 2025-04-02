@@ -218,14 +218,14 @@ const LearnerManagement = () => {
       >
         <SideBar />
       </div>
-      <div className="py-1  w-full  bg-gray-100 min-h-screen">
+      <div className="  w-full  bg-gray-100 min-h-screen">
         <ToastContainer />
         {/* Search Bar */}
-        <div className="mb-0 md:mb-2 bg-white  border-b  sm:mb-1">
+        <div className="mb-0  bg-white py-[19px] border-b  ">
   <div className="flex flex-col md:flex-row gap-2 justify-between">
-    <div className="flex items-center justify-between gap-4 w-full p-2 rounded-lg">
+    <div className="flex items-center    justify-between gap-4 w-full  ">
       {/* Mobile Navigation (Left Side) */}
-      <div className="flex items-center gap-2">
+      <div className="flex px-2 items-center gap-2">
         <MobileNav className="text-blue-600 hover:text-blue-800 transition-colors" />
         <div className="hidden md:block">
           <SidebarToggleButton
@@ -546,9 +546,9 @@ const LearnerManagement = () => {
 
         {/* Learners List */}
         {!isLoading && (
-          <div className="bg-white mx-2 md:mx-2  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[90vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
-            <div className="flex mb-2  md:mb-0 sm:mb-4 gap-2">       
-    <div className="flex  mb-2 mx-2 sm:mx-4 justify-between gap-2 sm:gap-3 items-center">
+          <div className="bg-white mx-4  md:mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen max-h-[75vh] md:max-h-[85vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto   ">
+            <div className="flex ">       
+    <div className="flex   mx-2  justify-between gap-2 sm:gap-3 items-center">
     <div className="flex md:hidden  focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
         <input
           type="text"
@@ -582,59 +582,59 @@ const LearnerManagement = () => {
               <table className="w-full border-collapse border border-gray-300 text-xs sm:text-sm">
                 <thead>
                   <tr className="bg-gray-200">
-                    <th className="border border-gray-300 p-1 sm:p-2">#</th>
-                    <th className="border border-gray-300 p-1 sm:p-2">Image</th>
-                    <th className="border border-gray-300 p-1 sm:p-2">Full Name</th>
-                    <th className="border border-gray-300 p-1 sm:p-2">Reg No</th>
-                    <th className="border border-gray-300 p-1 sm:p-2">Grade</th>
-                    <th className="border border-gray-300 p-1 sm:p-2">Stream</th>
-                    <th className="border border-gray-300 p-1 sm:p-2">Gender</th>
-                    <th className="border border-gray-300 p-1 sm:p-2">P/G Name</th>
-                    <th className="border border-gray-300 p-1 sm:p-2">P/G Phone</th>
-                    <th className="border border-gray-300 p-1 sm:p-2">Action</th>
+                    <th className=" p-1 sm:p-2">#</th>
+                    <th className=" p-1 sm:p-2">Image</th>
+                    <th className=" p-1 sm:p-2">Full Name</th>
+                    <th className=" p-1 sm:p-2">Reg No</th>
+                    <th className=" p-1 sm:p-2">Grade</th>
+                    <th className=" p-1 sm:p-2">Stream</th>
+                    <th className=" p-1 sm:p-2">Gender</th>
+                    <th className=" p-1 sm:p-2">P/G Name</th>
+                    <th className=" p-1 sm:p-2">P/G Phone</th>
+                    <th className=" p-1 sm:p-2">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredLearners.map((learner) => (
                     <tr
                       key={learner._id}
-                      className="text-center hover:bg-gray-100"
+                      className="text-center border-y border-gray-300 hover:bg-gray-100"
                     >
-                      <td className="border border-gray-300 p-1 sm:p-2">
+                      <td className="p-1 sm:p-2">
                         {learner.index}
                       </td>
-                      <td className="border border-gray-300 p-1 sm:p-2">
+                      <td className=" p-1 sm:p-2">
                         <img
                           src={` https://eps-dashboard.onrender.com${learner.learnerImage}`}
                           alt={learner.name}
                           className="w-10 h-10 sm:w-16 sm:h-16 object-cover rounded-md"
                         />
                       </td>
-                      <td className="border border-gray-300 p-1 sm:p-2">
+                      <td className=" p-1 sm:p-2">
                         {learner.name}
                       </td>
-                      <td className="border border-gray-300 p-1 sm:p-2">
+                      <td className="p-1 sm:p-2">
                         {learner.regno}
                       </td>
-                      <td className="border border-gray-300 p-1 sm:p-2">
+                      <td className=" p-1 sm:p-2">
                         {learner.grade}
                       </td>
-                      <td className="border border-gray-300 p-1 sm:p-2">
+                      <td className=" p-1 sm:p-2">
                         {learner.stream}
                       </td>
-                      <td className="border border-gray-300 p-1 sm:p-2">
+                      <td className=" p-1 sm:p-2">
                         {learner.gender}
                       </td>
-                      <td className="border border-gray-300 p-1 sm:p-2">
+                      <td className=" p-1 sm:p-2">
                         {learner.guardianName}
                       </td>
-                      <td className="border border-gray-300 p-1 sm:p-2">
+                      <td className=" p-1 sm:p-2">
                         {learner.guardianPhone}
                       </td>
-                      <td className="border flex gap-1 sm:gap-2 border-gray-300 p-1 sm:p-2">
+                      <td className="flex gap-1 sm:gap-2   p-1 sm:p-2">
                         <button
                           onClick={() => handleRowClick(learner._id)}
-                          className="bg-blue-600 text-white px-2 sm:px-3 py-1 rounded hover:bg-red-900 transition flex items-center justify-center min-w-[60px] sm:min-w-[100px] text-xs sm:text-sm"
+                          className="bg-blue-600 mt-2 text-white px-2 sm:px-3 py-1 rounded hover:bg-red-900 transition flex items-center justify-center min-w-[60px] sm:min-w-[100px] text-xs sm:text-sm"
                           disabled={loadingProfile === learner._id}
                         >
                           {loadingProfile === learner._id ? (
