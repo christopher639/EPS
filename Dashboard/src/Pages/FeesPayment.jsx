@@ -246,7 +246,7 @@ const FeesPayment = () => {
         <div className="flex justify-between items-center bg-white p-[19px] border-b ">
           <div className="flex items-center ">
             <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-            <p className="text-md px-4 font-semibold text-gray-800">Fees Payment Transactions Records</p>
+            <p className="text-md px-4 font-semibold text-gray-800">Payment Records</p>
           </div>
           <UserAccount />
         </div>
@@ -259,11 +259,11 @@ const FeesPayment = () => {
           {/* Transactions Table */}
           <div className="bg-white mx-2 md:mx-2  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[90vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-4">
           <div className="flex   justify-between items-start md:items-center gap-3 mb-2">
-<div className="bg-white p-1.5 rounded-md shadow-sm border flex items-center gap-1.5">
+<div className="bg-white  hidden  md:flex gap-2 p-1.5 rounded-md shadow-sm border flex items-center gap-1.5">
   <div className="p-1 bg-blue-100 rounded-full">
     <FaReceipt className="text-blue-600 text-sm" />
   </div>
-  <div>
+  <div className=" gap-2 flex">
     <p className="text-[10px] text-gray-500">Total Fees Paid</p>
     <p className="text-sm font-semibold text-gray-800">
       Ksh {new Intl.NumberFormat("en-US").format(totalFeesPaid)}
