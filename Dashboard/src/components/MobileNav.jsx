@@ -43,7 +43,7 @@ const navItems = [
   { to: "/learningarea", label: "Learning Areas", icon: <FaClipboardList /> },
   { to: "/parents", label: "Parents", icon: <FaUserFriends /> },
   { to: "/users", label: "Users", icon: <FaUsers /> },
-  { to: "/analytics", label: "Analytics", icon: <FaChartLine /> },
+  { to: "/analytics", label: "School Performance", icon: <FaChartLine /> },
 ];
 
 const MobileNav = () => {

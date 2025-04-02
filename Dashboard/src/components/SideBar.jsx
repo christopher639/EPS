@@ -40,7 +40,7 @@ const navItems = [
   { to: "/learningarea", label: "Learning Areas", icon: <FaClipboardList className="text-indigo-500" /> },
   { to: "/parents", label: "Parents", icon: <FaUsers className="text-pink-500" /> },
   { to: "/users", label: "Users", icon: <FaUsers className="text-teal-500" /> },
-  { to: "/analytics", label: "Analytics", icon: <FaChartLine className="text-orange-500" /> },
+  { to: "/analytics", label: "School Performace", icon: <FaChartLine className="text-orange-500" /> },
 ];
 
 const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {

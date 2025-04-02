@@ -127,45 +127,47 @@ const Finance = () => {
       </div>
 
       {/* Main Content */}
-      <div className='flex bg-gray-50 flex-col w-full p-4'>
+      <div className='flex bg-gray-50 flex-col w-full '>
         {/* Header */}
-        <div className='flex justify-between border-b shadow-sm md:border-none md:shadow-none mb-4'>
-          <div>
-            <MobileNav />
-          </div>
-          <div className='flex items-center gap-2'>
-            <div className='hidden md:flex'>
+     <div className='bg-white justify-between border-b flex py-[17px]'>
+     <div className='hidden h-8 w-1/6 px-4  md:flex'>
               <SidebarToggleButton
                 toggleSidebar={toggleSideBar}
                 isSidebarCollapsed={!sideBar}
               />
             </div>
-            <h1 className='text-sm hidden md:flex sm:text-lg md:text-xl lg:text-3xl font-bold text-gray-800'>
+        <div className='flex bg-white w-5/6  justify-between   mb-1'>
+          <div>
+            <MobileNav />
+          </div>
+         
+          <div className='flex items-center gap-2'>
+          
+            <p className='text-sm hidden md:flex  font-bold text-gray-800'>
               Finance Management
-            </h1>
+            </p>
           </div>
           <NavLink 
             to="/fees-structures" 
-            className='bg-blue-700 p-2 hidden md:flex rounded text-white items-center'
+            className='bg-blue-700  px-2 hidden md:flex rounded-full text-white items-center'
             data-tooltip-id="fees-structure-tooltip"
             data-tooltip-content="View fee structures"
           >
-            <span className='hidden md:flex'>Fees Structures</span>
+            <span className='hidden text-sm md:flex'>Fees Structures</span>
             <span className='flex md:hidden'>
               <FaMoneyBillAlt className='text-lg'/>
             </span>
           </NavLink>
           <UserAccount />
         </div>
+     </div>
         
         {/* Mobile Header */}
         <div className='flex justify-between md:hidden mb-4'>
-          <h1 className='text-sm'>
-            Finance Management
-          </h1>
+        
           <NavLink 
             to="/fees-structures" 
-            className='bg-blue-700 px-2 rounded text-white text-sm py-1 flex items-center'
+            className='bg-blue-700 px-2 hidden rounded text-white text-sm py-1 flex items-center'
             data-tooltip-id="mobile-fees-tooltip"
             data-tooltip-content="View fee structures"
           >
@@ -173,9 +175,9 @@ const Finance = () => {
           </NavLink>
         </div>
 
-        <div className='overflow-y-auto max-h-[85vh] pb-8'>
+        <div className='overflow-y-auto max-h-[87vh] p-1 mx-1 pb-8'>
           {/* Stats Cards */}
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-2'>
             {/* Revenue Card */}
             <div 
               className='bg-white p-4 rounded-lg'
