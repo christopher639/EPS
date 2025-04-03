@@ -221,7 +221,7 @@ const LearnerManagement = () => {
       <div className="  w-full  bg-gray-100 min-h-screen">
         <ToastContainer />
         {/* Search Bar */}
-        <div className="mb-0  bg-white py-[19px] border-b  ">
+        <div className="mb-0  bg-white py-[4px] md:py-[19px] border-b  ">
   <div className="flex flex-col md:flex-row gap-2 justify-between">
     <div className="flex items-center    justify-between gap-4 w-full  ">
       {/* Mobile Navigation (Left Side) */}
@@ -546,7 +546,7 @@ const LearnerManagement = () => {
 
         {/* Learners List */}
         {!isLoading && (
-          <div className="bg-white px-1  md:mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen max-h-[75vh] md:max-h-[85vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto   ">
+          <div className="bg-white px-1  md:mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen max-h-[75vh] md:max-h-[85vh] pb-8 md:pb-5 overflow-y-auto overflow-x-auto   ">
             <div className="flex ">       
     <div className="flex   w-full my-2    justify-between gap-2 sm:gap-3 ">
     <div className="flex md:hidden py-2  focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
