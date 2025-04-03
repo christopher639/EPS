@@ -235,23 +235,23 @@ const LearnerManagement = () => {
           />
         </div>
       </div>
-      <div className=" hidden md:flex   focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
-        <input
-          type="text"
-          placeholder="Search by RegNo..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="px-3 py-1 text-xs sm:text-sm w-full sm:w-64 max-w-40 focus:outline-none"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-blue-600 text-white px-3 hover:bg-blue-700 transition-colors flex items-center justify-center"
-          data-tooltip-id="search-tooltip"
-          data-tooltip-content="Search learners"
-        >
-          <FaSearch className="text-xs sm:text-sm" />
-        </button>
-      </div>
+      <div className="hidden md:flex max-w-128 focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
+  <input
+    type="text"
+    placeholder="Search by RegNo..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="px-3 py-1 text-xs sm:text-sm w-full focus:outline-none"
+  />
+  <button
+    onClick={handleSearch}
+    className="bg-blue-600 text-white px-3 hover:bg-blue-700 transition-colors flex items-center justify-center whitespace-nowrap"
+    data-tooltip-id="search-tooltip"
+    data-tooltip-content="Search learners"
+  >
+    <FaSearch className="text-xs sm:text-sm" />
+  </button>
+</div>
       <button
         onClick={() => setModalOpen(true)}
         className="bg-blue-600 hidden md:flex mx-2 flex gap-2 items-center max-w-64 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors  shadow-md hover:shadow-lg text-xs sm:text-sm"

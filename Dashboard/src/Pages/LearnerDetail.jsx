@@ -158,7 +158,7 @@ const LearnerDetail = () => {
           <h1 className="text-lg sm:text-xl font-semibold mb-3"></h1>
 
           <div className="flex flex-col md:flex-row gap-4">
-            {/* Left Column: Image */}
+            {/* Left Column: Image - Made significantly larger */}
             <div className="flex flex-col items-center md:items-start">
               <img
                 src={
@@ -167,13 +167,13 @@ const LearnerDetail = () => {
                     : `https://eps-dashboard.onrender.com${learner.learner.learnerImage}`
                 }
                 alt={learner.learner.name}
-                className="w-32 h-32 sm:w-48 sm:h-48 object-cover rounded-md mb-3"
+                className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover rounded-md mb-3"
               />
               {isEditing && (
                 <input
                   type="file"
                   onChange={handleFileChange}
-                  className="border p-1 sm:p-2 text-xs sm:text-sm w-full max-w-[200px] mb-3"
+                  className="border p-1 sm:p-2 text-xs sm:text-sm w-full max-w-xs mb-3"
                 />
               )}
             </div>
