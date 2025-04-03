@@ -228,7 +228,7 @@ const LearnerManagement = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 bg-gray-50 overflow-hidden">
         <ToastContainer position="top-right" autoClose={3000} />
 
         {/* Header */}
@@ -265,13 +265,13 @@ const LearnerManagement = () => {
 
             {/* Right Section */}
             <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setModalOpen(true)}
-                className="hidden md:flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm"
-              >
-                <FaPlus className="mr-2" />
-                Add Learner
-              </button>
+            <button
+              onClick={() => setModalOpen(true)}
+              className="hidden md:flex items-center bg-[rgb(232,240,254)] border border-[rgb(26,115,232)] text-blue-600 px-4 py-2 rounded-full hover:bg-[rgb(221,232,252)] transition-colors text-sm"
+            >
+              <FaPlus className="mr-2" />
+              Add Learner
+            </button>
               <UserAccount />
             </div>
           </div>
@@ -300,8 +300,8 @@ const LearnerManagement = () => {
         {/* Main Content Area */}
         <main className="bg-gray-50 mx-1 md:mx-1  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[90vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-1">
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
-            <div className="bg-white flex justify-between  p-4 rounded-lg shadow-sm border border-gray-100">
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-4 mb-3">
+            <div className="bg-white flex justify-between  p-4 rounded-lg  border border-1 border-gray-300">
              <div>
              <h3 className="text-gray-500 text-sm font-medium">Total Learners</h3>
              <p className="text-2xl font-bold text-gray-800">{totalLearners}</p>
@@ -310,13 +310,13 @@ const LearnerManagement = () => {
               <FaUsers className='text-4xl text-blue-500' />
              </div>
             </div>
-            <div className="bg-white p-4 flex justify-center rounded-lg shadow-sm border border-gray-100">
+            <div className="bg-white p-4 flex justify-center rounded-lg  border border-1 border-gray-300 ">
              <div>
              <h3 className="text-gray-500 text-sm font-medium">Current Page</h3>
              <p className="text-2xl font-bold text-gray-800">{currentPage} of {totalPages}</p>
              </div>
             </div>
-            <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+            <div className="bg-white p-4 rounded-lg  border   border-1 border-gray-300">
               <h3 className="text-gray-500 text-sm font-medium">Results Per Page</h3>
               <select 
                 value={learnersPerPage}
@@ -349,7 +349,7 @@ const LearnerManagement = () => {
 
           {/* Learners Table */}
           {!isLoading && (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-lg  border-1 border-gray-300 border  overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
@@ -431,7 +431,7 @@ const LearnerManagement = () => {
                           <button
                             onClick={() => handleRowClick(learner._id)}
                             disabled={loadingProfile === learner._id}
-                            className="text-blue-600 hover:text-blue-900 transition-colors"
+                            className="hidden md:flex items-center bg-[rgb(232,240,254)] border border-[rgb(26,115,232)] text-blue-600 px-4 py-1 rounded-full hover:bg-[rgb(221,232,252)] transition-colors text-sm"
                           >
                             {loadingProfile === learner._id ? (
                               <span className="flex items-center">
@@ -441,7 +441,7 @@ const LearnerManagement = () => {
                                 </svg>
                                 Loading...
                               </span>
-                            ) : 'View Details'}
+                            ) : 'Profile'}
                           </button>
                         </td>
                       </tr>
