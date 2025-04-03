@@ -546,10 +546,10 @@ const LearnerManagement = () => {
 
         {/* Learners List */}
         {!isLoading && (
-          <div className="bg-white mx-4  md:mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen max-h-[75vh] md:max-h-[85vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto   ">
+          <div className="bg-white px-1  md:mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen max-h-[75vh] md:max-h-[85vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto   ">
             <div className="flex ">       
-    <div className="flex   mx-2  justify-between gap-2 sm:gap-3 items-center">
-    <div className="flex md:hidden  focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
+    <div className="flex   w-full my-2    justify-between gap-2 sm:gap-3 ">
+    <div className="flex md:hidden py-2  focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:border-blue-300 transition-all">
         <input
           type="text"
           placeholder="Search by RegNo..."
@@ -559,7 +559,7 @@ const LearnerManagement = () => {
         />
         <button
           onClick={handleSearch}
-          className="bg-blue-600 text-white px-3 hover:bg-blue-700 transition-colors flex items-center justify-center"
+          className="bg-blue-600 text-white px-3 h-full hover:bg-blue-700 transition-colors flex items-center justify-center"
           data-tooltip-id="search-tooltip"
           data-tooltip-content="Search learners"
         >
@@ -578,7 +578,7 @@ const LearnerManagement = () => {
       </button>
     </div>
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto pb-48 md:pb-0">
               <table className="w-full border-collapse border border-gray-300 text-xs sm:text-sm">
                 <thead>
                   <tr className="bg-gray-200">
