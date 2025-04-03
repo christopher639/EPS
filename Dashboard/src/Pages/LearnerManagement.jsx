@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../components/SideBar";
-import { FaPlus, FaRegSquare, FaSearch, FaUser, FaUsers } from "react-icons/fa";
+import { FaGraduationCap, FaPlus, FaRegSquare, FaSearch, FaUser, FaUsers } from "react-icons/fa";
 import SidebarToggleButton from "../components/SidebarToggleButton";
 import UserAccount from "../components/UserAccount";
 import MobileNav from "../components/MobileNav";
@@ -300,7 +300,7 @@ const LearnerManagement = () => {
         {/* Main Content Area */}
         <main className="bg-gray-50 mx-1 md:mx-1  mx-0 grid gri-cols-1 pb-4 md:pb-6 max-h-screen md:max-h-[90vh] pb-20 md:pb-5 overflow-y-auto overflow-x-auto rounded-lg p-2 sm:p-1">
           {/* Stats Cards */}
-          <div className="grid grid-cols-3 md:grid-cols-3 gap-4 mb-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-3">
             <div className="bg-white flex justify-between  p-4 rounded-lg  border border-1 border-gray-300">
              <div>
              <h3 className="text-gray-500 text-sm font-medium">Total Learners</h3>
@@ -308,6 +308,15 @@ const LearnerManagement = () => {
              </div>
              <div>
               <FaUsers className='text-4xl text-blue-500' />
+             </div>
+            </div>
+            <div className="bg-white p-4 flex justify-between  gap-1 rounded-lg  border   border-1 border-gray-300">
+              <div>
+              <h3 className="text-gray-500 text-sm font-medium"> Alumni </h3>
+              <p className="font-bold text-2xl ">0</p>
+              </div>
+             <div>
+             <FaGraduationCap className='text-4xl text-blue-500' />
              </div>
             </div>
             <div className="bg-white p-4 flex justify-center rounded-lg  border border-1 border-gray-300 ">
@@ -329,6 +338,8 @@ const LearnerManagement = () => {
                 <option value={100}>100</option>
               </select>
             </div>
+
+           
           </div>
 
           {/* Add Learner Button (Mobile) */}
