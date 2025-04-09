@@ -462,16 +462,16 @@ const LearnerManagement = () => {
               </div>
 
               {/* Pagination */}
-              <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+              <div className="bg-white overflow-x-auto gap-2 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                 <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                  <div>
+                  <div className="flex gap-1">
                     <p className="text-sm text-gray-700">
                       Showing <span className="font-medium">{(currentPage - 1) * learnersPerPage + 1}</span> to{' '}
                       <span className="font-medium">{Math.min(currentPage * learnersPerPage, totalLearners)}</span> of{' '}
                       <span className="font-medium">{totalLearners}</span> learners
                     </p>
                   </div>
-                  <div>
+                  <div className="flex gap-2">
                     <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                       <button
                         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

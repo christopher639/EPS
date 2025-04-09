@@ -84,7 +84,7 @@ const Streams = () => {
   const fetchStreams = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("/api/streams");
+      const response = await axios.get("https://eps-dashboard.onrender.com/api/streams");
       setStreams(response.data);
       setFilteredStreams(response.data);
     } catch (error) {
@@ -111,13 +111,13 @@ const Streams = () => {
   // Handle navigation to StudentPerStream.jsx
   const handleStreamClick = (streamName) => {
     const year = "2024-2025";
-    navigate(`/students/${streamName}/${year}`);
+    navigate(`https://eps-dashboard.onrender.com/students/${streamName}/${year}`);
   };
 
   // Fetch all clases
   const fetchClases = async () => {
     try {
-      const { data } = await axios.get('/api/clase');
+      const { data } = await axios.get('https://eps-dashboard.onrender.com/api/clase');
       setClases(data);
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
@@ -137,7 +137,7 @@ const Streams = () => {
 
     setOperationLoading(prev => ({...prev, delete: true}));
     try {
-      await axios.delete(`/api/streams/${selectedStream._id}`);
+      await axios.delete(`https://eps-dashboard.onrender.com/api/streams/${selectedStream._id}`);
       await fetchStreams();
       setShowDeleteModal(false);
       toast.success("Stream deleted successfully!");
@@ -176,7 +176,7 @@ const Streams = () => {
     setOperationLoading(prev => ({...prev, update: true}));
     try {
       await axios.put(
-        `/api/streams/${selectedStream._id}`,
+        `https://eps-dashboard.onrender.com/api/streams/${selectedStream._id}`,
         updatedStream
       );
       await fetchStreams();

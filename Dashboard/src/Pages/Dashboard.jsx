@@ -65,22 +65,19 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const getFetchData = () => {
-      setLoadingTeachers(true);
-      axios
-        .get('https://eps-dashboard.onrender.com/api/teachers')
-        .then((response) => {
-          setTeachers(response.data);
-          setLoadingTeachers(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoadingTeachers(false);
-        });
+
+   const fetchTeachers = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get("https://eps-dashboard.onrender.com/api/teachers");
+        setTeachers(response.data.data.reverse());
+      } catch (error) {
+        toast.error("Failed to fetch teachers");
+        console.error("Error fetching teachers:", error);
+      } finally {
+        setLoading(false);
+      }
     };
-    getFetchData();
-  }, []);
 
   const fetchClases = async () => {
     setLoadingClasses(true);
@@ -96,6 +93,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchClases();
+    fetchTeachers();
   }, []);
 
   const fetchLearners = async () => {
@@ -290,7 +288,7 @@ const Dashboard = () => {
 
             {/* Classes Count */}
             <div className='bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-shadow'>
-              <NavLink to='/classes'>
+              <NavLink to='/clases'>
                 <div className='flex justify-between items-center'>
                   <div>
                     <p className='text-gray-600 font-medium'>Classes</p>

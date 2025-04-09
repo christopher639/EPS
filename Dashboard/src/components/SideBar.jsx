@@ -27,7 +27,8 @@ import {
   FaCalendarAlt,
   FaMoneyBillWave,
   FaUserTie,
-  FaMoneyCheck
+  FaMoneyCheck,
+  FaLifeRing
 } from "react-icons/fa";
 
 const navItems = [
@@ -41,6 +42,7 @@ const navItems = [
   { to: "/parents", label: "Parents", icon: <FaUsers className="text-pink-500" /> },
   { to: "/users", label: "Users", icon: <FaUsers className="text-teal-500" /> },
   { to: "/analytics", label: "School Performace", icon: <FaChartLine className="text-orange-500" /> },
+  { to: "/help", label: "Help", icon: <FaLifeRing className="text-orange-500" /> },
 ];
 
 const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {

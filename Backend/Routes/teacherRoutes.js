@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const {
   getAllTeachers,
   getTeacherById,
@@ -7,12 +8,37 @@ const {
   deleteTeacher,
 } = require('../Controllers/teacherController');
 
-const authenticateUser = require('../middleware/authenticateUser');
 const isAdmin = require('../middleware/isAdmin');
-const router = express.Router();
-router.get('/', getAllTeachers); // GET /api/teachers
-router.get('/:id', getTeacherById); // GET /api/teachers/:id
-router.post('/',authenticateUser,isAdmin, createTeacher); // POST /api/teachers
-router.put('/:id',authenticateUser,isAdmin, updateTeacher); // PUT /api/teachers/:id
-router.delete('/:id',authenticateUser,isAdmin, deleteTeacher); // DELETE /api/teachers/:id
+
+
+// GET /api/teachers - Get all teachers (accessible to authenticated users)
+router.get('/',  getAllTeachers);
+
+// GET /api/teachers/:id - Get single teacher (accessible to authenticated users)
+router.get('/:id', getTeacherById);
+
+// POST /api/teachers - Create new teacher (admin only)
+router.post(
+  '/',
+  
+
+  createTeacher
+);
+
+// PUT /api/teachers/:id - Update teacher (admin only)
+router.put(
+  '/:id',
+
+  
+
+  updateTeacher
+);
+
+// DELETE /api/teachers/:id - Delete teacher (admin only)
+router.delete(
+  '/:id',
+  
+  deleteTeacher
+);
+
 module.exports = router;

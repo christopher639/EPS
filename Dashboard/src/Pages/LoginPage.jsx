@@ -64,22 +64,27 @@ const LoginPage = () => {
 
   return (
  
-    <div className="  h-screen ">
-       <div className="overflow-y-auto md:py-2  max-h-screen flex   justify-center ">
+    <div className="  h-screen overflow-y-auto min-h-full">
+            <div className=" w-full flex justify-between  bg-white border-b   px-4 ">
+          <img src={lion} alt="School Logo" className="w-16   h-16  object-contain" />
+          <div>
+            <p className="font-bold  text-sm md:text-xl text-red-900 pt-5 ">SAMGE SCHOOL</p>
+          </div>
+        </div>
+       <div className="  max-h-screen flex   justify-center ">
     
     {/* Form Section */}
-    <div className=" w-full md:shadow-sm h-full  px-6 border bg-white pb-16 md:pb-0 min-h-full  rounded-lg  md:w-1/3 ">
+    
+    <div className=" w-full md:shadow-sm h-full  px-6 border bg-white pb-16 md:pb-0   rounded-lg  md:w-1/3 ">
+
       {/* Mobile Header - Only visible on small screens */}
+
      <div className="flex   justify-center">
      <div className=" items-center  ">
-        <div className=" flex items-center justify-center rounded-full ">
-          <img src={lion} alt="School Logo" className="w-32   h-32 object-contain" />
-        </div>
+  
        <div>
        <h1 className=" font-bold text-blue-800  md:text-2xl">Hello, Welcome back</h1>
-     <div className="flex justify-center">
- 
-     </div>
+
        </div>
       </div>
      </div>

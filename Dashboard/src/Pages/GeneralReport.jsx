@@ -745,114 +745,116 @@ const exportAllReportCards = async () => {
       <div className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}>
         <SideBar />
       </div>
-      <div className="container   bg-gray-100">
-        {/* Top Controls */}
-        <div className="flex py-1  justify-between items-center bg-white">
-          <MobileNav/>
-          <div className="hidden pl-2 md:flex">
-            <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-          </div>
-             {/* Filter Section */}
-        <div className="hidden md:grid p-2 gap-4 grid-cols-4 md:grid-cols-4 lg:grid-cols-5 pb-2 px-1 ">
-          
-          
-          {/* Class Select Dropdown */}
-          <select
-            value={selectedClass}
-            onChange={(e) => setSelectedClass(e.target.value)}
-            className="border max-w-48 border-gray-300 p-2 rounded-md"
-          >
-            <option value="">Select Class</option>
-            {clases.map((clase) => (
-              <option key={clase._id} value={clase.clasename}>
-                {clase.clasename}
-              </option>
-            ))}
-          </select>
+      <div className=" w-full bg-gray-100">
+     {/* Top Controls */}
+<div className="flex py-1 justify-between items-center bg-white">
+  <MobileNav />
+  <div className="hidden pl-2 md:flex">
+    <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
+  </div>
+  
+  {/* Filter Section (Desktop) */}
+  <div className="hidden md:grid p-2 gap-4 grid-cols-4 md:grid-cols-4 lg:grid-cols-5 pb-2 px-1">
+    <select
+      value={selectedClass}
+      onChange={(e) => setSelectedClass(e.target.value)}
+      className="border max-w-48 border-gray-300 p-2 rounded-md text-sm" // Added text-sm
+    >
+      <option value="">Select Class</option>
+      {clases.map((clase) => (
+        <option key={clase._id} value={clase.clasename}>
+          {clase.clasename}
+        </option>
+      ))}
+    </select>
 
-          <select
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            className="border max-w-48 border-gray-300 p-2 rounded-md"
-          >
-            <option value="">Select Year</option>
-            <option value="2024-2025">2024-2025</option>
-            <option value="2025-2026">2025-2026</option>
-          </select>
-          <select
-            value={selectedTerm}
-            onChange={(e) => setSelectedTerm(e.target.value)}
-            className="border max-w-48 border-gray-300 p-2 rounded-md"
-          >
-            <option value="">Select Term</option>
-            <option value="Term-1">Term-1</option>
-            <option value="Term-2">Term-2</option>
-            <option value="Term-3">Term-3</option>
-          </select>
-          <ActionButton
-            onClick={handleApplyFilters}
-            disabled={loading || !selectedClass || !selectedYear || !selectedTerm}
-            icon={FaSearch}
-            label="Search"
-            loadingLabel=""
-            tooltip="Search "
-            bgColor="bg-blue-600"
-            hoverColor="hover:bg-blue-700"
-          />
-        </div>
-          <UserAccount />
-        </div>
+    <select
+      value={selectedYear}
+      onChange={(e) => setSelectedYear(e.target.value)}
+      className="border max-w-48 border-gray-300 p-2 rounded-md text-sm" // Added text-sm
+    >
+      <option value="">Select Year</option>
+      <option value="2024-2025">2024-2025</option>
+      <option value="2025-2026">2025-2026</option>
+    </select>
 
-     <div className="flex justify-between  mx-1 p-1 gap-1">
-       {/* Filter Section */}
-       <div className="grid md:hidden gap-1 grid-cols-3 px-1 py-1 ">
-  {/* Class Select Dropdown */}
-  <select
-    value={selectedClass}
-    onChange={(e) => setSelectedClass(e.target.value)}
-    className="border border-gray-300 p-1 text-xs rounded"
+    <select
+      value={selectedTerm}
+      onChange={(e) => setSelectedTerm(e.target.value)}
+      className="border max-w-48 border-gray-300 p-2 rounded-md text-sm" // Added text-sm
+    >
+      <option value="">Select Term</option>
+      <option value="Term-1">Term-1</option>
+      <option value="Term-2">Term-2</option>
+      <option value="Term-3">Term-3</option>
+    </select>
+
+  </div>
+  
+  <ActionButton
+      onClick={handleApplyFilters}
+      disabled={loading || !selectedClass || !selectedYear || !selectedTerm}
+      icon={FaSearch}
+      label="Search"
+      loadingLabel=""
+      tooltip="Search"
+    
+  
+      textSize="text-sm" // Add this prop if ActionButton supports it
+    />
+  <UserAccount />
+</div>
+
+{/* Mobile Filters */}
+<div className="flex justify-between mx-1 p-1 gap-1">
+  <div className="grid md:hidden gap-1 grid-cols-3 px-1 py-1">
+    <select
+      value={selectedClass}
+      onChange={(e) => setSelectedClass(e.target.value)}
+      className="border border-gray-300 p-1 text-xs rounded" // Already text-xs
+    >
+      <option value="">Class</option>
+      {clases.map((clase) => (
+        <option key={clase._id} value={clase.clasename}>
+          {clase.clasename}
+        </option>
+      ))}
+    </select>
+
+    <select
+      value={selectedYear}
+      onChange={(e) => setSelectedYear(e.target.value)}
+      className="border border-gray-300 p-1 text-xs rounded" // Already text-xs
+    >
+      <option value="">Year</option>
+      <option value="2024-2025">2024-2025</option>
+      <option value="2025-2026">2025-2026</option>
+    </select>
+
+    <select
+      value={selectedTerm}
+      onChange={(e) => setSelectedTerm(e.target.value)}
+      className="border border-gray-300 p-1 text-xs rounded" // Already text-xs
+    >
+      <option value="">Term</option>
+      <option value="Term-1">Term-1</option>
+      <option value="Term-2">Term-2</option>
+      <option value="Term-3">Term-3</option>
+    </select>
+  </div>
+
+  <button
+    onClick={handleApplyFilters}
+    className="bg-blue-600 mr-2 md:hidden text-white px-3 py-1 rounded-md hover:bg-blue-700 transition text-xs" // Added text-xs
+    disabled={loading || !selectedClass || !selectedYear || !selectedTerm}
   >
-    <option value="">Class</option>
-    {clases.map((clase) => (
-      <option key={clase._id} value={clase.clasename}>
-        {clase.clasename}
-      </option>
-    ))}
-  </select>
-
-  <select
-    value={selectedYear}
-    onChange={(e) => setSelectedYear(e.target.value)}
-    className="border border-gray-300 p-1 text-xs rounded"
-  >
-    <option value="">Year</option>
-    <option value="2024-2025">2024-2025</option>
-    <option value="2025-2026">2025-2026</option>
-  </select>
-
-  <select
-    value={selectedTerm}
-    onChange={(e) => setSelectedTerm(e.target.value)}
-    className="border border-gray-300 p-1 text-xs rounded"
-  >
-    <option value="">Term</option>
-    <option value="Term-1">Term-1</option>
-    <option value="Term-2">Term-2</option>
-    <option value="Term-3">Term-3</option>
-  </select>
-      </div>
-        <button  
-          onClick={handleApplyFilters}
-          className="bg-blue-600 mr-2 md:hidden text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-          disabled={loading || !selectedClass || !selectedYear || !selectedTerm}
-        >
-          {loading ? "" : <FaSearch/>}
-        </button>
-     </div>
+    {loading ? "" : <FaSearch />}
+  </button>
+</div>
      
         
         {/* Table Section */}
-        <div className="px-1  grid grid-cols-1 max-h-[60vh]  pb-4  md:max-h-[80vh]  w-full ">
+        <div className="px-1  grid grid-cols-1 max-h-[60vh]  pb-4  md:max-h-[80vh]   ">
           {loading ? (
             <Spinner />
           ) : error ? (
@@ -905,58 +907,69 @@ const exportAllReportCards = async () => {
   <div className="flex flex-col md:flex-row gap-1 md:gap-2 w-full">
   {/* Bottom row - search and actions (stacked on mobile) */}
   <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-1 md:gap-2 w-full">
-    {/* Action buttons - compact but labeled on all screens */}
-    <div className="flex gap-1 md:gap-2 w-full md:w-auto">
-      <ActionButton
-        onClick={exportAllReportCards}
-        disabled={generatingReportCards}
-        icon={FaFileDownload}
-        label="Download All"
-        loadingLabel="Processing..."
-        tooltip="Download all PDFs"
-        bgColor="bg-purple-600"
-        hoverColor="hover:bg-purple-700"
-        textSize="text-xs md:text-xs"
-        padding="px-2 py-1"
-        iconSize="text-sm"
-      />
-      <ActionButton
-        onClick={exportToPDF}
-        disabled={generatingPDF}
-        icon={FaFilePdf}
-        label="PDF"
-        loadingLabel="Processing..."
-        tooltip="Export PDF"
-        bgColor="bg-red-600"
-        hoverColor="hover:bg-red-700"
-        textSize="text-xs md:text-xs"
-        padding="px-2 py-1"
-        iconSize="text-sm"
-      />
-      <ActionButton
-        onClick={exportToExcel}
-        disabled={generatingExcel}
-        icon={FaFileExcel}
-        label="Excel"
-        loadingLabel="Processing..."
-        tooltip="Export Excel"
-        bgColor="bg-green-600"
-        hoverColor="hover:bg-green-700"
-        textSize="text-xs md:text-xs"
-        padding="px-2 py-1"
-        iconSize="text-sm"
-      />
-    </div>
+  {/* Action buttons - compact but labeled on all screens */}
+  <div className="flex gap-1 md:gap-2 w-full md:w-auto">
+  {/* Download All (badge style) */}
+  <button
+    onClick={exportAllReportCards}
+    disabled={generatingReportCards}
+    className="flex items-center gap-1 bg-purple-600/10 hover:bg-purple-600/20 text-purple-700 border border-purple-300 text-[10px] md:text-[11px] px-2 py-1 rounded-full min-w-[80px] md:min-w-[90px] transition-colors disabled:opacity-50"
+    title="Download all PDFs"
+  >
+    {generatingReportCards ? (
+      <span>...</span>
+    ) : (
+      <>
+        <FaFileDownload className="text-xs text-purple-600" />
+        <span>Download</span>
+      </>
+    )}
+  </button>
 
-    {/* Search input - optimized for mobile */}
-    <input
-      type="text"
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-      className="w-full  md:hidden  md:w-40 text-md border border-gray-300 rounded px-2 py-2 mb-1 md:mb-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      placeholder="Search name/regno"
-    />
-  </div>
+  {/* PDF (badge style) */}
+  <button
+    onClick={exportToPDF}
+    disabled={generatingPDF}
+    className="flex items-center gap-1 bg-red-600/10 hover:bg-red-600/20 text-red-700 border border-red-300 text-[10px] md:text-[11px] px-2 py-1 rounded-full min-w-[60px] md:min-w-[70px] transition-colors disabled:opacity-50"
+    title="Export PDF"
+  >
+    {generatingPDF ? (
+      <span>...</span>
+    ) : (
+      <>
+        <FaFilePdf className="text-xs text-red-600" />
+        <span>PDF</span>
+      </>
+    )}
+  </button>
+
+  {/* Excel (badge style) */}
+  <button
+    onClick={exportToExcel}
+    disabled={generatingExcel}
+    className="flex items-center gap-1 bg-green-600/10 hover:bg-green-600/20 text-green-700 border border-green-300 text-[10px] md:text-[11px] px-2 py-1 rounded-full min-w-[60px] md:min-w-[70px] transition-colors disabled:opacity-50"
+    title="Export Excel"
+  >
+    {generatingExcel ? (
+      <span>...</span>
+    ) : (
+      <>
+        <FaFileExcel className="text-xs text-green-600" />
+        <span>Excel</span>
+      </>
+    )}
+  </button>
+</div>
+
+  {/* Search input - optimized for mobile */}
+  <input
+    type="text"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="w-full md:hidden md:w-40 text-xs border border-gray-300 rounded px-2 py-1.5 mb-1 md:mb-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
+    placeholder="Search name/regno"
+  />
+</div>
 </div>
 </div>
 </div>
