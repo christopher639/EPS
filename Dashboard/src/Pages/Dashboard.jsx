@@ -9,6 +9,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import SideBar from '../components/SideBar';
 import MobileNav from '../components/MobileNav';
+import { toast } from 'react-toastify';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -65,19 +66,22 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  const fetchTeachers = async () => {
+    setLoadingTeachers(true);
+    try {
+      const response = await axios.get("https://eps-dashboard.onrender.com/api/teachers");
+      setTeachers(response.data.data);
+    } catch (error) {
+      toast.error("Failed to fetch teachers");
+      console.error("Error fetching teachers:", error);
+    } finally {
+      setLoadingTeachers(false);
+    }
+  };
 
-   const fetchTeachers = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get("https://eps-dashboard.onrender.com/api/teachers");
-        setTeachers(response.data.data.reverse());
-      } catch (error) {
-        toast.error("Failed to fetch teachers");
-        console.error("Error fetching teachers:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  useEffect(() => {
+    fetchTeachers();
+  }, []);
 
   const fetchClases = async () => {
     setLoadingClasses(true);
@@ -93,7 +97,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchClases();
-    fetchTeachers();
   }, []);
 
   const fetchLearners = async () => {
@@ -336,66 +339,64 @@ const Dashboard = () => {
             </div>
           </div>
 
-        {/* Expanded Quick Links */}
-<div className='bg-white rounded-lg mb-8 shadow-sm p-6'>
-  <h2 className='text-xl font-semibold text-gray-800 mb-4'>Quick Links</h2>
-  <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4'>
-    {[
-      // Streams - Green (#4CAF50)
-      { to: '/streams', icon: <FaSchool className='text-xl' style={{ color: '#4CAF50' }} />, text: 'Streams' },
-      
-      // Teachers - Orange (#FF9800)
-      { to: '/teachers', icon: <FaChalkboardTeacher className='text-xl' style={{ color: '#FF9800' }} />, text: 'Teachers' },
-      
-      // Learners - Blue (#2196F3)
-      { to: '/learner', icon: <FaUsers className='text-xl' style={{ color: '#2196F3' }} />, text: 'Learners' },
-      
-      // Departments - Red (#FF5722)
-      { to: '', icon: <FaBuilding className='text-xl' style={{ color: '#FF5722' }} />, text: 'Departments' },
-      
-      // Classes - Purple (added to match stats grid)
-      { to: '/clases', icon: <FaUniversity className='text-xl' style={{ color: '#9C27B0' }} />, text: 'Classes' },
-      
-      // Finance - Teal (new color)
-      { to: '/finance', icon: <FaMoneyBillAlt className='text-xl' style={{ color: '#009688' }} />, text: 'Finances' },
-      
-      // Users - Deep Purple
-      { to: '/users', icon: <FaUserCircle className='text-xl' style={{ color: '#673AB7' }} />, text: 'Users' },
-      
-      // Learning Areas - Light Blue
-      { to: "/learningarea", icon: <FaBook className='text-xl' style={{ color: '#03A9F4' }} />, text: "Learning Areas" },
-      
-      // Assessments - Amber
-      { to: "", icon: <FaClipboard className='text-xl' style={{ color: '#FFC107' }} />, text: "Assessments" },
-      
-    
-      
-      // Timetable - Indigo
-      { to: "", icon: <FaClipboard className='text-xl' style={{ color: '#3F51B5' }} />, text: "Timetable" },
-      
-      // Fee Structure - Brown
-      { to: "/fees-structure", icon: <FaMoneyBillAlt className='text-xl' style={{ color: '#795548' }} />, text: "Fee Structure" },
-      
-      // Exam Results - Pink
-      { to: "/general-report", icon: <FaClipboard className='text-xl' style={{ color: '#E91E63' }} />, text: "Exam Results" },
-      
-      // Parents - Cyan
-      { to: "", icon: <FaUserCircle className='text-xl' style={{ color: '#00BCD4' }} />, text: "Parents" },
-      
-      // Staff - Lime
-      { to: "", icon: <FaUserCircle className='text-xl' style={{ color: '#CDDC39' }} />, text: "Staff" }
-    ].map((link, index) => (
-      <NavLink
-        key={index}
-        to={link.to}
-        className='flex flex-col items-center justify-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors'
-      >
-        {link.icon}
-        <p className='mt-2 text-sm font-medium text-center'>{link.text}</p>
-      </NavLink>
-    ))}
-  </div>
-</div>
+          {/* Expanded Quick Links */}
+          <div className='bg-white rounded-lg mb-8 shadow-sm p-6'>
+            <h2 className='text-xl font-semibold text-gray-800 mb-4'>Quick Links</h2>
+            <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4'>
+              {[
+                // Streams - Green (#4CAF50)
+                { to: '/streams', icon: <FaSchool className='text-xl' style={{ color: '#4CAF50' }} />, text: 'Streams' },
+                
+                // Teachers - Orange (#FF9800)
+                { to: '/teachers', icon: <FaChalkboardTeacher className='text-xl' style={{ color: '#FF9800' }} />, text: 'Teachers' },
+                
+                // Learners - Blue (#2196F3)
+                { to: '/learner', icon: <FaUsers className='text-xl' style={{ color: '#2196F3' }} />, text: 'Learners' },
+                
+                // Departments - Red (#FF5722)
+                { to: '', icon: <FaBuilding className='text-xl' style={{ color: '#FF5722' }} />, text: 'Departments' },
+                
+                // Classes - Purple (added to match stats grid)
+                { to: '/clases', icon: <FaUniversity className='text-xl' style={{ color: '#9C27B0' }} />, text: 'Classes' },
+                
+                // Finance - Teal (new color)
+                { to: '/finance', icon: <FaMoneyBillAlt className='text-xl' style={{ color: '#009688' }} />, text: 'Finances' },
+                
+                // Users - Deep Purple
+                { to: '/users', icon: <FaUserCircle className='text-xl' style={{ color: '#673AB7' }} />, text: 'Users' },
+                
+                // Learning Areas - Light Blue
+                { to: "/learningarea", icon: <FaBook className='text-xl' style={{ color: '#03A9F4' }} />, text: "Learning Areas" },
+                
+                // Assessments - Amber
+                { to: "", icon: <FaClipboard className='text-xl' style={{ color: '#FFC107' }} />, text: "Assessments" },
+                
+                // Timetable - Indigo
+                { to: "", icon: <FaClipboard className='text-xl' style={{ color: '#3F51B5' }} />, text: "Timetable" },
+                
+                // Fee Structure - Brown
+                { to: "/fees-structure", icon: <FaMoneyBillAlt className='text-xl' style={{ color: '#795548' }} />, text: "Fee Structure" },
+                
+                // Exam Results - Pink
+                { to: "/general-report", icon: <FaClipboard className='text-xl' style={{ color: '#E91E63' }} />, text: "Exam Results" },
+                
+                // Parents - Cyan
+                { to: "", icon: <FaUserCircle className='text-xl' style={{ color: '#00BCD4' }} />, text: "Parents" },
+                
+                // Staff - Lime
+                { to: "", icon: <FaUserCircle className='text-xl' style={{ color: '#CDDC39' }} />, text: "Staff" }
+              ].map((link, index) => (
+                <NavLink
+                  key={index}
+                  to={link.to}
+                  className='flex flex-col items-center justify-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors'
+                >
+                  {link.icon}
+                  <p className='mt-2 text-sm font-medium text-center'>{link.text}</p>
+                </NavLink>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

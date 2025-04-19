@@ -65,10 +65,10 @@ const LoginPage = () => {
   return (
  
     <div className="  h-screen overflow-y-auto min-h-full">
-            <div className=" w-full flex justify-between  bg-white border-b   px-4 ">
+            <div className=" w-full flex justify-between     px-4 ">
           <img src={lion} alt="School Logo" className="w-16   h-16  object-contain" />
           <div>
-            <p className="font-bold  text-sm md:text-xl text-red-900 pt-5 ">SAMGE SCHOOL</p>
+            <p className="font-bold  text-sm md:text-xl text-red-900 pt-2 ">SAMGE SCHOOL</p>
           </div>
         </div>
        <div className="  max-h-screen flex   justify-center ">
