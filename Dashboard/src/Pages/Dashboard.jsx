@@ -26,6 +26,7 @@ const Dashboard = () => {
   const [teachers, setTeachers] = useState([]);
   const [clases, setClases] = useState([]);
   const [leaners, setLearners] = useState([]); 
+  const [userName , setUserName] = useState("")
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalLeaners, setTotalLeaners] = useState(0);
@@ -150,6 +151,12 @@ const Dashboard = () => {
   useEffect(() => {
     fetchPayments();
   }, []);
+    useEffect(() => {
+      const storedUserName = localStorage.getItem("userName");
+      if (storedUserName) {
+        setUserName(storedUserName);
+      }
+    }, []);
 
   const doughnutData = {
     labels: ['Streams', 'Teachers', 'Learners', 'Departments'],
@@ -268,6 +275,8 @@ const Dashboard = () => {
             <h1 className='text-sm text-red-900 font-bold md:flex md:text-md lg:text-xl font-bold text-gray-800'>
               <img src="lion.jpg" alt="" className="h-[54px] md:hidden" />
             </h1>
+           
+            <p className='font-bold text-lg'>{userName}</p>
             <p className='hidden md:flex text-gray-500'> Admin Dashboard</p>
           </div>
           <div className='flex items-center gap-4'>
