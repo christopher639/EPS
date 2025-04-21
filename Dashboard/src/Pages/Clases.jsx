@@ -144,7 +144,7 @@ const Clases = () => {
       {/* Main Content */}
       <div className='flex flex-col w-full min-h-screen'>
         {/* Header */}
-        <header className='flex items-center justify-between p-4 border-b bg-white sticky top-0 z-10 shadow-sm'>
+        <header className='flex items-center  py-[19px]  justify-between p-4 border-b bg-white sticky top-0 z-10 shadow-sm'>
           <div className='flex items-center'>
             <MobileNav />
             <div className='hidden md:flex'>

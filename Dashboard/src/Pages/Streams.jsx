@@ -243,7 +243,7 @@ const Streams = () => {
       {/* Main Content */}
       <div className="bg-gray-50 w-full min-h-screen">
         {/* Header */}
-        <header className="flex px-4 py-3 border-b bg-white justify-between items-center sticky top-0 z-10 shadow-sm">
+        <header className="flex px-4 py-[19px] border-b bg-white justify-between items-center sticky top-0 z-10 shadow-sm">
           <MobileNav />
           <div className="hidden md:flex">
             <SidebarToggleButton

@@ -503,280 +503,289 @@ const LearnerManagement = () => {
         </main>
       </div>
 
-      {/* Add Learner Modal */}
-      {modalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
-            {/* Modal Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4 flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-white">Add New Learner</h2>
-              <button 
-                onClick={() => setModalOpen(false)}
-                className="text-white hover:text-gray-200 transition-colors"
-                disabled={isSavingLearner}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+   {/* Add Learner Modal */}
+{modalOpen && (
+  <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col">
+      {/* Modal Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-white">
+          {isSavingLearner ? 'Edit Learner Details' : 'Add New Learner'}
+        </h2>
+        <button 
+          onClick={() => setModalOpen(false)}
+          className="text-white hover:text-gray-200 transition-colors p-1 rounded-full hover:bg-blue-800"
+          disabled={isSavingLearner}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Modal Body */}
+      <div className="p-6 max-h-[70vh] overflow-y-auto flex-1">
+        <div className="space-y-8">
+          {/* Personal Information Card */}
+          <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <h3 className="text-lg font-medium text-blue-600 border-b pb-2 border-blue-100">Personal Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="John Doe"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  onChange={handleChange}
+                  value={newLearner.name}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Birth Certificate No</label>
+                <input
+                  type="text"
+                  name="birthCertificateNo"
+                  placeholder="12345678"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  onChange={handleChange}
+                  value={newLearner.birthCertificateNo}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                <select
+                  name="gender"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  onChange={handleChange}
+                  value={newLearner.gender}
+                  required
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                <input
+                  type="date"
+                  name="dateOfBirth"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  onChange={handleChange}
+                  value={newLearner.dateOfBirth}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Nationality</label>
+                <select
+                  name="nationality"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  onChange={handleChange}
+                  value={newLearner.nationality}
+                  required
+                >
+                  <option value="">Select Nationality</option>
+                  <option value="Kenyan">Kenyan</option>
+                  <option value="Ugandan">Ugandan</option>
+                  <option value="Tanzanian">Tanzanian</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
             </div>
+          </div>
 
-            {/* Modal Body */}
-            <div className="p-6 overflow-y-auto flex-1">
-              <div className="space-y-6">
-                {/* Personal Information */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Personal Information</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="John Doe"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={newLearner.name}
-                        required
-                      />
-                    </div>
+          {/* Academic Information Card */}
+          <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <h3 className="text-lg font-medium text-blue-600 border-b pb-2 border-blue-100">Academic Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Grade</label>
+                <select
+                  name="selectedClass"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  onChange={handleChange}
+                  value={clases.find((c) => c.name === newLearner.grade)?._id || ""}
+                  required
+                >
+                  <option value="">Select Class</option>
+                  {clases.map((clase) => (
+                    <option key={clase._id} value={clase._id}>
+                      {clase.clasename}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Birth Certificate No</label>
-                      <input
-                        type="text"
-                        name="birthCertificateNo"
-                        placeholder="12345678"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={newLearner.birthCertificateNo}
-                        required
-                      />
-                    </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Stream</label>
+                <select
+                  name="selectedStream"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  onChange={handleChange}
+                  value={streams.find((s) => s.name === newLearner.stream)?._id || ""}
+                  required
+                >
+                  <option value="">Select Stream</option>
+                  {streams.map((stream) => (
+                    <option key={stream._id} value={stream._id}>
+                      {stream.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-                      <select
-                        name="gender"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={newLearner.gender}
-                        required
-                      >
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                      </select>
-                    </div>
+          {/* Guardian Information Card */}
+          <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <h3 className="text-lg font-medium text-blue-600 border-b pb-2 border-blue-100">Guardian Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Guardian Name</label>
+                <input
+                  type="text"
+                  name="guardianName"
+                  placeholder="Jane Doe"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  onChange={handleChange}
+                  value={newLearner.guardianName}
+                  required
+                />
+              </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-                      <input
-                        type="date"
-                        name="dateOfBirth"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={newLearner.dateOfBirth}
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Nationality</label>
-                      <input
-                        type="text"
-                        name="nationality"
-                        placeholder="Kenyan"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={newLearner.nationality}
-                        required
-                      />
-                    </div>
-                  </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none mt-1 text-gray-500">+254</span>
+                  <input
+                    type="text"
+                    name="guardianPhone"
+                    placeholder="712345678"
+                    className="w-full pl-12 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    onChange={handleChange}
+                    value={newLearner.guardianPhone}
+                    required
+                  />
                 </div>
+              </div>
 
-                {/* Academic Information */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Academic Information</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Grade</label>
-                      <select
-                        name="selectedClass"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={clases.find((c) => c.name === newLearner.grade)?._id || ""}
-                        required
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="123 Main St, Nairobi"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  onChange={handleChange}
+                  value={newLearner.address}
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Photo Upload Card */}
+          <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <h3 className="text-lg font-medium text-blue-600 border-b pb-2 border-blue-100">Learner Photo</h3>
+            <div className="flex flex-col sm:flex-row items-center gap-6 mt-4">
+              <div className="w-full sm:w-2/3">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Upload Photo</label>
+                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-500 transition-colors">
+                  <div className="space-y-1 text-center">
+                    <svg
+                      className="mx-auto h-12 w-12 text-gray-400"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 48 48"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <div className="flex text-sm text-gray-600 justify-center">
+                      <label
+                        htmlFor="file-upload"
+                        className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
                       >
-                        <option value="">Select Class</option>
-                        {clases.map((clase) => (
-                          <option key={clase._id} value={clase._id}>
-                            {clase.clasename}
-                          </option>
-                        ))}
-                      </select>
+                        <span>Upload a file</span>
+                        <input
+                          id="file-upload"
+                          name="learnerImage"
+                          type="file"
+                          className="sr-only"
+                          onChange={handleFileChange}
+                          accept="image/*"
+                          required
+                        />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
                     </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Stream</label>
-                      <select
-                        name="selectedStream"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={streams.find((s) => s.name === newLearner.stream)?._id || ""}
-                        required
-                      >
-                        <option value="">Select Stream</option>
-                        {streams.map((stream) => (
-                          <option key={stream._id} value={stream._id}>
-                            {stream.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Guardian Information */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Guardian Information</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Guardian Name</label>
-                      <input
-                        type="text"
-                        name="guardianName"
-                        placeholder="Jane Doe"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={newLearner.guardianName}
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                      <input
-                        type="text"
-                        name="guardianPhone"
-                        placeholder="0712345678"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={newLearner.guardianPhone}
-                        required
-                      />
-                    </div>
-
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                      <input
-                        type="text"
-                        name="address"
-                        placeholder="123 Main St, Nairobi"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleChange}
-                        value={newLearner.address}
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Photo Upload */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Learner Photo</h3>
-                  <div className="flex flex-col sm:flex-row items-center gap-6">
-                    <div className="w-full sm:w-2/3">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Upload Photo</label>
-                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                        <div className="space-y-1 text-center">
-                          <svg
-                            className="mx-auto h-12 w-12 text-gray-400"
-                            stroke="currentColor"
-                            fill="none"
-                            viewBox="0 0 48 48"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                              strokeWidth={2}
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                          <div className="flex text-sm text-gray-600">
-                            <label
-                              htmlFor="file-upload"
-                              className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
-                            >
-                              <span>Upload a file</span>
-                              <input
-                                id="file-upload"
-                                name="learnerImage"
-                                type="file"
-                                className="sr-only"
-                                onChange={handleFileChange}
-                                accept="image/*"
-                                required
-                              />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                          </div>
-                          <p className="text-xs text-gray-500">PNG, JPG up to 2MB</p>
-                        </div>
-                      </div>
-                    </div>
-                    {newLearner.learnerImage && (
-                      <div className="flex justify-center sm:justify-start">
-                        <div className="h-32 w-32 rounded-full overflow-hidden border-4 border-white shadow-md">
-                          <img
-                            src={
-                              typeof newLearner.learnerImage === "string"
-                                ? `https://eps-dashboard.onrender.com${newLearner.learnerImage}`
-                                : URL.createObjectURL(newLearner.learnerImage)
-                            }
-                            alt="Preview"
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                      </div>
-                    )}
+                    <p className="text-xs text-gray-500">PNG, JPG up to 2MB</p>
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="bg-gray-50 px-6 py-4 flex justify-end space-x-3">
-              <button
-                onClick={() => setModalOpen(false)}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                disabled={isSavingLearner}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={addLearner}
-                disabled={isSavingLearner}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex items-center justify-center min-w-[100px]"
-              >
-                {isSavingLearner ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Saving...
-                  </>
-                ) : (
-                  'Save Learner'
-                )}
-              </button>
+              {newLearner.learnerImage && (
+                <div className="flex justify-center sm:justify-start">
+                  <div className="h-32 w-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    <img
+                      src={
+                        typeof newLearner.learnerImage === "string"
+                          ? `https://eps-dashboard.onrender.com${newLearner.learnerImage}`
+                          : URL.createObjectURL(newLearner.learnerImage)
+                      }
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      )}
+      </div>
+
+      {/* Modal Footer */}
+      <div className="bg-gray-50 px-6 py-4 flex justify-end space-x-3 border-t border-gray-200">
+        <button
+          onClick={() => setModalOpen(false)}
+          className="inline-flex justify-center py-2.5 px-6 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+          disabled={isSavingLearner}
+        >
+          Cancel
+        </button>
+        <button
+          onClick={addLearner}
+          disabled={isSavingLearner}
+          className="inline-flex justify-center py-2.5 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 transition-colors min-w-[120px]"
+        >
+          {isSavingLearner ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Saving...
+            </>
+          ) : (
+            'Save Learner'
+          )}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 };

@@ -134,8 +134,8 @@ const Teachers = () => {
       {/* Main Content */}
       <div className='flex-1 flex flex-col overflow-hidden'>
         {/* Header */}
-        <header className='bg-white shadow-sm'>
-          <div className='px-4 py-3 flex items-center justify-between'>
+        <header className='bg-white py-[19px] shadow-sm'>
+          <div className='px-4  flex items-center justify-between'>
             <div className='flex items-center space-x-4'>
               <MobileNav />
               <div className='hidden md:block'>
@@ -247,207 +247,233 @@ const Teachers = () => {
         </main>
       </div>
 
-      {/* Add/Edit Teacher Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-h-[90vh] overflow-y-auto w-full max-w-4xl">
-            <div className="p-6">
-              <div className="flex justify-between items-center border-b pb-4">
-                <h3 className="text-lg font-medium text-gray-900">
-                  {isUpdating ? 'Edit Teacher' : 'Add New Teacher'}
-                </h3>
-                <button
-                  onClick={() => setShowModal(false)}
-                  className="text-gray-400 hover:text-gray-500"
-                >
-                  <span className="sr-only">Close</span>
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+    {/* Add/Edit Teacher Modal */}
+{showModal && (
+  <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl overflow-hidden">
+      {/* Modal Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-white">
+          {isUpdating ? 'Edit Teacher Details' : 'Add New Teacher'}
+        </h2>
+        <button 
+          onClick={() => setShowModal(false)}
+          className="text-white hover:text-gray-200 transition-colors p-1 rounded-full hover:bg-blue-800"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Modal Body */}
+      <div className="p-6 max-h-[80vh] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Personal Information Card */}
+            <div className="space-y-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <h4 className="text-lg font-medium text-blue-600 border-b pb-2 border-blue-100">Personal Information</h4>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  value={formData.firstName}
+                  onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                  required
+                />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  value={formData.lastName}
+                  onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  required
+                />
+              </div>
+            </div>
 
-              <form onSubmit={handleSubmit} className="mt-4 space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Personal Information */}
-                  <div className="space-y-4">
-                    <h4 className="font-medium text-gray-700">Personal Information</h4>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">First Name</label>
-                      <input
-                        type="text"
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                        value={formData.firstName}
-                        onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Last Name</label>
-                      <input
-                        type="text"
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                        value={formData.lastName}
-                        onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Email</label>
-                      <input
-                        type="email"
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        required
-                      />
-                    </div>
-                  </div>
+            {/* Professional Information Card */}
+            <div className="space-y-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <h4 className="text-lg font-medium text-blue-600 border-b pb-2 border-blue-100">Professional Information</h4>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                <select
+                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  value={formData.department}
+                  onChange={(e) => setFormData({...formData, department: e.target.value})}
+                  required
+                >
+                  <option value="">Select Department</option>
+                  <option value="Mathematics">Mathematics</option>
+                  <option value="Science">Science</option>
+                  <option value="Languages">Languages</option>
+                  <option value="Humanities">Humanities</option>
+                  <option value="Technical">Technical</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Employee Number</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-100"
+                  value={formData.employeeNumber}
+                  onChange={(e) => setFormData({...formData, employeeNumber: e.target.value})}
+                  required
+                  disabled={isUpdating}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">TSC Number (if applicable)</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  value={formData.tscNumber}
+                  onChange={(e) => setFormData({...formData, tscNumber: e.target.value})}
+                />
+              </div>
+            </div>
 
-                  {/* Professional Information */}
-                  <div className="space-y-4">
-                    <h4 className="font-medium text-gray-700">Professional Information</h4>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Department</label>
-                      <input
-                        type="text"
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                        value={formData.department}
-                        onChange={(e) => setFormData({...formData, department: e.target.value})}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Employee Number</label>
-                      <input
-                        type="text"
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                        value={formData.employeeNumber}
-                        onChange={(e) => setFormData({...formData, employeeNumber: e.target.value})}
-                        required
-                        disabled={isUpdating}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">TSC Number (if applicable)</label>
-                      <input
-                        type="text"
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                        value={formData.tscNumber}
-                        onChange={(e) => setFormData({...formData, tscNumber: e.target.value})}
-                      />
-                    </div>
-                  </div>
+            {/* Teaching Subjects Card */}
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 md:col-span-2">
+              <h4 className="text-lg font-medium text-blue-600 border-b pb-2 border-blue-100 mb-4">Teaching Subjects</h4>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Subjects (comma separated)</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  value={formData.teachingSubjects.join(', ')}
+                  onChange={(e) => setFormData({
+                    ...formData, 
+                    teachingSubjects: e.target.value.split(',').map(item => item.trim())
+                  })}
+                  placeholder="Mathematics, Physics, Chemistry"
+                  required
+                />
+              </div>
+            </div>
 
-                  {/* Teaching Subjects */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Teaching Subjects (comma separated)</label>
-                    <input
-                      type="text"
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                      value={formData.teachingSubjects.join(', ')}
-                      onChange={(e) => setFormData({
-                        ...formData, 
-                        teachingSubjects: e.target.value.split(',').map(item => item.trim())
-                      })}
-                      required
-                    />
-                  </div>
-
-                  {/* Salary Information */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Salary</label>
-                    <input
-                      type="number"
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                      value={formData.salary}
-                      onChange={(e) => setFormData({...formData, salary: e.target.value})}
-                      required
-                    />
-                  </div>
-
-                  {/* Bank Information */}
-                  <div className="space-y-4 col-span-1 md:col-span-2">
-                    <h4 className="font-medium text-gray-700">Bank Information</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Account Name</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                          value={formData.bankAccount.accountName}
-                          onChange={(e) => setFormData({
-                            ...formData, 
-                            bankAccount: {
-                              ...formData.bankAccount,
-                              accountName: e.target.value
-                            }
-                          })}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Account Number</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                          value={formData.bankAccount.accountNumber}
-                          onChange={(e) => setFormData({
-                            ...formData, 
-                            bankAccount: {
-                              ...formData.bankAccount,
-                              accountNumber: e.target.value
-                            }
-                          })}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Bank Name</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                          value={formData.bankAccount.bankName}
-                          onChange={(e) => setFormData({
-                            ...formData, 
-                            bankAccount: {
-                              ...formData.bankAccount,
-                              bankName: e.target.value
-                            }
-                          })}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
+            {/* Salary Information Card */}
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <h4 className="text-lg font-medium text-blue-600 border-b pb-2 border-blue-100 mb-4">Salary Information</h4>
+              <div className="relative">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Salary</label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none mt-1 text-gray-500">KSh</span>
+                  <input
+                    type="number"
+                    className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 pl-10 pr-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    value={formData.salary}
+                    onChange={(e) => setFormData({...formData, salary: e.target.value})}
+                    required
+                  />
                 </div>
+              </div>
+            </div>
 
-                <div className="flex justify-end space-x-3 pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                    className="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            {/* Bank Information Card */}
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 md:col-span-2">
+              <h4 className="text-lg font-medium text-blue-600 border-b pb-2 border-blue-100">Bank Information</h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Bank Name</label>
+                  <select
+                    className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    value={formData.bankAccount.bankName}
+                    onChange={(e) => setFormData({
+                      ...formData, 
+                      bankAccount: {
+                        ...formData.bankAccount,
+                        bankName: e.target.value
+                      }
+                    })}
+                    required
                   >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                  >
-                    {submitting ? (
-                      <>
-                        <FaSpinner className="animate-spin mr-2" />
-                        Processing...
-                      </>
-                    ) : isUpdating ? 'Update Teacher' : 'Add Teacher'}
-                  </button>
+                    <option value="">Select Bank</option>
+                    <option value="Equity Bank">Equity Bank</option>
+                    <option value="KCB Bank">KCB Bank</option>
+                    <option value="Co-operative Bank">Co-operative Bank</option>
+                    <option value="Standard Chartered">Standard Chartered</option>
+                  </select>
                 </div>
-              </form>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Account Name</label>
+                  <input
+                    type="text"
+                    className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    value={formData.bankAccount.accountName}
+                    onChange={(e) => setFormData({
+                      ...formData, 
+                      bankAccount: {
+                        ...formData.bankAccount,
+                        accountName: e.target.value
+                      }
+                    })}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Account Number</label>
+                  <input
+                    type="text"
+                    className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    value={formData.bankAccount.accountNumber}
+                    onChange={(e) => setFormData({
+                      ...formData, 
+                      bankAccount: {
+                        ...formData.bankAccount,
+                        accountNumber: e.target.value
+                      }
+                    })}
+                    required
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+
+          {/* Modal Footer */}
+          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+            <button
+              type="button"
+              onClick={() => setShowModal(false)}
+              className="inline-flex justify-center py-2.5 px-6 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="inline-flex justify-center py-2.5 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 transition-colors"
+            >
+              {submitting ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing...
+                </>
+              ) : isUpdating ? 'Update Teacher' : 'Add Teacher'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+)}
 
       <ToastContainer position="top-right" autoClose={5000} />
     </div>
