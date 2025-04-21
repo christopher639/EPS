@@ -227,26 +227,26 @@ const Dashboard = () => {
     { 
       category: 'Academic', 
       links: [
-        { to: '/streams', icon: <FaSchool />, text: 'Streams', color: '#4CAF50' },
-        { to: '/clases', icon: <FaUniversity />, text: 'Classes', color: '#9C27B0' },
-        { to: "/learningarea", icon: <FaBook />, text: "Learning Areas", color: '#03A9F4' },
-        { to: "/general-report", icon: <FaClipboard />, text: "Exam Results", color: '#E91E63' }
+        { to: '/streams', icon: <FaSchool className="text-blue-500" />, text: 'Streams' },
+        { to: '/clases', icon: <FaUniversity className="text-blue-500" />, text: 'Classes' },
+        { to: "/learningarea", icon: <FaBook className="text-blue-500" />, text: "Learning Areas" },
+        { to: "/general-report", icon: <FaClipboard className="text-blue-500" />, text: "Exam Results" }
       ]
     },
     { 
       category: 'People', 
       links: [
-        { to: '/teachers', icon: <FaChalkboardTeacher />, text: 'Teachers', color: '#FF9800' },
-        { to: '/learner', icon: <FaUsers />, text: 'Learners', color: '#2196F3' },
-        { to: '/users', icon: <FaUserCircle />, text: 'Users', color: '#673AB7' }
+        { to: '/teachers', icon: <FaChalkboardTeacher className="text-blue-500" />, text: 'Teachers' },
+        { to: '/learner', icon: <FaUsers className="text-blue-500" />, text: 'Learners' },
+        { to: '/users', icon: <FaUserCircle className="text-blue-500" />, text: 'Users' }
       ]
     },
     { 
       category: 'Finance & Admin', 
       links: [
-        { to: '/finance', icon: <FaMoneyBillAlt />, text: 'Finances', color: '#009688' },
-        { to: '/fees-structure', icon: <FaMoneyBillAlt />, text: "Fee Structure", color: '#795548' },
-        { to: '', icon: <FaBuilding />, text: 'Departments', color: '#FF5722' }
+        { to: '/finance', icon: <FaMoneyBillAlt className="text-blue-500" />, text: 'Finances' },
+        { to: '/fees-structure', icon: <FaMoneyBillAlt className="text-blue-500" />, text: "Fee Structure" },
+        { to: '', icon: <FaBuilding className="text-blue-500" />, text: 'Departments' }
       ]
     }
   ];
@@ -276,7 +276,7 @@ const Dashboard = () => {
               <img src="lion.jpg" alt="" className="h-[54px] md:hidden" />
             </h1>
            
-            <p className='font-bold text-lg'>{userName}</p>
+            <p className='font-bold text-lg  hidden sm:flex'>{userName}</p>
             <p className='hidden md:flex text-gray-500'> Admin Dashboard</p>
           </div>
           <div className='flex items-center gap-4'>
@@ -309,7 +309,7 @@ const Dashboard = () => {
                     <p className='text-gray-600 font-medium'>Teachers</p>
                     {loadingTeachers ? <Spinner /> : <p className='text-3xl font-bold text-gray-800'>{teachers.length}</p>}
                   </div>
-                  <FaChalkboardTeacher className='text-4xl text-green-500' />
+                  <FaChalkboardTeacher className='text-4xl text-blue-500' />
                 </div>
               </NavLink>
             </div>
@@ -322,7 +322,7 @@ const Dashboard = () => {
                     <p className='text-gray-600 font-medium'>Streams</p>
                     {loadingStreams ? <Spinner /> : <p className='text-3xl font-bold text-gray-800'>{stream.length}</p>}
                   </div>
-                  <FaSchool className='text-4xl text-yellow-500' />
+                  <FaSchool className='text-4xl text-blue-500' />
                 </div>
               </NavLink>
             </div>
@@ -335,7 +335,7 @@ const Dashboard = () => {
                     <p className='text-gray-600 font-medium'>Classes</p>
                     {loadingClasses ? <Spinner /> : <p className='text-3xl font-bold text-gray-800'>{clases.length}</p>}
                   </div>
-                  <FaUniversity className='text-4xl text-purple-500' />
+                  <FaUniversity className='text-4xl text-blue-500' />
                 </div>
               </NavLink>
             </div>
@@ -391,8 +391,8 @@ const Dashboard = () => {
                       to={link.to}
                       className='flex flex-col items-center justify-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors'
                     >
-                      <div className='p-3 rounded-full mb-2' style={{ backgroundColor: `${link.color}20` }}>
-                        {React.cloneElement(link.icon, { className: 'text-xl', style: { color: link.color } })}
+                      <div className='p-3 rounded-full mb-2 bg-blue-50'>
+                        {link.icon}
                       </div>
                       <p className='text-sm font-medium text-center text-gray-700'>{link.text}</p>
                     </NavLink>

@@ -32,17 +32,17 @@ import {
 } from "react-icons/fa";
 
 const navItems = [
-  { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt className="text-purple-500" /> },
+  { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt className="text-blue-500" /> },
   { label: "Academics", icon: <FaBook className="text-blue-500" /> },
-  { label: "Finance", icon: <FaMoneyBillAlt className="text-green-500" /> },
-  { to: "/departments", label: "Departments", icon: <FaUniversity className="text-red-500" /> },
+  { label: "Finance", icon: <FaMoneyBillAlt className="text-blue-500" /> },
+  { to: "/departments", label: "Departments", icon: <FaUniversity className="text-blue-500" /> },
   { to: "/clases", label: "Classes", icon: <FaBook className="text-blue-500" /> },
-  { label: "Human Resource", icon: <FaChalkboardTeacher className="text-yellow-500" /> },
-  { to: "/learningarea", label: "Learning Areas", icon: <FaClipboardList className="text-indigo-500" /> },
-  { to: "/parents", label: "Parents", icon: <FaUsers className="text-pink-500" /> },
-  { to: "/users", label: "Users", icon: <FaUsers className="text-teal-500" /> },
-  { to: "/analytics", label: "School Performace", icon: <FaChartLine className="text-orange-500" /> },
-  { to: "/help", label: "Help", icon: <FaLifeRing className="text-orange-500" /> },
+  { label: "Human Resource", icon: <FaChalkboardTeacher className="text-blue-500" /> },
+  { to: "/learningarea", label: "Learning Areas", icon: <FaClipboardList className="text-blue-500" /> },
+  { to: "/parents", label: "Parents", icon: <FaUsers className="text-blue-500" /> },
+  { to: "/users", label: "Users", icon: <FaUsers className="text-blue-500" /> },
+  { to: "/analytics", label: "School Performace", icon: <FaChartLine className="text-blue-500" /> },
+  { to: "/help", label: "Help", icon: <FaLifeRing className="text-blue-500" /> },
 ];
 
 const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
@@ -113,7 +113,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-blue-50"
                   >
-                    <FaFileUpload className="text-blue-400" />
+                    <FaFileUpload className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Upload Marks</span>}
                   </NavLink>
                   <NavLink 
@@ -121,7 +121,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-blue-50"
                   >
-                    <FaFileInvoice className="text-blue-400" />
+                    <FaFileInvoice className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Assessments</span>}
                   </NavLink>
   
@@ -130,7 +130,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-blue-50"
                   >
-                    <FaClipboardList className="text-blue-400" />
+                    <FaClipboardList className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Exam Results</span>}
                   </NavLink>
                   <NavLink 
@@ -138,7 +138,7 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
                     activeClassName="bg-blue-50"
                   >
-                    <FaCalendarAlt className="text-blue-400" />
+                    <FaCalendarAlt className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Timetable</span>}
                   </NavLink>
                 </div>
@@ -175,49 +175,49 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                   <NavLink 
                     to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-green-50"
+                    activeClassName="bg-blue-50"
                   >
-                    <FaMoneyCheckAlt className="text-green-400" />
+                    <FaMoneyCheckAlt className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Allocation</span>}
                   </NavLink>
                   <NavLink 
                     to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-green-50"
+                    activeClassName="bg-blue-50"
                   >
-                    <FaReceipt className="text-green-400" />
+                    <FaReceipt className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Structure</span>}
                   </NavLink>
                   <NavLink 
                     to="/fees-payments" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-green-50"
+                    activeClassName="bg-blue-50"
                   >
-                    <FaCalculator className="text-green-400" />
+                    <FaCalculator className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Payments</span>}
                   </NavLink>
                   <NavLink 
                     to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-green-50"
+                    activeClassName="bg-blue-50"
                   >
-                    <FaPiggyBank className="text-green-400" />
+                    <FaPiggyBank className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Fees Balances</span>}
                   </NavLink>
                   <NavLink 
                     to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-green-50"
+                    activeClassName="bg-blue-50"
                   >
-                    <FaMoneyBillWave className="text-green-400" />
+                    <FaMoneyBillWave className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Expenses</span>}
                   </NavLink>
                   <NavLink 
                     to="/finance" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-green-50"
+                    activeClassName="bg-blue-50"
                   >
-                    <FaChartBar className="text-green-400" />
+                    <FaChartBar className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Financial Reports</span>}
                   </NavLink>
                 </div>
@@ -254,25 +254,25 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                   <NavLink 
                     to="/teachers" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-yellow-50"
+                    activeClassName="bg-blue-50"
                   >
-                    <FaChalkboardTeacher className="text-yellow-400" />
+                    <FaChalkboardTeacher className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Teachers</span>}
                   </NavLink>
                   <NavLink 
                     to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-yellow-50"
+                    activeClassName="bg-blue-50"
                   >
-                    <FaUserTie className="text-yellow-400" />
+                    <FaUserTie className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Staff</span>}
                   </NavLink>
                   <NavLink 
                     to="" 
                     className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors"
-                    activeClassName="bg-yellow-50"
+                    activeClassName="bg-blue-50"
                   >
-                    <FaMoneyCheck className="text-yellow-400" />
+                    <FaMoneyCheck className="text-blue-500" />
                     {!isSidebarCollapsed && <span className="ml-3 text-gray-600">Payroll</span>}
                   </NavLink>
                 </div>
