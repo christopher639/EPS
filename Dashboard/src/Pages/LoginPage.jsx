@@ -81,8 +81,12 @@ const AuthPage = () => {
 
   return (
     <div className="h-screen w-screen overflow-y-auto bg-gradient-to-tr from-red-900 to-blue-600 flex items-center justify-center px-4 py-10">
-  {/* Your content goes here */}
-  <div className="w-full max-w-md bg-white p-8 rounded-3xl mt-16 shadow-2xl border border-red-900 animate-fadeIn">
+      {/* this is my prompt: when user is on login, mt-0; when user is on signup, mt-16 */}
+      <div
+        className={`w-full max-w-md bg-white p-8 rounded-3xl ${
+          isSignup ? "mt-16" : "mt-0"
+        } shadow-2xl border border-red-900 animate-fadeIn`}
+      >
         <div className="flex flex-col items-center space-y-4 mb-6">
           <img src={lion} alt="Lion Logo" className="h-20 rounded-full border-4 border-blue-600" />
           <h2 className="text-3xl font-extrabold text-blue-600">
@@ -161,8 +165,7 @@ const AuthPage = () => {
           </button>
         </p>
       </div>
-</div>
-
+    </div>
   );
 };
 
