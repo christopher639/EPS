@@ -203,7 +203,7 @@ const LearningArea = () => {
                   color={primaryColors.primary}
                 />
               </div>
-              <h1 className="text-xl font-bold" style={{ color: primaryColors.textDark }}>
+              <h1 className="text-xl hidden sm:flex font-bold" style={{ color: primaryColors.textDark }}>
                 Learning Areas
               </h1>
             </div>
