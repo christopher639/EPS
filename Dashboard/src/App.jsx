@@ -38,6 +38,7 @@ import HelpAndSupport from "./Pages/HelpAndSupport";
 import AuthWrapper from "./Pages/AuthWrapper";
 import Clases from "./Pages/Clases";
 import Help from "./Pages/Help";
+import MarkForm from "./Pages/MarkForm";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -312,6 +313,14 @@ const App = () => {
           element={
             <AuthWrapper>
               <StudentPerStream />
+            </AuthWrapper>
+          }
+        />
+         <Route
+          path="/adminmarksform"
+          element={
+            <AuthWrapper>
+              <MarkForm />
             </AuthWrapper>
           }
         />
