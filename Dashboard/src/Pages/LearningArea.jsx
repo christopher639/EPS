@@ -6,17 +6,29 @@ import 'react-toastify/dist/ReactToastify.css';
 import SidebarToggleButton from '../components/SidebarToggleButton';
 import SideBar from '../components/SideBar';
 import BASE_URL from '../config';
-import { ClipLoader } from 'react-spinners'; // Import a spinner component
+import { ClipLoader } from 'react-spinners';
 import MobileNav from '../components/MobileNav';
+
+// Primary color scheme
+const primaryColors = {
+  primary: '#4F46E5',       // Indigo
+  secondary: '#10B981',     // Emerald
+  danger: '#EF4444',        // Red
+  warning: '#F59E0B',       // Amber
+  lightBg: '#F9FAFB',       // Gray-50
+  darkBg: '#1F2937',       // Gray-800
+  textDark: '#111827',      // Gray-900
+  textLight: '#6B7280',     // Gray-500
+};
 
 axios.defaults.baseURL = BASE_URL;
 
 const LearningArea = () => {
   const [learningAreas, setLearningAreas] = useState([]);
-  const [sideBar, setSideBar] = useState(true); // To control the visibility of the sidebar
+  const [sideBar, setSideBar] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState(""); // State for managing the search query
-  const [showModal, setShowModal] = useState(false); // For adding/updating learning areas
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     subjectname: '',
     code: '',
@@ -26,32 +38,30 @@ const LearningArea = () => {
     status: '',
     language: '',
     duration: 12,
-    content: '', // New attribute for content
+    content: '',
   });
-  const [editingId, setEditingId] = useState(null); // For identifying which learning area is being edited
-  const [isCreating, setIsCreating] = useState(false); // State to manage the create button spinner
-  const [isUpdating, setIsUpdating] = useState(false); // State to manage the update button spinner
-  const [isDeleting, setIsDeleting] = useState(null); // State to manage the delete button spinner
+  const [editingId, setEditingId] = useState(null);
+  const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(null);
 
-  // Fetch learning areas from the API
   const fetchLearningAreas = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('https://eps-dashboard.onrender.com/api/learning-areas');
+      const response = await axios.get('/api/learning-areas');
       setLearningAreas(response.data);
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching learning areas:', error);
+      toast.error('Failed to load learning areas');
+    } finally {
       setLoading(false);
     }
   };
 
-  // Fetch data when the component mounts
   useEffect(() => {
     fetchLearningAreas();
   }, []);
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -60,25 +70,20 @@ const LearningArea = () => {
     }));
   };
 
-  // Handle creating a new learning area
   const handleCreate = async (e) => {
     e.preventDefault();
-    console.log("Submitting form data:", formData); // Debugging line
-
     if (!formData.subjectname || !formData.code || !formData.description || !formData.content) {
-      toast.error('Subject Name, Code, Description, and Content are required!');
+      toast.error('Please fill all required fields!');
       return;
     }
 
-    setIsCreating(true); // Start the spinner
-
+    setIsCreating(true);
     try {
-      const response = await axios.post('https://eps-dashboard.onrender.com/api/learning-areas', formData);
-      console.log("Server response:", response.data); // Debugging line
+      await axios.post('/api/learning-areas', formData);
       toast.success('Learning area created successfully!');
-      fetchLearningAreas(); // Refresh the list
-      setShowModal(false); // Close the modal
-      setFormData({  // Reset form fields after successful creation
+      fetchLearningAreas();
+      setShowModal(false);
+      setFormData({
         subjectname: '',
         code: '',
         description: '',
@@ -90,52 +95,46 @@ const LearningArea = () => {
         content: '',
       });
     } catch (error) {
-      console.error('Error creating learning area:', error.response?.data || error.message);
       toast.error(error.response?.data?.message || 'Error creating learning area.');
     } finally {
-      setIsCreating(false); // Stop the spinner
+      setIsCreating(false);
     }
   };
 
-  // Handle updating an existing learning area
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (!formData.subjectname || !formData.code || !formData.description || !formData.content) {
-      toast.error('Subject Name, Code, Description, and Content are required!');
+      toast.error('Please fill all required fields!');
       return;
     }
 
-    setIsUpdating(true); // Start the spinner
-
+    setIsUpdating(true);
     try {
-      await axios.put(`https://eps-dashboard.onrender.com/api/learning-areas/${editingId}`, formData);
+      await axios.put(`/api/learning-areas/${editingId}`, formData);
       toast.success('Learning area updated successfully!');
-      fetchLearningAreas(); // Refresh the list
-      setShowModal(false); // Close the modal
-      setEditingId(null); // Reset editingId
+      fetchLearningAreas();
+      setShowModal(false);
+      setEditingId(null);
     } catch (error) {
       toast.error('Error updating learning area.');
     } finally {
-      setIsUpdating(false); // Stop the spinner
+      setIsUpdating(false);
     }
   };
 
-  // Handle delete action
   const handleDelete = async (id) => {
-    setIsDeleting(id); // Start the spinner for the specific delete button
-
+    setIsDeleting(id);
     try {
-      await axios.delete(`https://eps-dashboard.onrender.com/api/learning-areas/${id}`);
+      await axios.delete(`/api/learning-areas/${id}`);
       toast.success('Learning area deleted successfully!');
-      fetchLearningAreas(); // Refresh the list
+      fetchLearningAreas();
     } catch (error) {
       toast.error('Error deleting learning area.');
     } finally {
-      setIsDeleting(null); // Stop the spinner
+      setIsDeleting(null);
     }
   };
 
-  // Set the form data for editing
   const handleEdit = (learningArea) => {
     setFormData({
       subjectname: learningArea.subjectname,
@@ -146,24 +145,34 @@ const LearningArea = () => {
       status: learningArea.status,
       language: learningArea.language,
       duration: learningArea.duration,
-      content: learningArea.content, // Set the content for editing
+      content: learningArea.content,
     });
     setEditingId(learningArea._id);
-    setShowModal(true); // Open modal for editing
+    setShowModal(true);
   };
 
-  // Handle modal visibility
   const toggleModal = () => {
     setShowModal(!showModal);
-    setFormData({}); // Reset form data when closing
-    setEditingId(null); // Reset editing ID when closing
+    if (!showModal) {
+      setFormData({
+        subjectname: '',
+        code: '',
+        description: '',
+        department: '',
+        instructor: '',
+        status: '',
+        language: '',
+        duration: 12,
+        content: '',
+      });
+      setEditingId(null);
+    }
   };
 
   const toggleSideBar = () => {
-    setSideBar((prev) => !prev); // Toggle sidebar visibility
+    setSideBar((prev) => !prev);
   };
 
-  // Filtered learning areas based on the search query
   const filteredLearningAreas = learningAreas.filter(
     (learningArea) =>
       learningArea.subjectname.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -171,79 +180,143 @@ const LearningArea = () => {
   );
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
       <div
-        className={`transition-all duration-700 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'} bg-gray-800 min-h-screen`}
+        className={`transition-all duration-300 ease-in-out ${sideBar ? 'w-0 md:w-72' : 'w-0'}`}
+        style={{ backgroundColor: primaryColors.darkBg }}
       >
-        <SideBar /> {/* Conditionally render based on sidebar state */}
+        <SideBar />
       </div>
-      <div className="flex flex-col w-full bg-gray-50">
-        <div className="flex justify-between items-center bg-white shadow-sm p-2 border-b">
-          <MobileNav />
-          <div className='hidden md:flex'>
-            <SidebarToggleButton toggleSidebar={toggleSideBar} isSidebarCollapsed={!sideBar} />
-          </div>
-          <div>
-            <p className="text-sm hidden md:text-lg md:text-xl lg:text-2xl font-bold mb-6 md:flex">Learning Areas</p>
-          </div>
 
-          {/* Search Input */}
-          <div className="mb-2 hidden md:flex  items-center">
-            <input
-              type="text"
-              placeholder="Name or Code"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="px-2 border border-gray-300 rounded-lg max-w-32"
-            />
+      {/* Main Content */}
+      <div className="flex flex-col w-full" style={{ backgroundColor: primaryColors.lightBg }}>
+        {/* Header */}
+        <header className="sticky top-0 z-10 bg-white shadow-sm p-4 border-b">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <MobileNav />
+              <div className='hidden md:flex'>
+                <SidebarToggleButton 
+                  toggleSidebar={toggleSideBar} 
+                  isSidebarCollapsed={!sideBar} 
+                  color={primaryColors.primary}
+                />
+              </div>
+              <h1 className="text-xl font-bold" style={{ color: primaryColors.textDark }}>
+                Learning Areas
+              </h1>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center">
+                <input
+                  type="text"
+                  placeholder="Search by name or code..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
+                  style={{ 
+                    borderColor: primaryColors.textLight,
+                    focusBorderColor: primaryColors.primary 
+                  }}
+                />
+              </div>
+
+              <button
+                onClick={() => setShowModal(true)}
+               className=" items-center bg-[rgb(232,240,254)] border border-[rgb(26,115,232)] text-blue-600 px-4 py-2 rounded-full hover:bg-[rgb(221,232,252)] transition-colors text-sm"
+                style={{ 
+             
+                }}
+              >
+                <span>+</span>
+                <span className='hidden md:inline'>Add New</span>
+              </button>
+
+              <UserAccount />
+            </div>
           </div>
+        </header>
 
-          {/* Button to show modal for adding new learning area */}
-          <button
-            onClick={() => setShowModal(true)}
-            className="mb-2 flex gap-1 px-2 bg-green-600 text-white rounded-full"
-          > 
-            <p>+</p>
-            <p className='hidden md:flex'> Add</p>
-          </button>
-          <UserAccount />
-        </div>
-
-        {/* Grid layout for Learning Areas */}
-        <div className="overflow-x-auto overflow-y-auto max-h-[86vh] bg-white rounded-lg p-4">
-          {/* Grid container for learning areas */}
+        {/* Main Content Area */}
+        <main className="flex-1 p-4 overflow-auto">
           {loading ? (
             <div className="flex justify-center items-center h-64">
-              <ClipLoader color="#4A90E2" size={50} />
+              <ClipLoader color={primaryColors.primary} size={50} />
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredLearningAreas.map((learningArea) => (
-                <div key={learningArea._id} className="bg-gray-100 p-4 rounded-lg shadow-lg flex flex-col">
-                  {/* Learning Area Info */}
-                  <h3 className="font-semibold text-lg mb-2">{learningArea.subjectname}</h3>
-                  <p className="text-sm text-gray-700">Code: {learningArea.code}</p>
-                  <p className="text-sm text-gray-700">Level: {learningArea.level}</p>
-                  <p className="text-sm text-gray-700">Instructor: {learningArea.instructor}</p>
-                  <p className="text-sm text-gray-700 mt-2">{learningArea.description}</p>
-                  <p className="text-sm text-gray-700 mt-2 font-semibold">Content:</p>
-                  <p className="text-sm text-gray-700">{learningArea.content}</p> {/* Display the content */}
+                <div 
+                  key={learningArea._id} 
+                  className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col"
+                >
+                  <div className="flex-1">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="font-bold text-lg" style={{ color: primaryColors.textDark }}>
+                        {learningArea.subjectname}
+                      </h3>
+                      <span className="text-xs px-2 py-1 rounded-full" 
+                        style={{ 
+                          backgroundColor: learningArea.status === 'active' ? '#D1FAE5' : '#FEE2E2',
+                          color: learningArea.status === 'active' ? '#065F46' : '#B91C1C'
+                        }}
+                      >
+                        {learningArea.status || 'inactive'}
+                      </span>
+                    </div>
 
-                  {/* Actions */}
-                  <div className="flex gap-2 mt-auto">
+                    <div className="space-y-2 mb-4">
+                      <p className="text-sm" style={{ color: primaryColors.textLight }}>
+                        <span className="font-medium" style={{ color: primaryColors.textDark }}>Code:</span> {learningArea.code}
+                      </p>
+                      <p className="text-sm" style={{ color: primaryColors.textLight }}>
+                        <span className="font-medium" style={{ color: primaryColors.textDark }}>Instructor:</span> {learningArea.instructor || 'Not assigned'}
+                      </p>
+                      <p className="text-sm" style={{ color: primaryColors.textLight }}>
+                        <span className="font-medium" style={{ color: primaryColors.textDark }}>Duration:</span> {learningArea.duration} weeks
+                      </p>
+                    </div>
+
+                    <div className="mb-4">
+                      <p className="text-sm" style={{ color: primaryColors.textDark }}>
+                        {learningArea.description}
+                      </p>
+                    </div>
+
+                    <div className="border-t pt-3">
+                      <h4 className="text-sm font-medium mb-1" style={{ color: primaryColors.textDark }}>
+                        Content:
+                      </h4>
+                      <p className="text-sm" style={{ color: primaryColors.textLight }}>
+                        {learningArea.content}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end space-x-2 mt-4 pt-3 border-t">
                     <button
                       onClick={() => handleEdit(learningArea)}
-                      className="bg-blue-600 text-white py-1 px-3 rounded-md"
+                     className=" items-center bg-[rgb(232,240,254)] border border-[rgb(26,115,232)] text-blue-600 px-4 py-2 rounded-lg hover:bg-[rgb(221,232,252)] transition-colors text-sm"
+                      style={{ 
+                      
+                      }}
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(learningArea._id)}
-                      className="bg-red-600 text-white py-1 px-3 rounded-md"
+                      className="px-3 py-1 text-sm rounded-md transition-colors duration-200"
+                      style={{ 
+                        backgroundColor: primaryColors.danger,
+                        color: 'white',
+                        hoverBg: '#DC2626' // Darker red
+                      }}
                       disabled={isDeleting === learningArea._id}
                     >
                       {isDeleting === learningArea._id ? (
-                        <ClipLoader color="#ffffff" size={20} />
+                        <ClipLoader color="#ffffff" size={15} />
                       ) : (
                         'Delete'
                       )}
@@ -253,139 +326,217 @@ const LearningArea = () => {
               ))}
             </div>
           )}
-        </div>
+        </main>
 
-        {/* Modal for creating or editing a learning area */}
+        {/* Add/Edit Modal */}
         {showModal && (
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg w-full md:w-2/3">
-              <h2 className="text-lg font-semibold">{editingId ? 'Edit Learning Area' : 'Add New Learning Area'}</h2>
-              <form onSubmit={editingId ? handleUpdate : handleCreate}>
-                <div className="space-y-4 grid grid-cols-1 md:grid-cols-3 gap-1 overflow-y-auto max-h-[80vh]">
-                  {/* Form fields */}
-                  <div>
-                    <label className="block text-sm text-gray-700">Subject Name</label>
-                    <input
-                      type="text"
-                      name="subjectname"
-                      value={formData.subjectname || ''}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded-md"
-                      required
-                    />
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-20">
+            
+            <div 
+              className="bg-white rounded-xl my-5 shadow-2xl w-full max-w-3xl "
+              style={{ scrollbarWidth: 'thin' }}
+            >
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold" style={{ color: primaryColors.textDark }}>
+                    {editingId ? 'Edit Learning Area' : 'Create New Learning Area'}
+                  </h2>
+                  <button
+                    onClick={toggleModal}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <form onSubmit={editingId ? handleUpdate : handleCreate}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 max-h-[80vh] overflow-y-auto gap-4 mb-6">
+                    {/* Required Fields */}
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium" style={{ color: primaryColors.textDark }}>
+                        Subject Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="subjectname"
+                        value={formData.subjectname}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border rounded-md focus:ring-2 focus:outline-none"
+                        style={{ 
+                          borderColor: primaryColors.textLight,
+                          focusRingColor: primaryColors.primary
+                        }}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium" style={{ color: primaryColors.textDark }}>
+                        Code <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="code"
+                        value={formData.code}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border rounded-md focus:ring-2 focus:outline-none"
+                        style={{ 
+                          borderColor: primaryColors.textLight,
+                          focusRingColor: primaryColors.primary
+                        }}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium" style={{ color: primaryColors.textDark }}>
+                        Description <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border rounded-md focus:ring-2 focus:outline-none"
+                        style={{ 
+                          borderColor: primaryColors.textLight,
+                          focusRingColor: primaryColors.primary
+                        }}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium" style={{ color: primaryColors.textDark }}>
+                        Content <span className="text-red-500">*</span>
+                      </label>
+                      <textarea
+                        name="content"
+                        value={formData.content}
+                        onChange={handleInputChange}
+                        rows={3}
+                        className="w-full p-2 border rounded-md focus:ring-2 focus:outline-none"
+                        style={{ 
+                          borderColor: primaryColors.textLight,
+                          focusRingColor: primaryColors.primary
+                        }}
+                        required
+                      />
+                    </div>
+
+                    {/* Optional Fields */}
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium" style={{ color: primaryColors.textDark }}>
+                        Instructor
+                      </label>
+                      <input
+                        type="text"
+                        name="instructor"
+                        value={formData.instructor}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border rounded-md focus:ring-2 focus:outline-none"
+                        style={{ 
+                          borderColor: primaryColors.textLight,
+                          focusRingColor: primaryColors.primary
+                        }}
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium" style={{ color: primaryColors.textDark }}>
+                        Status
+                      </label>
+                      <select
+                        name="status"
+                        value={formData.status}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border rounded-md focus:ring-2 focus:outline-none"
+                        style={{ 
+                          borderColor: primaryColors.textLight,
+                          focusRingColor: primaryColors.primary
+                        }}
+                      >
+                        <option value="">Select status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="draft">Draft</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium" style={{ color: primaryColors.textDark }}>
+                        Language
+                      </label>
+                      <input
+                        type="text"
+                        name="language"
+                        value={formData.language}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border rounded-md focus:ring-2 focus:outline-none"
+                        style={{ 
+                          borderColor: primaryColors.textLight,
+                          focusRingColor: primaryColors.primary
+                        }}
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium" style={{ color: primaryColors.textDark }}>
+                        Duration (weeks)
+                      </label>
+                      <input
+                        type="number"
+                        name="duration"
+                        value={formData.duration}
+                        onChange={handleInputChange}
+                        min="1"
+                        className="w-full p-2 border rounded-md focus:ring-2 focus:outline-none"
+                        style={{ 
+                          borderColor: primaryColors.textLight,
+                          focusRingColor: primaryColors.primary
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm text-gray-700">Code</label>
-                    <input
-                      type="text"
-                      name="code"
-                      value={formData.code || ''}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded-md"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-700">Level</label>
-                    <input
-                      type="text"
-                      name="level"
-                      value={formData.level || ''}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded-md"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-700">Description</label>
-                    <input
-                      type="text"
-                      name="description"
-                      value={formData.description || ''}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded-md"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-700">Content</label>
-                    <textarea
-                      name="content"
-                      value={formData.content || ''}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded-md"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-700">Status</label>
-                    <input
-                      type="text"
-                      name="status"
-                      value={formData.status || ''}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-700">Language</label>
-                    <input
-                      type="text"
-                      name="language"
-                      value={formData.language || ''}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-700">Instructor</label>
-                    <input
-                      type="text"
-                      name="instructor"
-                      value={formData.instructor || ''}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-700">Duration (in weeks)</label>
-                    <input
-                      type="number"
-                      name="duration"
-                      value={formData.duration || 12}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded-md"
-                    />
-                  </div>
-                  <div className="flex justify-end gap-4 mt-4">
-                    <button
-                      type="submit"
-                      className="bg-green-600 text-white px-4 py-2 rounded-md"
-                      disabled={isCreating || isUpdating}
-                    >
-                      {isCreating || isUpdating ? (
-                        <ClipLoader color="#ffffff" size={20} />
-                      ) : editingId ? (
-                        'Update'
-                      ) : (
-                        'Create'
-                      )}
-                    </button>
+
+                  <div className="flex justify-end space-x-3 pt-4 border-t">
                     <button
                       type="button"
                       onClick={toggleModal}
-                      className="bg-gray-400 text-white px-4 py-2 rounded-md"
+                      className="px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200"
+                      style={{ 
+                        backgroundColor: '#E5E7EB',
+                        color: primaryColors.textDark,
+                        hoverBg: '#D1D5DB'
+                      }}
                     >
                       Cancel
                     </button>
+                    <button
+                      type="submit"
+                      className="px-4 py-2 text-sm font-medium text-white rounded-md transition-colors duration-200"
+                      style={{ 
+                        backgroundColor: editingId ? primaryColors.primary : primaryColors.secondary,
+                        hoverBg: editingId ? '#4338CA' : '#059669'
+                      }}
+                      disabled={isCreating || isUpdating}
+                    >
+                      {isCreating || isUpdating ? (
+                        <ClipLoader color="#ffffff" size={18} />
+                      ) : editingId ? (
+                        'Update Learning Area'
+                      ) : (
+                        'Create Learning Area'
+                      )}
+                    </button>
                   </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         )}
 
-        <ToastContainer />
+        <ToastContainer position="bottom-right" autoClose={3000} />
       </div>
     </div>
   );
