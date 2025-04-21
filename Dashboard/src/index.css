@@ -68,4 +68,12 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
   background-color: white; /* White for even rows */
 }
+/* Disable cursor blinking globally */
+* {
+  caret-color: transparent;
+}
 
+/* Enable cursor blinking only for input fields */
+input, textarea, [contenteditable] {
+  caret-color: auto;
+}

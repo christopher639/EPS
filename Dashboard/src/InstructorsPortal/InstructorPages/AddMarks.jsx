@@ -369,17 +369,18 @@ const AddMarks = () => {
   }, []);
 
   return (
-    <div className=" bg-gray-50">
+    <div className=" max-h-screen overflow-y-auto bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-white mb-2 py-[1px] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  flex justify-between items-center">
-          <h1 className="text-md font-bold text-gray-800">Marks  Portal</h1>
+         
+          <img src="/lion.jpg" alt="" className="h-16" />
           <UserAccount />
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="w-full max-h-screen pb-20 md:pb-16  overflow-y-auto md:w-1/2  mx-auto px-4 sm:px-6 lg:px-8 ">
+      <main className="w-full  pb-20 md:pb-16  overflow-y-auto md:w-1/2  mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
           {/* Form Header */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4">
@@ -506,7 +507,7 @@ const AddMarks = () => {
               {/* Student Marks Section */}
               <div className="mt-8">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
-                  <h2 className="text-lg font-semibold text-gray-800">Student Marks Entry</h2>
+                  <h2 className="text-lg font-semibold text-gray-800">Leaner Marks Entry</h2>
                   
                   <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                     {/* Filter Input */}
