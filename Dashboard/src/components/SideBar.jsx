@@ -31,17 +31,15 @@ import {
   FaLifeRing,
   FaTimes
 } from "react-icons/fa";
-import AddMarks from "../InstructorsPortal/InstructorPages/AddMarks";
 import MarkForm from "../Pages/MarkForm";
 
-// Add this UploadMarksModal component
 const UploadMarksModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div >
-      <div >
-        <MarkForm/>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+        <MarkForm onClose={onClose} />
       </div>
     </div>
   );
@@ -128,7 +126,6 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
                       isAcademicsOpen ? "max-h-96" : "max-h-0"
                     }`}
                   >
-                    {/* Changed this NavLink to a div with onClick handler */}
                     <div 
                       onClick={openUploadMarksModal}
                       className="flex items-center py-2 px-6 text-sm hover:bg-gray-100 transition-colors cursor-pointer"
@@ -167,7 +164,6 @@ const SideBar = ({ isSidebarCollapsed, toggleSidebar }) => {
               );
             }
 
-            // Rest of your existing code remains the same...
             if (item.label === "Finance") {
               return (
                 <div key={item.label}>
