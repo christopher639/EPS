@@ -2,18 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import BASE_URL from "../config";
-
-// // Set Axios Base URL globally
-// axios.defaults.baseURL = BASE_URL;
 
 const PendingUsersModal = ({ isOpen, onClose }) => {
   const [pendingUsers, setPendingUsers] = useState([]);
 
-  // Fetch pending users when the modal opens
   useEffect(() => {
     if (isOpen) {
-      axios.get("https://eps-dashboard.onrender.com/api/users/admin/pending-users")
+      axios
+        .get("https://eps-dashboard.onrender.com/api/users/admin/pending-users")
         .then((res) => {
           setPendingUsers(res.data.filter((user) => user.status === "pending"));
         })
@@ -24,10 +20,12 @@ const PendingUsersModal = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  // Handle user approval
   const handleApprove = async (userId) => {
     try {
-      await axios.put(`https://eps-dashboard.onrender.com/api/users/admin/approve/${userId}`, { status: "approved" });
+      await axios.put(
+        `https://eps-dashboard.onrender.com/api/users/admin/approve/${userId}`,
+        { status: "approved" }
+      );
       toast.success("User approved successfully!");
       setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
     } catch (error) {
@@ -36,10 +34,12 @@ const PendingUsersModal = ({ isOpen, onClose }) => {
     }
   };
 
-  // Handle user rejection
   const handleReject = async (userId) => {
     try {
-      await axios.put(`https://eps-dashboard.onrender.com/api/users/admin/approve/${userId}`, { status: "rejected" });
+      await axios.put(
+        `https://eps-dashboard.onrender.com/api/users/admin/approve/${userId}`,
+        { status: "rejected" }
+      );
       toast.success("User rejected successfully!");
       setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
     } catch (error) {
@@ -51,59 +51,55 @@ const PendingUsersModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-5/6">
-        <div className="overflow-y-auto max-h-[80vh]">
-          <div className="flex items-center mb-4">
-            <h2 className="text-xl font-semibold">Pending Users</h2>
-            {pendingUsers.length > 0 && (
-              <span className="ml-2 w-3 h-3 bg-red-500 rounded-full"></span>
-            )}
-          </div>
-          {pendingUsers.length === 0 ? (
-            <p className="text-gray-500">No pending users</p>
-          ) : (
-            <table className="w-full border-collapse border border-gray-300">
-              <thead>
-                <tr className="bg-gray-200">
-                  <th className="border p-2">Name</th>
-                  <th className="border p-2">Email</th>
-                  <th className="border p-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pendingUsers.map((user) => (
-                  <tr key={user._id} className="border">
-                    <td className="border p-2">{user.fullName}</td>
-                    <td className="border p-2">{user.email}</td>
-                    <td className="border p-2">
-                      <button
-                        onClick={() => handleApprove(user._id)}
-                        className="bg-green-500 text-white px-3 py-1 rounded mr-2 hover:bg-green-600 transition"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => handleReject(user._id)}
-                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
-                      >
-                        Reject
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
+      <div className="w-full h-full bg-white overflow-y-auto p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold">Pending Users</h2>
+          <button
+            onClick={onClose}
+            className="text-white bg-gray-700 px-4 py-2 rounded hover:bg-gray-800 transition"
+          >
+            Close
+          </button>
         </div>
-        <button
-          onClick={onClose}
-          className="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
-        >
-          Close
-        </button>
+
+        {pendingUsers.length === 0 ? (
+          <p className="text-gray-600">No pending users</p>
+        ) : (
+          <table className="w-full border-collapse border border-gray-300">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="border p-2">Name</th>
+                <th className="border p-2">Email</th>
+                <th className="border p-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pendingUsers.map((user) => (
+                <tr key={user._id} className="border">
+                  <td className="border p-2">{user.fullName}</td>
+                  <td className="border p-2">{user.email}</td>
+                  <td className="border p-2">
+                    <button
+                      onClick={() => handleApprove(user._id)}
+                      className="bg-green-600 text-white px-3 py-1 rounded mr-2 hover:bg-green-700"
+                    >
+                      Approve
+                    </button>
+                    <button
+                      onClick={() => handleReject(user._id)}
+                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
       </div>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>
   );
 };
