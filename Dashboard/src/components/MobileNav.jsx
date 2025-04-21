@@ -30,6 +30,35 @@ import {
   FaUserCircle
 } from "react-icons/fa";
 
+// Icon color mapping for consistent styling
+const iconColors = {
+  Dashboard: "text-purple-600",
+  Learners: "text-blue-600",
+  Academics: "text-blue-600",
+  Finance: "text-green-600",
+  Departments: "text-red-600",
+  Classes: "text-indigo-600",
+  Streams: "text-indigo-600",
+  Teachers: "text-amber-600",
+  "Human Resource": "text-amber-600",
+  "Learning Areas": "text-violet-600",
+  Parents: "text-pink-600",
+  Users: "text-teal-600",
+  "School Performance": "text-orange-600",
+  "Upload Marks": "text-blue-500",
+  Assessments: "text-blue-500",
+  "Exams Results": "text-blue-500",
+  Timetable: "text-blue-500",
+  "Fees Allocation": "text-green-500",
+  "Fees Structure": "text-green-500",
+  "Fees Payments": "text-green-500",
+  "Fees Balances": "text-green-500",
+  Expenses: "text-green-500",
+  "Financial Reports": "text-green-500",
+  Staff: "text-amber-500",
+  Payroll: "text-amber-500"
+};
+
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
   { to: "/learner", label: "Learners", icon: <FaUsers /> },
@@ -133,8 +162,8 @@ const MobileNav = () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col px-4 py-2 max-h-[70vh] overflow-y-auto no-scrollbar md:scrollbar-custom divide-y divide-gray-100">
-          {navItems.map((item, index) => {
+        <div className="flex flex-col px-4 py-2 max-h-[70vh] overflow-y-auto no-scrollbar divide-y divide-gray-100">
+          {navItems.map((item) => {
             if (item.label === "Academics") {
               return (
                 <React.Fragment key={item.label}>
@@ -144,8 +173,8 @@ const MobileNav = () => {
                       className="flex items-center justify-between py-3 px-4 text-gray-800 hover:bg-gray-50 cursor-pointer rounded-lg transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="text-blue-500">{item.icon}</span>
-                        <span className="font-medium">Academics</span>
+                        <span className={iconColors[item.label]}>{item.icon}</span>
+                        <span className="font-medium">{item.label}</span>
                       </div>
                       {isAcademicsOpen ? (
                         <FaChevronDown className="text-gray-500" />
@@ -163,7 +192,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaFileUpload className="text-blue-400" />
+                        <FaFileUpload className={iconColors["Upload Marks"]} />
                         <span>Upload Marks</span>
                       </NavLink>
                       <NavLink
@@ -171,7 +200,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaFileAlt className="text-blue-400" />
+                        <FaFileAlt className={iconColors["Assessments"]} />
                         <span>Assessments</span>
                       </NavLink>
                       <NavLink
@@ -179,16 +208,15 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaFileExport className="text-blue-400" />
+                        <FaFileExport className={iconColors["Exams Results"]} />
                         <span>Exams Results</span>
                       </NavLink>
-                     
                       <NavLink
                         to=""
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg"
                         onClick={toggleNav}
                       >
-                        <FaCalendarAlt className="text-blue-400" />
+                        <FaCalendarAlt className={iconColors["Timetable"]} />
                         <span>Timetable</span>
                       </NavLink>
                     </div>
@@ -206,8 +234,8 @@ const MobileNav = () => {
                       className="flex items-center justify-between py-3 px-4 text-gray-800 hover:bg-gray-50 cursor-pointer rounded-lg transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="text-green-500">{item.icon}</span>
-                        <span className="font-medium">Finance</span>
+                        <span className={iconColors[item.label]}>{item.icon}</span>
+                        <span className="font-medium">{item.label}</span>
                       </div>
                       {isFinanceOpen ? (
                         <FaChevronDown className="text-gray-500" />
@@ -225,7 +253,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaMoneyCheckAlt className="text-green-400" />
+                        <FaMoneyCheckAlt className={iconColors["Fees Allocation"]} />
                         <span>Fees Allocation</span>
                       </NavLink>
                       <NavLink
@@ -233,7 +261,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaReceipt className="text-green-400" />
+                        <FaReceipt className={iconColors["Fees Structure"]} />
                         <span>Fees Structure</span>
                       </NavLink>
                       <NavLink
@@ -241,7 +269,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaCalculator className="text-green-400" />
+                        <FaCalculator className={iconColors["Fees Payments"]} />
                         <span>Fees Payments</span>
                       </NavLink>
                       <NavLink
@@ -249,7 +277,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaPiggyBank className="text-green-400" />
+                        <FaPiggyBank className={iconColors["Fees Balances"]} />
                         <span>Fees Balances</span>
                       </NavLink>
                       <NavLink
@@ -257,7 +285,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaFileInvoiceDollar className="text-green-400" />
+                        <FaFileInvoiceDollar className={iconColors["Expenses"]} />
                         <span>Expenses</span>
                       </NavLink>
                       <NavLink
@@ -265,7 +293,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg"
                         onClick={toggleNav}
                       >
-                        <FaChartBar className="text-green-400" />
+                        <FaChartBar className={iconColors["Financial Reports"]} />
                         <span>Financial Reports</span>
                       </NavLink>
                     </div>
@@ -283,8 +311,8 @@ const MobileNav = () => {
                       className="flex items-center justify-between py-3 px-4 text-gray-800 hover:bg-gray-50 cursor-pointer rounded-lg transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="text-yellow-500">{item.icon}</span>
-                        <span className="font-medium">Human Resource</span>
+                        <span className={iconColors[item.label]}>{item.icon}</span>
+                        <span className="font-medium">{item.label}</span>
                       </div>
                       {isHROpen ? (
                         <FaChevronDown className="text-gray-500" />
@@ -302,7 +330,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaUserTie className="text-yellow-400" />
+                        <FaUserTie className={iconColors["Teachers"]} />
                         <span>Teachers</span>
                       </NavLink>
                       <NavLink
@@ -310,7 +338,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg border-b border-gray-100"
                         onClick={toggleNav}
                       >
-                        <FaUserCircle className="text-yellow-400" />
+                        <FaUserCircle className={iconColors["Staff"]} />
                         <span>Staff</span>
                       </NavLink>
                       <NavLink
@@ -318,7 +346,7 @@ const MobileNav = () => {
                         className="flex items-center gap-3 py-2 px-4 text-gray-600 hover:bg-gray-50 rounded-lg"
                         onClick={toggleNav}
                       >
-                        <FaMoneyBillAlt className="text-yellow-400" />
+                        <FaMoneyBillAlt className={iconColors["Payroll"]} />
                         <span>Payroll</span>
                       </NavLink>
                     </div>
@@ -335,18 +363,7 @@ const MobileNav = () => {
                   activeClassName="bg-gray-100"
                   onClick={toggleNav}
                 >
-                  <span className={
-                    item.label === "Dashboard" ? "text-purple-500" :
-                    item.label === "Learners" ? "text-blue-500" :
-                    item.label === "Departments" ? "text-red-500" :
-                    item.label === "Classes" ? "text-blue-500" :
-                    item.label === "Streams" ? "text-indigo-500" :
-                    item.label === "Teachers" ? "text-yellow-500" :
-                    item.label === "Learning Areas" ? "text-indigo-500" :
-                    item.label === "Parents" ? "text-pink-500" :
-                    item.label === "Users" ? "text-teal-500" :
-                    item.label === "Analytics" ? "text-orange-500" : "text-gray-500"
-                  }>
+                  <span className={iconColors[item.label]}>
                     {item.icon}
                   </span>
                   <span>{item.label}</span>
@@ -359,11 +376,7 @@ const MobileNav = () => {
         {/* User Profile Footer */}
         <div className="p-4 border-t border-gray-200">
           <div className="flex items-center gap-3">
-         
-            <div>
-            © 2025 Topaz Computer Systems
-              
-            </div>
+            <div>© 2025 Topaz Computer Systems</div>
           </div>
         </div>
       </div>
