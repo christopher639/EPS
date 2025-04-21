@@ -192,7 +192,7 @@ const LearningArea = () => {
       {/* Main Content */}
       <div className="flex flex-col w-full" style={{ backgroundColor: primaryColors.lightBg }}>
         {/* Header */}
-        <header className="sticky top-0 z-10 bg-white shadow-sm p-4 border-b">
+        <header className="sticky  top-0 z-10 bg-white shadow-sm py-[19px] border-b">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <MobileNav />
@@ -240,7 +240,7 @@ const LearningArea = () => {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 p-4 overflow-auto">
+        <main className="flex-1 p-4 max-h-[80vh]  overflow-auto">
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <ClipLoader color={primaryColors.primary} size={50} />
